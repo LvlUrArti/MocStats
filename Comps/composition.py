@@ -163,6 +163,7 @@ class Composition:
                 "Fugue",
                 "Ice Trailblazer",
                 "Tribbie",
+                "Cipher",
             ]:
                 self.anemo.append(character)
             elif character in [

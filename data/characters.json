@@ -3934,5 +3934,57 @@
         "role": "Sustain",
         "alt_name": null,
         "out_name": false
+    },
+    "Cipher": {
+        "id": "1406",
+        "name": "Cipher",
+        "tag": "cipher",
+        "rarity": 5,
+        "path": "Warlock",
+        "element": "Quantum",
+        "max_sp": 130,
+        "ranks": [
+            "140601",
+            "140602",
+            "140603",
+            "140604",
+            "140605",
+            "140606"
+        ],
+        "skills": [
+            "140601",
+            "140602",
+            "140603",
+            "140604",
+            "140606",
+            "140607"
+        ],
+        "skill_trees": [
+            "1406001",
+            "1406002",
+            "1406003",
+            "1406004",
+            "1406007",
+            "1406101",
+            "1406102",
+            "1406103",
+            "1406201",
+            "1406202",
+            "1406203",
+            "1406204",
+            "1406205",
+            "1406206",
+            "1406207",
+            "1406208",
+            "1406209",
+            "1406210"
+        ],
+        "icon": "icon/character/1406.png",
+        "preview": "image/character_preview/1406.png",
+        "portrait": "image/character_portrait/1406.png",
+        "availability": "Limited 5*",
+        "role": "Amplifier",
+        "alt_name": null,
+        "out_name": false
     }
 }

@@ -3,6 +3,13 @@ from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
 
+# don't add underscore, i.e. 2.2.1"_pf"
+RECENT_PHASE = "3.3.2"
+
+# if no past phase, leave blank
+# add underscore, i.e. 2.2.1"_pf"
+past_phase = "3.3.1"
+
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-ca", "--comps_all", action="store_true")
@@ -31,13 +38,6 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-
-# don't add underscore, i.e. 2.2.1"_pf"
-RECENT_PHASE = "3.3.1"
-
-# if no past phase, leave blank
-# add underscore, i.e. 2.2.1"_pf"
-past_phase = "3.2.3"
 
 global pf_mode
 global as_mode
