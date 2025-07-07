@@ -3986,5 +3986,61 @@
         "role": "Amplifier",
         "alt_name": null,
         "out_name": false
+    },
+    "Phainon": {
+        "id": "1408",
+        "name": "Phainon",
+        "tag": "phainon",
+        "rarity": 5,
+        "path": "Warrior",
+        "element": "Physical",
+        "max_sp": 12,
+        "ranks": [
+            "140801",
+            "140802",
+            "140803",
+            "140804",
+            "140805",
+            "140806"
+        ],
+        "skills": [
+            "140801",
+            "140802",
+            "140803",
+            "140804",
+            "140805",
+            "140806",
+            "140807",
+            "140808",
+            "140809",
+            "140811"
+        ],
+        "skill_trees": [
+            "1408001",
+            "1408002",
+            "1408003",
+            "1408004",
+            "1408007",
+            "1408101",
+            "1408102",
+            "1408103",
+            "1408201",
+            "1408202",
+            "1408203",
+            "1408204",
+            "1408205",
+            "1408206",
+            "1408207",
+            "1408208",
+            "1408209",
+            "1408210"
+        ],
+        "icon": "icon/character/1408.png",
+        "preview": "image/character_preview/1408.png",
+        "portrait": "image/character_portrait/1408.png",
+        "availability": "Limited 5*",
+        "role": "Damage Dealer",
+        "alt_name": null,
+        "out_name": false
     }
 }

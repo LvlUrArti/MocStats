@@ -111,6 +111,9 @@ class Composition:
                 "The Herta",
                 "Aglaea",
                 "Castorice",
+                "Phainon",
+                "Saber",
+                "Archer",
             ]:
                 self.dps.insert(0, character)
             elif character in [
@@ -142,6 +145,7 @@ class Composition:
                 "Physical Trailblazer",
                 "Herta",
                 "Topaz & Numby",
+                "Cipher",
             ]:
                 self.subdps.append(character)
             elif character in ["Sampo", "Luka", "Guinaifen"]:
@@ -163,7 +167,6 @@ class Composition:
                 "Fugue",
                 "Ice Trailblazer",
                 "Tribbie",
-                "Cipher",
             ]:
                 self.anemo.append(character)
             elif character in [
