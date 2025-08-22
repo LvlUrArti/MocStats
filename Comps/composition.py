@@ -114,6 +114,7 @@ class Composition:
                 "Phainon",
                 "Saber",
                 "Archer",
+                "Hysilens",
             ]:
                 self.dps.insert(0, character)
             elif character in [
