@@ -2,12 +2,11 @@
 
 set -e # Stop on error
 
+# Check for arguments, e.g. `sh compile_all.sh hello`
 if [ -n "$1" ]; then
   cd Comps
 else
-  cd mihomo
-  python combine.py
-  cd ../Comps
+  cd Comps
   python combine_raw_chars.py
   python hash.py
 fi
