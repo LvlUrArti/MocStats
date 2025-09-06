@@ -309,8 +309,8 @@ mihomo/data
 char_results
 comp_results
 rogue_results
-web_results
-web_results_pf
+web_results*
+web_results_pf*
 patch_process_real.txt
 data/simulated_blocks - Copy (2).json
 enka.network/.enka_py
