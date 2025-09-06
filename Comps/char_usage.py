@@ -157,8 +157,10 @@ def appearances(
                     if char in user.owned and user.owned[char].weapon in sig_weaps:
                         f2p_comp = False
 
-            if (WHALE_ONLY and (giga_whale or not whale_comp)) or (
-                F2P_ONLY and (not f2p_comp or whale_comp)
+            if (
+                (WHALE_ONLY and not whale_comp)
+                or (F2P_ONLY and (not f2p_comp or whale_comp))
+                or giga_whale
             ):
                 continue
 

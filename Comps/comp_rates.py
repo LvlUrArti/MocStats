@@ -653,8 +653,10 @@ def used_comps(
             whale_count += 1
         if f2p_comp:
             f2p_count += 1
-        if (WHALE_ONLY and (not whale_comp or giga_whale)) or (
-            F2P_ONLY and (not f2p_comp or whale_comp)
+        if (
+            (WHALE_ONLY and not whale_comp)
+            or (F2P_ONLY and (not f2p_comp or whale_comp))
+            or giga_whale
         ):
             continue
 
