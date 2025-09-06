@@ -1,16 +1,32 @@
+"""An object that stores information about a particular composition."""
+
+from __future__ import annotations
+
 import json
+
+from comp_rates_config import (
+    DOT_LIST,
+    DOT_SUPPORT_LIST,
+    DPS_APPEND_LIST,
+    DPS_LIST,
+    FUA_LIST,
+    HARMONY_LIST,
+    HEALER_LIST,
+    PRESERVATION_LIST,
+    SUB_DPS_APPEND_LIST,
+    SUB_DPS_LIST,
+    SUPER_BREAK_LIST,
+)
 
 # Set class constants in initialization
 # Load the list of characters from their file
 with open("../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
-# # Load the list of elements from the reactions file
-# with open('../data/reaction.json') as react_file:
-#     ELEMENTS = list(json.load(react_file).keys())
-
 
 class Composition:
+    """An object that stores information about a particular composition."""
+
     """An object that stores information about a particular composition. Has:
     player: a string for the player who used this comp.
     phase: a string for the phase this composition was used in.
@@ -34,11 +50,11 @@ class Composition:
         round_num: str,
         star_num: str,
         room: str,
-        info_char: bool,
         buff: str,
         comp_chars_cons: list[int],
     ) -> None:
-        """Composition constructor. Takes in:
+        """Composition constructor."""
+        """Takes in:
         A player, as a UID string
         A composition, as a length-four list of character strings
         A phase, as a string
@@ -49,14 +65,12 @@ class Composition:
         self.room = room
         self.round_num = int(round_num)
         self.star_num = int(star_num)
-        self.char_structs(comp_chars, info_char, comp_chars_cons)
+        self.char_structs(comp_chars, comp_chars_cons)
         self.buff = buff
-        # self.comp_elements()
 
-    def char_structs(
-        self, comp_chars: list[str], info_char: bool, comp_chars_cons: list[int]
-    ) -> None:
-        """Character structure creator.
+    def char_structs(self, comp_chars: list[str], comp_chars_cons: list[int]) -> None:
+        """Character structure creator."""
+        """
         Makes a presence dict that maps character names to bools, and
         a list (alphabetically ordered) of the character names.
         """
@@ -83,139 +97,40 @@ class Composition:
             for char_iter in range(len(comp_chars)):
                 self.char_cons[comp_chars[char_iter]] = comp_chars_cons[char_iter]
         comp_chars.sort()
-        for character in comp_chars:
+        for iter_character in comp_chars:
+            character = iter_character
             if "Imbibitor" in character:
                 character = "Dan Heng • Imbibitor Lunae"
-            if "Topaz and Numby" == character:
+            if character == "Topaz and Numby":
                 character = "Topaz & Numby"
-            if "March 7th" == character:
+            if character == "March 7th":
                 character = "Ice March 7th"
             self.char_presence[character] = True
             if CHARACTERS[character]["availability"] in ["Limited 5*", "5*"]:
                 fives.append(character)
 
-            if character in [
-                "Seele",
-                "Yanqing",
-                "Hook",
-                "Jing Yuan",
-                "Dan Heng • Imbibitor Lunae",
-                "Argenti",
-                "Dr. Ratio",
-                "Acheron",
-                "Boothill",
-                "Firefly",
-                "Jade",
-                "Feixiao",
-                "Rappa",
-                "The Herta",
-                "Aglaea",
-                "Castorice",
-                "Phainon",
-                "Saber",
-                "Archer",
-                "Hysilens",
-            ]:
+            if character in DPS_LIST:
                 self.dps.insert(0, character)
-            elif character in [
-                "Kafka",
-                "Qingque",
-                "Arlan",
-                "Dan Heng",
-                "Sushang",
-                "Jingliu",
-                "Himeko",
-                "Mydei",
-                "Anaxa",
-            ]:
+            elif character in DPS_APPEND_LIST:
                 self.dps.append(character)
-            elif character in [
-                "Clara",
-                "Yunli",
-                "Blade",
-                "Xueyi",
-                "Misha",
-                "Black Swan",
-            ]:
+            elif character in SUB_DPS_LIST:
                 self.subdps.insert(0, character)
-            elif character in [
-                "Imaginary March 7th",
-                "Moze",
-                "Welt",
-                "Serval",
-                "Physical Trailblazer",
-                "Herta",
-                "Topaz & Numby",
-                "Cipher",
-            ]:
+            elif character in SUB_DPS_APPEND_LIST:
                 self.subdps.append(character)
-            elif character in ["Sampo", "Luka", "Guinaifen"]:
+            elif character in DOT_SUPPORT_LIST:
                 self.anemo.insert(0, character)
-            elif character in [
-                "Bronya",
-                "Silver Wolf",
-                "Asta",
-                "Tingyun",
-                "Pela",
-                "Yukong",
-                "Hanya",
-                "Ruan Mei",
-                "Sparkle",
-                "Robin",
-                "Imaginary Trailblazer",
-                "Jiaoqiu",
-                "Sunday",
-                "Fugue",
-                "Ice Trailblazer",
-                "Tribbie",
-            ]:
+            elif character in HARMONY_LIST:
                 self.anemo.append(character)
-            elif character in [
-                "Natasha",
-                "Luocha",
-                "Bailu",
-                "Lynx",
-                "Huohuo",
-                "Gallagher",
-                "Hyacine",
-            ]:
+            elif character in HEALER_LIST:
                 self.healer.insert(0, character)
-            elif character in [
-                "Ice March 7th",
-                "Gepard",
-                "Fire Trailblazer",
-                "Fu Xuan",
-                "Aventurine",
-                "Lingsha",
-            ]:
+            elif character in PRESERVATION_LIST:
                 self.healer.append(character)
 
-            if character in [
-                "Kafka",
-                "Black Swan",
-                "Serval",
-                "Sampo",
-                "Luka",
-                "Guinaifen",
-            ]:
+            if character in DOT_LIST:
                 self.dot.append(character)
-            if character in [
-                "Topaz & Numby",
-                "Dr. Ratio",
-                "Clara",
-                "Yunli",
-                "Jing Yuan",
-                "Himeko",
-                "Kafka",
-                "Blade",
-                "Herta",
-                "Xueyi",
-                "Jade",
-                "Feixiao",
-                "Moze",
-            ]:
+            if character in FUA_LIST:
                 self.fua.append(character)
-            if character in ["Imaginary Trailblazer", "Fugue"]:
+            if character in SUPER_BREAK_LIST:
                 self.super_break.append(character)
 
             if CHARACTERS[character]["element"] == "Ice":
@@ -247,15 +162,9 @@ class Composition:
 
         """Name structure creator.
         """
-        # comp_names = {
-        # }
         self.comp_name = "-"
         self.alt_comp_name = "-"
         self.dual_comp_name = "-"
-        # for comp_name in comp_names:
-        #     if self.characters in comp_names[comp_name]:
-        #         self.comp_name = comp_name
-        #         break
 
         if self.comp_name == "-":
             if len(self.dot) >= 1:
@@ -263,21 +172,9 @@ class Composition:
                     self.alt_comp_name = self.characters[0] + " Triple DoT"
                 elif len(self.dot) > 1:
                     self.alt_comp_name = self.characters[0] + " Dual DoT"
-                # elif len(self.dps) + len(self.subdps) == 1:
-                #     self.alt_comp_name = self.characters[0] + " Solo DoT"
             elif len(self.fua) > 1:
                 self.alt_comp_name = self.characters[0] + " Follow-Up"
 
-            # if len_element["Quantum"] == 4:
-            #     self.alt_comp_name = "Mono Quantum"
-            #     self.dual_comp_name = "Mono Quantum"
-            # for elem in len_element:
-            #     if len_element[elem] == 4:
-            #         self.comp_name = "Mono " + elem
-            # if self.comp_name == "-" and "Silver Wolf" in self.characters:
-            #     for elem in len_element:
-            #         if len_element[elem] == 3 and elem != "Quantum":
-            #             self.comp_name = "Faux-Mono " + elem
             # if self.comp_name == "-":
             archetype = ""
             if len(self.healer) == 0:
@@ -294,11 +191,10 @@ class Composition:
                 else:
                     archetype = " Dual Carry"
                 self.dual_comp_name = self.characters[1] + archetype
-            else:
-                if len(self.healer) > 1:
-                    archetype = " Dual Sustain"
-                elif len(self.anemo) > 0:
-                    archetype = " Hypercarry"
+            elif len(self.healer) > 1:
+                archetype = " Dual Sustain"
+            elif len(self.anemo) > 0:
+                archetype = " Hypercarry"
 
             if self.dps or self.subdps or self.anemo:
                 self.comp_name = self.characters[0] + archetype
@@ -306,8 +202,5 @@ class Composition:
                 self.comp_name = "Full Sustain"
 
     def contains_chars(self, chars: list[str]) -> bool:
-        """Returns a bool whether this comp contains all the chars in included list."""
-        for char in chars:
-            if not self.char_presence[char]:
-                return False
-        return True
+        """Return a bool whether this comp contains all the chars in included list."""
+        return all(self.char_presence[char] for char in chars)

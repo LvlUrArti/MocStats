@@ -1,3 +1,5 @@
+"""Move files."""
+
 import shutil
 from os import listdir, mkdir, path
 
@@ -34,7 +36,7 @@ for source_dir in source_dirs:
     for file_name in file_names:
         if (source_dir == "../mihomo" and file_name.startswith("output")) or (
             source_dir != "../mihomo"
-            and file_name.endswith(tuple([".json", ".csv"]))
+            and file_name.endswith((".json", ".csv"))
             and (
                 "demographic_collect" not in file_name
                 or file_name == ("demographic_collect" + suffix + ".json")
@@ -42,7 +44,7 @@ for source_dir in source_dirs:
         ):
             shutil.move(path.join(source_dir, file_name), target_dir)
             if source_dir == "../mihomo/results_real" and not file_name.startswith(
-                "output"
+                "output",
             ):
                 if not path.exists(target_dir + "/" + RECENT_PHASE_PF):
                     mkdir(target_dir + "/" + RECENT_PHASE_PF)

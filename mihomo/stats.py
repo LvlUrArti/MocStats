@@ -1,5 +1,8 @@
+"""Compile stats."""
+
 from csv import reader as csvreader
 from csv import writer as csvwriter
+from io import TextIOWrapper
 from itertools import chain
 from json import dumps as json_dumps
 from json import load as json_load
@@ -7,11 +10,15 @@ from operator import itemgetter
 from os import mkdir, path
 from statistics import mean as stat_mean
 from statistics import median as stat_median
+from sys import exit as sys_exit
 from sys import path as sys_path
 
-import numpy as np
-from matplotlib.pyplot import hist as plt_hist  # type: ignore
-from matplotlib.pyplot import show as plt_show  # type: ignore
+from matplotlib.pyplot import (
+    hist as plt_hist,  # pyright: ignore[reportUnknownVariableType]
+)
+from matplotlib.pyplot import (
+    show as plt_show,  # pyright: ignore[reportUnknownVariableType]
+)
 
 sys_path.append("../Comps/")
 from comp_rates_config import (
@@ -28,17 +35,26 @@ from nohomo_config import (
     check_stats,
     print_chart,
 )
+from numpy import array as nparray
 from pynput import keyboard
-from scipy.stats import skew  # type: ignore
+from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
+    skew,  # pyright: ignore[reportUnknownVariableType]
+)
+
+
+def read_csv(file: TextIOWrapper) -> list[list[str]]:
+    """Read CSV."""
+    reader = csvreader(file, delimiter=",")
+    next(reader)
+    return list(reader)
+
 
 if path.exists("../data/raw_csvs_real/"):
-    f = open("results_real/" + RECENT_PHASE + "/output1.csv")
+    with open("results_real/" + RECENT_PHASE + "/output1.csv") as f:
+        data = nparray(read_csv(f))
 else:
-    f = open("results/" + RECENT_PHASE + "_output.csv")
-reader = csvreader(f, delimiter=",")
-headers = next(reader)
-data = np.array(list(reader))
-f.close()
+    with open("results/" + RECENT_PHASE + "_output.csv") as f:
+        data = nparray(read_csv(f))
 
 with open("../data/light_cones.json") as f:
     LIGHT_CONES = json_load(f)
@@ -46,18 +62,14 @@ with open("../Comps/prydwen-slug.json") as slug_file:
     slug = json_load(slug_file)
 
 if path.exists("../data/raw_csvs_real/"):
-    f = open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
+    with open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv") as f:
+        spiral = read_csv(f)
 else:
-    f = open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv")
-reader = csvreader(f, delimiter=",")
-headers = next(reader)
-spiral = list(reader)
-f.close()
+    with open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv") as f:
+        spiral = read_csv(f)
 
 with open("../char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
-    reader = csvreader(f, delimiter=",")
-    headers = next(reader)
-    build = np.array(list(reader))
+    build = nparray(read_csv(f))
 
 archetype = "all"
 
@@ -105,10 +117,13 @@ substats = {
 
 
 class StatsChar:
+    """Character stats."""
+
     def __init__(self, char: str) -> None:
+        """Initialize StatsChar class."""
         self.name = char
         self.stats_count: dict[str, list[float]] = {key: [] for key in statkeys}
-        self.stats_write: dict[str, float | str] = {key: 0 for key in statkeys}
+        self.stats_write: dict[str, float | str] = dict.fromkeys(statkeys, 0)
         self.sample_size = 0
         self.sample_size_players = 0
 
@@ -127,13 +142,6 @@ for spiral_row in spiral:
     ) and int(spiral_row[4]) == 3:
         if spiral_row[0] not in spiral_rows:
             spiral_rows[spiral_row[0]] = {}
-        # if comp_stats:
-        #     spiral_temp = []
-        #     for i in range(5,9):
-        #         spiral_temp.append(spiral_row[i])
-        #     spiral_temp.sort()
-        #     if spiral_temp != ['Bailu', 'Jing Yuan', 'Tingyun', 'Yukong']:
-        #         continue
         for i in range(5, 9):
             if spiral_row[i] in [
                 "Dan Heng â€¢ Imbibitor Lunae",
@@ -147,12 +155,11 @@ for spiral_row in spiral:
             else:
                 spiral_rows[spiral_row[0]][spiral_row[i]] += 1
 
-for row in build:
-    chars.append(row[0])
+chars.extend(row[0] for row in build)
 
 for char in chars:
     stats[char] = StatsChar(char)
-    mean[char] = {key: 0 for key in statkeys}
+    mean[char] = dict.fromkeys(statkeys, 0)
     median[char] = mean[char].copy()
     mainstats[char] = {
         "body_stats": {},
@@ -169,7 +176,7 @@ substatkeys: list[str] = list(substats.keys())
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
-        self_uids = list(reader)[0]
+        self_uids = next(iter(reader))
 else:
     self_uids = []
 
@@ -180,8 +187,6 @@ for row in data:
         continue
     if skip_random and cur_uid not in self_uids:
         continue
-    # if (char.isnumeric()):
-    #     row.insert(2,"Nilou")
     if cur_uid != uid:
         uid = cur_uid
         ar += int(row[1])
@@ -189,7 +194,7 @@ for row in data:
     if char not in chars:
         if char in [
             "Dan Heng â€¢ Imbibitor Lunae",
-            "Dan Heng Ã¢â‚¬Â¢ Imbibitor Lunae",
+            "Dan Heng Ã¢â,¬Â¢ Imbibitor Lunae",
             "Dan Heng \u2022 Imbibitor Lunae",
         ]:
             char = "Dan Heng • Imbibitor Lunae"
@@ -201,8 +206,8 @@ for row in data:
             char = "March 7th"
         else:
             print(char)
-            exit()
-    if char == "Trailblazer" or char == "March 7th":
+            sys_exit()
+    if char in {"Trailblazer", "March 7th"}:
         match row[4]:
             case "Fire":
                 char = "Fire " + char
@@ -220,16 +225,6 @@ for row in data:
                 char = "Imaginary " + char
             case _:
                 pass
-    # for char in chars:
-    #     if char == char:
-    # elif row[4] == "None":
-    #     char = "Traveler-D"
-
-    # found = False
-    # for char_row in chardata:
-    #     if char_row[0] == cur_uid and not found:
-    #         if char_char == char and char_row[3] == "Dendro":
-    #             found = True
     found = False
     if cur_uid in spiral_rows:
         if char in spiral_rows[cur_uid] or (
@@ -237,44 +232,28 @@ for row in data:
         ):
             found = True
 
-        # isValidChar = False
-        # match archetype:
-        #     # case "melt":
-        #     #     if found and foundPyro:
-        #     #         isValidChar = True
-        #     case _:
         if found:
-            #     isValidChar = True
-            # # if found and foundDendro and foundHydro: # Hyperbloom
-            # # if found and foundDendro and not foundHydro: # Aggravate/Spread
             # if isValidChar:
             stats[char].sample_size_players += 1
-            for i in range(spiral_rows[cur_uid][char]):
+            for _i in range(spiral_rows[cur_uid][char]):
                 stats[char].stats_count["char_lvl"].append(float(row[3]))
                 stats[char].sample_size += 1
                 stats[char].stats_count["spd_sub"].append(float(row[23]))
                 if row[6].isnumeric():
                     stats[char].stats_count["light_cone_lvl"].append(float(row[6]))
-                for i in range(2, 10):
-                    stats[char].stats_count[statkeys[i]].append(float(row[i + 5]))
-                for i in chain(range(10, 18), range(19, 27)):
-                    stats[char].stats_count[statkeys[i]].append(float(row[i + 5]) / 100)
-                for i in range(4):
-                    if row[i + 32] in mainstats[char][mainstatkeys[i]]:
-                        mainstats[char][mainstatkeys[i]][row[i + 32]] += 1
+                for j in range(2, 10):
+                    stats[char].stats_count[statkeys[j]].append(float(row[j + 5]))
+                for j in chain(range(10, 18), range(19, 27)):
+                    stats[char].stats_count[statkeys[j]].append(float(row[j + 5]) / 100)
+                for j in range(4):
+                    if row[j + 32] in mainstats[char][mainstatkeys[j]]:
+                        mainstats[char][mainstatkeys[j]][row[j + 32]] += 1
                     else:
-                        mainstats[char][mainstatkeys[i]][row[i + 32]] = 1
+                        mainstats[char][mainstatkeys[j]][row[j + 32]] = 1
 
-                # if char_arti in artifacts[char]:
-                #     artifacts[char][char_arti] += 1
-                # else:
-                #     artifacts[char][char_arti] = 1
 copy_chars = chars.copy()
 for char in copy_chars:
-    # print(artifacts[char])
     if stats[char].sample_size > 0:
-        # print(char + ": " + str(stats[char].sample_size))
-        # print()
         for stat in stats[char].stats_count:
             skewness = 0
             if not stats[char].stats_count[stat]:
@@ -293,36 +272,40 @@ for char in copy_chars:
                     "speed",
                 ]:
                     median[char][stat] = round(
-                        stat_median(stats[char].stats_count[stat]), 2
+                        stat_median(stats[char].stats_count[stat]),
+                        2,
                     )
                     mean[char][stat] = round(
-                        stat_mean(stats[char].stats_count[stat]), 2
+                        stat_mean(stats[char].stats_count[stat]),
+                        2,
                     )
                 else:
                     median[char][stat] = round(
-                        stat_median(stats[char].stats_count[stat]), 4
+                        stat_median(stats[char].stats_count[stat]),
+                        4,
                     )
                     mean[char][stat] = round(
-                        stat_mean(stats[char].stats_count[stat]), 4
+                        stat_mean(stats[char].stats_count[stat]),
+                        4,
                     )
                 if (
                     mean[char][stat] > 0
                     and median[char][stat] > 0
                     and stats[char].sample_size > 5
-                ):
-                    if stat not in [
-                        "char_lvl",
-                        "light_cone_lvl",
-                        "attack_lvl",
-                        "skill_lvl",
-                        "ultimate_lvl",
-                        "talent_lvl",
-                        "energy_regen",
-                        "dmg_boost",
-                    ]:
-                        skewness = round(
-                            skew(stats[char].stats_count[stat], axis=0, bias=True), 2
-                        )
+                ) and stat not in [
+                    "char_lvl",
+                    "light_cone_lvl",
+                    "attack_lvl",
+                    "skill_lvl",
+                    "ultimate_lvl",
+                    "talent_lvl",
+                    "energy_regen",
+                    "dmg_boost",
+                ]:
+                    skewness = round(
+                        skew(stats[char].stats_count[stat], axis=0, bias=True),
+                        2,
+                    )
                 if abs(skewness) > skew_num:
                     if print_chart:
                         if (
@@ -334,14 +317,13 @@ for char in copy_chars:
                                 + ": "
                                 + str(mean[char][stat])
                                 + ", "
-                                + str(median[char][stat])
+                                + str(median[char][stat]),
                             )
                             try:
                                 plt_hist(stats[char].stats_count[stat])
                                 plt_show()
                             except Exception:
-                                pass
-                            # print("1 - Mean, 2 - Median: ")
+                                print("error plt")
                             with keyboard.Events() as events:
                                 event = events.get(1e6)
                                 if (
@@ -349,11 +331,11 @@ for char in copy_chars:
                                     and event.key == keyboard.KeyCode.from_char("1")
                                 ):
                                     stats[char].stats_write[stat] = str(
-                                        mean[char][stat]
+                                        mean[char][stat],
                                     )
                                 else:
                                     stats[char].stats_write[stat] = str(
-                                        median[char][stat]
+                                        median[char][stat],
                                     )
                         else:
                             stats[char].stats_write[stat] = median[char][stat]
@@ -366,12 +348,15 @@ for char in copy_chars:
 
         for stat in mainstats[char]:
             sorted_stats = sorted(
-                mainstats[char][stat].items(), key=itemgetter(1), reverse=True
+                mainstats[char][stat].items(),
+                key=itemgetter(1),
+                reverse=True,
             )
-            mainstats[char][stat] = {k: v for k, v in sorted_stats}
+            mainstats[char][stat] = dict(sorted_stats)
             for mainstat in mainstats[char][stat]:
                 mainstats[char][stat][mainstat] = round(
-                    mainstats[char][stat][mainstat] / stats[char].sample_size, 4
+                    mainstats[char][stat][mainstat] / stats[char].sample_size,
+                    4,
                 )
             mainstatlist = list(mainstats[char][stat])
             i = 0
@@ -388,9 +373,9 @@ for char in copy_chars:
 
     else:
         for stat in stats[char].stats_count:
-            if not stats[char].stats_count[stat]:
-                stats[char].stats_write[stat] = 0
-            elif stat != "name" and "sample_size" not in stat:
+            if not stats[char].stats_count[stat] or (
+                stat != "name" and "sample_size" not in stat
+            ):
                 stats[char].stats_write[stat] = 0
 
         stats[char].stats_write["sample_size_players"] = 0
@@ -401,41 +386,56 @@ for char in copy_chars:
                 stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 i += 1
 
-if path.exists("results_real"):
-    file1 = open("results_real/chars.csv", "w", newline="")
-    file2 = open("results_real/demographic.csv", "w", newline="")
-else:
-    file1 = open("results/chars.csv", "w", newline="")
-    file2 = open("results/demographic.csv", "w", newline="")
 
-csv_writer = csvwriter(file1)
-csv_writer2 = csvwriter(file2)
-del stats[chars[0]].sample_size
-csv_writer.writerow(["name", *stats[chars[0]].stats_write.keys()])
-for char in chars:
-    if char != chars[0]:
-        del stats[char].sample_size
-    csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
-    csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
-file1.close()
-file2.close()
+def write_files(
+    f1: TextIOWrapper,
+    f2: TextIOWrapper,
+) -> None:
+    """Write the stats to a csv file."""
+    csv_writer = csvwriter(f1)
+    csv_writer2 = csvwriter(f2)
+    del stats[chars[0]].sample_size
+    csv_writer.writerow(["name", *stats[chars[0]].stats_write.keys()])
+    for char in chars:
+        if char != chars[0]:
+            del stats[char].sample_size
+        csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
+        csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
+    f1.close()
+    f2.close()
+
+
+if path.exists("results_real"):
+    with (
+        open("results_real/chars.csv", "w", newline="") as file1,
+        open("results_real/demographic.csv", "w", newline="") as file2,
+    ):
+        write_files(file1, file2)
+else:
+    with (
+        open("results/chars.csv", "w", newline="") as file1,
+        open("results/demographic.csv", "w", newline="") as file2,
+    ):
+        write_files(file1, file2)
+
 
 temp_stats: list[str] = []
 iter_char = 0
 with open("../char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
     CHARACTERS = json_load(char_file)
 with open(
-    "../char_results/" + RECENT_PHASE_PF + "/appearance_combine.json"
+    "../char_results/" + RECENT_PHASE_PF + "/appearance_combine.json",
 ) as app_char_file:
     APP = json_load(app_char_file)
 with open(
-    "../char_results/" + RECENT_PHASE_PF + "/rounds_combine.json"
+    "../char_results/" + RECENT_PHASE_PF + "/rounds_combine.json",
 ) as round_char_file:
     ROUND = json_load(round_char_file)
-for char in stats:
+for char, char_stat in stats.items():
     for i in chain(range(10, 18), range(19, 27)):
         stats[char].stats_write[statkeys[i]] = round(
-            float(stats[char].stats_write[statkeys[i]]) * 100, 2
+            float(char_stat.stats_write[statkeys[i]]) * 100,
+            2,
         )
     iterate_value_app: list[str] = []
     for i in range(3):
@@ -444,25 +444,25 @@ for char in stats:
         iterate_value_app.append("sphere_stats_" + str(i + 1) + "_app")
         iterate_value_app.append("rope_stats_" + str(i + 1) + "_app")
     for value in iterate_value_app:
-        if isinstance(stats[char].stats_write[value], float):
+        if isinstance(char_stat.stats_write[value], float):
             stats[char].stats_write[value] = round(
-                float(stats[char].stats_write[value]) * 100, 2
+                float(char_stat.stats_write[value]) * 100,
+                2,
             )
         else:
             stats[char].stats_write[value] = 0.00
 
-    stats[char].name = stats[char].name.replace(" ", "-").lower()
-    if stats[char].name in slug:
-        stats[char].name = slug[stats[char].name]
-    if stats[char].name == CHARACTERS[iter_char]["char"]:
+    stats[char].name = char_stat.name.replace(" ", "-").lower()
+    if char_stat.name in slug:
+        stats[char].name = slug[char_stat.name]
+    if char_stat.name == CHARACTERS[iter_char]["char"]:
         del stats[char].name
     else:
-        print(stats[char].name)
+        print(char_stat.name)
         print(CHARACTERS[iter_char]["char"])
-        exit()
+        sys_exit()
 
-    temp_stats.append(CHARACTERS[iter_char] | stats[char].stats_write)
-    # temp_stats.append((CHARACTERS[iter_char]) | app_dict)
+    temp_stats.append(CHARACTERS[iter_char] | char_stat.stats_write)
     iter_char += 1
 
 if not path.exists("../char_results/" + RECENT_PHASE_PF):

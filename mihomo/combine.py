@@ -1,3 +1,5 @@
+"""Combine data from multiple CSV files."""
+
 import csv
 from os import path
 
@@ -30,7 +32,6 @@ for i in range(iteration):
             for j in output_temp:
                 if j[0] not in uidlistchar:
                     output += [j]
-        # np.concatenate((output, list(reader)), axis=1)
 
     with open("output" + str(i + 1) + "_char.csv") as f:
         reader = csv.reader(f, delimiter=",")
@@ -47,14 +48,14 @@ for i in range(iteration):
                 if j[0] not in uidlist:
                     output_char += [j]
                     uidcheck.add(int(j[0]))
-        # np.concatenate((output_char, list(reader)), axis=1)
     send2trash("output" + str(i + 1) + ".csv")
     send2trash("output" + str(i + 1) + "_char.csv")
     print("\r", end="")
 
-# print(uidcheck)
-csv_writer = csv.writer(open("output1.csv", "w", newline=""))
-csv_writer.writerows(output)
+with open("output1.csv", "w", newline="") as f:
+    csv_writer = csv.writer(f)
+    csv_writer.writerows(output)
 
-csv_writer = csv.writer(open("output1_char.csv", "w", newline=""))
-csv_writer.writerows(output_char)
+with open("output1_char.csv", "w", newline="") as f:
+    csv_writer = csv.writer(f)
+    csv_writer.writerows(output_char)

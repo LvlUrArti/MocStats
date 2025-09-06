@@ -1,4 +1,7 @@
-import csv
+"""Combine data from multiple CSV files."""
+
+from csv import reader as csv_reader
+from csv import writer as csv_writer
 
 from comp_rates_config import RECENT_PHASE
 from send2trash import send2trash
@@ -6,13 +9,14 @@ from send2trash import send2trash
 char_data: dict[str, dict[str, list[str]]] = {}
 print_data: list[list[str]] = []
 
+print("Opening files...")
 # with open("char_data.csv", 'r') as f:
 with open("../mihomo/output1_char.csv", encoding="UTF8") as f:
-    reader = csv.reader(f, delimiter=",")
+    reader = csv_reader(f, delimiter=",")
     print_data += [next(reader)]
     char_data_temp = list(reader)
 with open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv") as f:
-    reader = csv.reader(f, delimiter=",")
+    reader = csv_reader(f, delimiter=",")
     headers = next(reader)
     char_data_temp += list(reader)
     for line in char_data_temp:
@@ -27,12 +31,11 @@ with open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv") as f:
                 line[7],
                 line[8],
             ]
-for uid in char_data:
-    for char in char_data[uid]:
-        print_data += [[uid, "", char] + char_data[uid][char]]
+for uid, uid_char in char_data.items():
+    for char in uid_char:
+        print_data += [[uid, "", char] + uid_char[char]]
 
 send2trash("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv")
-csv_writer = csv.writer(
-    open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv", "w", newline="")
-)
-csv_writer.writerows(print_data)
+with open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv", "w", newline="") as f:
+    csv_writer = csv_writer(f)
+    csv_writer.writerows(print_data)

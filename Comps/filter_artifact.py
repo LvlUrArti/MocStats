@@ -1,3 +1,7 @@
+"""Filter artifact characters."""
+
+from __future__ import annotations
+
 import json
 
 from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
@@ -69,7 +73,7 @@ for char_data in filtered_data:
             planars.add(str(planar_name))
 
 # Create a dictionary to store the results
-results: dict[str, str] = {}
+results: dict[str, dict[str, dict[str, dict[str, list[float | str]]]]] = {}
 
 # Loop through each artifact
 for artifact in artifacts:
@@ -86,8 +90,8 @@ for artifact in artifacts:
 
     # Find the character that uses the most of each
     # body stat and feet stat for this artifact
-    body_stats: dict[str, dict[str, list[float] | list[str]]] = {}
-    feet_stats: dict[str, dict[str, list[float] | list[str]]] = {}
+    body_stats: dict[str, dict[str, list[float | str]]] = {}
+    feet_stats: dict[str, dict[str, list[float | str]]] = {}
     for char_data in artifact_chars:
         char_name = str(char_data.get("char"))
         for i in range(1, 4):  # Check top 3 body stats
@@ -134,8 +138,8 @@ for planar in planars:
 
     # Find the character that uses the most of each
     # sphere stat and rope stat for this planar
-    sphere_stats: dict[str, dict[str, list[float] | list[str]]] = {}
-    rope_stats: dict[str, dict[str, list[float] | list[str]]] = {}
+    sphere_stats: dict[str, dict[str, list[float | str]]] = {}
+    rope_stats: dict[str, dict[str, list[float | str]]] = {}
     for char_data in planar_chars:
         char_name = str(char_data.get("char"))
         for i in range(1, 4):  # Check top 3 sphere stats

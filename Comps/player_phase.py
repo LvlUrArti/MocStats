@@ -1,6 +1,12 @@
-import json
+"""An object that stores information about a player on a phase."""
 
-from composition import Composition
+from __future__ import annotations
+
+import json
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from composition import Composition
 
 # Set class constants in initialization
 # Load the list of characters from their file
@@ -11,6 +17,8 @@ with open("../data/relic_affixes.json") as relic_file:
 
 
 class OwnedChars:
+    """An object that stores information about owned characters."""
+
     def __init__(
         self,
         level: str,
@@ -20,6 +28,7 @@ class OwnedChars:
         artifacts: str,
         planars: str,
     ) -> None:
+        """Character constructor."""
         self.level: int = int(level)
         self.cons: int = int(cons)
         self.weapon: str = weapon
@@ -29,8 +38,9 @@ class OwnedChars:
 
 
 class PlayerPhase:
-    """
-    An object that stores information about a player on a phase. Has:
+    """An object that stores information about a player on a phase."""
+
+    """Has:
     player: a string for this player.
     phase: a string for the phase.
     chambers: a string->composition dict for the comps they used.
@@ -39,8 +49,9 @@ class PlayerPhase:
     """
 
     def __init__(self, player: str, phase: str) -> None:
+        """Composition constructor."""
         """
-        Composition constructor. Takes in:
+        Takes in:
         A player, as a string
         A phase, as a string
         """
@@ -59,23 +70,21 @@ class PlayerPhase:
         artifacts: str,
         planars: str,
     ) -> None:
-        """
-        Adds in a character to the owned characters dict.
-        """
-        for arti in articombinations:
+        """Add in a character to the owned characters dict."""
+        for arti_item in articombinations.values():
             articom: list[str] = []
             comarti: list[str] = []
-            for artiset in articombinations[arti]:
+            for artiset in arti_item:
                 articom.append(artiset + ", ")
                 comarti.append(", " + artiset)
             replaced = False
-            arti_name = articombinations[arti][0]
+            arti_name = arti_item[0]
             for arti_replace in comarti:
                 if arti_replace in artifacts:
                     artifacts = artifacts.replace(arti_replace, ", " + arti_name)
                     replaced = True
             if replaced:
-                arti_name = articombinations[arti][1]
+                arti_name = arti_item[1]
             for arti_replace in articom:
                 if arti_replace in artifacts:
                     artifacts = artifacts.replace(arti_replace, "")
@@ -86,7 +95,7 @@ class PlayerPhase:
         self.owned[name] = OwnedChars(level, cons, weapon, element, artifacts, planars)
 
     def add_comp(self, composition: Composition) -> None:
-        """Adds a composition to the chambers dict."""
+        """Add a composition to the chambers dict."""
         if composition.phase != self.phase or composition.player != self.player:
             return
         if composition.room in self.chambers:
@@ -94,87 +103,28 @@ class PlayerPhase:
         self.chambers[composition.room] = composition
 
     def chars_owned(self, characters: list[str]) -> bool:
-        """Takes in an iter of character names,
-        and returns true if the player owned them all."""
-        for char in characters:
-            if not self.owned[char]:
-                return False
-        return True
+        """Take in an iter of char names. True if the player owned them all."""
+        return all(self.owned[char] for char in characters)
 
     def chars_used(self, characters: list[str]) -> bool:
-        """Takes in an iter of character names,
-        and returns true if the player used them all."""
+        """Take in an iter of char names. True if the player used them all."""
         if not self.chars_owned(characters):
             return False
-        for char in characters:
-            if not self.char_used(char):
-                return False
-        return True
+        return all(self.char_used(char) for char in characters)
 
     def no_chars_owned(self, characters: list[str]) -> bool:
-        """Takes in a list of character names,
-        and returns true if the player owns none of them."""
-        for char in characters:
-            if self.owned[char]:
-                return False
-        return True
+        """Take in an iter of character names. True if the player owns none of them."""
+        return all(not self.owned[char] for char in characters)
 
     def no_chars_used(self, characters: list[str]) -> bool:
-        """Takes in an iter of character names,
-        and returns true if the player used none of them."""
-        for char in characters:
-            if self.char_used(char):
-                return False
-        return True
+        """Take in an iter of character names. True if the player used none of them."""
+        return all(not self.char_used(char) for char in characters)
 
     def char_used(self, character: str) -> bool:
-        """Takes in a character name, and returns true if the player used them."""
+        """Take in a character name. True if the player used them."""
         if not self.owned[character]:
             return False
         for chamber in self.chambers.values():
             if chamber.char_presence[character]:
                 return True
         return False
-
-    def chars_placement(self, characters: list[str]) -> None | dict[str, list[str]]:
-        """
-        Takes in an iter of character names, and if the player owns them all,
-        returns a dict of which chambers each was used in.
-        """
-        if not self.chars_owned(characters):
-            return None
-        chambers: dict[str, list[str]] = {
-            "1-1": [],
-            "1-2": [],
-            "2-1": [],
-            "2-2": [],
-            "3-1": [],
-            "3-2": [],
-            "4-1": [],
-            "4-2": [],
-            "5-1": [],
-            "5-2": [],
-            "6-1": [],
-            "6-2": [],
-            "7-1": [],
-            "7-2": [],
-            "8-1": [],
-            "8-2": [],
-            "9-1": [],
-            "9-2": [],
-            "10-1": [],
-            "10-2": [],
-            "11-1": [],
-            "11-2": [],
-            "12-1": [],
-            "12-2": [],
-        }
-        for char in characters:
-            for chamber in chambers:
-                if self.chambers[chamber].char_presence[char]:
-                    chambers[chamber].append(char)
-        return chambers
-
-    # def floor_twelve(self):
-    #     """Returns the comps used on floor 12."""
-    #     return [c[1] for c in self.chambers.items() if c[0][:2] == "12"]

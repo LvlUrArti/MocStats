@@ -1,5 +1,7 @@
 """Config file for comp_rates.py."""
 
+from __future__ import annotations
+
 from argparse import ArgumentParser
 from json import load
 from os.path import dirname as path_dirname
@@ -41,8 +43,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-global pf_mode
-global as_mode
 # if as: pf_mode = True
 pf_mode: bool = args.pure_fic or args.apoc_shadow
 as_mode: bool = args.apoc_shadow
@@ -64,15 +64,135 @@ run_all_chars = False
 run_chars_name = ["Aglaea", "Boothill", "Robin", "Silver Wolf"]
 char_infographics = run_chars_name[1]
 
+DPS_LIST = [
+    "Yanqing",
+    "Hook",
+    "Seele",
+    "Dan Heng • Imbibitor Lunae",
+    "Dr. Ratio",
+    "Argenti",
+    "Rappa",
+    "Jing Yuan",
+    "Firefly",
+    "Boothill",
+    "Feixiao",
+    "Acheron",
+    "The Herta",
+    "Saber",
+    "Aglaea",
+    "Phainon",
+    "Hysilens",
+    "Castorice",
+    "Archer",
+]
+
+DPS_APPEND_LIST = [
+    "Xueyi",
+    "Physical Trailblazer",
+    "Sushang",
+    "Misha",
+    "Dan Heng",
+    "Arlan",
+    "Qingque",
+    "Luka",
+    "Clara",
+    "Himeko",
+    "Yunli",
+    "Jingliu",
+    "Blade",
+    "Mydei",
+    "Anaxa",
+]
+
+SUB_DPS_LIST = [
+    "Black Swan",
+    "Jade",
+    "Kafka",
+]
+
+SUB_DPS_APPEND_LIST = [
+    "Imaginary March 7th",
+    "Moze",
+    "Welt",
+    "Serval",
+    "Herta",
+    "Topaz & Numby",
+    "Cipher",
+]
+
+DOT_SUPPORT_LIST = ["Sampo", "Guinaifen"]
+
+HARMONY_LIST = [
+    "Bronya",
+    "Silver Wolf",
+    "Asta",
+    "Tingyun",
+    "Pela",
+    "Yukong",
+    "Hanya",
+    "Ruan Mei",
+    "Sparkle",
+    "Robin",
+    "Imaginary Trailblazer",
+    "Jiaoqiu",
+    "Sunday",
+    "Fugue",
+    "Ice Trailblazer",
+    "Tribbie",
+    "Cerydra",
+]
+
+HEALER_LIST = [
+    "Natasha",
+    "Luocha",
+    "Bailu",
+    "Lynx",
+    "Huohuo",
+    "Gallagher",
+    "Hyacine",
+]
+
+PRESERVATION_LIST = [
+    "Ice March 7th",
+    "Gepard",
+    "Fire Trailblazer",
+    "Fu Xuan",
+    "Aventurine",
+    "Lingsha",
+]
+
+DOT_LIST = [
+    "Kafka",
+    "Black Swan",
+    "Serval",
+    "Sampo",
+    "Luka",
+    "Guinaifen",
+]
+
+FUA_LIST = [
+    "Topaz & Numby",
+    "Dr. Ratio",
+    "Clara",
+    "Yunli",
+    "Jing Yuan",
+    "Himeko",
+    "Kafka",
+    "Blade",
+    "Herta",
+    "Xueyi",
+    "Jade",
+    "Feixiao",
+    "Moze",
+]
+
+SUPER_BREAK_LIST = ["Imaginary Trailblazer", "Fugue"]
+
 
 # threshold for comps in character infographics, non-inclusive
-global char_app_rate_threshold
 char_app_rate_threshold = 0.25
 
 # threshold for comps, not inclusive
-global app_rate_threshold
-global app_rate_threshold_round
-global f2p_app_rate_threshold
 app_rate_threshold = 0.1
 app_rate_threshold_round = 0
 json_threshold = 0
@@ -80,12 +200,14 @@ f2p_app_rate_threshold = 0.1
 skew_num = 0.8
 duo_dict_len = 30
 duo_dict_len_print = 10
+LAST_MOC_FLOOR = 12
+CONS_LIMIT = 2
 
 skip_self = False
 skip_random = False
 archetype = "all"
-whaleOnly: bool = args.whale
-f2pOnly: bool = args.f2p
+WHALE_ONLY: bool = args.whale
+F2P_ONLY: bool = args.f2p
 
 # Char infographics should be separated from overall comp rankings
 run_commands = [
@@ -149,6 +271,7 @@ if alt_comps and char_app_rate_threshold > app_rate_threshold:
 
 
 def relative_path(relative_path: str) -> str:
+    """Get absolute path to resource, works for dev and for PyInstaller."""
     script_dir = path_dirname(__file__)
     return path_join(script_dir, relative_path)
 
@@ -159,8 +282,8 @@ with open(relative_path("../data/characters.json")) as char_file:
 with open(relative_path("../data/light_cones.json")) as char_file:
     LIGHT_CONES: dict[str, dict[str, str | int | None]] = load(char_file)
 
-sigWeaps: list[str] = []
-standWeaps = [
+sig_weaps: list[str] = []
+STAND_WEAPS = [
     "Night on the Milky Way",
     "Something Irreplaceable",
     "But the Battle Isn't Over",
@@ -174,9 +297,10 @@ standWeaps = [
     "Solitary Healing",
     "Eternal Calculus",
 ]
+MAX_LC_RARITY = 5
 for light_cone in LIGHT_CONES:
     if (
-        LIGHT_CONES[light_cone]["rarity"] == 5
-        and LIGHT_CONES[light_cone]["name"] not in standWeaps
+        LIGHT_CONES[light_cone]["rarity"] == MAX_LC_RARITY
+        and LIGHT_CONES[light_cone]["name"] not in STAND_WEAPS
     ):
-        sigWeaps += [str(LIGHT_CONES[light_cone]["name"])]
+        sig_weaps += [str(LIGHT_CONES[light_cone]["name"])]

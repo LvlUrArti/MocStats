@@ -1,3 +1,5 @@
+"""Copy files to web_results."""
+
 import shutil
 from os import listdir, mkdir, path
 

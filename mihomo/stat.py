@@ -1,14 +1,18 @@
+"""Compile stats for single character."""
+
+from __future__ import annotations
+
 import sys
 
 sys.path.append("../Comps/")
 
-import csv
 import os
-import statistics
+from csv import reader as csvreader
+from csv import writer as csvwriter
+from statistics import mean as stat_mean
+from statistics import median as stat_median
+from typing import TYPE_CHECKING
 
-# matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
-import numpy as np
 from comp_rates_config import (
     RECENT_PHASE_PF,
     pf_mode,
@@ -18,52 +22,69 @@ from comp_rates_config import (
     skip_random,
     skip_self,
 )
+from matplotlib.pyplot import (
+    hist as plt_hist,  # pyright: ignore[reportUnknownVariableType]
+)
+from matplotlib.pyplot import (
+    show as plt_show,  # pyright: ignore[reportUnknownVariableType]
+)
 from nohomo_config import (
     print_chart,
 )
+from numpy import array as nparray
 from pynput import keyboard
-from scipy.stats import skew  # type: ignore
+from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
+    skew,  # pyright: ignore[reportUnknownVariableType]
+)
 
-global self_uids
+if TYPE_CHECKING:
+    from io import TextIOWrapper
+
+
+def read_csv(file: TextIOWrapper) -> list[list[str]]:
+    """Read CSV."""
+    reader = csvreader(file, delimiter=",")
+    next(reader)
+    return list(reader)
+
+
 if os.path.isfile("../../uids.csv"):
-    with open("../../uids.csv", "r", encoding="UTF8") as f:
-        reader = csv.reader(f, delimiter=",")
-        self_uids = list(reader)[0]
+    with open("../../uids.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        self_uids = next(iter(reader))
 else:
     self_uids = []
 
 with open("output1.csv") as f:
-    reader = csv.reader(f, delimiter=",")
+    reader = csvreader(f, delimiter=",")
     headers = next(reader)
-    data = np.array(list(reader))
+    data = nparray(list(reader))
 
 if os.path.exists("../data/raw_csvs_real/"):
-    f = open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
+    with open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv") as f:
+        spiral = read_csv(f)
 else:
-    f = open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv")
-reader = csv.reader(f, delimiter=",")
-headers = next(reader)
-spiral = list(reader)
+    with open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv") as f:
+        spiral = read_csv(f)
 
 with open("../char_results/all.csv") as f:
-    reader = csv.reader(f, delimiter=",")
+    reader = csvreader(f, delimiter=",")
     col_names_build = next(reader)
-    build = np.array(list(reader))
+    build = nparray(list(reader))
 
 archetype = "all"
 
 chars: list[str] = []
 if run_all_chars:
-    for row in build:
-        chars.append(row[0])
+    chars.extend(row[0] for row in build)
 else:
     chars = run_chars_name
-stats = {}
-median = {}
-mean = {}
-sample = {}
-weapons = {}
-copy_weapons = {}
+stats: dict[str, dict[str, dict[str, list[float | str]]]] = {}
+median: dict[str, dict[str, dict[str, float]]] = {}
+mean: dict[str, dict[str, dict[str, float]]] = {}
+sample: dict[str, dict[str, int]] = {}
+weapons: dict[str, list[str]] = {}
+copy_weapons: dict[str, list[str]] = {}
 
 spiral_rows: dict[str, set[str]] = {}
 for spiral_row in spiral:
@@ -165,7 +186,7 @@ for row in data:
         cur_char = "Dan Heng • Imbibitor Lunae"
     if "Topaz and Numby" in cur_char:
         cur_char = "Topaz & Numby"
-    if cur_char == "Trailblazer" or cur_char == "March 7th":
+    if cur_char in {"Trailblazer", "March 7th"}:
         match row[4]:
             case "Fire":
                 cur_char = "Fire " + cur_char
@@ -190,25 +211,22 @@ for row in data:
                 "Trailblazer" in spiral_rows[row[0]] and "Trailblazer" in cur_char
             ):
                 found = True
-            if found:
-                if row[5] in weapons[cur_char]:
-                    sample[cur_char][row[5]] += 1
-                    stats[cur_char][row[5]]["char_lvl"].append(float(row[3]))
-                    if row[6].isnumeric():
-                        stats[cur_char][row[5]]["light_cone_lvl"].append(float(row[6]))
-                    for i in range(3, 11):
-                        stats[cur_char][row[5]][statkeys[i]].append(float(row[i + 4]))
-                    for i in range(11, 19):
-                        stats[cur_char][row[5]][statkeys[i]].append(
-                            float(row[i + 4]) / 100
-                        )
+            if found and row[5] in weapons[cur_char]:
+                sample[cur_char][row[5]] += 1
+                stats[cur_char][row[5]]["char_lvl"].append(float(row[3]))
+                if row[6].isnumeric():
+                    stats[cur_char][row[5]]["light_cone_lvl"].append(float(row[6]))
+                for i in range(3, 11):
+                    stats[cur_char][row[5]][statkeys[i]].append(float(row[i + 4]))
+                for i in range(11, 19):
+                    stats[cur_char][row[5]][statkeys[i]].append(
+                        float(row[i + 4]) / 100,
+                    )
 
 for char in chars:
     copy_weapons[char] = weapons[char].copy()
     for weapon in copy_weapons[char]:
         if sample[char][weapon] > 0:
-            # print()
-            # print(weapon + ": " + str(sample[char][weapon]))
             for stat in stats[char][weapon]:
                 skewness = 0
                 if stat not in ["name"]:
@@ -225,36 +243,40 @@ for char in chars:
                         "speed",
                     ]:
                         median[char][weapon][stat] = round(
-                            statistics.median(stats[char][weapon][stat]), 2
+                            stat_median(stats[char][weapon][stat]),
+                            2,
                         )
                         mean[char][weapon][stat] = round(
-                            statistics.mean(stats[char][weapon][stat]), 2
+                            stat_mean(stats[char][weapon][stat]),
+                            2,
                         )
                     else:
                         median[char][weapon][stat] = round(
-                            statistics.median(stats[char][weapon][stat]), 4
+                            stat_median(stats[char][weapon][stat]),
+                            4,
                         )
                         mean[char][weapon][stat] = round(
-                            statistics.mean(stats[char][weapon][stat]), 4
+                            stat_mean(stats[char][weapon][stat]),
+                            4,
                         )
                     if (
                         mean[char][weapon][stat] > 0
                         and median[char][weapon][stat] > 0
                         and sample[char][weapon] > 5
-                    ):
-                        if stat not in [
-                            "char_lvl",
-                            "light_cone_lvl",
-                            "attack_lvl",
-                            "skill_lvl",
-                            "ultimate_lvl",
-                            "talent_lvl",
-                            "energy_regen",
-                            "dmg_boost",
-                        ]:
-                            skewness = round(
-                                skew(stats[char][weapon][stat], axis=0, bias=True), 2
-                            )
+                    ) and stat not in [
+                        "char_lvl",
+                        "light_cone_lvl",
+                        "attack_lvl",
+                        "skill_lvl",
+                        "ultimate_lvl",
+                        "talent_lvl",
+                        "energy_regen",
+                        "dmg_boost",
+                    ]:
+                        skewness = round(
+                            skew(stats[char][weapon][stat], axis=0, bias=True),
+                            2,
+                        )
                     if abs(skewness) > skew_num:
                         if print_chart:
                             print("skewness: " + str(skewness))
@@ -263,23 +285,25 @@ for char in chars:
                                 + ": "
                                 + str(mean[char][weapon][stat])
                                 + ", "
-                                + str(median[char][weapon][stat])
+                                + str(median[char][weapon][stat]),
                             )
                             try:
-                                plt.hist(stats[char][weapon][stat])
-                                plt.show()
+                                plt_hist(stats[char][weapon][stat])
+                                plt_show()
                             except Exception:
-                                pass
-                            # print("1 - Mean, 2 - Median: ")
+                                print("error in plt_hist")
+                            print("1 - Mean, 2 - Median: ")
                             with keyboard.Events() as events:
                                 event = events.get(1e6)
-                                if event.key == keyboard.KeyCode.from_char("1"):
+                                if event and event.key == keyboard.KeyCode.from_char(
+                                    "1",
+                                ):
                                     stats[char][weapon][stat] = str(
-                                        mean[char][weapon][stat]
+                                        mean[char][weapon][stat],
                                     )
                                 else:
                                     stats[char][weapon][stat] = str(
-                                        median[char][weapon][stat]
+                                        median[char][weapon][stat],
                                     )
                         else:
                             stats[char][weapon][stat] = str(median[char][weapon][stat])
@@ -293,12 +317,12 @@ for char in chars:
         print()
         print()
         if os.path.exists("results_real"):
-            csv_writer = csv.writer(
-                open("results_real/" + char + "_weapons.csv", "w", newline="")
+            csv_writer = csvwriter(
+                open("results_real/" + char + "_weapons.csv", "w", newline=""),
             )
         else:
-            csv_writer = csv.writer(
-                open("results/" + char + "_weapons.csv", "w", newline="")
+            csv_writer = csvwriter(
+                open("results/" + char + "_weapons.csv", "w", newline=""),
             )
             csv_writer.writerow(stats[char][weapons[char][0]].keys())
         for weapon in weapons[char]:

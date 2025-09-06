@@ -1,26 +1,29 @@
+"""Collects character data from Enka Network."""
+
 import _thread
 import asyncio
-import time
 import traceback
 
-import enka  # type: ignore
+import enka  # type: ignore[reportMissingTypeStubs]
 from enka_config import csv, filename, json, os, relics_data, trailblazer_ids, uids
 
 print(len(uids))
 
 
 def jprint(obj: dict[str, str]) -> None:
-    # create a formatted string of the Python JSON object
+    """Create a formatted string of the Python JSON object."""
     text = json.dumps(obj, sort_keys=True, indent=4)
     print(text)
 
 
 def input_thread(input_list: list[bool]) -> None:
+    """Input thread."""
     input()
     input_list.append(True)
 
 
 async def main() -> None:
+    """Compile character builds."""
     async with enka.HSRClient(enka.hsr.Language.ENGLISH) as client:
         is_update = input("Update assets? (y/n) ")
         if is_update == "y":
@@ -28,7 +31,6 @@ async def main() -> None:
         if not os.path.exists("results_real"):
             os.makedirs("results_real")
 
-        # error_uids = []
         header = [
             "uid",
             "player_level",
@@ -69,8 +71,9 @@ async def main() -> None:
             "relic",
             "ornament",
         ]
-        writer = csv.writer(open(filename + ".csv", "w", encoding="UTF8", newline=""))
-        writer.writerow(header)
+        with open(filename + ".csv", "w", encoding="UTF8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
 
         header = [
             "uid",
@@ -83,10 +86,9 @@ async def main() -> None:
             "artifacts",
             "relics",
         ]
-        writer_chars = csv.writer(
-            open(filename + "_char.csv", "w", encoding="UTF8", newline="")
-        )
-        writer_chars.writerow(header)
+        with open(filename + "_char.csv", "w", encoding="UTF8", newline="") as f:
+            writer_chars = csv.writer(f)
+            writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))
@@ -135,9 +137,11 @@ async def main() -> None:
                             line.append("")
                         line_chars.append(element_name)
 
-                        for skill in character.traces:
-                            if skill.type == 2 and skill.max_level > 1:
-                                line.append(skill.level)
+                        line.extend(
+                            skill.level
+                            for skill in character.traces
+                            if skill.type == 2 and skill.max_level > 1
+                        )
 
                         desired_stats = {
                             "HP": 0.00,
@@ -168,8 +172,7 @@ async def main() -> None:
                                 else:
                                     desired_stats[stat.name] = stat.value
 
-                        for stat in desired_stats.values():
-                            line.append(round(stat, 3))
+                        line.extend(round(stat, 3) for stat in desired_stats.values())
 
                         mainstats = {
                             "HEAD": "",
@@ -204,35 +207,38 @@ async def main() -> None:
                                     ornaments[relic.set_name] = 1
                                 else:
                                     ornaments[relic.set_name] += 1
+                            elif relic.set_name not in artifacts:
+                                artifacts[relic.set_name] = 1
                             else:
-                                if relic.set_name not in artifacts:
-                                    artifacts[relic.set_name] = 1
-                                else:
-                                    artifacts[relic.set_name] += 1
+                                artifacts[relic.set_name] += 1
                             for stat in relic.sub_stats:
                                 if stat.is_percentage:
                                     substats[stat.name] += stat.value * 100
                                 else:
                                     substats["Flat " + stat.name] += stat.value
 
-                        for stat_key in list(substats.keys())[3:]:
-                            line.append(round(substats[stat_key], 3))
+                        line.extend(
+                            round(substats[stat_key], 3)
+                            for stat_key in list(substats.keys())[3:]
+                        )
 
-                        for stat_key in list(mainstats.keys())[2:]:
-                            line.append(mainstats[stat_key])
+                        line.extend(
+                            mainstats[stat_key]
+                            for stat_key in list(mainstats.keys())[2:]
+                        )
 
                         char_set = None
-                        for set in artifacts:
-                            if artifacts[set] == 2 or artifacts[set] == 4:
+                        for arti_set, arti_count in artifacts.items():
+                            if arti_count in {2, 4}:
                                 if char_set is not None:
-                                    if set < char_set:
-                                        char_set = set + ", " + char_set
+                                    if arti_set < char_set:
+                                        char_set = arti_set + ", " + char_set
                                     else:
-                                        char_set += ", " + set
+                                        char_set += ", " + arti_set
                                 else:
-                                    char_set = set
-                            elif artifacts[set] == 3:
-                                char_set = set + ", Flex"
+                                    char_set = arti_set
+                            elif arti_count == 3:
+                                char_set = arti_set + ", Flex"
                         if len(artifacts) > 2:
                             if char_set is not None:
                                 char_set += ", Flex"
@@ -242,9 +248,9 @@ async def main() -> None:
                         line_chars.append(char_set)
 
                         char_set = None
-                        for set in ornaments:
-                            if ornaments[set] == 2:
-                                char_set = set
+                        for set_name, set_value in ornaments.items():
+                            if set_value == 2:
+                                char_set = set_name
                         line.append(char_set)
                         line_chars.append(char_set)
 
@@ -256,31 +262,29 @@ async def main() -> None:
                     break
                 except enka.errors.APIRequestTimeoutError:
                     print("timeout")
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                 except enka.errors.GameMaintenanceError:
                     print("Game is in maintenance.")
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                 except asyncio.exceptions.TimeoutError:
                     print("timeout")
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                 except AttributeError:
                     print(f"{uid}: {traceback.format_exc()}")
-                    # print(str(uid) + " Too Many Requests")
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                 except Exception as e:
                     if str(e) == "[429] Too Many Requests":
                         print("[429] Too Many Requests")
-                        time.sleep(3)
+                        await asyncio.sleep(3)
                     elif "Cannot connect" in str(e):
                         print("Cannot connect")
                         i = 0
-                        time.sleep(1)
+                        await asyncio.sleep(1)
                     elif str(e) == "User not found.":
                         print("User not found.")
                         break
                     else:
                         print(f"{uid}: {traceback.format_exc()}")
-                        # exit()
                         break
 
         print("\nFinished")

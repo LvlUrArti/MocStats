@@ -1,3 +1,7 @@
+"""Combine JSON results."""
+
+from __future__ import annotations
+
 import json
 import re
 
@@ -44,7 +48,7 @@ with open("../char_results/" + pf_phase + "_pf/all_E0S0.json") as stats:
 with open("../char_results/" + as_phase + "_as/all_E0S0.json") as stats:
     as_dict_s0 = json.load(stats)
 
-uses = []
+uses: list[dict[str, float | str | dict[str, dict[str, float]]]] = []
 uses_moc: dict[str, dict[str, dict[str, dict[str, float]]]] = {}
 uses_pf: dict[str, dict[str, dict[str, dict[str, float]]]] = {}
 uses_as: dict[str, dict[str, dict[str, dict[str, float]]]] = {}
@@ -80,23 +84,24 @@ for char in moc_dict:
             "sphere_stats",
             "rope_stats",
         ]:
+            r_stat_name = stat_name
             if (
-                re.sub(r"\d", "", stat) == stat_name + "_"
+                re.sub(r"\d", "", stat) == r_stat_name + "_"
                 and char[stat] != ""
                 and char[stat] != "-"
             ):
                 temp_dict = {}
-                if stat_name == "artifact":
+                if r_stat_name == "artifact":
                     temp_dict["1"] = char[stat + "_1"]
                     temp_dict["2"] = char[stat + "_2"]
                 temp_dict["app"] = char[stat + "_app"]
-                if stat_name in ["weapon", "artifact", "planar"]:
+                if r_stat_name in ["weapon", "artifact", "planar"]:
                     temp_dict["round_moc"] = char[stat + "_round"]
                     temp_dict["round_pf"] = 0.0
                     temp_dict["round_as"] = 0.0
                 else:
-                    stat_name = stat_name[:-1]
-                uses_moc[char["char"]][stat_name + "s"][char[stat]] = temp_dict
+                    r_stat_name = r_stat_name[:-1]
+                uses_moc[char["char"]][r_stat_name + "s"][char[stat]] = temp_dict
 for char in pf_dict:
     char["char"] = slugify(char["char"])
     if char["char"] in slug:
@@ -119,23 +124,24 @@ for char in pf_dict:
             "sphere_stats",
             "rope_stats",
         ]:
+            r_stat_name = stat_name
             if (
-                re.sub(r"\d", "", stat) == stat_name + "_"
+                re.sub(r"\d", "", stat) == r_stat_name + "_"
                 and char[stat] != ""
                 and char[stat] != "-"
             ):
                 temp_dict = {}
-                if stat_name == "artifact":
+                if r_stat_name == "artifact":
                     temp_dict["1"] = char[stat + "_1"]
                     temp_dict["2"] = char[stat + "_2"]
                 temp_dict["app"] = char[stat + "_app"]
-                if stat_name in ["weapon", "artifact", "planar"]:
+                if r_stat_name in ["weapon", "artifact", "planar"]:
                     temp_dict["round_moc"] = 99.99
                     temp_dict["round_pf"] = char[stat + "_round"]
                     temp_dict["round_as"] = 0.0
                 else:
-                    stat_name = stat_name[:-1]
-                uses_pf[char["char"]][stat_name + "s"][char[stat]] = temp_dict
+                    r_stat_name = r_stat_name[:-1]
+                uses_pf[char["char"]][r_stat_name + "s"][char[stat]] = temp_dict
 for char in as_dict:
     char["char"] = slugify(char["char"])
     if char["char"] in slug:
@@ -158,45 +164,52 @@ for char in as_dict:
             "sphere_stats",
             "rope_stats",
         ]:
+            r_stat_name = stat_name
             if (
-                re.sub(r"\d", "", stat) == stat_name + "_"
+                re.sub(r"\d", "", stat) == r_stat_name + "_"
                 and char[stat] != ""
                 and char[stat] != "-"
             ):
                 temp_dict = {}
-                if stat_name == "artifact":
+                if r_stat_name == "artifact":
                     temp_dict["1"] = char[stat + "_1"]
                     temp_dict["2"] = char[stat + "_2"]
                 temp_dict["app"] = char[stat + "_app"]
-                if stat_name in ["weapon", "artifact", "planar"]:
+                if r_stat_name in ["weapon", "artifact", "planar"]:
                     temp_dict["round_moc"] = 99.99
                     temp_dict["round_pf"] = 0.0
                     temp_dict["round_as"] = char[stat + "_round"]
                 else:
-                    stat_name = stat_name[:-1]
-                uses_as[char["char"]][stat_name + "s"][char[stat]] = temp_dict
+                    r_stat_name = r_stat_name[:-1]
+                uses_as[char["char"]][r_stat_name + "s"][char[stat]] = temp_dict
 
 for char in CHARACTERS:
     char = slugify(char)
     if char in slug:
         char = slug[char]
     moc_dict_e1_char: dict[str, float] = next(
-        (x for x in moc_dict_e1 if x["char"] == char), dict[str, float]()
+        (x for x in moc_dict_e1 if x["char"] == char),
+        dict[str, float](),
     )
     moc_dict_s0_char: dict[str, float] = next(
-        (x for x in moc_dict_s0 if x["char"] == char), dict[str, float]()
+        (x for x in moc_dict_s0 if x["char"] == char),
+        dict[str, float](),
     )
     pf_dict_e1_char: dict[str, float] = next(
-        (x for x in pf_dict_e1 if x["char"] == char), dict[str, float]()
+        (x for x in pf_dict_e1 if x["char"] == char),
+        dict[str, float](),
     )
     pf_dict_s0_char: dict[str, float] = next(
-        (x for x in pf_dict_s0 if x["char"] == char), dict[str, float]()
+        (x for x in pf_dict_s0 if x["char"] == char),
+        dict[str, float](),
     )
     as_dict_e1_char: dict[str, float] = next(
-        (x for x in as_dict_e1 if x["char"] == char), dict[str, float]()
+        (x for x in as_dict_e1 if x["char"] == char),
+        dict[str, float](),
     )
     as_dict_s0_char: dict[str, float] = next(
-        (x for x in as_dict_s0 if x["char"] == char), dict[str, float]()
+        (x for x in as_dict_s0 if x["char"] == char),
+        dict[str, float](),
     )
     uses_temp: dict[str, float | str | dict[str, dict[str, float]]] = {
         "char": char,
@@ -208,7 +221,10 @@ for char in CHARACTERS:
         "avg_round_moc_e1": moc_dict_e1_char.get("avg_round", 99.99),
         "avg_round_moc_s0": moc_dict_s0_char.get("avg_round", 99.99),
         "sample_moc": uses_moc.get(char, {}).get("sample", 0),
-        "sample_size_players_moc": uses_moc.get(char, {}).get("sample_size_players", 0),
+        "sample_size_players_moc": uses_moc.get(char, {}).get(
+            "sample_size_players",
+            0,
+        ),
         "app_rate_pf": uses_pf.get(char, {}).get("app_rate", 0),
         "app_rate_pf_e0s1": uses_pf.get(char, {}).get("app_rate_e0", 0),
         "app_rate_pf_e1": pf_dict_e1_char.get("app_rate", 0),
@@ -217,7 +233,10 @@ for char in CHARACTERS:
         "avg_round_pf_e1": pf_dict_e1_char.get("avg_round", 0),
         "avg_round_pf_s0": pf_dict_s0_char.get("avg_round", 0),
         "sample_pf": uses_pf.get(char, {}).get("sample", 0),
-        "sample_size_players_pf": uses_pf.get(char, {}).get("sample_size_players", 0),
+        "sample_size_players_pf": uses_pf.get(char, {}).get(
+            "sample_size_players",
+            0,
+        ),
         "app_rate_as": uses_as.get(char, {}).get("app_rate", 0),
         "app_rate_as_e0s1": uses_as.get(char, {}).get("app_rate_e0", 0),
         "app_rate_as_e1": as_dict_e1_char.get("app_rate", 0),
@@ -226,7 +245,10 @@ for char in CHARACTERS:
         "avg_round_as_e1": as_dict_e1_char.get("avg_round", 0),
         "avg_round_as_s0": as_dict_s0_char.get("avg_round", 0),
         "sample_as": uses_as.get(char, {}).get("sample", 0),
-        "sample_size_players_as": uses_as.get(char, {}).get("sample_size_players", 0),
+        "sample_size_players_as": uses_as.get(char, {}).get(
+            "sample_size_players",
+            0,
+        ),
         "app_0": 0,
         "round_0_moc": uses_moc.get(char, {}).get("round_0", 99.99),
         "round_0_pf": uses_pf.get(char, {}).get("round_0", 0),
@@ -286,13 +308,14 @@ for char in CHARACTERS:
     rate_combine = rate_moc + rate_pf + rate_as
     rate_combine = rate_combine if rate_combine else 1
 
-    for stat in stats_len:
+    for stat, stat_len in stats_len.items():
         for item in uses_temp[stat]:
             uses_temp[stat][item]["app"] = round(
-                uses_temp[stat][item]["app"] * rate_moc / rate_combine, 2
+                uses_temp[stat][item]["app"] * rate_moc / rate_combine,
+                2,
             )
         for item in uses_pf.get(char, {}).get(stat, {}):
-            if item != "" and item != "-":
+            if item not in {"", "-"}:
                 if item in uses_temp[stat]:
                     uses_temp[stat][item]["app"] = round(
                         uses_temp[stat][item]["app"]
@@ -306,10 +329,11 @@ for char in CHARACTERS:
                 else:
                     uses_temp[stat][item] = uses_pf[char][stat][item].copy()
                     uses_temp[stat][item]["app"] = round(
-                        uses_temp[stat][item]["app"] * rate_pf / rate_combine, 2
+                        uses_temp[stat][item]["app"] * rate_pf / rate_combine,
+                        2,
                     )
         for item in uses_as.get(char, {}).get(stat, {}):
-            if item != "" and item != "-":
+            if item not in {"", "-"}:
                 if item in uses_temp[stat]:
                     uses_temp[stat][item]["app"] = round(
                         uses_temp[stat][item]["app"]
@@ -323,36 +347,39 @@ for char in CHARACTERS:
                 else:
                     uses_temp[stat][item] = uses_as[char][stat][item].copy()
                     uses_temp[stat][item]["app"] = round(
-                        uses_temp[stat][item]["app"] * rate_as / rate_combine, 2
+                        uses_temp[stat][item]["app"] * rate_as / rate_combine,
+                        2,
                     )
 
         sorted_items = sorted(
-            uses_temp[stat].items(), key=lambda t: t[1]["app"], reverse=True
+            uses_temp[stat].items(),
+            key=lambda t: t[1]["app"],
+            reverse=True,
         )
-        uses_temp[stat] = {k: v for k, v in sorted_items}
+        uses_temp[stat] = dict(sorted_items)
 
-        for i in range(stats_len[stat]):
+        for i in range(stat_len):
             if i < len(list(uses_temp[stat])):
                 uses_temp[stat + "_" + str(i + 1)] = list(uses_temp[stat])[i]
                 if stat == "artifacts":
                     uses_temp[stat + "_" + str(i + 1) + "_1"] = list(
-                        uses_temp[stat].values()
+                        uses_temp[stat].values(),
                     )[i]["1"]
                     uses_temp[stat + "_" + str(i + 1) + "_2"] = list(
-                        uses_temp[stat].values()
+                        uses_temp[stat].values(),
                     )[i]["2"]
                 uses_temp[stat + "_" + str(i + 1) + "_app"] = list(
-                    uses_temp[stat].values()
+                    uses_temp[stat].values(),
                 )[i]["app"]
                 if stat in ["weapons", "artifacts", "planars"]:
                     uses_temp[stat + "_" + str(i + 1) + "_round_moc"] = list(
-                        uses_temp[stat].values()
+                        uses_temp[stat].values(),
                     )[i]["round_moc"]
                     uses_temp[stat + "_" + str(i + 1) + "_round_pf"] = list(
-                        uses_temp[stat].values()
+                        uses_temp[stat].values(),
                     )[i]["round_pf"]
                     uses_temp[stat + "_" + str(i + 1) + "_round_as"] = list(
-                        uses_temp[stat].values()
+                        uses_temp[stat].values(),
                     )[i]["round_as"]
             else:
                 uses_temp[stat + "_" + str(i + 1)] = ""

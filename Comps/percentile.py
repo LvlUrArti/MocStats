@@ -1,11 +1,11 @@
+"""Calculate the specified percentile of an array using linear interpolation."""
+
 import numpy as np
 
 
 def calculate_percentile(custom_array: list[int], percentile: float) -> float:
-    """
-    Calculate the specified percentile of an array using linear interpolation.
-
-    Parameters:
+    """Calculate the specified percentile of an array using linear interpolation."""
+    """Parameters:
         custom_array (list or numpy array): The input array.
         percentile (float): The desired percentile (e.g., 25 for 25th percentile).
 
@@ -36,22 +36,23 @@ def calculate_percentile(custom_array: list[int], percentile: float) -> float:
     # Perform linear interpolation
     x1 = unique_values[idx - 1]
     x2 = unique_values[idx]
-    P1 = cumulative_frequencies[idx - 1]
-    P2 = cumulative_frequencies[idx]
+    p1 = cumulative_frequencies[idx - 1]
+    p2 = cumulative_frequencies[idx]
 
-    interpolated_value = x1 + (position - P1) / (P2 - P1) * (x2 - x1)
-    return interpolated_value
+    return x1 + (position - p1) / (p2 - p1) * (x2 - x1)
 
 
-# # Example usage
-# # Custom array taken from Firefly's E0S1 cycles for versioin 3.0
-# custom_array = [5] * 4 + [6] * 12 + [7] * 43 + [8] * 105 + [9] * 172 + [10] * 269
+example = False
+if example:
+    # Example usage
+    # Custom array taken from Firefly's E0S1 cycles for versioin 3.0
+    custom_array = [5] * 4 + [6] * 12 + [7] * 43 + [8] * 105 + [9] * 172 + [10] * 269
 
-# # Calculate specific percentiles
-# q1 = calculate_percentile(custom_array, 25)
-# median = calculate_percentile(custom_array, 50)
-# q3 = calculate_percentile(custom_array, 75)
+    # Calculate specific percentiles
+    q1 = calculate_percentile(custom_array, 25)
+    median = calculate_percentile(custom_array, 50)
+    q3 = calculate_percentile(custom_array, 75)
 
-# print("25th Percentile (Q1):", q1)
-# print("50th Percentile (Median):", median)
-# print("75th Percentile (Q3):", q3)
+    print("25th Percentile (Q1):", q1)
+    print("50th Percentile (Median):", median)
+    print("75th Percentile (Q3):", q3)
