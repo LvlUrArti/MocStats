@@ -9,6 +9,8 @@ from warnings import filterwarnings
 
 from comp_rates_config import (
     CONS_LIMIT,
+    DPS_APPEND_LIST,
+    DPS_LIST,
     F2P_ONLY,
     RECENT_PHASE,
     WHALE_ONLY,
@@ -102,6 +104,11 @@ class CharApp(RoundApp):
         self.cons_freq = {i: RoundApp() for i in range(7)}
 
 
+def include_dps(char: str) -> bool:
+    """Check if character is a DPS character."""
+    return char in [*DPS_LIST, *DPS_APPEND_LIST]
+
+
 @profile
 def appearances(
     users: dict[str, dict[str, PlayerPhase]],
@@ -117,6 +124,13 @@ def appearances(
     for char in CHARACTERS:
         user_chars[char] = set[str]()
         app[char] = CharApp()
+
+        if include_dps(char):
+            user_chars["solo-" + char] = set[str]()
+            app["solo-" + char] = CharApp()
+
+            user_chars["supp-" + char] = set[str]()
+            app["supp-" + char] = CharApp()
 
     for user in users[RECENT_PHASE].values():
         for chamber in user.chambers:
@@ -164,66 +178,83 @@ def appearances(
             ):
                 continue
 
-            for char in user.chambers[chamber].characters:
-                user_round = user.chambers[chamber].round_num
-                # to print the amount of players using a character,
-                # for char infographics
-                if chambers == SINGLE_CHAMBER:
-                    user_chars[char].add(user.player)
+            for comp_char in user.chambers[chamber].characters:
+                solo_dps = include_dps(comp_char)
+                supp_dps = solo_dps
 
-                app[char].app_flat += 1
-                if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
-                    app[char].app_flat_exclude += 1
+                if len(user.chambers[chamber].dps) > 1:
+                    solo_dps = False
+                else:
+                    supp_dps = False
 
-                if (
-                    whale_comp == WHALE_ONLY
-                    and (not F2P_ONLY or f2p_comp)
-                    and (sustain_count <= 1)
-                ):
-                    app[char].round_list[cur_chamber].append(user_round)
+                loop_char = [comp_char]
+                if solo_dps:
+                    loop_char.append("solo-" + comp_char)
+                if supp_dps:
+                    loop_char.append("supp-" + comp_char)
 
-                if user.chambers[chamber].char_cons and chambers == SINGLE_CHAMBER:
-                    char_con = user.chambers[chamber].char_cons[char]
-                    app[char].cons_freq[char_con].app_flat += 1
-                    if sustain_count <= 1:
-                        app[char].cons_freq[char_con].round_list[cur_chamber].append(
-                            user_round,
-                        )
-                    app[char].cons_avg += char_con
-                if chambers != (SINGLE_CHAMBER):
-                    continue
-                if char not in user.owned:
-                    continue
+                for char in loop_char:
+                    user_round = user.chambers[chamber].round_num
+                    # to print the amount of players using a character,
+                    # for char infographics
+                    if chambers == SINGLE_CHAMBER:
+                        user_chars[char].add(user.player)
 
-                user_char = user.owned[char]
-                app[char].owned += 1
+                    app[char].app_flat += 1
+                    if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
+                        app[char].app_flat_exclude += 1
 
-                if user_char.weapon != "":
-                    if user_char.weapon not in app[char].weap_freq:
-                        app[char].weap_freq[user_char.weapon] = RoundApp()
-                    app[char].weap_freq[user_char.weapon].app_flat += 1
-                    if not whale_comp and (sustain_count <= 1):
-                        app[char].weap_freq[user_char.weapon].round_list[
-                            cur_chamber
-                        ].append(user_round)
+                    if (
+                        whale_comp == WHALE_ONLY
+                        and (not F2P_ONLY or f2p_comp)
+                        and (sustain_count <= 1)
+                    ):
+                        app[char].round_list[cur_chamber].append(user_round)
 
-                if user_char.artifacts != "":
-                    if user_char.artifacts not in app[char].arti_freq:
-                        app[char].arti_freq[user_char.artifacts] = RoundApp()
-                    app[char].arti_freq[user_char.artifacts].app_flat += 1
-                    if not whale_comp and (sustain_count <= 1):
-                        app[char].arti_freq[user_char.artifacts].round_list[
-                            cur_chamber
-                        ].append(user_round)
+                    if user.chambers[chamber].char_cons and chambers == SINGLE_CHAMBER:
+                        char_con = user.chambers[chamber].char_cons[comp_char]
+                        app[char].cons_freq[char_con].app_flat += 1
+                        if sustain_count <= 1:
+                            app[char].cons_freq[char_con].round_list[
+                                cur_chamber
+                            ].append(
+                                user_round,
+                            )
+                        app[char].cons_avg += char_con
+                    if chambers != (SINGLE_CHAMBER):
+                        continue
+                    if comp_char not in user.owned:
+                        continue
 
-                if user_char.planars != "":
-                    if user_char.planars not in app[char].planar_freq:
-                        app[char].planar_freq[user_char.planars] = RoundApp()
-                    app[char].planar_freq[user_char.planars].app_flat += 1
-                    if not whale_comp and (sustain_count <= 1):
-                        app[char].planar_freq[user_char.planars].round_list[
-                            cur_chamber
-                        ].append(user_round)
+                    user_char = user.owned[comp_char]
+                    app[char].owned += 1
+
+                    if user_char.weapon != "":
+                        if user_char.weapon not in app[char].weap_freq:
+                            app[char].weap_freq[user_char.weapon] = RoundApp()
+                        app[char].weap_freq[user_char.weapon].app_flat += 1
+                        if not whale_comp and (sustain_count <= 1):
+                            app[char].weap_freq[user_char.weapon].round_list[
+                                cur_chamber
+                            ].append(user_round)
+
+                    if user_char.artifacts != "":
+                        if user_char.artifacts not in app[char].arti_freq:
+                            app[char].arti_freq[user_char.artifacts] = RoundApp()
+                        app[char].arti_freq[user_char.artifacts].app_flat += 1
+                        if not whale_comp and (sustain_count <= 1):
+                            app[char].arti_freq[user_char.artifacts].round_list[
+                                cur_chamber
+                            ].append(user_round)
+
+                    if user_char.planars != "":
+                        if user_char.planars not in app[char].planar_freq:
+                            app[char].planar_freq[user_char.planars] = RoundApp()
+                        app[char].planar_freq[user_char.planars].app_flat += 1
+                        if not whale_comp and (sustain_count <= 1):
+                            app[char].planar_freq[user_char.planars].round_list[
+                                cur_chamber
+                            ].append(user_round)
 
     total = len(all_uids) / 100.0
     all_rounds: dict[str, dict[int, dict[int, int]]] = {}
@@ -579,6 +610,10 @@ class CharUsageData(CharApp):
 
     def __init__(self, char_app: CharApp, char: str) -> None:
         """Initialize CharUsageData class."""
+        if "solo-" in char:
+            char = char.replace("solo-", "")
+        if "supp-" in char:
+            char = char.replace("supp-", "")
         super().__init__()
         self.__dict__.update(char_app.__dict__)
         self.usage = 0

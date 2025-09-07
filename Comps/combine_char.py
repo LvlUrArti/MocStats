@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 
-from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
+from comp_rates_config import DPS_APPEND_LIST, DPS_LIST, RECENT_PHASE, as_mode, pf_mode
 from slugify import slugify
 
 with open("../Comps/prydwen-slug.json") as slug_file:
@@ -28,7 +28,7 @@ pf_phase = phases["pf_phase"]
 as_phase = phases["as_phase"]
 
 with open("../data/characters.json") as char_file:
-    CHARACTERS = json.load(char_file)
+    CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 with open("../char_results/" + moc_phase + "/all2.json") as stats:
     moc_dict = json.load(stats)
 with open("../char_results/" + pf_phase + "_pf/all2.json") as stats:
@@ -183,10 +183,18 @@ for char in as_dict:
                     r_stat_name = r_stat_name[:-1]
                 uses_as[char["char"]][r_stat_name + "s"][char[stat]] = temp_dict
 
-for char in CHARACTERS:
-    char = slugify(char)
+char_array: list[str] = []
+for char_iter in CHARACTERS:
+    char = slugify(char_iter)
     if char in slug:
         char = slug[char]
+    char_array.append(char)
+    if char_iter in [*DPS_LIST, *DPS_APPEND_LIST]:
+        char_array.append("solo-" + char)
+        char_array.append("supp-" + char)
+
+
+for char in char_array:
     moc_dict_e1_char: dict[str, float] = next(
         (x for x in moc_dict_e1 if x["char"] == char),
         dict[str, float](),
