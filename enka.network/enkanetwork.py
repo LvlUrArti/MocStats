@@ -71,9 +71,8 @@ async def main() -> None:
             "relic",
             "ornament",
         ]
-        with open(filename + ".csv", "w", encoding="UTF8", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(header)
+        writer = csv.writer(open(filename + ".csv", "w", encoding="UTF8", newline=""))
+        writer.writerow(header)
 
         header = [
             "uid",
@@ -86,9 +85,10 @@ async def main() -> None:
             "artifacts",
             "relics",
         ]
-        with open(filename + "_char.csv", "w", encoding="UTF8", newline="") as f:
-            writer_chars = csv.writer(f)
-            writer_chars.writerow(header)
+        writer_chars = csv.writer(
+            open(filename + "_char.csv", "w", encoding="UTF8", newline=""),
+        )
+        writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))

@@ -4200,5 +4200,57 @@
         "role": "Damage Dealer",
         "alt_name": null,
         "out_name": false
+    },
+    "Cerydra": {
+        "id": "1412",
+        "name": "Cerydra",
+        "tag": "cerydra",
+        "rarity": 5,
+        "path": "Shaman",
+        "element": "Wind",
+        "max_sp": 130,
+        "ranks": [
+            "141201",
+            "141202",
+            "141203",
+            "141204",
+            "141205",
+            "141206"
+        ],
+        "skills": [
+            "141201",
+            "141202",
+            "141203",
+            "141204",
+            "141206",
+            "141207"
+        ],
+        "skill_trees": [
+            "1412001",
+            "1412002",
+            "1412003",
+            "1412004",
+            "1412007",
+            "1412101",
+            "1412102",
+            "1412103",
+            "1412201",
+            "1412202",
+            "1412203",
+            "1412204",
+            "1412205",
+            "1412206",
+            "1412207",
+            "1412208",
+            "1412209",
+            "1412210"
+        ],
+        "icon": "icon/character/1412.png",
+        "preview": "image/character_preview/1412.png",
+        "portrait": "image/character_portrait/1412.png",
+        "availability": "Limited 5*",
+        "role": "Amplifier",
+        "alt_name": null,
+        "out_name": false
     }
 }
