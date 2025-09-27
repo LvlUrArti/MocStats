@@ -596,19 +596,20 @@ def used_comps(
             continue
 
         side_comp = None
+        prev_comp = comps[comp_iter - 1] if comp_iter > 0 else None
+        next_comp = comps[comp_iter + 1] if comp_iter < len(comps) - 1 else None
         if (
-            comp_iter - 1 >= 0
-            and comps[comp_iter - 1].player == comp.player
-            and comps[comp_iter - 1].room.split("-")[0] == comp.room.split("-")[0]
+            prev_comp
+            and prev_comp.player == comp.player
+            and prev_comp.room.split("-")[0] == comp.room.split("-")[0]
         ):
-            side_comp = comps[comp_iter - 1]
+            side_comp = prev_comp
         if (
-            not side_comp
-            and comp_iter + 1 < len(comps)
-            and comps[comp_iter + 1].player == comp.player
-            and comps[comp_iter + 1].room.split("-")[0] == comp.room.split("-")[0]
+            next_comp
+            and next_comp.player == comp.player
+            and next_comp.room.split("-")[0] == comp.room.split("-")[0]
         ):
-            side_comp = comps[comp_iter + 1]
+            side_comp = next_comp
 
         comp_tuple = tuple(comp.characters)
 
@@ -824,19 +825,20 @@ def used_duos(
                 sustain_count += 1
 
         side_comp = None
+        prev_comp = comps[comp_iter - 1] if comp_iter > 0 else None
+        next_comp = comps[comp_iter + 1] if comp_iter < len(comps) - 1 else None
         if (
-            comp_iter - 1 >= 0
-            and comps[comp_iter - 1].player == comp.player
-            and comps[comp_iter - 1].room.split("-")[0] == comp.room.split("-")[0]
+            prev_comp
+            and prev_comp.player == comp.player
+            and prev_comp.room.split("-")[0] == comp.room.split("-")[0]
         ):
-            side_comp = comps[comp_iter - 1]
+            side_comp = prev_comp
         if (
-            not side_comp
-            and comp_iter + 1 < len(comps)
-            and comps[comp_iter + 1].player == comp.player
-            and comps[comp_iter + 1].room.split("-")[0] == comp.room.split("-")[0]
+            next_comp
+            and next_comp.player == comp.player
+            and next_comp.room.split("-")[0] == comp.room.split("-")[0]
         ):
-            side_comp = comps[comp_iter + 1]
+            side_comp = next_comp
 
         if not pf_mode and side_comp and side_comp.char_cons:
             for char in side_comp.characters:
