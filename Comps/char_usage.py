@@ -79,6 +79,7 @@ class RoundApp:
     def __init__(self) -> None:
         """Initialize RoundApp class."""
         self.app_flat: int = 0
+        self.app_flat_all: int = 0
         self.app: float = 0
         self.round_list = {str(i): list[int]() for i in range(1, 13)}
         self.round: float = 0
@@ -171,10 +172,10 @@ def appearances(
                     if char in user.owned and user.owned[char].weapon in sig_weaps:
                         f2p_comp = False
 
-            if (
-                (WHALE_ONLY and not whale_comp)
-                or (F2P_ONLY and (not f2p_comp or whale_comp))
-                or giga_whale
+            # >E2 clears should still be included to calculate
+            # characters' average score for all eidolons
+            if (WHALE_ONLY and (giga_whale or not whale_comp)) or (
+                F2P_ONLY and (not f2p_comp or whale_comp)
             ):
                 continue
 
@@ -196,6 +197,21 @@ def appearances(
                 for char in loop_char:
                     user_round = user_chamber.round_num
 
+                    app[char].app_flat_all += 1
+                    if user_chamber.char_cons and chambers == SINGLE_CHAMBER:
+                        char_con = user_chamber.char_cons[comp_char]
+                        app[char].cons_freq[char_con].app_flat += 1
+                        if sustain_count <= 1:
+                            app[char].cons_freq[char_con].round_list[
+                                cur_chamber
+                            ].append(
+                                user_round,
+                            )
+                        app[char].cons_avg += char_con
+
+                    if giga_whale:
+                        continue
+
                     # to print the amount of players using a character,
                     # for char infographics
                     if chambers == SINGLE_CHAMBER:
@@ -211,17 +227,6 @@ def appearances(
                         and (sustain_count <= 1)
                     ):
                         app[char].round_list[cur_chamber].append(user_round)
-
-                    if user_chamber.char_cons and chambers == SINGLE_CHAMBER:
-                        char_con = user_chamber.char_cons[comp_char]
-                        app[char].cons_freq[char_con].app_flat += 1
-                        if sustain_count <= 1:
-                            app[char].cons_freq[char_con].round_list[
-                                cur_chamber
-                            ].append(
-                                user_round,
-                            )
-                        app[char].cons_avg += char_con
 
                     if chambers != (SINGLE_CHAMBER):
                         continue
@@ -339,15 +344,15 @@ def appearances(
         if chambers != SINGLE_CHAMBER:
             continue
         # Calculate constellations
-        if char_item.app_flat > 0:
+        if char_item.app_flat_all > 0:
             app[char].cons_avg = round(
-                char_item.cons_avg / char_item.app_flat,
+                char_item.cons_avg / char_item.app_flat_all,
                 2,
             )
         for cons, cons_freq in char_item.cons_freq.items():
             if cons_freq.app_flat > 0:
                 app[char].cons_freq[cons].app = round(
-                    cons_freq.app_flat / char_item.app_flat * 100,
+                    cons_freq.app_flat / char_item.app_flat_all * 100,
                     2,
                 )
                 avg_round = []

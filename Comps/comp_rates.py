@@ -813,6 +813,7 @@ def used_duos(
             continue
 
         whale_comp = False
+        giga_whale = False
         sustain_count = 0
         for char in comp.characters:
             if (
@@ -821,6 +822,8 @@ def used_duos(
                 and comp.char_cons[char] > 0
             ):
                 whale_comp = True
+                if comp.char_cons[char] > 2:
+                    giga_whale = True
             if CHARACTERS[char]["role"] == "Sustain":
                 sustain_count += 1
 
@@ -847,6 +850,11 @@ def used_duos(
                     and side_comp.char_cons[char] > 0
                 ):
                     whale_comp = True
+                    if side_comp.char_cons[char] > 2:
+                        giga_whale = True
+
+        if giga_whale:
+            continue
 
         duos = list(permutations(comp.characters, 2))
         for duo in duos:
