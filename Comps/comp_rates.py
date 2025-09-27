@@ -590,8 +590,7 @@ def used_comps(
     f2p_count = 0
 
     # For storing the prev and next comps
-    comp_iter = 0
-    for comp in comps:
+    for comp_iter, comp in enumerate(comps):
         # Check if the comp is used in the rooms that are being checked
         if comp.room not in rooms:
             continue
@@ -600,17 +599,16 @@ def used_comps(
         if (
             comp_iter - 1 >= 0
             and comps[comp_iter - 1].player == comp.player
-            and comps[comp_iter - 1].room == comp.room
+            and comps[comp_iter - 1].room.split("-")[0] == comp.room.split("-")[0]
         ):
             side_comp = comps[comp_iter - 1]
         if (
             not side_comp
             and comp_iter + 1 < len(comps)
             and comps[comp_iter + 1].player == comp.player
-            and comps[comp_iter + 1].room == comp.room
+            and comps[comp_iter + 1].room.split("-")[0] == comp.room.split("-")[0]
         ):
             side_comp = comps[comp_iter + 1]
-        comp_iter += 1
 
         comp_tuple = tuple(comp.characters)
 
@@ -807,9 +805,8 @@ def used_duos(
 ) -> dict[str, dict[str, cu.RoundApp]]:
     """Return dictionary of all the duos used and how many times they were used."""
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
-    comp_iter = 0
 
-    for comp in comps:
+    for comp_iter, comp in enumerate(comps):
         cur_room = next(iter(str(comp.room).split("-")))
         if len(comp.characters) < 2 or comp.room not in rooms:
             continue
@@ -830,17 +827,16 @@ def used_duos(
         if (
             comp_iter - 1 >= 0
             and comps[comp_iter - 1].player == comp.player
-            and comps[comp_iter - 1].room == comp.room
+            and comps[comp_iter - 1].room.split("-")[0] == comp.room.split("-")[0]
         ):
             side_comp = comps[comp_iter - 1]
         if (
             not side_comp
             and comp_iter + 1 < len(comps)
             and comps[comp_iter + 1].player == comp.player
-            and comps[comp_iter + 1].room == comp.room
+            and comps[comp_iter + 1].room.split("-")[0] == comp.room.split("-")[0]
         ):
             side_comp = comps[comp_iter + 1]
-        comp_iter += 1
 
         if not pf_mode and side_comp and side_comp.char_cons:
             for char in side_comp.characters:
