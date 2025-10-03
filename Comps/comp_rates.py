@@ -330,48 +330,7 @@ def main() -> None:
                     [room],
                     filename=room,
                 )
-            appearances: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
-            rounds: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
-            appearances_write: dict[
-                str,
-                dict[int, dict[str, dict[str, float | str]]],
-            ] = {}
-            rounds_write: dict[str, dict[int, dict[str, dict[str, float | str]]]] = {}
-            for room, char_cham in char_chambers.items():
-                appearances[room] = {}
-                rounds[room] = {}
-                appearances_write[room] = {}
-                rounds_write[room] = {}
-                for star_num in char_cham:
-                    appearances[room][star_num] = dict(
-                        sorted(
-                            char_cham[star_num].items(),
-                            key=lambda t: t[1].app,
-                            reverse=True,
-                        ),
-                    )
-                    rounds[room][star_num] = dict(
-                        sorted(
-                            char_cham[star_num].items(),
-                            key=lambda t: t[1].round,
-                            reverse=pf_mode,
-                        ),
-                    )
-                    appearances_write[room][star_num] = {}
-                    rounds_write[room][star_num] = {}
-                    for char in char_cham[star_num]:
-                        appearances_write[room][star_num][char] = {
-                            "app": char_cham[star_num][char].app,
-                            "rarity": char_cham[star_num][char].rarity,
-                            "diff": char_cham[star_num][char].diff,
-                        }
-                        if char_cham[star_num][char].round == 0:
-                            continue
-                        rounds_write[room][star_num][char] = {
-                            "round": char_cham[star_num][char].round,
-                            "rarity": char_cham[star_num][char].rarity,
-                            "diff": char_cham[star_num][char].diff_rounds,
-                        }
+            appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
                 with open("../char_results/appearance.json", "w") as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
@@ -396,48 +355,7 @@ def main() -> None:
                     room,
                     filename=room[0].split("-")[0],
                 )
-            appearances: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
-            rounds: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
-            appearances_write: dict[
-                str,
-                dict[int, dict[str, dict[str, float | str]]],
-            ] = {}
-            rounds_write: dict[str, dict[int, dict[str, dict[str, float | str]]]] = {}
-            for room in char_chambers:
-                appearances[room] = {}
-                rounds[room] = {}
-                appearances_write[room] = {}
-                rounds_write[room] = {}
-                for star_num in char_chambers[room]:
-                    appearances[room][star_num] = dict(
-                        sorted(
-                            char_chambers[room][star_num].items(),
-                            key=lambda t: t[1].app,
-                            reverse=True,
-                        ),
-                    )
-                    rounds[room][star_num] = dict(
-                        sorted(
-                            char_chambers[room][star_num].items(),
-                            key=lambda t: t[1].round,
-                            reverse=pf_mode,
-                        ),
-                    )
-                    appearances_write[room][star_num] = {}
-                    rounds_write[room][star_num] = {}
-                    for char in char_chambers[room][star_num]:
-                        appearances_write[room][star_num][char] = {
-                            "app": char_chambers[room][star_num][char].app,
-                            "rarity": char_chambers[room][star_num][char].rarity,
-                            "diff": char_chambers[room][star_num][char].diff,
-                        }
-                        if char_chambers[room][star_num][char].round == 0:
-                            continue
-                        rounds_write[room][star_num][char] = {
-                            "round": char_chambers[room][star_num][char].round,
-                            "rarity": char_chambers[room][star_num][char].rarity,
-                            "diff": char_chambers[room][star_num][char].diff_rounds,
-                        }
+            appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
                 with open("../char_results/appearance_combine.json", "w") as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
@@ -522,6 +440,58 @@ def main() -> None:
         )  # pyright: ignore[reportOptionalCall]
         # waiting time
         sleep(2)
+
+
+def compile_app_round(
+    char_chambers: dict[str, dict[int, dict[str, cu.CharUsageData]]],
+) -> tuple[
+    dict[str, dict[int, dict[str, dict[str, float | str]]]],
+    dict[str, dict[int, dict[str, dict[str, float | str]]]],
+]:
+    """Compile appearance and round data."""
+    appearances: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
+    rounds: dict[str, dict[int, dict[str, cu.CharUsageData]]] = {}
+    appearances_write: dict[
+        str,
+        dict[int, dict[str, dict[str, float | str]]],
+    ] = {}
+    rounds_write: dict[str, dict[int, dict[str, dict[str, float | str]]]] = {}
+    for room, char_cham in char_chambers.items():
+        appearances[room] = {}
+        rounds[room] = {}
+        appearances_write[room] = {}
+        rounds_write[room] = {}
+        for star_num in char_cham:
+            appearances[room][star_num] = dict(
+                sorted(
+                    char_cham[star_num].items(),
+                    key=lambda t: t[1].app,
+                    reverse=True,
+                ),
+            )
+            appearances_write[room][star_num] = {}
+            rounds_write[room][star_num] = {}
+            rounds[room][star_num] = dict(
+                sorted(
+                    char_cham[star_num].items(),
+                    key=lambda t: t[1].round,
+                    reverse=pf_mode,
+                ),
+            )
+            for char in char_cham[star_num]:
+                appearances_write[room][star_num][char] = {
+                    "app": char_cham[star_num][char].app,
+                    "rarity": char_cham[star_num][char].rarity,
+                    "diff": char_cham[star_num][char].diff,
+                }
+                if char_cham[star_num][char].round == 0:
+                    continue
+                rounds_write[room][star_num][char] = {
+                    "round": char_cham[star_num][char].round,
+                    "rarity": char_cham[star_num][char].rarity,
+                    "diff": char_cham[star_num][char].diff_rounds,
+                }
+    return (appearances_write, rounds_write)
 
 
 @profile
