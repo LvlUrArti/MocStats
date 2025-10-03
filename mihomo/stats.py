@@ -420,7 +420,6 @@ else:
 
 
 temp_stats: list[str] = []
-iter_char = 0
 with open("../char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
     CHARACTERS = json_load(char_file)
 with open(
@@ -431,7 +430,7 @@ with open(
     "../char_results/" + RECENT_PHASE_PF + "/rounds_combine.json",
 ) as round_char_file:
     ROUND = json_load(round_char_file)
-for char, char_stat in stats.items():
+for iter_char, (char, char_stat) in enumerate(stats.items()):
     for i in chain(range(10, 18), range(19, 27)):
         stats[char].stats_write[statkeys[i]] = round(
             float(char_stat.stats_write[statkeys[i]]) * 100,
@@ -463,7 +462,6 @@ for char, char_stat in stats.items():
         sys_exit()
 
     temp_stats.append(CHARACTERS[iter_char] | char_stat.stats_write)
-    iter_char += 1
 
 if not path.exists("../char_results/" + RECENT_PHASE_PF):
     mkdir("../char_results/" + RECENT_PHASE_PF)

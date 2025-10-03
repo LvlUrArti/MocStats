@@ -70,18 +70,16 @@ def main() -> None:
         pf_filename = "_as"
     elif pf_mode:
         pf_filename = "_pf"
-    if path.exists("../data/raw_csvs_real/"):
-        with open("../data/raw_csvs_real/" + RECENT_PHASE + pf_filename + ".csv") as f:
-            stats = csvreader(f)
-            reader = stats
-            next(reader)
-            reader = list(reader)
-    else:
-        with open("../data/raw_csvs/" + RECENT_PHASE + pf_filename + ".csv") as f:
-            stats = csvreader(f)
-            reader = stats
-            next(reader)
-            reader = list(reader)
+
+    with (
+        open("../data/raw_csvs_real/" + RECENT_PHASE + pf_filename + ".csv")
+        if path.exists("../data/raw_csvs_real/")
+        else open("../data/raw_csvs/" + RECENT_PHASE + pf_filename + ".csv")
+    ) as f:
+        stats = csvreader(f)
+        reader = stats
+        next(reader)
+        reader = list(reader)
 
     # uid_freq_comp will help detect duplicate UIDs
     all_comps: list[Composition] = []
@@ -170,18 +168,15 @@ def main() -> None:
         "random": len(uid_freq_comp) - len(self_freq_comp),
     }
 
-    if path.exists("../data/raw_csvs_real/"):
-        with open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv") as f:
-            stats = f
-            reader = csvreader(stats)
-            next(reader)
-            reader = list(reader)
-    else:
-        with open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv") as f:
-            stats = f
-            reader = csvreader(stats)
-            next(reader)
-            reader = list(reader)
+    with (
+        open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv")
+        if path.exists("../data/raw_csvs_real/")
+        else open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv")
+    ) as f:
+        stats = f
+        reader = csvreader(stats)
+        next(reader)
+        reader = list(reader)
 
     # uid_freq_char and last_uid will help detect duplicate UIDs
     all_players: dict[str, dict[str, PlayerPhase]] = {}
@@ -1290,8 +1285,7 @@ def char_usages_write(
     arti_len = 10
     planar_len = 5
     chars_dict = dict(sorted(chars_dict.items(), key=lambda t: t[1].app, reverse=True))
-    for char in chars_dict:
-        cur_char = chars_dict[char]
+    for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
             "char": char,
             "app_rate": str(cur_char.app) + "%",
