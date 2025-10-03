@@ -9,8 +9,7 @@ from warnings import filterwarnings
 
 from comp_rates_config import (
     CONS_LIMIT,
-    DPS_APPEND_LIST,
-    DPS_LIST,
+    DPS_SUB_LIST,
     F2P_ONLY,
     RECENT_PHASE,
     WHALE_ONLY,
@@ -106,8 +105,8 @@ class CharApp(RoundApp):
 
 
 def include_dps(char: str) -> bool:
-    """Check if character is a DPS character."""
-    return char in [*DPS_LIST, *DPS_APPEND_LIST]
+    """Check if character is a DPS and a sub-DPS character."""
+    return char in DPS_SUB_LIST
 
 
 @profile

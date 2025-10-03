@@ -64,6 +64,8 @@ run_all_chars = False
 run_chars_name = ["Aglaea", "Boothill", "Robin", "Silver Wolf"]
 char_infographics = run_chars_name[1]
 
+DPS_SUB_LIST = ["Anaxa", "Argenti", "Blade", "Evernight"]
+
 DPS_LIST = [
     "Yanqing",
     "Hook",
