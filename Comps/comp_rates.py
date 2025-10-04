@@ -1,5 +1,7 @@
 """Compile all HSR data."""
 
+from __future__ import annotations
+
 from csv import reader as csvreader
 from csv import writer as csvwriter
 from itertools import permutations
@@ -96,32 +98,33 @@ def main() -> None:
     skip_uid = False
 
     for line in reader:
+        player = line[0]
         stage = str(line[1])
-        if skip_self and line[0] in self_uids:
+        round_num = int(line[3])
+        star_num = int(line[4])
+        if skip_self and player in self_uids:
             continue
-        if skip_random and line[0] not in self_uids:
+        if skip_random and player not in self_uids:
             continue
-        if line[0] != last_uid:
+        if player != last_uid:
             skip_uid = False
-            if line[0] in uid_freq_comp:
+            if player in uid_freq_comp:
                 skip_uid = True
-                print("duplicate UID in comp: " + line[0])
-            elif (
-                not pf_mode and int(stage) >= LAST_MOC_FLOOR and int(line[4]) == 3
-            ) or (pf_mode and int(stage) > 3 and int(line[4]) == 3):
-                uid_freq_comp[line[0]] = 1
-                if line[0] in self_uids:
-                    self_freq_comp[line[0]] = 1
+                print("duplicate UID in comp: " + player)
+            elif (not pf_mode and int(stage) >= LAST_MOC_FLOOR and star_num == 3) or (
+                pf_mode and int(stage) > 3 and star_num == 3
+            ):
+                uid_freq_comp[player] = 1
+                if player in self_uids:
+                    self_freq_comp[player] = 1
             else:
                 skip_uid = True
-        last_uid = line[0]
+        last_uid = player
         if not skip_uid:
             comp_chars_temp: list[str] = []
             for i in range(5, 9):
                 if line[i] != "":
-                    if "Imbibitor" in line[i]:
-                        line[i] = "Dan Heng • Imbibitor Lunae"
-                    elif line[i] == "Topaz and Numby":
+                    if line[i] == "Topaz and Numby":
                         line[i] = "Topaz & Numby"
                     elif line[i] == "March 7th":
                         line[i] = "Ice March 7th"
@@ -136,17 +139,17 @@ def main() -> None:
                 pf_buff = line[9] if pf_mode else ""
             if comp_chars_temp:
                 comp = Composition(
-                    line[0],
-                    comp_chars_temp,
-                    RECENT_PHASE,
-                    line[3],
-                    line[4],
-                    stage + "-" + str(line[2]),
-                    pf_buff,
-                    cons_chars_temp,
+                    player=player,
+                    comp_chars=comp_chars_temp,
+                    phase=RECENT_PHASE,
+                    round_num=round_num,
+                    star_num=star_num,
+                    room=stage + "-" + str(line[2]),
+                    buff=pf_buff,
+                    comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)
-                if int(line[4]) == 3:
+                if star_num == 3:
                     three_star_sample[stage] += 1
 
     global sample_size
@@ -200,9 +203,7 @@ def main() -> None:
                     all_players[RECENT_PHASE][last_uid] = player
                     last_uid = line[0]
                     player = PlayerPhase(last_uid, RECENT_PHASE)
-                if "Imbibitor" in line[2]:
-                    line[2] = "Dan Heng • Imbibitor Lunae"
-                elif line[2] == "Topaz and Numby":
+                if line[2] == "Topaz and Numby":
                     line[2] = "Topaz & Numby"
                 elif line[2] == "March 7th":
                     line[2] = "Ice March 7th"
@@ -321,7 +322,6 @@ def main() -> None:
             }
             for star_num in usage:
                 char_chambers["all"][star_num] = usage[star_num].copy()
-            # for room in all_stages:
             for room in three_stages:
                 char_chambers[room] = char_usages(
                     all_players,
@@ -392,7 +392,6 @@ def main() -> None:
         start_time = cur_time
 
     if "Comp usages for each stage" in run_commands:
-        # for room in all_stages:
         for room in three_stages:
             comp_usages(
                 all_comps,
@@ -527,7 +526,7 @@ class CompUsage(Composition):
         del self.player
         self.uses = 0
         self.owns = 0
-        self.round_num = {str(i): list[int]() for i in range(1, 13)}
+        self.round_num_dict = {str(i): list[int]() for i in range(1, 13)}
         self.whale_count = set[str]()
         self.players = set[str]()
         self.is_count_round: bool
@@ -636,7 +635,7 @@ def used_comps(
             comp_data.whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             cur_room = next(iter(str(comp.room).split("-")))
-            comp_data.round_num[cur_room].append(comp.round_num)
+            comp_data.round_num_dict[cur_room].append(comp.round_num)
             if sustain_count <= 1:
                 avg_round_stage[cur_room].append(comp.round_num)
                 if pf_mode:
@@ -676,7 +675,7 @@ def rank_usages(
         cur_comp = comps_dict[4][comp]
 
         for room_num in range(1, 13):
-            cur_round = cur_comp.round_num[str(room_num)]
+            cur_round = cur_comp.round_num_dict[str(room_num)]
             if cur_round:
                 uses_room[room_num] = len(cur_round)
                 if cur_comp.uses > 10:

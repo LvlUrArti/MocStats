@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 
 from comp_rates_config import (
     DOT_LIST,
@@ -24,6 +25,7 @@ with open("../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
 
+@dataclass
 class Composition:
     """An object that stores information about a particular composition."""
 
@@ -42,17 +44,16 @@ class Composition:
     char_elemeent_list: returns the list of character's elements.
     """
 
-    def __init__(
-        self,
-        uid: str,
-        comp_chars: list[str],
-        phase: str,
-        round_num: str,
-        star_num: str,
-        room: str,
-        buff: str,
-        comp_chars_cons: list[int],
-    ) -> None:
+    player: str  # UID as string
+    phase: str
+    room: str
+    round_num: int
+    star_num: int
+    buff: str
+    comp_chars: list[str]
+    comp_chars_cons: list[int]
+
+    def __post_init__(self) -> None:
         """Composition constructor."""
         """Takes in:
         A player, as a UID string
@@ -60,13 +61,8 @@ class Composition:
         A phase, as a string
         A room, as a string
         """
-        self.player = str(uid)
-        self.phase = phase
-        self.room = room
-        self.round_num = int(round_num)
-        self.star_num = int(star_num)
-        self.char_structs(comp_chars, comp_chars_cons)
-        self.buff = buff
+        self.player = str(self.player)
+        self.char_structs(self.comp_chars, self.comp_chars_cons)
 
     def char_structs(self, comp_chars: list[str], comp_chars_cons: list[int]) -> None:
         """Character structure creator."""
@@ -99,8 +95,6 @@ class Composition:
         comp_chars.sort()
         for iter_character in comp_chars:
             character = iter_character
-            if "Imbibitor" in character:
-                character = "Dan Heng • Imbibitor Lunae"
             if character == "Topaz and Numby":
                 character = "Topaz & Numby"
             if character == "March 7th":

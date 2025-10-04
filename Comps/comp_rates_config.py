@@ -43,7 +43,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-# if as: pf_mode = True
 pf_mode: bool = args.pure_fic or args.apoc_shadow
 as_mode: bool = args.apoc_shadow
 
