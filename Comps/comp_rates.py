@@ -472,10 +472,8 @@ def comp_usages(
     global top_comps_app
     top_comps_app = {}
     comps_dict: list[dict[tuple[str, ...], CompUsage]] = used_comps(
-        all_comps,
         rooms,
         filename,
-        avg_round_stage,
     )
     rank_usages(comps_dict, rooms, owns_offset=offset)
     comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=True)
@@ -505,10 +503,8 @@ class CompUsage(Composition):
 
 @profile
 def used_comps(
-    comps: list[Composition],
     rooms: list[str],
     filename: str,
-    avg_round_stage: dict[int, list[int]],
 ) -> list[dict[tuple[str, ...], CompUsage]]:
     """Return the dictionary of all the comps used and how many times they were used."""
     comps_dict: list[dict[tuple[str, ...], CompUsage]] = [{}, {}, {}, {}, {}]
@@ -519,7 +515,7 @@ def used_comps(
     f2p_count = 0
 
     # For storing the prev and next comps
-    for comp in comps:
+    for comp in all_comps:
         # Check if the comp is used in the rooms that are being checked
         if str(comp.room) not in rooms:
             continue
@@ -606,11 +602,12 @@ def used_comps(
             2,
         )
 
-    chamber_num = list(str(filename).split("-"))
-    if len(chamber_num) > 1 and chamber_num[1] == "1":
-        sample_size[chamber_num[0]]["total"] = total_comps
-        sample_size[chamber_num[0]]["self_report"] = total_self_comps
-        sample_size[chamber_num[0]]["random"] = total_comps - total_self_comps
+    if "-" in filename:
+        chamber_num = Stage.from_string(filename)
+        if chamber_num.node == 1:
+            sample_size[chamber_num.stage]["total"] = total_comps
+            sample_size[chamber_num.stage]["self_report"] = total_self_comps
+            sample_size[chamber_num.stage]["random"] = total_comps - total_self_comps
     return comps_dict
 
 
