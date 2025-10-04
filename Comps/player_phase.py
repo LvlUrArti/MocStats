@@ -48,7 +48,7 @@ class PlayerPhase:
         None if they don't own the character.
     """
 
-    def __init__(self, player: str, phase: str) -> None:
+    def __init__(self, player: str) -> None:
         """Composition constructor."""
         """
         Takes in:
@@ -56,7 +56,6 @@ class PlayerPhase:
         A phase, as a string
         """
         self.player = player
-        self.phase = phase
         self.chambers: dict[Stage, Composition] = {}
         self.owned: dict[str, OwnedChars] = {}
 
@@ -96,7 +95,7 @@ class PlayerPhase:
 
     def add_comp(self, composition: Composition) -> None:
         """Add a composition to the chambers dict."""
-        if composition.phase != self.phase or composition.player != self.player:
+        if composition.player != self.player:
             return
         if composition.room in self.chambers:
             return

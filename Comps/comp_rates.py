@@ -20,7 +20,6 @@ from comp_rates_config import (
     WHALE_ONLY,
     app_rate_threshold,
     app_rate_threshold_round,
-    archetype,
     as_mode,
     char_app_rate_threshold,
     char_infographics,
@@ -43,8 +42,18 @@ from scipy.stats import skew, trim_mean  # type: ignore[reportMissingTypeStubs]
 with open("prydwen-slug.json") as slug_file:
     slug = load(slug_file)
 
-all_players: dict[str, dict[str, PlayerPhase]] = {}
-all_players[RECENT_PHASE] = {}
+all_players: dict[str, PlayerPhase] = {}
+all_comps: list[Composition] = []
+avg_round_stage: dict[int, list[int]] = {}
+sample_size: dict[int | str, dict[str, int | float]] = {}
+all_comps_json: dict[str, list[dict[str, str | float]]] = {}
+
+if path.isfile("../../uids.csv"):
+    with open("../../uids.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        self_uids = next(iter(reader))
+else:
+    self_uids = []
 
 
 @profile
@@ -63,14 +72,6 @@ def main() -> None:
         if not path.exists(make_path):
             makedirs(make_path)
 
-    global self_uids
-    if path.isfile("../../uids.csv"):
-        with open("../../uids.csv", encoding="UTF8") as f:
-            reader = csvreader(f, delimiter=",")
-            self_uids = next(iter(reader))
-    else:
-        self_uids = []
-
     pf_filename = ""
     if as_mode:
         pf_filename = "_as"
@@ -88,7 +89,6 @@ def main() -> None:
         reader = list(reader)
 
     # uid_freq_comp will help detect duplicate UIDs
-    all_comps: list[Composition] = []
     if pf_mode:
         all_chambers: list[int] = [1, 2, 3, 4]
     else:
@@ -145,7 +145,6 @@ def main() -> None:
                 comp = Composition(
                     player=player,
                     comp_chars=comp_chars_temp,
-                    phase=RECENT_PHASE,
                     round_num=round_num,
                     star_num=star_num,
                     room=Stage(stage, int(line[2])),
@@ -160,19 +159,10 @@ def main() -> None:
     print("done csv comps:", round(cur_time - start_time, 2), "s")
     start_time = cur_time
 
-    global sample_size
-    sample_size = {}
     for chamber_num in all_chambers:
         sample_size[chamber_num] = {}
-    avg_round_stage: dict[int, list[int]] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
-    global valid_duo_dps
-    if path.exists("../char_results/duo_check.csv"):
-        with open("../char_results/duo_check.csv") as f:
-            valid_duo_dps = list(csvreader(f, delimiter=","))
-    else:
-        valid_duo_dps = []
     sample_size["all"] = {
         "total": len(uid_freq_comp),
         "self_report": len(self_freq_comp),
@@ -191,12 +181,11 @@ def main() -> None:
 
     # uid_freq_char and last_uid will help detect duplicate UIDs
     last_uid = "0"
-    player = PlayerPhase(last_uid, RECENT_PHASE)
+    player = PlayerPhase(last_uid)
     uid_freq_char: list[str] = []
 
     # Append lines
     for line in reader:
-        line[1] = RECENT_PHASE
         if line[0] in uid_freq_comp:
             if line[0] != last_uid:
                 skip_uid = False
@@ -206,9 +195,9 @@ def main() -> None:
                     uid_freq_char.append(line[0])
             if not skip_uid:
                 if line[0] != last_uid:
-                    all_players[RECENT_PHASE][last_uid] = player
+                    all_players[last_uid] = player
                     last_uid = line[0]
-                    player = PlayerPhase(last_uid, RECENT_PHASE)
+                    player = PlayerPhase(last_uid)
                 if line[2] == "Topaz and Numby":
                     line[2] = "Topaz & Numby"
                 elif line[2] == "March 7th":
@@ -222,12 +211,12 @@ def main() -> None:
                     line[7],
                     line[8],
                 )
-    all_players[RECENT_PHASE][last_uid] = player
+    all_players[last_uid] = player
 
     for comp in all_comps:
-        if comp.player not in all_players[comp.phase]:
-            all_players[comp.phase][comp.player] = PlayerPhase(comp.player, comp.phase)
-        all_players[comp.phase][comp.player].add_comp(comp)
+        if comp.player not in all_players:
+            all_players[comp.player] = PlayerPhase(comp.player)
+        all_players[comp.player].add_comp(comp)
 
     with open("../char_results/uids.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
@@ -276,9 +265,6 @@ def main() -> None:
 
     if "Char usages all stages" in run_commands:
         char_usages(
-            all_players,
-            archetype,
-            past_phase,
             all_stages,
             filename="all",
         )
@@ -288,33 +274,23 @@ def main() -> None:
 
     if "Duos check" in run_commands:
         usage = char_usages(
-            all_players,
-            archetype,
-            past_phase,
             three_stages,
             filename="all",
         )
         duo_usages(
-            all_comps,
             usage,
-            archetype,
             three_stages,
             check_duo=True,
         )
 
     if "Char usages 8 - 10" in run_commands:
         usage = char_usages(
-            all_players,
-            archetype,
-            past_phase,
             one_stage,
             filename="all",
         )
         if not WHALE_ONLY and not F2P_ONLY:
             duo_usages(
-                all_comps,
                 usage,
-                archetype,
                 one_stage,
                 check_duo=False,
             )
@@ -330,9 +306,6 @@ def main() -> None:
                 char_chambers["all"][star_num] = usage[star_num].copy()
             for room in three_stages:
                 char_chambers[room] = char_usages(
-                    all_players,
-                    archetype,
-                    past_phase,
                     [room],
                     filename=room,
                 )
@@ -355,9 +328,6 @@ def main() -> None:
             # for room in all_double_stages:
             for room in three_double_stages:
                 char_chambers[room[0]] = char_usages(
-                    all_players,
-                    archetype,
-                    past_phase,
                     room,
                     filename=room[0].split("-")[0],
                 )
@@ -371,13 +341,9 @@ def main() -> None:
             print("done char stage (combine):", round(cur_time - start_time, 2), "s")
             start_time = cur_time
 
-    global all_comps_json
-    all_comps_json = {}
     if "Comp usage all stages" in run_commands:
         comp_usages(
-            all_comps,
             all_stages,
-            avg_round_stage,
             filename="all",
             floor=True,
         )
@@ -387,9 +353,7 @@ def main() -> None:
 
     if "Comp usage 8 - 10" in run_commands:
         comp_usages(
-            all_comps,
             one_stage,
-            avg_round_stage,
             filename="top",
             floor=True,
         )
@@ -400,9 +364,7 @@ def main() -> None:
     if "Comp usages for each stage" in run_commands:
         for room in three_stages:
             comp_usages(
-                all_comps,
                 [room],
-                avg_round_stage,
                 filename=room,
                 offset=2,
             )
@@ -416,9 +378,7 @@ def main() -> None:
 
     if "Character specific infographics" in run_commands:
         comp_usages(
-            all_comps,
             one_stage,
-            avg_round_stage,
             filename=char_infographics,
             info_char=True,
             floor=True,
@@ -501,11 +461,10 @@ def compile_app_round(
 
 @profile
 def comp_usages(
-    comps: list[Composition],
     rooms: list[str],
-    avg_round_stage: dict[int, list[int]],
     filename: str = "comp_usages",
     offset: int = 1,
+    *,
     info_char: bool = False,
     floor: bool = False,
 ) -> None:
@@ -513,14 +472,14 @@ def comp_usages(
     global top_comps_app
     top_comps_app = {}
     comps_dict: list[dict[tuple[str, ...], CompUsage]] = used_comps(
-        comps,
+        all_comps,
         rooms,
         filename,
         avg_round_stage,
     )
     rank_usages(comps_dict, rooms, owns_offset=offset)
-    comp_usages_write(comps_dict, filename, floor, info_char, True)
-    comp_usages_write(comps_dict, filename, floor, info_char, False)
+    comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=True)
+    comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=False)
 
 
 class CompUsage(Composition):
@@ -568,7 +527,7 @@ def used_comps(
         side_comp = None
         if moc_mode:
             side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
-            side_comp = all_players[RECENT_PHASE][comp.player].chambers[side_chamber]
+            side_comp = all_players[comp.player].chambers[side_chamber]
 
         comp_tuple = tuple(comp.characters)
 
@@ -739,21 +698,19 @@ def rank_usages(
 
 @profile
 def duo_usages(
-    comps: list[Composition],
     usage: dict[int, dict[str, cu.CharUsageData]],
-    archetype: str,
     rooms: list[str],
+    *,
     check_duo: bool = False,
-    filename: str = "duo_usages",
 ) -> None:
     """Calculate duo usage."""
     duos_dict: dict[str, dict[str, cu.RoundApp]] = used_duos(
-        comps,
+        all_comps,
         rooms,
         usage,
-        check_duo,
+        check_duo=check_duo,
     )
-    duo_write(duos_dict, usage, filename, archetype, check_duo)
+    duo_write(duos_dict, usage, "duo_usages", check_duo=check_duo)
 
 
 @profile
@@ -761,6 +718,7 @@ def used_duos(
     comps: list[Composition],
     rooms: list[str],
     usage: dict[int, dict[str, cu.CharUsageData]],
+    *,
     check_duo: bool,
 ) -> dict[str, dict[str, cu.RoundApp]]:
     """Return dictionary of all the duos used and how many times they were used."""
@@ -789,7 +747,7 @@ def used_duos(
         side_comp = None
         if moc_mode:
             side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
-            side_comp = all_players[RECENT_PHASE][comp.player].chambers[side_chamber]
+            side_comp = all_players[comp.player].chambers[side_chamber]
 
         if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
@@ -858,15 +816,11 @@ def used_duos(
 
 @profile
 def char_usages(
-    players: dict[str, dict[str, PlayerPhase]],
-    archetype: str,
-    past_phase: str,
     rooms: list[str],
     filename: str = "char_usages",
-    info_char: bool = False,
 ) -> dict[int, dict[str, cu.CharUsageData]]:
     """Calculate character usage."""
-    app = cu.appearances(players, chambers=rooms, info_char=info_char)
+    app = cu.appearances(all_players, chambers=rooms, info_char=False)
     chars_dict: dict[int, dict[str, cu.CharUsageData]] = cu.usages(
         app,
         past_phase,
@@ -875,7 +829,7 @@ def char_usages(
     if (moc_mode and rooms == ["12-1", "12-2"]) or (
         pf_mode and rooms == ["4-1", "4-2"]
     ):
-        char_usages_write(chars_dict[4], filename, archetype)
+        char_usages_write(chars_dict[4], filename)
     return chars_dict
 
 
@@ -884,6 +838,7 @@ def comp_usages_write(
     comps_dict: list[dict[tuple[str, ...], CompUsage]],
     filename: str,
     floor: int,
+    *,
     info_char: bool,
     sort_app: bool,
 ) -> None:
@@ -1031,9 +986,6 @@ def comp_usages_write(
     if info_char:
         out_comps += var_comps
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
-
     if not (sort_app):
         filename = filename + "_rounds"
 
@@ -1063,7 +1015,7 @@ def duo_write(
     duos_dict: dict[str, dict[str, cu.RoundApp]],
     usage: dict[int, dict[str, cu.CharUsageData]],
     filename: str,
-    archetype: str,
+    *,
     check_duo: bool,
 ) -> None:
     """Write duo usage."""
@@ -1091,8 +1043,6 @@ def duo_write(
             out_duos.append(out_duos_append)
     out_duos = sorted(out_duos, key=lambda t: t["app"], reverse=True)
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
     with open("../char_results/" + filename + ".csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
@@ -1229,7 +1179,6 @@ def duo_write(
 def char_usages_write(
     chars_dict: dict[str, cu.CharUsageData],
     filename: str,
-    archetype: str,
 ) -> None:
     """Write character usage."""
     out_chars: list[dict[str, str | int | float]] = []
@@ -1375,8 +1324,6 @@ def char_usages_write(
         if char == filename:
             break
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
     if WHALE_ONLY:
         filename = filename + "_C1"
     elif F2P_ONLY:

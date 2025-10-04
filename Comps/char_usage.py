@@ -11,7 +11,6 @@ from comp_rates_config import (
     CONS_LIMIT,
     DPS_SUB_LIST,
     F2P_ONLY,
-    RECENT_PHASE,
     WHALE_ONLY,
     load,
     moc_mode,
@@ -113,8 +112,9 @@ def include_dps(char: str) -> bool:
 
 @profile
 def appearances(
-    users: dict[str, dict[str, PlayerPhase]],
+    users: dict[str, PlayerPhase],
     chambers: list[str] = ROOMS,
+    *,
     info_char: bool = False,
 ) -> dict[int, dict[str, CharApp]]:
     """Calculate appearance data for each character."""
@@ -134,7 +134,7 @@ def appearances(
             user_chars["supp-" + char] = set[str]()
             app["supp-" + char] = CharApp()
 
-    for user in users[RECENT_PHASE].values():
+    for user in users.values():
         for chamber, user_chamber in user.chambers.items():
             cur_chamber = chamber.stage
             if str(chamber) not in chambers:
@@ -409,8 +409,8 @@ def appearances(
             # If it's for character infographic, include all gears
             if (
                 weap_freq.app_flat > GEAR_APP_THRESHOLD
-                or info_char
                 or (weap_freq.app_flat / app_flat) > WEAP_APP_THRESHOLD
+                or info_char
             ):
                 app[char].weap_freq[weapon].app = round(
                     weap_freq.app_flat / app_flat,
@@ -633,7 +633,7 @@ def usages(
             past_usage = load(stats)
         with open("../char_results/" + past_phase + "/rounds.json") as stats:
             past_rounds = load(stats)
-    except Exception:
+    except FileNotFoundError:
         print("No past usage data")
 
     for star_num in app:

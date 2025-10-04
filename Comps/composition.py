@@ -49,7 +49,6 @@ class Composition:
 
     """An object that stores information about a particular composition. Has:
     player: a string for the player who used this comp.
-    phase: a string for the phase this composition was used in.
     room: a string in the form XX-X-X for the room this comp was used in.
     char_presence: a string --> boolean dict for chars in this comp.
     characters: a list of strings for the names of the chars in this comp.
@@ -63,7 +62,6 @@ class Composition:
     """
 
     player: str  # UID as string
-    phase: str
     room: Stage
     round_num: int
     star_num: int
@@ -73,12 +71,6 @@ class Composition:
 
     def __post_init__(self) -> None:
         """Composition constructor."""
-        """Takes in:
-        A player, as a UID string
-        A composition, as a length-four list of character strings
-        A phase, as a string
-        A room, as a string
-        """
         self.player = str(self.player)
         self.char_structs(self.comp_chars, self.comp_chars_cons)
 
