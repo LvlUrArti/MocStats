@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from typing import NamedTuple
 
 from comp_rates_config import (
     DOT_LIST,
@@ -23,6 +24,23 @@ from comp_rates_config import (
 # Load the list of characters from their file
 with open("../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
+
+
+class Stage(NamedTuple):
+    """A stage in a phase."""
+
+    stage: int
+    node: int
+
+    def __str__(self) -> str:
+        """Stage string representation."""
+        return f"{self.stage}-{self.node}"
+
+    @classmethod
+    def from_string(cls, stage_str: str) -> Stage:
+        """Stage constructor."""
+        room, node = stage_str.split("-")
+        return cls(int(room), int(node))
 
 
 @dataclass
@@ -46,7 +64,7 @@ class Composition:
 
     player: str  # UID as string
     phase: str
-    room: str
+    room: Stage
     round_num: int
     star_num: int
     buff: str

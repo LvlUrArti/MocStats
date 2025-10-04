@@ -6,7 +6,7 @@ import json
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from composition import Composition
+    from composition import Composition, Stage
 
 # Set class constants in initialization
 # Load the list of characters from their file
@@ -57,7 +57,7 @@ class PlayerPhase:
         """
         self.player = player
         self.phase = phase
-        self.chambers: dict[str, Composition] = {}
+        self.chambers: dict[Stage, Composition] = {}
         self.owned: dict[str, OwnedChars] = {}
 
     def add_character(

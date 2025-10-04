@@ -33,7 +33,7 @@ from comp_rates_config import (
     skip_random,
     skip_self,
 )
-from composition import Composition
+from composition import Composition, Stage
 from line_profiler import profile
 from player_phase import PlayerPhase
 from plyer import notification  # type: ignore[reportMissingTypeStubs]
@@ -86,10 +86,10 @@ def main() -> None:
     # uid_freq_comp will help detect duplicate UIDs
     all_comps: list[Composition] = []
     if pf_mode:
-        all_chambers = ["1", "2", "3", "4"]
+        all_chambers: list[int] = [1, 2, 3, 4]
     else:
-        all_chambers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-    three_star_sample = {}
+        all_chambers: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    three_star_sample: dict[int, int] = {}
     for chamber_num in all_chambers:
         three_star_sample[chamber_num] = 0
     uid_freq_comp: dict[str, int] = {}
@@ -144,19 +144,23 @@ def main() -> None:
                     phase=RECENT_PHASE,
                     round_num=round_num,
                     star_num=star_num,
-                    room=stage + "-" + str(line[2]),
+                    room=Stage(int(stage), int(line[2])),
                     buff=pf_buff,
                     comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)
                 if star_num == 3:
-                    three_star_sample[stage] += 1
+                    three_star_sample[int(stage)] += 1
+
+    cur_time = time()
+    print("done csv comps:", round(cur_time - start_time, 2), "s")
+    start_time = cur_time
 
     global sample_size
     sample_size = {}
     for chamber_num in all_chambers:
         sample_size[chamber_num] = {}
-    avg_round_stage: dict[str, list[int]] = {}
+    avg_round_stage: dict[int, list[int]] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
     global valid_duo_dps
@@ -497,7 +501,7 @@ def compile_app_round(
 def comp_usages(
     comps: list[Composition],
     rooms: list[str],
-    avg_round_stage: dict[str, list[int]],
+    avg_round_stage: dict[int, list[int]],
     filename: str = "comp_usages",
     offset: int = 1,
     info_char: bool = False,
@@ -526,7 +530,7 @@ class CompUsage(Composition):
         del self.player
         self.uses = 0
         self.owns = 0
-        self.round_num_dict = {str(i): list[int]() for i in range(1, 13)}
+        self.round_num_dict = {i: list[int]() for i in range(1, 13)}
         self.whale_count = set[str]()
         self.players = set[str]()
         self.is_count_round: bool
@@ -543,7 +547,7 @@ def used_comps(
     comps: list[Composition],
     rooms: list[str],
     filename: str,
-    avg_round_stage: dict[str, list[int]],
+    avg_round_stage: dict[int, list[int]],
 ) -> list[dict[tuple[str, ...], CompUsage]]:
     """Return the dictionary of all the comps used and how many times they were used."""
     comps_dict: list[dict[tuple[str, ...], CompUsage]] = [{}, {}, {}, {}, {}]
@@ -556,7 +560,7 @@ def used_comps(
     # For storing the prev and next comps
     for comp_iter, comp in enumerate(comps):
         # Check if the comp is used in the rooms that are being checked
-        if comp.room not in rooms:
+        if str(comp.room) not in rooms:
             continue
 
         side_comp = None
@@ -565,13 +569,13 @@ def used_comps(
         if (
             prev_comp
             and prev_comp.player == comp.player
-            and prev_comp.room.split("-")[0] == comp.room.split("-")[0]
+            and prev_comp.room.stage == comp.room.stage
         ):
             side_comp = prev_comp
         if (
             next_comp
             and next_comp.player == comp.player
-            and next_comp.room.split("-")[0] == comp.room.split("-")[0]
+            and next_comp.room.stage == comp.room.stage
         ):
             side_comp = next_comp
 
@@ -634,7 +638,7 @@ def used_comps(
         if whale_comp:
             comp_data.whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
-            cur_room = next(iter(str(comp.room).split("-")))
+            cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             if sustain_count <= 1:
                 avg_round_stage[cur_room].append(comp.round_num)
@@ -675,7 +679,7 @@ def rank_usages(
         cur_comp = comps_dict[4][comp]
 
         for room_num in range(1, 13):
-            cur_round = cur_comp.round_num_dict[str(room_num)]
+            cur_round = cur_comp.round_num_dict[room_num]
             if cur_round:
                 uses_room[room_num] = len(cur_round)
                 if cur_comp.uses > 10:
@@ -772,8 +776,8 @@ def used_duos(
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
 
     for comp_iter, comp in enumerate(comps):
-        cur_room = next(iter(str(comp.room).split("-")))
-        if len(comp.characters) < 2 or comp.room not in rooms:
+        cur_room = comp.room.stage
+        if len(comp.characters) < 2 or str(comp.room) not in rooms:
             continue
 
         whale_comp = False
@@ -797,13 +801,13 @@ def used_duos(
         if (
             prev_comp
             and prev_comp.player == comp.player
-            and prev_comp.room.split("-")[0] == comp.room.split("-")[0]
+            and prev_comp.room.stage == comp.room.stage
         ):
             side_comp = prev_comp
         if (
             next_comp
             and next_comp.player == comp.player
-            and next_comp.room.split("-")[0] == comp.room.split("-")[0]
+            and next_comp.room.stage == comp.room.stage
         ):
             side_comp = next_comp
 
@@ -846,7 +850,7 @@ def used_duos(
             cur_duo.app_flat = 0
             avg_round: list[float] = []
             for room_num in range(1, 13):
-                duo_round = cur_duo.round_list[str(room_num)]
+                duo_round = cur_duo.round_list[room_num]
                 if duo_round:
                     cur_duo.app_flat += len(duo_round)
                     if len(duo_round) > 1:

@@ -17,6 +17,7 @@ from comp_rates_config import (
     pf_mode,
     sig_weaps,
 )
+from composition import Stage
 from line_profiler import profile
 from percentile import calculate_percentile
 from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
@@ -80,7 +81,7 @@ class RoundApp:
         self.app_flat: int = 0
         self.app_flat_all: int = 0
         self.app: float = 0
-        self.round_list = {str(i): list[int]() for i in range(1, 13)}
+        self.round_list = {i: list[int]() for i in range(1, 13)}
         self.round: float = 0
 
 
@@ -134,8 +135,8 @@ def appearances(
 
     for user in users[RECENT_PHASE].values():
         for chamber, user_chamber in user.chambers.items():
-            cur_chamber = next(iter(str(chamber).split("-")))
-            if chamber not in chambers:
+            cur_chamber = chamber.stage
+            if str(chamber) not in chambers:
                 continue
             all_uids.add(user.player)
             whale_comp = False
@@ -158,7 +159,7 @@ def appearances(
                     sustain_count += 1
 
             if not (pf_mode):
-                side_chamber = chamber[:-1] + ("2" if chamber[-1] == "1" else "1")
+                side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
                 for char in user.chambers[side_chamber].characters:
                     if (
                         CHARACTERS[char]["availability"] == "Limited 5*"
@@ -282,37 +283,37 @@ def appearances(
                     all_rounds[char][room_num] = {}
                     for i in range(41):
                         all_rounds[char][room_num][i] = 0
-                if char_item.round_list[str(room_num)]:
+                if char_item.round_list[room_num]:
                     if room_num >= MOC_LOWER_LIMIT:
-                        for round_num_iter in char_item.round_list[str(room_num)]:
+                        for round_num_iter in char_item.round_list[room_num]:
                             all_rounds[char][room_num][round_num_iter] += 1
-                    uses_room[room_num] = len(char_item.round_list[str(room_num)])
-                    if len(char_item.round_list[str(room_num)]) > MOC_LOWER_LIMIT:
-                        std_dev_round.append(stdev(char_item.round_list[str(room_num)]))
+                    uses_room[room_num] = len(char_item.round_list[room_num])
+                    if len(char_item.round_list[room_num]) > MOC_LOWER_LIMIT:
+                        std_dev_round.append(stdev(char_item.round_list[room_num]))
                         q1_round.append(
                             calculate_percentile(
-                                char_item.round_list[str(room_num)],
+                                char_item.round_list[room_num],
                                 75 if pf_mode else 25,
                             ),
                         )
                         skewness = skew(
-                            char_item.round_list[str(room_num)],
+                            char_item.round_list[room_num],
                             axis=0,
                             bias=True,
                         )
                         if abs(skewness) > SKEW_LIMIT:
                             avg_round.append(
                                 trim_mean(
-                                    char_item.round_list[str(room_num)],
+                                    char_item.round_list[room_num],
                                     0.25,
                                 ),
                             )
                         else:
-                            avg_round.append(mean(char_item.round_list[str(room_num)]))
+                            avg_round.append(mean(char_item.round_list[room_num]))
                     else:
                         std_dev_round.append(0)
                         q1_round.append(0)
-                        avg_round.append(mean(char_item.round_list[str(room_num)]))
+                        avg_round.append(mean(char_item.round_list[room_num]))
 
             is_count_cycles = True
             if not uses_room:
@@ -356,30 +357,30 @@ def appearances(
                 )
                 avg_round = []
                 for room_num in range(1, 13):
-                    if cons_freq.round_list[str(room_num)]:
+                    if cons_freq.round_list[room_num]:
                         if cons_freq.app_flat > SKEW_APP_LIMIT:
                             skewness = skew(
-                                cons_freq.round_list[str(room_num)],
+                                cons_freq.round_list[room_num],
                                 axis=0,
                                 bias=True,
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
                                     trim_mean(
-                                        cons_freq.round_list[str(room_num)],
+                                        cons_freq.round_list[room_num],
                                         0.25,
                                     ),
                                 )
                             else:
                                 avg_round.append(
                                     mean(
-                                        cons_freq.round_list[str(room_num)],
+                                        cons_freq.round_list[room_num],
                                     ),
                                 )
                         else:
                             avg_round.append(
                                 mean(
-                                    cons_freq.round_list[str(room_num)],
+                                    cons_freq.round_list[room_num],
                                 ),
                             )
                 if avg_round:
@@ -416,30 +417,30 @@ def appearances(
                 )
                 avg_round = []
                 for room_num in range(1, 13):
-                    if weap_freq.round_list[str(room_num)]:
+                    if weap_freq.round_list[room_num]:
                         if weap_freq.app_flat > SKEW_APP_LIMIT:
                             skewness = skew(
-                                weap_freq.round_list[str(room_num)],
+                                weap_freq.round_list[room_num],
                                 axis=0,
                                 bias=True,
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
                                     trim_mean(
-                                        weap_freq.round_list[str(room_num)],
+                                        weap_freq.round_list[room_num],
                                         0.25,
                                     ),
                                 )
                             else:
                                 avg_round.append(
                                     mean(
-                                        weap_freq.round_list[str(room_num)],
+                                        weap_freq.round_list[room_num],
                                     ),
                                 )
                         else:
                             avg_round.append(
                                 mean(
-                                    weap_freq.round_list[str(room_num)],
+                                    weap_freq.round_list[room_num],
                                 ),
                             )
                 if avg_round:
@@ -476,30 +477,30 @@ def appearances(
                 )
                 avg_round = []
                 for room_num in range(1, 13):
-                    if arti_freq.round_list[str(room_num)]:
+                    if arti_freq.round_list[room_num]:
                         if arti_freq.app_flat > SKEW_APP_LIMIT:
                             skewness = skew(
-                                arti_freq.round_list[str(room_num)],
+                                arti_freq.round_list[room_num],
                                 axis=0,
                                 bias=True,
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
                                     trim_mean(
-                                        arti_freq.round_list[str(room_num)],
+                                        arti_freq.round_list[room_num],
                                         0.25,
                                     ),
                                 )
                             else:
                                 avg_round.append(
                                     mean(
-                                        arti_freq.round_list[str(room_num)],
+                                        arti_freq.round_list[room_num],
                                     ),
                                 )
                         else:
                             avg_round.append(
                                 mean(
-                                    arti_freq.round_list[str(room_num)],
+                                    arti_freq.round_list[room_num],
                                 ),
                             )
                 if avg_round:
@@ -536,30 +537,30 @@ def appearances(
                 )
                 avg_round = []
                 for room_num in range(1, 13):
-                    if planar_freq.round_list[str(room_num)]:
+                    if planar_freq.round_list[room_num]:
                         if planar_freq.app_flat > 1:
                             skewness = skew(
-                                planar_freq.round_list[str(room_num)],
+                                planar_freq.round_list[room_num],
                                 axis=0,
                                 bias=True,
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
                                     trim_mean(
-                                        planar_freq.round_list[str(room_num)],
+                                        planar_freq.round_list[room_num],
                                         0.25,
                                     ),
                                 )
                             else:
                                 avg_round.append(
                                     mean(
-                                        planar_freq.round_list[str(room_num)],
+                                        planar_freq.round_list[room_num],
                                     ),
                                 )
                         else:
                             avg_round.append(
                                 mean(
-                                    planar_freq.round_list[str(room_num)],
+                                    planar_freq.round_list[room_num],
                                 ),
                             )
                 if avg_round:
