@@ -27,6 +27,7 @@ from comp_rates_config import (
     duo_dict_len,
     json_threshold,
     load,
+    moc_mode,
     past_phase,
     pf_mode,
     run_commands,
@@ -41,6 +42,9 @@ from scipy.stats import skew, trim_mean  # type: ignore[reportMissingTypeStubs]
 
 with open("prydwen-slug.json") as slug_file:
     slug = load(slug_file)
+
+all_players: dict[str, dict[str, PlayerPhase]] = {}
+all_players[RECENT_PHASE] = {}
 
 
 @profile
@@ -99,7 +103,7 @@ def main() -> None:
 
     for line in reader:
         player = line[0]
-        stage = str(line[1])
+        stage = int(line[1])
         round_num = int(line[3])
         star_num = int(line[4])
         if skip_self and player in self_uids:
@@ -111,8 +115,8 @@ def main() -> None:
             if player in uid_freq_comp:
                 skip_uid = True
                 print("duplicate UID in comp: " + player)
-            elif (not pf_mode and int(stage) >= LAST_MOC_FLOOR and star_num == 3) or (
-                pf_mode and int(stage) > 3 and star_num == 3
+            elif (moc_mode and stage >= LAST_MOC_FLOOR and star_num == 3) or (
+                pf_mode and stage > 3 and star_num == 3
             ):
                 uid_freq_comp[player] = 1
                 if player in self_uids:
@@ -144,13 +148,13 @@ def main() -> None:
                     phase=RECENT_PHASE,
                     round_num=round_num,
                     star_num=star_num,
-                    room=Stage(int(stage), int(line[2])),
+                    room=Stage(stage, int(line[2])),
                     buff=pf_buff,
                     comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)
                 if star_num == 3:
-                    three_star_sample[int(stage)] += 1
+                    three_star_sample[stage] += 1
 
     cur_time = time()
     print("done csv comps:", round(cur_time - start_time, 2), "s")
@@ -186,8 +190,6 @@ def main() -> None:
         reader = list(reader)
 
     # uid_freq_char and last_uid will help detect duplicate UIDs
-    all_players: dict[str, dict[str, PlayerPhase]] = {}
-    all_players[RECENT_PHASE] = {}
     last_uid = "0"
     player = PlayerPhase(last_uid, RECENT_PHASE)
     uid_freq_char: list[str] = []
@@ -558,26 +560,15 @@ def used_comps(
     f2p_count = 0
 
     # For storing the prev and next comps
-    for comp_iter, comp in enumerate(comps):
+    for comp in comps:
         # Check if the comp is used in the rooms that are being checked
         if str(comp.room) not in rooms:
             continue
 
         side_comp = None
-        prev_comp = comps[comp_iter - 1] if comp_iter > 0 else None
-        next_comp = comps[comp_iter + 1] if comp_iter < len(comps) - 1 else None
-        if (
-            prev_comp
-            and prev_comp.player == comp.player
-            and prev_comp.room.stage == comp.room.stage
-        ):
-            side_comp = prev_comp
-        if (
-            next_comp
-            and next_comp.player == comp.player
-            and next_comp.room.stage == comp.room.stage
-        ):
-            side_comp = next_comp
+        if moc_mode:
+            side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
+            side_comp = all_players[RECENT_PHASE][comp.player].chambers[side_chamber]
 
         comp_tuple = tuple(comp.characters)
 
@@ -606,7 +597,7 @@ def used_comps(
             if CHARACTERS[comp_char]["role"] == "Sustain":
                 sustain_count += 1
 
-        if not pf_mode and side_comp and side_comp.char_cons:
+        if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
                     CHARACTERS[char]["availability"] == "Limited 5*"
@@ -775,7 +766,7 @@ def used_duos(
     """Return dictionary of all the duos used and how many times they were used."""
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
 
-    for comp_iter, comp in enumerate(comps):
+    for comp in comps:
         cur_room = comp.room.stage
         if len(comp.characters) < 2 or str(comp.room) not in rooms:
             continue
@@ -796,22 +787,11 @@ def used_duos(
                 sustain_count += 1
 
         side_comp = None
-        prev_comp = comps[comp_iter - 1] if comp_iter > 0 else None
-        next_comp = comps[comp_iter + 1] if comp_iter < len(comps) - 1 else None
-        if (
-            prev_comp
-            and prev_comp.player == comp.player
-            and prev_comp.room.stage == comp.room.stage
-        ):
-            side_comp = prev_comp
-        if (
-            next_comp
-            and next_comp.player == comp.player
-            and next_comp.room.stage == comp.room.stage
-        ):
-            side_comp = next_comp
+        if moc_mode:
+            side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
+            side_comp = all_players[RECENT_PHASE][comp.player].chambers[side_chamber]
 
-        if not pf_mode and side_comp and side_comp.char_cons:
+        if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
                     CHARACTERS[char]["availability"] == "Limited 5*"
@@ -892,7 +872,7 @@ def char_usages(
         past_phase,
         chambers=rooms,
     )
-    if (not pf_mode and rooms == ["12-1", "12-2"]) or (
+    if (moc_mode and rooms == ["12-1", "12-2"]) or (
         pf_mode and rooms == ["4-1", "4-2"]
     ):
         char_usages_write(chars_dict[4], filename, archetype)

@@ -51,6 +51,8 @@ if not pf_mode:
 if not as_mode:
     as_mode = False
 
+moc_mode = not pf_mode
+
 suffix = ""
 if as_mode:
     suffix = "_as"

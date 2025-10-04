@@ -14,6 +14,7 @@ from comp_rates_config import (
     RECENT_PHASE,
     WHALE_ONLY,
     load,
+    moc_mode,
     pf_mode,
     sig_weaps,
 )
@@ -158,7 +159,7 @@ def appearances(
                 if CHARACTERS[char]["role"] == "Sustain":
                     sustain_count += 1
 
-            if not (pf_mode):
+            if moc_mode:
                 side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
                 for char in user.chambers[side_chamber].characters:
                     if (
