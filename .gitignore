@@ -294,7 +294,6 @@ data/raw_csvs_real
 Comps/client_secret.json
 Comps/sheets.googleapis.com-python.json
 Comps/sort.py
-Comps/hash.py
 Comps/compile_usage.py
 Comps/unlist.py
 Comps/profile.html
