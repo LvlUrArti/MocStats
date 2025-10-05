@@ -17,6 +17,7 @@ from comp_rates_config import (
     CHARACTERS,
     F2P_ONLY,
     WHALE_ONLY,
+    aa_mode,
     app_rate_threshold,
     app_rate_threshold_round,
     as_mode,
@@ -45,6 +46,8 @@ with open("prydwen-slug.json") as slug_file:
 pf_filename = ""
 if as_mode:
     pf_filename = "_as"
+elif aa_mode:
+    pf_filename = "_aa"
 elif pf_mode:
     pf_filename = "_pf"
 
@@ -75,6 +78,11 @@ def main() -> None:
         three_double_stages = [["4-1", "4-2"]]
         one_stage = ["4-1", "4-2"]
         all_stages = ["1-1", "1-2", "2-1", "2-2", "3-1", "3-2", "4-1", "4-2"]
+    elif aa_mode:
+        three_stages = ["1-1", "1-2", "1-3", "2-1"]
+        three_double_stages = [["1-1", "1-2", "1-3"], ["2-1"]]
+        one_stage = ["1-1", "1-2", "1-3"]
+        all_stages = ["1-1", "1-2", "1-3", "2-1"]
     else:
         three_stages = ["10-1", "10-2", "11-1", "11-2", "12-1", "12-2"]
         three_double_stages = [["10-1", "10-2"], ["11-1", "11-2"], ["12-1", "12-2"]]
@@ -357,7 +365,6 @@ def used_comps(
     whale_count = 0
     f2p_count = 0
 
-    # For storing the prev and next comps
     for comp in all_comps:
         # Check if the comp is used in the rooms that are being checked
         if str(comp.room) not in rooms:
@@ -431,7 +438,7 @@ def used_comps(
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             if sustain_count <= 1:
                 avg_round_stage[cur_room].append(comp.round_num)
-                if pf_mode:
+                if pf_mode or (aa_mode and cur_room == 2):
                     if "buff_" + comp.buff not in sample_size[cur_room]:
                         sample_size[cur_room]["buff_" + comp.buff] = 0
                     sample_size[cur_room]["buff_" + comp.buff] += 1
@@ -492,7 +499,11 @@ def rank_usages(
 
         cur_comp.is_count_round = True
         cur_comp.is_count_round_print = True
-        if (rooms == ["12-1", "12-2"]) or (pf_mode and rooms == ["4-1", "4-2"]):
+        if (
+            (rooms == ["12-1", "12-2"])
+            or (pf_mode and rooms == ["4-1", "4-2"])
+            or (aa_mode and rooms == ["1-1", "2-1", "3-1"])
+        ):
             for uses_room_num in uses_room.values():
                 if uses_room_num < 15:
                     if WHALE_ONLY and uses_room_num < 10:
@@ -666,8 +677,10 @@ def char_usages(
         past_phase,
         chambers=rooms,
     )
-    if (moc_mode and rooms == ["12-1", "12-2"]) or (
-        pf_mode and rooms == ["4-1", "4-2"]
+    if (
+        (moc_mode and rooms == ["12-1", "12-2"])
+        or (pf_mode and rooms == ["4-1", "4-2"])
+        or (aa_mode and filename not in ["1", "2"])
     ):
         char_usages_write(chars_dict[4], filename)
     return chars_dict

@@ -4,15 +4,18 @@ from __future__ import annotations
 
 import json
 
-from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
+from comp_rates_config import RECENT_PHASE, aa_mode, as_mode, pf_mode
 
 file_names = ["top"]
 moc_names = ["10-1", "10-2", "11-1", "11-2", "12-1", "12-2"]
+aa_names = ["1-1", "1-2", "1-3", "2-1"]
 pf_names = ["4-1", "4-2"]
 exclude_value = 0 if pf_mode else 99.99
 
 if pf_mode:
     file_names.extend(pf_names)
+elif aa_mode:
+    file_names.extend(aa_names)
 else:
     file_names.extend(moc_names)
 
@@ -21,6 +24,8 @@ if as_mode:
     suffix = "_as"
 elif pf_mode:
     suffix = "_pf"
+elif aa_mode:
+    suffix = "_aa"
 
 RECENT_PHASE_PF = RECENT_PHASE + suffix
 

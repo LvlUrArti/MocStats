@@ -3,11 +3,13 @@
 import shutil
 from os import listdir, mkdir, path
 
-from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
+from comp_rates_config import RECENT_PHASE, aa_mode, as_mode, pf_mode
 
 suffix = ""
 if as_mode:
     suffix = "_as"
+elif aa_mode:
+    suffix = "_aa"
 elif pf_mode:
     suffix = "_pf"
 RECENT_PHASE_PF = RECENT_PHASE + suffix
@@ -40,6 +42,7 @@ for source_dir in source_dirs:
             and (
                 "demographic_collect" not in file_name
                 or file_name == ("demographic_collect" + suffix + ".json")
+                or (aa_mode and file_name == ("boss_names.json"))
             )
         ):
             shutil.move(path.join(source_dir, file_name), target_dir)

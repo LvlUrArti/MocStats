@@ -16,6 +16,7 @@ past_phase = "3.5.3"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
+parser.add_argument("-cha", "--chars_all", action="store_true")
 parser.add_argument("-ca", "--comps_all", action="store_true")
 parser.add_argument("-d", "--duos", action="store_true")
 parser.add_argument("-t", "--top", action="store_true")
@@ -39,25 +40,33 @@ parser.add_argument(
     "--apoc_shadow",
     action="store_true",
 )
+parser.add_argument(
+    "-aa",
+    "--anomaly_arbitration",
+    action="store_true",
+)
 
 args = parser.parse_args()
 
 
 pf_mode: bool = args.pure_fic or args.apoc_shadow
 as_mode: bool = args.apoc_shadow
+aa_mode: bool = args.anomaly_arbitration
 
 if not pf_mode:
     pf_mode = False
 if not as_mode:
     as_mode = False
 
-moc_mode = not pf_mode
+moc_mode = not pf_mode and not aa_mode
 
 suffix = ""
 if as_mode:
     suffix = "_as"
 elif pf_mode:
     suffix = "_pf"
+elif aa_mode:
+    suffix = "_aa"
 RECENT_PHASE_PF = RECENT_PHASE + suffix
 past_phase = past_phase + suffix
 
@@ -229,12 +238,14 @@ run_commands = [
 if args.top or args.f2p:
     run_commands = [
         "Char usages 8 - 10",
+        "Char usages for each stage",
         "Comp usage 8 - 10",
     ]
 
 elif args.whale:
     run_commands = [
         "Char usages 8 - 10",
+        "Char usages for each stage",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
     ]
@@ -256,6 +267,13 @@ elif args.all:
         "Char usages for each stage (combined)",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
+    ]
+
+elif args.chars_all:
+    run_commands = [
+        "Char usages 8 - 10",
+        "Char usages for each stage",
+        "Char usages for each stage (combined)",
     ]
 
 elif args.comps_all:

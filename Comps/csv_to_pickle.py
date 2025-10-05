@@ -13,6 +13,7 @@ from time import time
 from comp_rates_config import (
     LAST_MOC_FLOOR,
     RECENT_PHASE,
+    aa_mode,
     as_mode,
     load,
     moc_mode,
@@ -80,6 +81,8 @@ def main() -> None:
     pf_filename = ""
     if as_mode:
         pf_filename = "_as"
+    elif aa_mode:
+        pf_filename = "_aa"
     elif pf_mode:
         pf_filename = "_pf"
 
@@ -96,6 +99,8 @@ def main() -> None:
     # uid_freq_comp will help detect duplicate UIDs
     if pf_mode:
         all_chambers: list[int] = [1, 2, 3, 4]
+    elif aa_mode:
+        all_chambers: list[int] = [1, 2]
     else:
         all_chambers: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     three_star_sample: dict[int, int] = {}
@@ -109,9 +114,12 @@ def main() -> None:
     for line in reader:
         player = line[0]
         stage = int(line[1])
-        node = int(line[2])
-        round_num = int(line[3])
-        star_num = int(line[4])
+        node = (stage if stage != 4 else 1) if aa_mode else int(line[2])
+        if aa_mode:
+            stage = 1 if stage <= 3 else 2
+
+        round_num = int(line[2] if aa_mode else line[3])
+        star_num = int(line[3] if aa_mode else line[4])
         if skip_self and player in self_uids:
             continue
         if skip_random and player not in self_uids:
@@ -121,8 +129,10 @@ def main() -> None:
             if player in uid_freq_comp:
                 skip_uid = True
                 print("duplicate UID in comp: " + player)
-            elif (moc_mode and stage >= LAST_MOC_FLOOR and star_num == 3) or (
-                pf_mode and stage > 3 and star_num == 3
+            elif (
+                (aa_mode and (stage == 2 or round_num <= 4) and star_num >= 1)
+                or (moc_mode and stage >= LAST_MOC_FLOOR and star_num == 3)
+                or (pf_mode and stage > 3 and star_num == 3)
             ):
                 uid_freq_comp[player] = 1
                 if player in self_uids:
@@ -132,7 +142,7 @@ def main() -> None:
         last_uid = player
         if not skip_uid:
             comp_chars_temp: list[str] = []
-            for i in range(5, 9):
+            for i in range(4, 8) if aa_mode else range(5, 9):
                 if line[i] != "":
                     if line[i] == "Topaz and Numby":
                         line[i] = "Topaz & Numby"
@@ -142,7 +152,9 @@ def main() -> None:
             cons_chars_temp: list[int] = []
             if len(line) > 10:
                 cons_chars_temp.extend(
-                    int(float(line[i])) for i in range(9, 13) if line[i] != ""
+                    int(float(line[i]))
+                    for i in (range(8, 12) if aa_mode else range(9, 13))
+                    if line[i] != ""
                 )
                 pf_buff = line[13] if pf_mode else ""
             else:
@@ -154,7 +166,7 @@ def main() -> None:
                     round_num=round_num,
                     star_num=star_num,
                     room=Stage(stage, node),
-                    buff=pf_buff,
+                    buff=line[12] if aa_mode else pf_buff,
                     comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)

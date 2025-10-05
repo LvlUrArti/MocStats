@@ -12,6 +12,7 @@ from comp_rates_config import (
     DPS_SUB_LIST,
     F2P_ONLY,
     WHALE_ONLY,
+    aa_mode,
     load,
     moc_mode,
     pf_mode,
@@ -39,7 +40,13 @@ EXCLUDED_LIMIT = 8
 ALL_STAR_NUM = 4
 DEFAULT_VALUE: float = 0 if pf_mode else 99.99
 DEFAULT_ROUND: int = 0 if pf_mode else 2
-SINGLE_CHAMBER: list[str] = ["4-1", "4-2"] if pf_mode else ["12-1", "12-2"]
+SINGLE_CHAMBER: list[str] = (
+    ["1-1", "1-2", "1-3"]
+    if aa_mode
+    else ["4-1", "4-2"]
+    if pf_mode
+    else ["12-1", "12-2"]
+)
 with open("../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = load(char_file)
 
@@ -293,8 +300,10 @@ def appearances(
             if not uses_room:
                 is_count_cycles = False
             elif chambers == SINGLE_CHAMBER:
-                app[char].sample_app_flat = uses_room[4 if pf_mode else 12]
-                if len(uses_room) != len(chambers) / 2:
+                app[char].sample_app_flat = uses_room[
+                    1 if aa_mode else 4 if pf_mode else 12
+                ]
+                if not aa_mode and len(uses_room) != len(chambers) / 2:
                     # If, for example, calculating cycles from chambers 10 to 12,
                     # the character should be used in all of those chambers
                     is_count_cycles = False
