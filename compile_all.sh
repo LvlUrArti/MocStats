@@ -8,7 +8,10 @@ if [ -n "$1" ]; then
 else
   cd Comps
   python combine_raw_chars.py
-  python hash.py
+	python hash.py &
+	python csv_to_pickle.py &
+	python csv_to_pickle.py -pf &
+	python csv_to_pickle.py -as
 fi
 
 echo ""
@@ -60,9 +63,6 @@ cd ../Comps
 python move.py -as
 
 python combine_char.py
-python combine_char.py -pf
-python combine_char.py -as
-
 python combine_comp.py
 python combine_comp.py -pf
 python combine_comp.py -as
