@@ -16,7 +16,6 @@ import char_usage as cu
 from comp_rates_config import (
     CHARACTERS,
     F2P_ONLY,
-    RECENT_PHASE,
     WHALE_ONLY,
     app_rate_threshold,
     app_rate_threshold_round,
@@ -49,9 +48,7 @@ if as_mode:
 elif pf_mode:
     pf_filename = "_pf"
 
-loaded_data: PickleData = load_pickle_data(
-    "../data/pickle/" + RECENT_PHASE + pf_filename + ".pkl",
-)
+loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps
@@ -695,30 +692,13 @@ def comp_usages_write(
 
     # Sort the comps according to their usage rate
 
-    if sort_app:
-        comps_dict[4] = dict(
-            sorted(
-                comps_dict[4].items(),
-                key=lambda t: t[1].app_rate,
-                reverse=True,
-            ),
-        )
-    elif pf_mode:
-        comps_dict[4] = dict(
-            sorted(
-                comps_dict[4].items(),
-                key=lambda t: t[1].round,
-                reverse=True,
-            ),
-        )
-    else:
-        comps_dict[4] = dict(
-            sorted(
-                comps_dict[4].items(),
-                key=lambda t: t[1].round,
-                reverse=False,
-            ),
-        )
+    comps_dict[4] = dict(
+        sorted(
+            comps_dict[4].items(),
+            key=lambda t: t[1].app_rate if sort_app else t[1].round,
+            reverse=pf_mode or sort_app,
+        ),
+    )
     comp_names: list[str] = []
     dual_comp_names: list[str] = []
 

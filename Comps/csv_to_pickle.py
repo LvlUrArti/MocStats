@@ -109,6 +109,7 @@ def main() -> None:
     for line in reader:
         player = line[0]
         stage = int(line[1])
+        node = int(line[2])
         round_num = int(line[3])
         star_num = int(line[4])
         if skip_self and player in self_uids:
@@ -152,7 +153,7 @@ def main() -> None:
                     comp_chars=comp_chars_temp,
                     round_num=round_num,
                     star_num=star_num,
-                    room=Stage(stage, int(line[2])),
+                    room=Stage(stage, node),
                     buff=pf_buff,
                     comp_chars_cons=cons_chars_temp,
                 )
@@ -235,7 +236,7 @@ def main() -> None:
         sample_size=sample_size,
     )
 
-    save_pickle_data("../data/pickle/" + RECENT_PHASE + pf_filename + ".pkl", data)
+    save_pickle_data("../data/pickle/data" + pf_filename + ".pkl", data)
 
     cur_time = time()
     print("done csv:", round(cur_time - start_time, 2), "s")
