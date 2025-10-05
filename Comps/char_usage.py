@@ -29,39 +29,10 @@ if TYPE_CHECKING:
     from player_phase import PlayerPhase
 
 filterwarnings("ignore", category=RuntimeWarning)
-ROOMS = (
-    ["1-1", "1-2", "2-1", "2-2", "3-1", "3-2", "4-1", "4-2"]
-    if pf_mode
-    else [
-        "1-1",
-        "1-2",
-        "2-1",
-        "2-2",
-        "3-1",
-        "3-2",
-        "4-1",
-        "4-2",
-        "5-1",
-        "5-2",
-        "6-1",
-        "6-2",
-        "7-1",
-        "7-2",
-        "8-1",
-        "8-2",
-        "9-1",
-        "9-2",
-        "10-1",
-        "10-2",
-        "11-1",
-        "11-2",
-        "12-1",
-        "12-2",
-    ]
-)
 GEAR_APP_THRESHOLD = 0
 WEAP_APP_THRESHOLD = 20
 MOC_LOWER_LIMIT = 10
+MIN_APP_LIMIT = 10
 SKEW_LIMIT = 0.8
 SKEW_APP_LIMIT = 10
 EXCLUDED_LIMIT = 8
@@ -113,7 +84,7 @@ def include_dps(char: str) -> bool:
 @profile
 def appearances(
     users: dict[str, PlayerPhase],
-    chambers: list[str] = ROOMS,
+    chambers: list[str],
     *,
     info_char: bool = False,
 ) -> dict[int, dict[str, CharApp]]:
@@ -289,7 +260,7 @@ def appearances(
                         for round_num_iter in char_item.round_list[room_num]:
                             all_rounds[char][room_num][round_num_iter] += 1
                     uses_room[room_num] = len(char_item.round_list[room_num])
-                    if len(char_item.round_list[room_num]) > MOC_LOWER_LIMIT:
+                    if len(char_item.round_list[room_num]) > MIN_APP_LIMIT:
                         std_dev_round.append(stdev(char_item.round_list[room_num]))
                         q1_round.append(
                             calculate_percentile(
@@ -322,9 +293,11 @@ def appearances(
             elif chambers == SINGLE_CHAMBER:
                 app[char].sample_app_flat = uses_room[4 if pf_mode else 12]
                 if len(uses_room) != len(chambers) / 2:
+                    # If, for example, calculating cycles from chambers 10 to 12,
+                    # the character should be used in all of those chambers
                     is_count_cycles = False
             for uses_room_num in uses_room.values():
-                if uses_room_num < MOC_LOWER_LIMIT:
+                if uses_room_num < MIN_APP_LIMIT:
                     is_count_cycles = False
                     break
 
@@ -621,7 +594,7 @@ class CharUsageData(CharApp):
 def usages(
     app: dict[int, dict[str, CharApp]],
     past_phase: str,
-    chambers: list[str] = ROOMS,
+    chambers: list[str],
 ) -> dict[int, dict[str, CharUsageData]]:
     """Calculate usage data for each character."""
     uses: dict[int, dict[str, CharUsageData]] = {}
