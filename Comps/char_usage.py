@@ -263,9 +263,11 @@ def appearances(
                     if len(char_item.round_list[room_num]) > MIN_APP_LIMIT:
                         std_dev_round.append(stdev(char_item.round_list[room_num]))
                         q1_round.append(
-                            calculate_percentile(
-                                char_item.round_list[room_num],
-                                75 if pf_mode else 25,
+                            float(
+                                calculate_percentile(
+                                    char_item.round_list[room_num],
+                                    75 if pf_mode else 25,
+                                ),
                             ),
                         )
                         skewness = skew(
@@ -301,7 +303,6 @@ def appearances(
                     is_count_cycles = False
                     break
 
-            # if avg_round:
             if is_count_cycles:
                 app[char].round = round(mean(avg_round), DEFAULT_ROUND)
                 app[char].std_dev_round = round(mean(std_dev_round), DEFAULT_ROUND)
@@ -607,7 +608,7 @@ def usages(
         with open("../char_results/" + past_phase + "/rounds.json") as stats:
             past_rounds = load(stats)
     except FileNotFoundError:
-        print("No past usage data")
+        pass
 
     for star_num in app:
         uses[star_num] = {}
