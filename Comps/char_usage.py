@@ -618,7 +618,7 @@ def usages(
 
             stage = "all" if chambers == SINGLE_CHAMBER else chambers[0]
 
-            if char in past_usage[stage][str(star_num)]:
+            if past_usage and char in past_usage[stage][str(star_num)]:
                 uses[star_num][char].diff = str(
                     round(
                         app_char.app - past_usage[stage][str(star_num)][char]["app"],
@@ -626,7 +626,7 @@ def usages(
                     ),
                 )
 
-            if char in past_rounds[stage][str(star_num)]:
+            if past_rounds and char in past_rounds[stage][str(star_num)]:
                 uses[star_num][char].diff_rounds = str(
                     round(
                         app_char.round
