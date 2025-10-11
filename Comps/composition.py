@@ -64,7 +64,6 @@ class Composition:
     player: str  # UID as string
     room: Stage
     round_num: int
-    star_num: int
     buff: str
     comp_chars: list[str]
     comp_chars_cons: list[int]

@@ -103,9 +103,6 @@ def main() -> None:
         all_chambers: list[int] = [1, 2]
     else:
         all_chambers: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    three_star_sample: dict[int, int] = {}
-    for chamber_num in all_chambers:
-        three_star_sample[chamber_num] = 0
     uid_freq_comp: dict[str, int] = {}
     self_freq_comp: dict[str, int] = {}
     last_uid = "0"
@@ -164,14 +161,11 @@ def main() -> None:
                     player=player,
                     comp_chars=comp_chars_temp,
                     round_num=round_num,
-                    star_num=star_num,
                     room=Stage(stage, node),
                     buff=line[12] if aa_mode else pf_buff,
                     comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)
-                if star_num == 3:
-                    three_star_sample[stage] += 1
 
     cur_time = time()
     print("done csv comps:", round(cur_time - start_time, 2), "s")

@@ -37,7 +37,6 @@ MIN_APP_LIMIT = 10
 SKEW_LIMIT = 0.8
 SKEW_APP_LIMIT = 10
 EXCLUDED_LIMIT = 8
-ALL_STAR_NUM = 4
 DEFAULT_VALUE: float = 0 if pf_mode else 99.99
 DEFAULT_ROUND: int = 0 if pf_mode else 2
 SINGLE_CHAMBER: list[str] = (
@@ -94,7 +93,7 @@ def appearances(
     chambers: list[str],
     *,
     info_char: bool = False,
-) -> dict[int, dict[str, CharApp]]:
+) -> dict[str, CharApp]:
     """Calculate appearance data for each character."""
     app: dict[str, CharApp] = {}
     user_chars: dict[str, set[str]] = {}
@@ -572,7 +571,7 @@ def appearances(
                                 all_round_num[round_num_iter],
                             ],
                         )
-    return {4: app}
+    return app
 
 
 class CharUsageData(CharApp):
@@ -602,14 +601,15 @@ class CharUsageData(CharApp):
 
 @profile
 def usages(
-    app: dict[int, dict[str, CharApp]],
+    app: dict[str, CharApp],
     past_phase: str,
     chambers: list[str],
-) -> dict[int, dict[str, CharUsageData]]:
+) -> dict[str, CharUsageData]:
     """Calculate usage data for each character."""
-    uses: dict[int, dict[str, CharUsageData]] = {}
-    past_usage: dict[str, dict[str, dict[str, dict[str, float]]]] = {}
-    past_rounds: dict[str, dict[str, dict[str, dict[str, float]]]] = {}
+    uses: dict[str, CharUsageData] = {}
+    past_usage: dict[str, dict[str, dict[str, float]]] = {}
+    past_rounds: dict[str, dict[str, dict[str, float]]] = {}
+    rates: list[float] = []
 
     try:
         with open("../char_results/" + past_phase + "/appearance.json") as stats:
@@ -619,69 +619,59 @@ def usages(
     except FileNotFoundError:
         pass
 
-    for star_num in app:
-        uses[star_num] = {}
-        rates: list[float] = []
-        for char, app_char in app[4].items():
-            uses[star_num][char] = CharUsageData(app_char, char)
-            rates.append(uses[star_num][char].app)
+    for char, app_char in app.items():
+        uses[char] = CharUsageData(app_char, char)
+        rates.append(uses[char].app)
 
-            stage = "all" if chambers == SINGLE_CHAMBER else chambers[0]
+        stage = "all" if chambers == SINGLE_CHAMBER else chambers[0]
 
-            if past_usage and char in past_usage[stage][str(star_num)]:
-                uses[star_num][char].diff = str(
-                    round(
-                        app_char.app - past_usage[stage][str(star_num)][char]["app"],
-                        2,
-                    ),
-                )
+        if stage in past_usage and char in past_usage[stage]:
+            uses[char].diff = str(
+                round(
+                    app_char.app - past_usage[stage][char]["app"],
+                    2,
+                ),
+            )
 
-            if past_rounds and char in past_rounds[stage][str(star_num)]:
-                uses[star_num][char].diff_rounds = str(
-                    round(
-                        app_char.round
-                        - past_rounds[stage][str(star_num)][char]["round"],
-                        2,
-                    ),
-                )
+        if stage in past_rounds and char in past_rounds[stage]:
+            uses[char].diff_rounds = str(
+                round(
+                    app_char.round - past_rounds[stage][char]["round"],
+                    2,
+                ),
+            )
 
-            for i in range(7):
-                uses[star_num][char].cons_usage[i] = {
-                    "app": "-",
-                    "own": "-",
-                    "usage": "-",
-                }
+        for i in range(7):
+            uses[char].cons_usage[i] = {
+                "app": "-",
+                "own": "-",
+                "usage": "-",
+            }
 
-            if chambers != SINGLE_CHAMBER or star_num != ALL_STAR_NUM:
-                continue
+        if chambers != SINGLE_CHAMBER:
+            continue
 
-            weapons = list(app_char.weap_freq)
-            for i in range(len(weapons)):
-                uses[star_num][char].weapons[weapons[i]] = app_char.weap_freq[
-                    weapons[i]
-                ]
+        weapons = list(app_char.weap_freq)
+        for i in range(len(weapons)):
+            uses[char].weapons[weapons[i]] = app_char.weap_freq[weapons[i]]
 
-            artifacts = list(app_char.arti_freq)
-            for i in range(len(artifacts)):
-                uses[star_num][char].artifacts[artifacts[i]] = app_char.arti_freq[
-                    artifacts[i]
-                ]
+        artifacts = list(app_char.arti_freq)
+        for i in range(len(artifacts)):
+            uses[char].artifacts[artifacts[i]] = app_char.arti_freq[artifacts[i]]
 
-            planars = list(app_char.planar_freq)
-            for i in range(len(planars)):
-                uses[star_num][char].planars[planars[i]] = app_char.planar_freq[
-                    planars[i]
-                ]
+        planars = list(app_char.planar_freq)
+        for i in range(len(planars)):
+            uses[char].planars[planars[i]] = app_char.planar_freq[planars[i]]
 
-            for i in range(7):
-                uses[star_num][char].cons_usage[i]["app"] = str(
-                    app_char.cons_freq[i].app,
-                )
-                uses[star_num][char].cons_usage[i]["round"] = str(
-                    app_char.cons_freq[i].round,
-                )
-        rates.sort(reverse=True)
-        for char in uses[star_num]:
-            # if owns[star_num][char]["flat"] > 0:
-            uses[star_num][char].rank = rates.index(uses[star_num][char].app) + 1
+        for i in range(7):
+            uses[char].cons_usage[i]["app"] = str(
+                app_char.cons_freq[i].app,
+            )
+            uses[char].cons_usage[i]["round"] = str(
+                app_char.cons_freq[i].round,
+            )
+    rates.sort(reverse=True)
+    for char in uses:
+        # if owns[char]["flat"] > 0:
+        uses[char].rank = rates.index(uses[char].app) + 1
     return uses
