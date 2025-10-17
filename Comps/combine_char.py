@@ -11,33 +11,16 @@ from comp_rates_config import (
     DPS_APPEND_LIST,
     DPS_LIST,
     RECENT_PHASE,
-    aa_mode,
-    as_mode,
-    pf_mode,
 )
 from slugify import slugify
 
 with open("../Comps/prydwen-slug.json") as slug_file:
     slug = json.load(slug_file)
-with open("phases.json") as phases_file:
-    phases = json.load(phases_file)
 
-if as_mode:
-    phases["as_phase"] = RECENT_PHASE
-elif aa_mode:
-    phases["aa_phase"] = RECENT_PHASE
-elif pf_mode:
-    phases["pf_phase"] = RECENT_PHASE
-else:
-    phases["moc_phase"] = RECENT_PHASE
-
-with open("phases.json", "w") as phases_file:
-    phases_file.write(json.dumps(phases, indent=2))
-
-moc_phase = phases["moc_phase"]
-pf_phase = phases["pf_phase"]
-as_phase = phases["as_phase"]
-aa_phase = phases["aa_phase"]
+moc_phase = RECENT_PHASE
+pf_phase = RECENT_PHASE
+as_phase = RECENT_PHASE
+aa_phase = RECENT_PHASE
 
 with open("../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
@@ -632,13 +615,5 @@ for char in char_array:
         )
     uses.append(uses_temp)
 
-phase_num = RECENT_PHASE
-if as_mode:
-    phase_num = phase_num + "_as"
-elif pf_mode:
-    phase_num = phase_num + "_pf"
-elif aa_mode:
-    phase_num = phase_num + "_aa"
-
-with open("../char_results/" + phase_num + "/builds.json", "w") as out_file:
+with open("../char_results/" + RECENT_PHASE + "/builds.json", "w") as out_file:
     out_file.write(json.dumps(uses, indent=2))

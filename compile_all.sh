@@ -8,11 +8,11 @@ if [ -n "$1" ]; then
 else
 	cd Comps
 	python combine_raw_chars.py
-	python hash.py &
 	python csv_to_pickle.py &
 	python csv_to_pickle.py -pf &
 	python csv_to_pickle.py -aa &
-	python csv_to_pickle.py -as
+	python csv_to_pickle.py -as &
+	python hash.py
 fi
 
 echo ""
@@ -79,12 +79,7 @@ python stats.py -aa
 cd ../Comps
 python move.py -aa
 
-# Need to run combine_char four times because builds.json needs to update phases.json file
 python combine_char.py
-python combine_char.py -pf
-python combine_char.py -as
-python combine_char.py -aa
-
 python combine_comp.py
 python combine_comp.py -pf
 python combine_comp.py -as
