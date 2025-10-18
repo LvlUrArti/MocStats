@@ -429,7 +429,7 @@ def used_comps(
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             if sustain_count <= 1:
                 avg_round_stage[cur_room].append(comp.round_num)
-                if pf_mode or (aa_mode and cur_room == 2):
+                if (pf_mode or (aa_mode and cur_room == 2)) and comp.buff:
                     if "buff_" + comp.buff not in sample_size[cur_room]:
                         sample_size[cur_room]["buff_" + comp.buff] = 0
                     sample_size[cur_room]["buff_" + comp.buff] += 1

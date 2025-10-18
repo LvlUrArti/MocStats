@@ -153,9 +153,9 @@ def main() -> None:
                     for i in (range(8, 12) if aa_mode else range(9, 13))
                     if line[i] != ""
                 )
-                pf_buff = line[13] if pf_mode else ""
+                pf_buff = line[13] if pf_mode else None
             else:
-                pf_buff = line[9] if pf_mode else ""
+                pf_buff = line[9] if pf_mode else None
             if comp_chars_temp:
                 comp = Composition(
                     player=player,

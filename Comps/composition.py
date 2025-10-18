@@ -64,7 +64,7 @@ class Composition:
     player: str  # UID as string
     room: Stage
     round_num: int
-    buff: str
+    buff: str | None
     comp_chars: list[str]
     comp_chars_cons: list[int]
     is_hard_mode: bool | None
