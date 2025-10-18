@@ -1,11 +1,13 @@
 # pyright: reportUnknownVariableType=false, reportUnknownMemberType=false
 """Hash function for comp rates."""
 
-import uuid
+from itertools import count
 
 from comp_rates_config import RECENT_PHASE
 from pandas import DataFrame, read_csv
 
+# Create sequential ID generator
+id_generator = count(1000000)  # Start at 1,000,000 (7 digits)
 pass_hash = {}
 
 df_char: DataFrame = read_csv(
@@ -32,19 +34,19 @@ df_spiral_aa = read_csv(
 df_stats = read_csv("../mihomo/output1.csv", encoding="cp1252").convert_dtypes()
 
 for i in df_char["uid"].unique():
-    pass_hash[i] = uuid.uuid1().hex
+    pass_hash[i] = next(id_generator)
 for i in df_spiral["uid"].unique():
     if i not in pass_hash:
-        pass_hash[i] = uuid.uuid1().hex
+        pass_hash[i] = next(id_generator)
 for i in df_spiral_pf["uid"].unique():
     if i not in pass_hash:
-        pass_hash[i] = uuid.uuid1().hex
+        pass_hash[i] = next(id_generator)
 for i in df_spiral_as["uid"].unique():
     if i not in pass_hash:
-        pass_hash[i] = uuid.uuid1().hex
+        pass_hash[i] = next(id_generator)
 for i in df_spiral_aa["uid"].unique():
     if i not in pass_hash:
-        pass_hash[i] = uuid.uuid1().hex
+        pass_hash[i] = next(id_generator)
 
 df_char["uid"] = df_char["uid"].replace(pass_hash)
 df_spiral["uid"] = df_spiral["uid"].replace(pass_hash)
