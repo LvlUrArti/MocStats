@@ -60,15 +60,15 @@ if not as_mode:
 
 moc_mode = not pf_mode and not aa_mode
 
-suffix = ""
+pf_filename = ""
 if as_mode:
-    suffix = "_as"
+    pf_filename = "_as"
 elif pf_mode:
-    suffix = "_pf"
+    pf_filename = "_pf"
 elif aa_mode:
-    suffix = "_aa"
-RECENT_PHASE_PF = RECENT_PHASE + suffix
-past_phase = past_phase + suffix
+    pf_filename = "_aa"
+RECENT_PHASE_PF = RECENT_PHASE + pf_filename
+past_phase = past_phase + pf_filename
 
 run_all_chars = False
 run_chars_name = ["Aglaea", "Boothill", "Robin", "Silver Wolf"]

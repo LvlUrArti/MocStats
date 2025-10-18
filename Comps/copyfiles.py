@@ -3,24 +3,17 @@
 import shutil
 from os import listdir, mkdir, path
 
-from comp_rates_config import RECENT_PHASE, aa_mode, as_mode, pf_mode
+from comp_rates_config import RECENT_PHASE_PF, aa_mode, as_mode, pf_filename, pf_mode
 from send2trash import send2trash
 
-suffix = ""
-moc_suffix = ""
 if as_mode:
-    suffix = "_as"
     moc_suffix = "as"
 elif aa_mode:
-    suffix = "_aa"
     moc_suffix = "aa"
 elif pf_mode:
-    suffix = "_pf"
     moc_suffix = "pf"
 else:
     moc_suffix = "moc"
-
-RECENT_PHASE_PF = RECENT_PHASE + suffix
 
 source_dirs = [
     "../char_results/" + RECENT_PHASE_PF,
@@ -47,7 +40,7 @@ for source_dir in source_dirs:
         common_file = file_name in ["builds.json", "boss_names.json"]
         if ("comp_results" in source_dir and "combined" in file_name) or (
             file_name == "duo_usages.json"
-            or file_name == ("demographic_collect" + suffix + ".json")
+            or file_name == ("demographic_collect" + pf_filename + ".json")
             or (common_file and aa_mode)
         ):
             if common_file:

@@ -20,7 +20,6 @@ from comp_rates_config import (
     aa_mode,
     app_rate_threshold,
     app_rate_threshold_round,
-    as_mode,
     char_app_rate_threshold,
     char_infographics,
     duo_dict_len,
@@ -28,6 +27,7 @@ from comp_rates_config import (
     load,
     moc_mode,
     past_phase,
+    pf_filename,
     pf_mode,
     run_commands,
 )
@@ -42,14 +42,6 @@ if TYPE_CHECKING:
 
 with open("prydwen-slug.json") as slug_file:
     slug = load(slug_file)
-
-pf_filename = ""
-if as_mode:
-    pf_filename = "_as"
-elif aa_mode:
-    pf_filename = "_aa"
-elif pf_mode:
-    pf_filename = "_pf"
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 

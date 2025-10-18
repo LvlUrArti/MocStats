@@ -13,10 +13,11 @@ from time import time
 from comp_rates_config import (
     LAST_MOC_FLOOR,
     RECENT_PHASE,
+    RECENT_PHASE_PF,
     aa_mode,
-    as_mode,
     load,
     moc_mode,
+    pf_filename,
     pf_mode,
     skip_random,
     skip_self,
@@ -78,18 +79,10 @@ def main() -> None:
         if not path.exists(make_path):
             makedirs(make_path)
 
-    pf_filename = ""
-    if as_mode:
-        pf_filename = "_as"
-    elif aa_mode:
-        pf_filename = "_aa"
-    elif pf_mode:
-        pf_filename = "_pf"
-
     with (
-        open("../data/raw_csvs_real/" + RECENT_PHASE + pf_filename + ".csv")
+        open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
         if path.exists("../data/raw_csvs_real/")
-        else open("../data/raw_csvs/" + RECENT_PHASE + pf_filename + ".csv")
+        else open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv")
     ) as f:
         stats = csvreader(f)
         reader = stats
