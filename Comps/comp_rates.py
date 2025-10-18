@@ -411,6 +411,7 @@ def used_comps(
             (WHALE_ONLY and not whale_comp)
             or (F2P_ONLY and (not f2p_comp or whale_comp))
             or giga_whale
+            or comp.is_hard_mode
         ):
             continue
 

@@ -67,6 +67,7 @@ class Composition:
     buff: str
     comp_chars: list[str]
     comp_chars_cons: list[int]
+    is_hard_mode: bool | None
 
     def __post_init__(self) -> None:
         """Composition constructor."""

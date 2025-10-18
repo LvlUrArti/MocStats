@@ -152,8 +152,10 @@ def appearances(
 
             # >E2 clears should still be included to calculate
             # characters' average score for all eidolons
-            if (WHALE_ONLY and (giga_whale or not whale_comp)) or (
-                F2P_ONLY and (not f2p_comp or whale_comp)
+            if (
+                (WHALE_ONLY and (giga_whale or not whale_comp))
+                or (F2P_ONLY and (not f2p_comp or whale_comp))
+                or user_chamber.is_hard_mode
             ):
                 continue
 
@@ -671,7 +673,7 @@ def usages(
                 app_char.cons_freq[i].round,
             )
     rates.sort(reverse=True)
-    for char in uses:
+    for char, use_char in uses.items():
         # if owns[char]["flat"] > 0:
-        uses[char].rank = rates.index(uses[char].app) + 1
+        uses[char].rank = rates.index(use_char.app) + 1
     return uses
