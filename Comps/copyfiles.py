@@ -27,10 +27,12 @@ source_dirs = [
     "../comp_results/" + RECENT_PHASE_PF + "/json",
 ]
 
-for source_dir in source_dirs:
-    if not path.exists("../web_results/" + moc_suffix):
-        mkdir("../web_results/" + moc_suffix)
+if path.exists("../web_results"):
+    send2trash("../web_results")
+mkdir("../web_results")
+mkdir("../web_results/" + moc_suffix)
 
+for source_dir in source_dirs:
     if "comp_results" in source_dir:
         target_dir = "../web_results/" + moc_suffix + "/comps"
     else:
