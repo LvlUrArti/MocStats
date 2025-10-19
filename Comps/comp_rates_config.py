@@ -201,6 +201,12 @@ FUA_LIST = [
 
 SUPER_BREAK_LIST = ["Imaginary Trailblazer", "Fugue"]
 
+CHAR_NAME_REPLACE = {
+    "Dan Heng â€¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
+    "Dan Heng Ã¢â,¬Â¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
+    "Dan Heng \u2022 Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
+    "Topaz and Numby": "Topaz & Numby",
+}
 
 # threshold for comps in character infographics, non-inclusive
 char_app_rate_threshold = 0.25

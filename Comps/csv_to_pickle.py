@@ -15,7 +15,6 @@ from comp_rates_config import (
     RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
-    load,
     moc_mode,
     pf_filename,
     pf_mode,
@@ -24,9 +23,6 @@ from comp_rates_config import (
 )
 from composition import Composition, Stage
 from player_phase import PlayerPhase
-
-with open("prydwen-slug.json") as slug_file:
-    slug = load(slug_file)
 
 all_players: dict[str, PlayerPhase] = {}
 all_comps: list[Composition] = []

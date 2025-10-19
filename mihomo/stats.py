@@ -22,20 +22,22 @@ from matplotlib.pyplot import (
 
 sys_path.append("../Comps/")
 from comp_rates_config import (
+    CHAR_NAME_REPLACE,
     RECENT_PHASE,
     RECENT_PHASE_PF,
-    pf_mode,
+    pf_filename,
     skew_num,
     skip_random,
     skip_self,
 )
+from csv_to_pickle import PickleData, load_pickle_data
 from nohomo_config import (
     check_char,
     check_char_name,
     check_stats,
     print_chart,
 )
-from numpy import array as nparray
+from player_phase import PlayerPhase
 from pynput import keyboard
 from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
     skew,  # pyright: ignore[reportUnknownVariableType]
@@ -50,26 +52,19 @@ def read_csv(file: TextIOWrapper) -> list[list[str]]:
 
 
 if path.exists("../data/raw_csvs_real/"):
-    with open("results_real/" + RECENT_PHASE + "/output1.csv") as f:
-        data = nparray(read_csv(f))
+    with open("results_real/" + RECENT_PHASE + "/output1.csv", encoding="UTF8") as f:
+        data = list(read_csv(f))
 else:
-    with open("results/" + RECENT_PHASE + "_output.csv") as f:
-        data = nparray(read_csv(f))
+    with open("results/" + RECENT_PHASE + "_output.csv", encoding="UTF8") as f:
+        data = list(read_csv(f))
 
 with open("../data/light_cones.json") as f:
     LIGHT_CONES = json_load(f)
 with open("../Comps/prydwen-slug.json") as slug_file:
     slug = json_load(slug_file)
 
-if path.exists("../data/raw_csvs_real/"):
-    with open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv") as f:
-        spiral = read_csv(f)
-else:
-    with open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv") as f:
-        spiral = read_csv(f)
-
 with open("../char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
-    build = nparray(read_csv(f))
+    build = list(read_csv(f))
 
 archetype = "all"
 
@@ -133,29 +128,19 @@ stats: dict[str, StatsChar] = {}
 median: dict[str, dict[str, float]] = {}
 mean: dict[str, dict[str, float]] = {}
 mainstats: dict[str, dict[str, dict[str, float]]] = {}
-
-spiral_rows: dict[str, dict[str, int]] = {}
-for spiral_row in spiral:
-    if (
-        int("".join(filter(str.isdigit, spiral_row[1]))) > 11
-        or (pf_mode and int("".join(filter(str.isdigit, spiral_row[1]))) > 3)
-    ) and int(spiral_row[4]) == 3:
-        if spiral_row[0] not in spiral_rows:
-            spiral_rows[spiral_row[0]] = {}
-        for i in range(5, 9):
-            if spiral_row[i] in [
-                "Dan Heng â€¢ Imbibitor Lunae",
-                "Dan Heng \u2022 Imbibitor Lunae",
-            ]:
-                spiral_row[i] = "Dan Heng • Imbibitor Lunae"
-            if "Topaz and Numby" in spiral_row[i]:
-                spiral_row[i] = "Topaz & Numby"
-            if spiral_row[i] not in spiral_rows[spiral_row[0]]:
-                spiral_rows[spiral_row[0]][spiral_row[i]] = 1
-            else:
-                spiral_rows[spiral_row[0]][spiral_row[i]] += 1
-
 chars.extend(row[0] for row in build)
+
+loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
+
+all_players: dict[str, PlayerPhase] = loaded_data.all_players
+spiral_rows: dict[str, dict[str, int]] = {}
+for cur_uid, cur_player in all_players.items():
+    spiral_rows[cur_uid] = {}
+    for player_comp in cur_player.chambers.values():
+        for char in player_comp.comp_chars:
+            if char not in spiral_rows[cur_uid]:
+                spiral_rows[cur_uid][char] = 0
+            spiral_rows[cur_uid][char] += 1
 
 for char in chars:
     stats[char] = StatsChar(char)
@@ -169,7 +154,7 @@ for char in chars:
     }
 ar = 0
 count = 0
-uid = 0
+uid = "0"
 mainstatkeys: list[str] = list(mainstats[chars[0]].keys())
 substatkeys: list[str] = list(substats.keys())
 
@@ -181,8 +166,8 @@ else:
     self_uids = []
 
 for row in data:
-    char = row[2]
-    cur_uid = row[0]
+    char = str(row[2])
+    cur_uid = str(row[0])
     if skip_self and cur_uid in self_uids:
         continue
     if skip_random and cur_uid not in self_uids:
@@ -192,64 +177,31 @@ for row in data:
         ar += int(row[1])
         count += 1
     if char not in chars:
-        if char in [
-            "Dan Heng â€¢ Imbibitor Lunae",
-            "Dan Heng Ã¢â,¬Â¢ Imbibitor Lunae",
-            "Dan Heng \u2022 Imbibitor Lunae",
-        ]:
-            char = "Dan Heng • Imbibitor Lunae"
-        elif "Topaz and Numby" in char:
-            char = "Topaz & Numby"
-        elif "Trailblazer" in char:
-            char = "Trailblazer"
-        elif "March 7th" in char:
-            char = "March 7th"
+        if char in CHAR_NAME_REPLACE:
+            char = CHAR_NAME_REPLACE[char]
+        elif char in {"Trailblazer", "March 7th"}:
+            char = f"{row[4]} {char}"
         else:
             print(char)
             sys_exit()
-    if char in {"Trailblazer", "March 7th"}:
-        match row[4]:
-            case "Fire":
-                char = "Fire " + char
-            case "Physical":
-                char = "Physical " + char
-            case "Ice":
-                char = "Ice " + char
-            case "Lightning":
-                char = "Lightning " + char
-            case "Wind":
-                char = "Wind " + char
-            case "Quantum":
-                char = "Quantum " + char
-            case "Imaginary":
-                char = "Imaginary " + char
-            case _:
-                pass
-    found = False
-    if cur_uid in spiral_rows:
-        if char in spiral_rows[cur_uid] or (
-            "Trailblazer" in spiral_rows[cur_uid] and "Trailblazer" in char
-        ):
-            found = True
-
-        if found:
-            # if isValidChar:
-            stats[char].sample_size_players += 1
-            for _i in range(spiral_rows[cur_uid][char]):
-                stats[char].stats_count["char_lvl"].append(float(row[3]))
-                stats[char].sample_size += 1
-                stats[char].stats_count["spd_sub"].append(float(row[23]))
-                if row[6].isnumeric():
-                    stats[char].stats_count["light_cone_lvl"].append(float(row[6]))
-                for j in range(2, 10):
-                    stats[char].stats_count[statkeys[j]].append(float(row[j + 5]))
-                for j in chain(range(10, 18), range(19, 27)):
-                    stats[char].stats_count[statkeys[j]].append(float(row[j + 5]) / 100)
-                for j in range(4):
-                    if row[j + 32] in mainstats[char][mainstatkeys[j]]:
-                        mainstats[char][mainstatkeys[j]][row[j + 32]] += 1
-                    else:
-                        mainstats[char][mainstatkeys[j]][row[j + 32]] = 1
+    if cur_uid in spiral_rows and char in spiral_rows[cur_uid]:
+        # if isValidChar:
+        stats[char].sample_size_players += 1
+        for _i in range(spiral_rows[cur_uid][char]):
+            stats[char].stats_count["char_lvl"].append(float(row[3]))
+            stats[char].sample_size += 1
+            stats[char].stats_count["spd_sub"].append(float(row[23]))
+            if row[6].isnumeric():
+                stats[char].stats_count["light_cone_lvl"].append(float(row[6]))
+            for j in range(2, 10):
+                stats[char].stats_count[statkeys[j]].append(float(row[j + 5]))
+            for j in chain(range(10, 18), range(19, 27)):
+                stats[char].stats_count[statkeys[j]].append(float(row[j + 5]) / 100)
+            for j in range(4):
+                if row[j + 32] in mainstats[char][mainstatkeys[j]]:
+                    mainstats[char][mainstatkeys[j]][row[j + 32]] += 1
+                else:
+                    mainstats[char][mainstatkeys[j]][row[j + 32]] = 1
 
 copy_chars = chars.copy()
 for char in copy_chars:
@@ -407,14 +359,14 @@ def write_files(
 
 if path.exists("results_real"):
     with (
-        open("results_real/chars.csv", "w", newline="") as file1,
-        open("results_real/demographic.csv", "w", newline="") as file2,
+        open("results_real/chars.csv", "w", newline="", encoding="UTF8") as file1,
+        open("results_real/demographic.csv", "w", newline="", encoding="UTF8") as file2,
     ):
         write_files(file1, file2)
 else:
     with (
-        open("results/chars.csv", "w", newline="") as file1,
-        open("results/demographic.csv", "w", newline="") as file2,
+        open("results/chars.csv", "w", newline="", encoding="UTF8") as file1,
+        open("results/demographic.csv", "w", newline="", encoding="UTF8") as file2,
     ):
         write_files(file1, file2)
 
@@ -422,14 +374,6 @@ else:
 temp_stats: list[str] = []
 with open("../char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
     CHARACTERS = json_load(char_file)
-with open(
-    "../char_results/" + RECENT_PHASE_PF + "/appearance_combine.json",
-) as app_char_file:
-    APP = json_load(app_char_file)
-with open(
-    "../char_results/" + RECENT_PHASE_PF + "/rounds_combine.json",
-) as round_char_file:
-    ROUND = json_load(round_char_file)
 for iter_char, (char, char_stat) in enumerate(stats.items()):
     for i in chain(range(10, 18), range(19, 27)):
         stats[char].stats_write[statkeys[i]] = round(
