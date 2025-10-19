@@ -11,11 +11,9 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
-    LAST_MOC_FLOOR,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
-    moc_mode,
     pf_filename,
     pf_mode,
     skip_random,
@@ -105,7 +103,6 @@ def main() -> None:
             stage = 1 if stage <= 3 else 2
 
         round_num = int(line[2] if aa_mode else line[3])
-        star_num = int(line[3] if aa_mode else line[4])
         if skip_self and player in self_uids:
             continue
         if skip_random and player not in self_uids:
@@ -115,16 +112,10 @@ def main() -> None:
             if player in uid_freq_comp:
                 skip_uid = True
                 print("duplicate UID in comp: " + player)
-            elif (
-                (aa_mode and (stage == 2 or round_num <= 4) and star_num >= 1)
-                or (moc_mode and stage >= LAST_MOC_FLOOR and star_num == 3)
-                or (pf_mode and stage > 3 and star_num == 3)
-            ):
+            else:
                 uid_freq_comp[player] = 1
                 if player in self_uids:
                     self_freq_comp[player] = 1
-            else:
-                skip_uid = True
         last_uid = player
         if not skip_uid:
             comp_chars_temp: list[str] = []
@@ -150,6 +141,7 @@ def main() -> None:
                     player=player,
                     comp_chars=comp_chars_temp,
                     round_num=round_num,
+                    star_num=int(line[3] if aa_mode else line[4]),
                     room=Stage(stage, node),
                     buff=line[12] if aa_mode else pf_buff,
                     comp_chars_cons=cons_chars_temp,
