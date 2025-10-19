@@ -4312,5 +4312,57 @@
         "role": "Damage Dealer",
         "alt_name": null,
         "out_name": false
+    },
+    "Dan Heng \u2022 Permansor Terrae": {
+        "id": "1414",
+        "name": "Dan Heng \u2022 Permansor Terrae",
+        "tag": "danhengpt",
+        "rarity": 5,
+        "path": "Knight",
+        "element": "Physical",
+        "max_sp": 135,
+        "ranks": [
+            "141401",
+            "141402",
+            "141403",
+            "141404",
+            "141405",
+            "141406"
+        ],
+        "skills": [
+            "141401",
+            "141402",
+            "141403",
+            "141404",
+            "141406",
+            "141407"
+        ],
+        "skill_trees": [
+            "1414001",
+            "1414002",
+            "1414003",
+            "1414004",
+            "1414007",
+            "1414101",
+            "1414102",
+            "1414103",
+            "1414201",
+            "1414202",
+            "1414203",
+            "1414204",
+            "1414205",
+            "1414206",
+            "1414207",
+            "1414208",
+            "1414209",
+            "1414210"
+        ],
+        "icon": "icon/character/1414.png",
+        "preview": "image/character_preview/1414.png",
+        "portrait": "image/character_portrait/1414.png",
+        "availability": "Limited 5*",
+        "role": "Sustain",
+        "alt_name": null,
+        "out_name": false
     }
 }
