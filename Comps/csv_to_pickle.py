@@ -153,7 +153,7 @@ def main() -> None:
                     room=Stage(stage, node),
                     buff=line[12] if aa_mode else pf_buff,
                     comp_chars_cons=cons_chars_temp,
-                    is_hard_mode=bool(line[13]) if aa_mode else None,
+                    is_hard_mode=line[13] == "True" if aa_mode else None,
                 )
                 all_comps.append(comp)
 
