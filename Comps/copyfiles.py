@@ -3,7 +3,14 @@
 import shutil
 from os import listdir, mkdir, path
 
-from comp_rates_config import RECENT_PHASE_PF, aa_mode, as_mode, pf_filename, pf_mode
+from comp_rates_config import (
+    RECENT_PHASE_PF,
+    aa_mode,
+    as_mode,
+    moc_mode,
+    pf_filename,
+    pf_mode,
+)
 from send2trash import send2trash
 
 if as_mode:
@@ -20,9 +27,9 @@ source_dirs = [
     "../comp_results/" + RECENT_PHASE_PF + "/json",
 ]
 
-if path.exists("../web_results"):
+if moc_mode and path.exists("../web_results"):
     send2trash("../web_results")
-mkdir("../web_results")
+    mkdir("../web_results")
 mkdir("../web_results/" + moc_suffix)
 
 for source_dir in source_dirs:
@@ -41,7 +48,7 @@ for source_dir in source_dirs:
         if ("comp_results" in source_dir and "combined" in file_name) or (
             file_name == "duo_usages.json"
             or file_name == ("demographic_collect" + pf_filename + ".json")
-            or (common_file and aa_mode)
+            or (common_file and moc_mode)
         ):
             if common_file:
                 temp_target_dir = target_dir
