@@ -8,7 +8,7 @@ from os.path import dirname as path_dirname
 from os.path import join as path_join
 
 # don't add underscore, i.e. 2.2.1"_pf"
-RECENT_PHASE = "3.6.3"
+RECENT_PHASE = "3.6.3.2"
 
 # if no past phase, leave blank
 # add underscore, i.e. 2.2.1"_pf"
@@ -153,6 +153,7 @@ HARMONY_LIST = [
     "Ice Trailblazer",
     "Tribbie",
     "Cerydra",
+    "Cyrene",
 ]
 
 HEALER_LIST = [
