@@ -8,8 +8,7 @@ import re
 from typing import cast
 
 from comp_rates_config import (
-    DPS_APPEND_LIST,
-    DPS_LIST,
+    DPS_SUB_LIST,
     RECENT_PHASE,
 )
 from slugify import slugify
@@ -219,7 +218,7 @@ for char_iter in CHARACTERS:
     if char in slug:
         char = slug[char]
     char_array.append(char)
-    if char_iter in [*DPS_LIST, *DPS_APPEND_LIST]:
+    if char_iter in [*DPS_SUB_LIST]:
         char_array.append("solo-" + char)
         char_array.append("supp-" + char)
 
