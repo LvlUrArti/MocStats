@@ -291,6 +291,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 data/raw_csvs_real
+data/repo_files_real.csv
 data/pickle
 Comps/client_secret.json
 Comps/sheets.googleapis.com-python.json

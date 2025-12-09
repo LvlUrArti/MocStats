@@ -12,6 +12,8 @@ You can find the raw data in the [Hugging Face Dataset](https://huggingface.co/d
 
 Run `pip install -r requirements.txt`
 
+In the `Comps/hf_data` folder, run `python fetch_data.py`
+
 Change past and recent phase in `Comps/comp_rates_config.py`
 
 ## Compile for all gamemodes
