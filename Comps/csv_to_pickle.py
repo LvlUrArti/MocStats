@@ -31,8 +31,20 @@ if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
         self_uids = set(next(iter(reader)))
+    with open("../../random.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        random_uids = set(next(iter(reader)))
+    with open("../../collect/collected_stardb.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        star_db = {item for sublist in list(reader) for item in sublist}
+    with open("../../collect/collected_hoyobuddy.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        hoyo_buddy = {item for sublist in list(reader) for item in sublist}
 else:
     self_uids: set[str] = set()
+    random_uids: set[str] = set()
+    star_db: set[str] = set()
+    hoyo_buddy: set[str] = set()
 
 
 @dataclass
@@ -91,7 +103,6 @@ def main() -> None:
     else:
         all_chambers: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     uid_freq_comp: dict[str, int] = {}
-    self_freq_comp: dict[str, int] = {}
     last_uid = "0"
     skip_uid = False
 
@@ -114,8 +125,6 @@ def main() -> None:
                 print("duplicate UID in comp: " + player)
             else:
                 uid_freq_comp[player] = 1
-                if player in self_uids:
-                    self_freq_comp[player] = 1
         last_uid = player
         if not skip_uid:
             comp_chars_temp: list[str] = []
@@ -157,11 +166,6 @@ def main() -> None:
         sample_size[chamber_num] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
-    sample_size["all"] = {
-        "total": len(uid_freq_comp),
-        "self_report": len(self_freq_comp),
-        "random": len(uid_freq_comp) - len(self_freq_comp),
-    }
 
     with (
         open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv")

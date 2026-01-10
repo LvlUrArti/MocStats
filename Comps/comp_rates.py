@@ -55,8 +55,20 @@ if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
         self_uids = set(next(iter(reader)))
+    with open("../../random.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        random_uids = set(next(iter(reader)))
+    with open("../../collect/collected_stardb.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        star_db_uids = {item for sublist in list(reader) for item in sublist}
+    with open("../../collect/collected_hoyobuddy.csv", encoding="UTF8") as f:
+        reader = csvreader(f, delimiter=",")
+        hoyobuddy_uids = {item for sublist in list(reader) for item in sublist}
 else:
     self_uids = set[str]()
+    random_uids = set[str]()
+    star_db_uids = set[str]()
+    hoyobuddy_uids = set[str]()
 
 
 @profile
@@ -345,6 +357,9 @@ def used_comps(
     global total_comps
     total_comps = 0
     total_self_comps = 0
+    total_random_comps = 0
+    total_star_db_comps = 0
+    total_hoyobuddy_comps = 0
     whale_count = 0
     f2p_count = 0
 
@@ -373,6 +388,12 @@ def used_comps(
         total_comps += 1
         if comp.player in self_uids:
             total_self_comps += 1
+        if comp.player in random_uids:
+            total_random_comps += 1
+        if comp.player in star_db_uids:
+            total_star_db_comps += 1
+        if comp.player in hoyobuddy_uids:
+            total_hoyobuddy_comps += 1
         if len(comp_tuple) < 4:
             continue
         if side_comp and len(side_comp.characters) < 4:
@@ -449,8 +470,10 @@ def used_comps(
         chamber_num = Stage.from_string(filename)
         if chamber_num.node == 1:
             sample_size[chamber_num.stage]["total"] = total_comps
-            sample_size[chamber_num.stage]["self_report"] = total_self_comps
-            sample_size[chamber_num.stage]["random"] = total_comps - total_self_comps
+            sample_size[chamber_num.stage]["prydwen"] = total_self_comps
+            sample_size[chamber_num.stage]["random"] = total_random_comps
+            sample_size[chamber_num.stage]["stardb"] = total_star_db_comps
+            sample_size[chamber_num.stage]["hoyobuddy"] = total_hoyobuddy_comps
     return comps_dict
 
 
