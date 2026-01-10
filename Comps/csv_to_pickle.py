@@ -30,9 +30,9 @@ sample_size: dict[int | str, dict[str, int | float]] = {}
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
-        self_uids = next(iter(reader))
+        self_uids = set(next(iter(reader)))
 else:
-    self_uids = []
+    self_uids: set[str] = set()
 
 
 @dataclass
@@ -176,7 +176,7 @@ def main() -> None:
     # uid_freq_char and last_uid will help detect duplicate UIDs
     last_uid = "0"
     player = PlayerPhase(last_uid)
-    uid_freq_char: list[str] = []
+    uid_freq_char: set[str] = set()
 
     # Append lines
     for line in reader:
@@ -186,7 +186,7 @@ def main() -> None:
                 if line[0] in uid_freq_char:
                     skip_uid = True
                 else:
-                    uid_freq_char.append(line[0])
+                    uid_freq_char.add(line[0])
             if not skip_uid:
                 if line[0] != last_uid:
                     all_players[last_uid] = player

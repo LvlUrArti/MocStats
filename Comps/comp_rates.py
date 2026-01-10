@@ -54,9 +54,9 @@ all_comps_json: dict[str, list[dict[str, str | float]]] = {}
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
-        self_uids = next(iter(reader))
+        self_uids = set(next(iter(reader)))
 else:
-    self_uids = []
+    self_uids = set[str]()
 
 
 @profile

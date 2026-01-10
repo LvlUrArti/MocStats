@@ -8,11 +8,11 @@ from os.path import dirname as path_dirname
 from os.path import join as path_join
 
 # don't add underscore, i.e. 2.2.1"_pf"
-RECENT_PHASE = "3.7.2"
+RECENT_PHASE = "3.8.2"
 
 # if no past phase, leave blank
 # add underscore, i.e. 2.2.1"_pf"
-past_phase = "3.7.1"
+past_phase = "3.8.1"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
@@ -71,12 +71,12 @@ RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 past_phase = past_phase + pf_filename
 
 run_all_chars = False
-run_chars_name = ["Aglaea", "Boothill", "Robin", "Silver Wolf"]
-char_infographics = run_chars_name[1]
+run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
+char_infographics = next(iter(run_chars_name))
 
-DPS_SUB_LIST = ["Anaxa", "Argenti", "Blade", "Evernight"]
+DPS_SUB_LIST = {"Anaxa", "Argenti", "Blade", "Evernight"}
 
-DPS_LIST = [
+DPS_LIST = {
     "Yanqing",
     "Hook",
     "Seele",
@@ -96,9 +96,9 @@ DPS_LIST = [
     "Hysilens",
     "Castorice",
     "Archer",
-]
+}
 
-DPS_APPEND_LIST = [
+DPS_APPEND_LIST = {
     "Xueyi",
     "Physical Trailblazer",
     "Sushang",
@@ -115,15 +115,15 @@ DPS_APPEND_LIST = [
     "Mydei",
     "Anaxa",
     "Evernight",
-]
+}
 
-SUB_DPS_LIST = [
+SUB_DPS_LIST = {
     "Black Swan",
     "Jade",
     "Kafka",
-]
+}
 
-SUB_DPS_APPEND_LIST = [
+SUB_DPS_APPEND_LIST = {
     "Imaginary March 7th",
     "Moze",
     "Welt",
@@ -131,11 +131,11 @@ SUB_DPS_APPEND_LIST = [
     "Herta",
     "Topaz & Numby",
     "Cipher",
-]
+}
 
-DOT_SUPPORT_LIST = ["Sampo", "Guinaifen"]
+DOT_SUPPORT_LIST = {"Sampo", "Guinaifen"}
 
-HARMONY_LIST = [
+HARMONY_LIST = {
     "Bronya",
     "Silver Wolf",
     "Asta",
@@ -154,9 +154,10 @@ HARMONY_LIST = [
     "Tribbie",
     "Cerydra",
     "Cyrene",
-]
+    "The Dahlia",
+}
 
-HEALER_LIST = [
+HEALER_LIST = {
     "Natasha",
     "Luocha",
     "Bailu",
@@ -165,27 +166,27 @@ HEALER_LIST = [
     "Gallagher",
     "Hyacine",
     "Lingsha",
-]
+}
 
-PRESERVATION_LIST = [
+PRESERVATION_LIST = {
     "Ice March 7th",
     "Gepard",
     "Fire Trailblazer",
     "Fu Xuan",
     "Aventurine",
     "Dan Heng • Permansor Terrae",
-]
+}
 
-DOT_LIST = [
+DOT_LIST = {
     "Kafka",
     "Black Swan",
     "Serval",
     "Sampo",
     "Luka",
     "Guinaifen",
-]
+}
 
-FUA_LIST = [
+FUA_LIST = {
     "Topaz & Numby",
     "Dr. Ratio",
     "Clara",
@@ -199,9 +200,9 @@ FUA_LIST = [
     "Jade",
     "Feixiao",
     "Moze",
-]
+}
 
-SUPER_BREAK_LIST = ["Imaginary Trailblazer", "Fugue"]
+SUPER_BREAK_LIST = {"Imaginary Trailblazer", "Fugue"}
 
 CHAR_NAME_REPLACE = {
     "Dan Heng â€¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
@@ -231,7 +232,7 @@ WHALE_ONLY: bool = args.whale
 F2P_ONLY: bool = args.f2p
 
 # Char infographics should be separated from overall comp rankings
-run_commands = [
+run_commands = {
     # "Duos check",
     "Char usages 8 - 10",
     "Char usages for each stage",
@@ -241,59 +242,59 @@ run_commands = [
     # "Character specific infographics",
     # "Char usages all stages",
     # "Comp usage all stages",
-]
+}
 
 if args.top or args.f2p:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Comp usage 8 - 10",
-    ]
+    }
 
 elif args.whale:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    ]
+    }
 
 elif args.chars_top:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
-    ]
+    }
 
 elif args.comps_top:
-    run_commands = [
+    run_commands = {
         "Comp usage 8 - 10",
-    ]
+    }
 
 elif args.all:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Char usages for each stage (combined)",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    ]
+    }
 
 elif args.chars_all:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Char usages for each stage (combined)",
-    ]
+    }
 
 elif args.comps_all:
-    run_commands = [
+    run_commands = {
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    ]
+    }
 
 elif args.duos:
-    run_commands = [
+    run_commands = {
         "Duos check",
-    ]
+    }
 
 alt_comps = "Character specific infographics" in run_commands
 if alt_comps and char_app_rate_threshold > app_rate_threshold:
@@ -312,8 +313,8 @@ with open(relative_path("../data/characters.json")) as char_file:
 with open(relative_path("../data/light_cones.json")) as char_file:
     LIGHT_CONES: dict[str, dict[str, str | int | None]] = load(char_file)
 
-sig_weaps: list[str] = []
-STAND_WEAPS = [
+sig_weaps: set[str] = set()
+STAND_WEAPS = {
     "Night on the Milky Way",
     "Something Irreplaceable",
     "But the Battle Isn't Over",
@@ -326,11 +327,11 @@ STAND_WEAPS = [
     "Texture of Memories",
     "Solitary Healing",
     "Eternal Calculus",
-]
+}
 MAX_LC_RARITY = 5
 for light_cone in LIGHT_CONES:
     if (
         LIGHT_CONES[light_cone]["rarity"] == MAX_LC_RARITY
         and LIGHT_CONES[light_cone]["name"] not in STAND_WEAPS
     ):
-        sig_weaps += [str(LIGHT_CONES[light_cone]["name"])]
+        sig_weaps.add(str(LIGHT_CONES[light_cone]["name"]))

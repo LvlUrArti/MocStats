@@ -11,7 +11,7 @@ from csv import reader as csvreader
 from csv import writer as csvwriter
 from statistics import mean as stat_mean
 from statistics import median as stat_median
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from comp_rates_config import (
     RECENT_PHASE_PF,
@@ -74,11 +74,8 @@ with open("../char_results/all.csv") as f:
 
 archetype = "all"
 
-chars: list[str] = []
-if run_all_chars:
-    chars.extend(row[0] for row in build)
-else:
-    chars = run_chars_name
+chars: set[str] = set()
+chars = {row[0] for row in build} if run_all_chars else run_chars_name
 stats: dict[str, dict[str, dict[str, list[float | str]]]] = {}
 median: dict[str, dict[str, dict[str, float]]] = {}
 mean: dict[str, dict[str, dict[str, float]]] = {}
@@ -95,7 +92,7 @@ for spiral_row in spiral:
         if spiral_row[0] not in spiral_rows:
             spiral_rows[spiral_row[0]] = set()
         spiral_rows[spiral_row[0]].update(
-            [spiral_row[5], spiral_row[6], spiral_row[7], spiral_row[8]]
+            [spiral_row[5], spiral_row[6], spiral_row[7], spiral_row[8]],
         )
 
 for char in chars:
@@ -174,7 +171,8 @@ for char in chars:
                     sample[char][row[j]] = 0
             break
 
-statkeys = list(stats[chars[0]][weapons[chars[0]][0]].keys())
+first_char = next(iter(chars))
+statkeys = list(stats[first_char][weapons[first_char][0]].keys())
 
 for row in data:
     cur_char = row[2]
@@ -243,20 +241,20 @@ for char in chars:
                         "speed",
                     ]:
                         median[char][weapon][stat] = round(
-                            stat_median(stats[char][weapon][stat]),
+                            stat_median(cast("list[float]", stats[char][weapon][stat])),
                             2,
                         )
                         mean[char][weapon][stat] = round(
-                            stat_mean(stats[char][weapon][stat]),
+                            stat_mean(cast("list[float]", stats[char][weapon][stat])),
                             2,
                         )
                     else:
                         median[char][weapon][stat] = round(
-                            stat_median(stats[char][weapon][stat]),
+                            stat_median(cast("list[float]", stats[char][weapon][stat])),
                             4,
                         )
                         mean[char][weapon][stat] = round(
-                            stat_mean(stats[char][weapon][stat]),
+                            stat_mean(cast("list[float]", stats[char][weapon][stat])),
                             4,
                         )
                     if (
