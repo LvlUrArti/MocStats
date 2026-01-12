@@ -2,12 +2,14 @@
 
 from os import listdir
 from os.path import dirname, exists, join
+from time import sleep
 
 from huggingface_hub import (
     HfApi,
     hf_hub_download,  # pyright: ignore[reportUnknownVariableType]
 )
 from huggingface_hub.repocard import RepoCard
+from plyer import notification  # type: ignore[reportMissingTypeStubs]
 from send2trash import send2trash
 
 # Prompt for real data
@@ -19,7 +21,7 @@ real_suffix = "_real" if is_real_suffix else ""
 # Define known suffixes (DO NOT include the underscore).
 # If a file ends in "_char.csv", it will be treated as the 'char' split.
 # Any part of the filename BEFORE the suffix becomes the Version ID.
-KNOWN_SUFFIXES: list[str] = ["char", "pf", "as", "aa"]
+KNOWN_SUFFIXES: list[str] = ["char", "pf", "as", "aa", "build"]
 
 # Where to look for NEW files to upload
 LOCAL_DATA_DIR = f"../../data/raw_csvs{real_suffix}"
@@ -73,14 +75,18 @@ def scan_upload_and_clean() -> None:
 
     # 3. Upload to Hugging Face
     # Using upload_folder is more efficient than looping upload_file
-    api.upload_folder(
-        folder_path=LOCAL_DATA_DIR,
-        repo_id=REPO_ID,
-        repo_type="dataset",
-        allow_patterns=["*.csv", "*.json"],
-        commit_message=f"Upload {len(files_to_upload)} new data files",
-    )
-    print("✅ Upload successful.")
+    try:
+        api.upload_folder(
+            folder_path=LOCAL_DATA_DIR,
+            repo_id=REPO_ID,
+            repo_type="dataset",
+            allow_patterns=["*.csv", "*.json"],
+            commit_message=f"Upload {len(files_to_upload)} new data files",
+        )
+        print("✅ Upload successful.")
+    except Exception:
+        print("⚠️  Failed to upload data.")
+        return
 
     # 4. Update local tracking CSV
     print(f"📝 Updating {CSV_LIST_FILE}...")
@@ -244,3 +250,12 @@ if __name__ == "__main__":
     scan_upload_and_clean()
     config = generate_yaml_config()
     update_readme(config)
+
+    if __name__ == "__main__":
+        notification.notify(
+            title="Finished",
+            message="Finished uploading data",
+            # displaying time
+            timeout=2,
+        )  # pyright: ignore[reportOptionalCall]
+        sleep(0.1)
