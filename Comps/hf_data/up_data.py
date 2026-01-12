@@ -5,6 +5,7 @@ from os.path import dirname, exists, join
 from time import sleep
 
 from huggingface_hub import (
+    CommitOperationAdd,
     HfApi,
     hf_hub_download,  # pyright: ignore[reportUnknownVariableType]
 )
@@ -30,6 +31,7 @@ LOCAL_DATA_DIR = f"../../data/raw_csvs{real_suffix}"
 CSV_LIST_FILE = f"repo_files{real_suffix}.csv"
 CSV_LIST = join("../../data", CSV_LIST_FILE)
 
+CHUNK_SIZE = 10
 REPO_ID = f"LvlUrArti/MocData{'Real' if is_real_suffix else ''}"
 DEFAULT_README = (
     "# MocData\n\nUsed alongside my [data compilation repository]"
@@ -73,20 +75,30 @@ def scan_upload_and_clean() -> None:
 
     print(f"📦 Found {len(files_to_upload)} files. Uploading to {REPO_ID}...")
 
-    # 3. Upload to Hugging Face
-    # Using upload_folder is more efficient than looping upload_file
-    try:
-        api.upload_folder(
-            folder_path=LOCAL_DATA_DIR,
-            repo_id=REPO_ID,
-            repo_type="dataset",
-            allow_patterns=["*.csv", "*.json"],
-            commit_message=f"Upload {len(files_to_upload)} new data files",
-        )
-        print("✅ Upload successful.")
-    except Exception:
-        print("⚠️  Failed to upload data.")
-        return
+    # 3. Upload to Hugging Face in chunks
+    for i in range(0, len(files_to_upload), CHUNK_SIZE):
+        batch = files_to_upload[i : i + CHUNK_SIZE]
+
+        # Prepare the operations for this specific batch
+        operations = [
+            CommitOperationAdd(
+                path_in_repo=filename,
+                path_or_fileobj=join(LOCAL_DATA_DIR, filename),
+            )
+            for filename in batch
+        ]
+
+        try:
+            api.create_commit(
+                repo_id=REPO_ID,
+                operations=operations,
+                commit_message=f"🤖 Batch upload: {', '.join(batch)}",
+                repo_type="dataset",
+            )
+            print(f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}")
+        except Exception as e:
+            print(f"   ❌ Failed to upload batch starting with {batch[0]}. Error: {e}")
+            return
 
     # 4. Update local tracking CSV
     print(f"📝 Updating {CSV_LIST_FILE}...")
