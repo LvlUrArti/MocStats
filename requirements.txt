@@ -9,3 +9,4 @@ plyer
 python-slugify
 matplotlib
 pynput
+huggingface_hub
