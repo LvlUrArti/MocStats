@@ -3,9 +3,18 @@
 import _thread
 import asyncio
 import traceback
+from os import stat as os_stat
 
 import enka  # type: ignore[reportMissingTypeStubs]
-from enka_config import csv, filename, json, os, relics_data, trailblazer_ids, uids
+from enka_config import (
+    char_filename,
+    csv,
+    filename,
+    json,
+    relics_data,
+    trailblazer_ids,
+    uids,
+)
 
 print(len(uids))
 
@@ -22,15 +31,19 @@ def input_thread(input_list: list[bool]) -> None:
     input_list.append(True)
 
 
+def empty_file(path: str) -> bool:
+    """Check if file is empty."""
+    return os_stat(path).st_size == 0
+
+
 async def main() -> None:
     """Compile character builds."""
     async with enka.HSRClient(enka.hsr.Language.ENGLISH) as client:
         is_update = input("Update assets? (y/n) ")
         if is_update == "y":
             await client.update_assets()
-        if not os.path.exists("results_real"):
-            os.makedirs("results_real")
 
+        # TODO: Automate header keys, follow ZZZ example
         header = [
             "uid",
             "player_level",
@@ -71,8 +84,10 @@ async def main() -> None:
             "relic",
             "ornament",
         ]
-        writer = csv.writer(open(filename + ".csv", "w", encoding="UTF8", newline=""))
-        writer.writerow(header)
+
+        writer = csv.writer(open(filename, "a", encoding="UTF8", newline=""))
+        if empty_file(filename):
+            writer.writerow(header)
 
         header = [
             "uid",
@@ -85,10 +100,12 @@ async def main() -> None:
             "artifacts",
             "relics",
         ]
+
         writer_chars = csv.writer(
-            open(filename + "_char.csv", "w", encoding="UTF8", newline=""),
+            open(char_filename, "a", encoding="UTF8", newline=""),
         )
-        writer_chars.writerow(header)
+        if empty_file(char_filename):
+            writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))

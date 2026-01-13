@@ -50,7 +50,6 @@ if os.path.exists("../char_results/uids.csv"):
 else:
     uids = [806411333]
 
-filenum = 1
-while os.path.exists("../mihomo/output" + str(filenum) + ".csv"):
-    filenum += 1
-filename = "../mihomo/output" + str(filenum)
+filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build"
+char_filename = filename + "_char.csv"
+filename = filename + ".csv"

@@ -52,10 +52,13 @@ def read_csv(file: TextIOWrapper) -> list[list[str]]:
 
 
 if path.exists("../data/raw_csvs_real/"):
-    with open("results_real/" + RECENT_PHASE + "/output1.csv", encoding="UTF8") as f:
+    with open(
+        "../data/raw_csvs_real/" + RECENT_PHASE + "_build.csv",
+        encoding="UTF8",
+    ) as f:
         data = list(read_csv(f))
 else:
-    with open("results/" + RECENT_PHASE + "_output.csv", encoding="UTF8") as f:
+    with open("../data/raw_csvs/" + RECENT_PHASE + "_build.csv", encoding="UTF8") as f:
         data = list(read_csv(f))
 
 with open("../data/light_cones.json") as f:
