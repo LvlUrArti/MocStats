@@ -1409,6 +1409,16 @@
         "preview": "image/light_cone_preview/23049.png",
         "portrait": "image/light_cone_portrait/23049.png"
     },
+    "23050": {
+        "id": "23050",
+        "name": "Never Forget Her Flame",
+        "rarity": 5,
+        "path": "Warlock",
+        "desc": "\"Come, come to me...\"\nA vivid memory, guided by flames, envelops her body and soul.\nThe bygone days had fallen into the grave, is that true?\n\"Hush, don't weep, don't resist...\"\nShe brands herself onto others' hearts, as strange gazes gradually turn familiar.\n\"Do you remember now?\"\nAs the embers of old memories scatter away, her face carries a trace of intoxicating floral fragrance...\n\"I am your memory.\"",
+        "icon": "icon/light_cone/23050.png",
+        "preview": "image/light_cone_preview/23050.png",
+        "portrait": "image/light_cone_portrait/23050.png"
+    },
     "23051": {
         "id": "23051",
         "name": "Though Worlds Apart",

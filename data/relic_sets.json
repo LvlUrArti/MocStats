@@ -260,8 +260,8 @@
         "id": "115",
         "name": "The Ashblazing Grand Duke",
         "desc": [
-            "Increases the DMG dealt by Follow-up ATK by 20%.",
-            "When the wearer uses a Follow-up ATK, increases the wearer's ATK by 6% for every time the Follow-up ATK deals DMG. This effect can stack up to 8 time(s) and lasts for 3 turn(s). This effect is removed the next time the wearer uses a Follow-up ATK."
+            "Increases the DMG dealt by Follow-Up ATK by 20%.",
+            "When the wearer uses a Follow-Up ATK, increases the wearer's ATK by 6% for every time the Follow-Up ATK deals DMG. This effect can stack up to 8 time(s) and lasts for 3 turn(s). This effect is removed the next time the wearer uses a Follow-Up ATK."
         ],
         "properties": [
             [],
@@ -346,7 +346,7 @@
         "name": "The Wind-Soaring Valorous",
         "desc": [
             "Increases ATK by 12%.",
-            "Increases the wearer's CRIT Rate by 6%. After the wearer uses a Follow-up ATK, increases DMG dealt by Ultimate by 36%, lasting for 1 turn(s)."
+            "Increases the wearer's CRIT Rate by 6%. After the wearer uses a Follow-Up ATK, increases DMG dealt by Ultimate by 36%, lasting for 1 turn(s)."
         ],
         "properties": [
             [
@@ -592,7 +592,7 @@
         "id": "306",
         "name": "Inert Salsotto",
         "desc": [
-            "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 50% or higher, the DMG dealt by the wearer's Ultimate and Follow-up ATK increases by 15%."
+            "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 50% or higher, the DMG dealt by the wearer's Ultimate and Follow-Up ATK increases by 15%."
         ],
         "properties": [
             [
@@ -736,7 +736,7 @@
         "id": "315",
         "name": "Duran, Dynasty of Running Wolves",
         "desc": [
-            "When an ally uses a Follow-up ATK, the wearer gains 1 stack of Merit, stacking up to 5 time(s). Each stack of Merit increases the DMG dealt by the wearer's Follow-up ATKs by 5%. When there are 5 stacks, additionally increases the wearer's CRIT DMG by 25%."
+            "When an ally character uses a Follow-Up ATK, the wearer gains 1 stack of \"Merit,\" stacking up to 5 time(s). Each stack of \"Merit\" increases the DMG dealt by the wearer's Follow-Up ATKs by 5%. When there are 5 stacks, additionally increases the wearer's CRIT DMG by 25%."
         ],
         "properties": [
             []
