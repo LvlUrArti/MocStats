@@ -31,7 +31,7 @@ LOCAL_DATA_DIR = f"../../data/raw_csvs{real_suffix}"
 CSV_LIST_FILE = f"repo_files{real_suffix}.csv"
 CSV_LIST = join("../../data", CSV_LIST_FILE)
 
-CHUNK_SIZE = 10
+CHUNK_SIZE = 3
 REPO_ID = f"LvlUrArti/MocData{'Real' if is_real_suffix else ''}"
 DEFAULT_README = (
     "# MocData\n\nUsed alongside my [data compilation repository]"
@@ -42,8 +42,46 @@ DEFAULT_README = (
 # =================================================
 
 
+def get_version_map(filenames: list[str]) -> dict[str, list[dict[str, str]]]:
+    """Group filenames by version and identifies their splits.
+
+    Returns: { "version_str": [{"split": "split_name", "path": "filename.csv"}, ...] }.
+    """
+    version_map: dict[str, list[dict[str, str]]] = {}
+
+    for filename in sorted(filenames):
+        # Remove supported extensions
+        name_no_ext: str = filename.replace(".csv", "").replace(".json", "")
+
+        version: str = ""
+        split_name: str = ""
+
+        # Logic: Check if filename ends with a known suffix
+        matched_suffix: bool = False
+        for suffix in KNOWN_SUFFIXES:
+            if name_no_ext.endswith(f"_{suffix}"):
+                split_name = suffix
+                version = name_no_ext[: -(len(suffix) + 1)]
+                matched_suffix = True
+                break
+
+        if not matched_suffix:
+            version = name_no_ext
+            split_name = "moc"
+
+        if version not in version_map:
+            version_map[version] = []
+
+        version_map[version].append({"split": split_name, "path": filename})
+
+    return version_map
+
+
 def scan_upload_and_clean() -> None:
-    """Scan, uploads to HF, adds to the tracking CSV, deletes local copies."""
+    """Scan, uploads to HF, adds to the tracking CSV.
+
+    Keeps only last 2 versions locally.
+    """
     api = HfApi()
 
     # 1. Download latest tracking
@@ -71,61 +109,77 @@ def scan_upload_and_clean() -> None:
 
     if not files_to_upload:
         print("✨ No new files found to upload.")
-        return
+    else:
+        print(f"📦 Found {len(files_to_upload)} files. Uploading to {REPO_ID}...")
 
-    print(f"📦 Found {len(files_to_upload)} files. Uploading to {REPO_ID}...")
+        # 3. Upload to Hugging Face in chunks
+        for i in range(0, len(files_to_upload), CHUNK_SIZE):
+            batch = files_to_upload[i : i + CHUNK_SIZE]
 
-    # 3. Upload to Hugging Face in chunks
-    for i in range(0, len(files_to_upload), CHUNK_SIZE):
-        batch = files_to_upload[i : i + CHUNK_SIZE]
+            # Prepare the operations for this specific batch
+            operations = [
+                CommitOperationAdd(
+                    path_in_repo=filename,
+                    path_or_fileobj=join(LOCAL_DATA_DIR, filename),
+                )
+                for filename in batch
+            ]
 
-        # Prepare the operations for this specific batch
-        operations = [
-            CommitOperationAdd(
-                path_in_repo=filename,
-                path_or_fileobj=join(LOCAL_DATA_DIR, filename),
-            )
-            for filename in batch
-        ]
+            try:
+                api.create_commit(
+                    repo_id=REPO_ID,
+                    operations=operations,
+                    commit_message=f"🤖 Batch upload {len(batch)} files",
+                    repo_type="dataset",
+                )
+                print(
+                    f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}",
+                )
+            except Exception as e:
+                print(
+                    f"   ❌ Failed to upload batch starting with {batch[0]}."
+                    f" Error: {e}",
+                )
+                return
 
-        try:
-            api.create_commit(
-                repo_id=REPO_ID,
-                operations=operations,
-                commit_message=f"🤖 Batch upload: {', '.join(batch)}",
-                repo_type="dataset",
-            )
-            print(f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}")
-        except Exception as e:
-            print(f"   ❌ Failed to upload batch starting with {batch[0]}. Error: {e}")
-            return
+        # 4. Update local tracking CSV
+        print(f"📝 Updating {CSV_LIST_FILE}...")
 
-    # 4. Update local tracking CSV
-    print(f"📝 Updating {CSV_LIST_FILE}...")
+        # Read existing entries to prevent duplicates
+        existing_files: set[str] = set()
+        if exists(CSV_LIST):
+            with open(CSV_LIST) as f:
+                existing_files = {line.strip() for line in f}
 
-    # Read existing entries to prevent duplicates
-    existing_files: set[str] = set()
-    if exists(CSV_LIST):
-        with open(CSV_LIST) as f:
-            existing_files = {line.strip() for line in f}
-
-    with open(CSV_LIST, "a") as f:
-        for filename in files_to_upload:
-            if filename not in existing_files:
-                f.write(f"{filename}\n")
-                print(f"   + Added {filename}")
-            else:
-                print(f"   . Skipping duplicate in list: {filename}")
+        with open(CSV_LIST, "a") as f:
+            for filename in files_to_upload:
+                if filename not in existing_files:
+                    f.write(f"{filename}\n")
+                    print(f"   + Added {filename}")
 
     # 5. Delete local files
-    print("🗑️  Cleaning up local files...")
-    for filename in files_to_upload:
-        file_path = join(LOCAL_DATA_DIR, filename)
-        try:
-            send2trash(file_path)
-            print(f"   - Deleted {filename}")
-        except OSError as e:
-            print(f"   ❌ Error deleting {filename}: {e}")
+    print("🧹 Starting smart cleanup of local files...")
+
+    # Use the new centralized logic
+    local_version_map = get_version_map(files_to_upload)
+
+    # Determine which versions to keep
+    sorted_versions = sorted(local_version_map.keys(), reverse=True)
+    versions_to_keep = sorted_versions[:2]
+
+    print(f"📌 Versions to keep locally: {versions_to_keep}")
+
+    # Delete versions not in the keep list
+    for version, file_infos in local_version_map.items():
+        if not is_real_suffix or version not in versions_to_keep:
+            for info in file_infos:
+                filename = info["path"]
+                file_path = join(LOCAL_DATA_DIR, filename)
+                try:
+                    send2trash(file_path)
+                    print(f"   - Deleted {filename}")
+                except OSError as e:
+                    print(f"   ❌ Error deleting {filename}: {e}")
 
     # 6. Sync the tracking CSV
     print(f"⬆️  Syncing {CSV_LIST_FILE} back to Hub...")
@@ -147,47 +201,8 @@ def generate_yaml_config() -> list[dict[str, str | list[dict[str, str]]]]:
     with open(CSV_LIST) as f:
         repo_files.extend(line.strip() for line in f)
 
-    # Get all CSV files
-    all_files: set[str] = set(repo_files)
-
-    # Track which files we successfully add to the config
-    processed_files: set[str] = set()
-
     # Dictionary to hold data: { "1.0.1": [ {split: 'moc', path: '...'}, ... ] }
-    version_map: dict[str, list[dict[str, str]]] = {}
-
-    for filename in sorted(all_files):
-        # Remove extension
-        name_no_ext: str = filename.replace(".csv", "").replace(".json", "")
-
-        version: str = ""
-        split_name: str = ""
-
-        # Logic: Check if filename ends with a known suffix
-        matched_suffix: bool = False
-        for suffix in KNOWN_SUFFIXES:
-            # Check for "_suffix" at the end of the name
-            if name_no_ext.endswith(f"_{suffix}"):
-                # Example: 2.7.1_old_char -> version: 2.7.1_old, split: char
-                split_name = suffix
-                # Remove "_suffix" from the end to get version
-                version = name_no_ext[: -(len(suffix) + 1)]
-                matched_suffix = True
-                break
-
-        # If no suffix matched, assume it is the moc file for that version
-        if not matched_suffix:
-            # Example: 2.7.1_old.csv -> version: 2.7.1_old, split: moc
-            version = name_no_ext
-            split_name = "moc"
-
-        # Add to our map
-        if version not in version_map:
-            version_map[version] = []
-
-        version_map[version].append({"split": split_name, "path": filename})
-
-        processed_files.add(filename)
+    version_map = get_version_map(repo_files)
 
     # Construct the final YAML structure
     # We sort versions to keep the file tidy
@@ -199,24 +214,6 @@ def generate_yaml_config() -> list[dict[str, str | list[dict[str, str]]]]:
         {"config_name": ver, "data_files": version_map[ver]} for ver in sorted_versions
     )
 
-    # ================= OUTPUT =================
-
-    # 1. Print Unused Files (Audit)
-    unused_files: set[str] = all_files - processed_files
-
-    print("-" * 40)
-    if unused_files:
-        print(f"⚠️  WARNING: {len(unused_files)} files were NOT added to the config:")
-        for f in sorted(unused_files):
-            print(f"   - {f}")
-        print(
-            "\n(Check if these files have typos or missing suffixes in KNOWN_SUFFIXES)",
-        )
-    else:
-        print("✨ All .csv files were successfully mapped to a version.")
-    print("-" * 40)
-
-    # 2. Return the YAML config
     return final_configs
 
 
@@ -263,11 +260,10 @@ if __name__ == "__main__":
     config = generate_yaml_config()
     update_readme(config)
 
-    if __name__ == "__main__":
-        notification.notify(
-            title="Finished",
-            message="Finished uploading data",
-            # displaying time
-            timeout=2,
-        )  # pyright: ignore[reportOptionalCall]
-        sleep(0.1)
+    notification.notify(
+        title="Finished",
+        message="Finished uploading data",
+        # displaying time
+        timeout=2,
+    )  # pyright: ignore[reportOptionalCall]
+    sleep(0.1)
