@@ -1,64 +1,48 @@
-# pyright: reportUnknownVariableType=false, reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false, reportUnknownArgumentType=false, reportUnknownMemberType=false
 """Hash function for comp rates."""
 
 from itertools import count
+from time import time
 
 from comp_rates_config import RECENT_PHASE
-from pandas import DataFrame, read_csv
+from pandas import read_csv
 
-# Create sequential ID generator
-id_generator = count(1000000)  # Start at 1,000,000 (7 digits)
-pass_hash = {}
+start_time = time()
 
-df_char: DataFrame = read_csv(
-    "../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv",
-    encoding="cp1252",
-).convert_dtypes()
-df_spiral = read_csv(
-    "../data/raw_csvs_real/" + RECENT_PHASE + ".csv",
-    encoding="cp1252",
-).convert_dtypes()
-df_spiral_pf = read_csv(
-    "../data/raw_csvs_real/" + RECENT_PHASE + "_pf.csv",
-    encoding="cp1252",
-).convert_dtypes()
-df_spiral_as = read_csv(
-    "../data/raw_csvs_real/" + RECENT_PHASE + "_as.csv",
-    encoding="cp1252",
-).convert_dtypes()
-df_spiral_aa = read_csv(
-    "../data/raw_csvs_real/" + RECENT_PHASE + "_aa.csv",
-    encoding="cp1252",
-).convert_dtypes()
+# 1. Use a list to manage your DataFrames and paths for cleaner processing
+files = {
+    "char": f"../data/raw_csvs_real/{RECENT_PHASE}_char.csv",
+    "spiral": f"../data/raw_csvs_real/{RECENT_PHASE}.csv",
+    "pf": f"../data/raw_csvs_real/{RECENT_PHASE}_pf.csv",
+    "as": f"../data/raw_csvs_real/{RECENT_PHASE}_as.csv",
+    "aa": f"../data/raw_csvs_real/{RECENT_PHASE}_aa.csv",
+    "build": f"../data/raw_csvs_real/{RECENT_PHASE}_build.csv",
+}
 
-df_stats = read_csv("../mihomo/output1.csv", encoding="cp1252").convert_dtypes()
+# 2. Load data without convert_dtypes (unless absolutely necessary)
+# Force UID to string or int immediately to save memory/time
+dfs = {name: read_csv(path, encoding="cp1252") for name, path in files.items()}
 
-for i in df_char["uid"].unique():
-    pass_hash[i] = next(id_generator)
-for i in df_spiral["uid"].unique():
-    if i not in pass_hash:
-        pass_hash[i] = next(id_generator)
-for i in df_spiral_pf["uid"].unique():
-    if i not in pass_hash:
-        pass_hash[i] = next(id_generator)
-for i in df_spiral_as["uid"].unique():
-    if i not in pass_hash:
-        pass_hash[i] = next(id_generator)
-for i in df_spiral_aa["uid"].unique():
-    if i not in pass_hash:
-        pass_hash[i] = next(id_generator)
+# 3. Build the hash using set unions
+all_uids: set[str] = set()
+for df in dfs.values():
+    all_uids.update(df["uid"].unique())
 
-df_char["uid"] = df_char["uid"].replace(pass_hash)
-df_spiral["uid"] = df_spiral["uid"].replace(pass_hash)
-df_spiral_pf["uid"] = df_spiral_pf["uid"].replace(pass_hash)
-df_spiral_as["uid"] = df_spiral_as["uid"].replace(pass_hash)
-df_spiral_aa["uid"] = df_spiral_aa["uid"].replace(pass_hash)
-df_stats["uid"] = df_stats["uid"].replace(pass_hash)
-print("csv done")
+# Create the mapping dictionary
+id_generator = count(1000000)
+pass_hash = {uid: next(id_generator) for uid in all_uids}
 
-df_char.to_csv("../data/raw_csvs/" + RECENT_PHASE + "_char.csv", index=False)
-df_spiral.to_csv("../data/raw_csvs/" + RECENT_PHASE + ".csv", index=False)
-df_spiral_pf.to_csv("../data/raw_csvs/" + RECENT_PHASE + "_pf.csv", index=False)
-df_spiral_as.to_csv("../data/raw_csvs/" + RECENT_PHASE + "_as.csv", index=False)
-df_spiral_aa.to_csv("../data/raw_csvs/" + RECENT_PHASE + "_aa.csv", index=False)
-df_stats.to_csv("../mihomo/results/" + RECENT_PHASE + "_output.csv", index=False)
+# 4. Apply the hash
+for df in dfs.values():
+    df["uid"] = df["uid"].map(pass_hash)
+
+# 5. Save back
+for name, df in dfs.items():
+    # Constructing the output path to match your original logic
+    suffix = f"_{name}" if name != "spiral" else ""
+    out_path = f"../data/raw_csvs/{RECENT_PHASE}{suffix}.csv"
+
+    df.to_csv(out_path, index=False)
+
+cur_time = time()
+print("CSV processing complete:", round(cur_time - start_time, 2), "s")
