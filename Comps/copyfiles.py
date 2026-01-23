@@ -8,7 +8,6 @@ from comp_rates_config import (
     aa_mode,
     as_mode,
     moc_mode,
-    pf_filename,
     pf_mode,
 )
 from send2trash import send2trash
@@ -46,8 +45,7 @@ for source_dir in source_dirs:
     for file_name in file_names:
         common_file = file_name in ["builds.json", "boss_names.json"]
         if ("comp_results" in source_dir and "combined" in file_name) or (
-            file_name == "duo_usages.json"
-            or file_name == ("demographic_collect" + pf_filename + ".json")
+            file_name in {"duo_usages.json", "demographic.json"}
             or (common_file and moc_mode)
         ):
             if common_file:
