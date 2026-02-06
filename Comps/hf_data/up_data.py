@@ -1,5 +1,6 @@
 """Generate a list of configs from a folder of csv files."""
 
+from argparse import ArgumentParser
 from os import listdir
 from os.path import dirname, exists, join
 from time import sleep
@@ -14,8 +15,22 @@ from plyer import notification  # type: ignore[reportMissingTypeStubs]
 from send2trash import send2trash
 
 # Prompt for real data
-is_real_suffix = input("Real data? (y/n): ")
-is_real_suffix = is_real_suffix == "y"
+parser = ArgumentParser()
+parser.add_argument("-y", "--yes", action="store_true")
+parser.add_argument("-n", "--no", action="store_true")
+args = parser.parse_args()
+
+
+yes_arg: bool | None = args.yes
+no_arg: bool | None = args.no
+
+if yes_arg:
+    is_real_suffix = True
+elif no_arg:
+    is_real_suffix = False
+else:
+    is_real_suffix = input("Real data? (y/n): ")
+    is_real_suffix = is_real_suffix == "y"
 real_suffix = "_real" if is_real_suffix else ""
 
 # ================= CONFIGURATION =================
@@ -80,7 +95,7 @@ def get_version_map(filenames: list[str]) -> dict[str, list[dict[str, str]]]:
 def scan_upload_and_clean() -> None:
     """Scan, uploads to HF, adds to the tracking CSV.
 
-    Keeps only last 2 versions locally.
+    Keeps only last version locally.
     """
     api = HfApi()
 
@@ -165,7 +180,7 @@ def scan_upload_and_clean() -> None:
 
     # Determine which versions to keep
     sorted_versions = sorted(local_version_map.keys(), reverse=True)
-    versions_to_keep = sorted_versions[:2]
+    versions_to_keep = sorted_versions[:1]
 
     print(f"📌 Versions to keep locally: {versions_to_keep}")
 
