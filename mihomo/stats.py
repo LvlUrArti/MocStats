@@ -246,7 +246,7 @@ for char in copy_chars:
                 if (
                     mean[char][stat] > 0
                     and median[char][stat] > 0
-                    and stats[char].sample_size > 5
+                    and stats[char].sample_size > 10
                 ) and stat not in [
                     "char_lvl",
                     "light_cone_lvl",
