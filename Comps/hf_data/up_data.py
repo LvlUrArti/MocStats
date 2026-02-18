@@ -124,38 +124,34 @@ def scan_upload_and_clean() -> None:
 
     if not files_to_upload:
         print("✨ No new files found to upload.")
-    else:
-        print(f"📦 Found {len(files_to_upload)} files. Uploading to {REPO_ID}...")
+        return
 
-        # 3. Upload to Hugging Face in chunks
-        for i in range(0, len(files_to_upload), CHUNK_SIZE):
-            batch = files_to_upload[i : i + CHUNK_SIZE]
+    print(f"📦 Found {len(files_to_upload)} files. Uploading to {REPO_ID}...")
 
-            # Prepare the operations for this specific batch
-            operations = [
-                CommitOperationAdd(
-                    path_in_repo=filename,
-                    path_or_fileobj=join(LOCAL_DATA_DIR, filename),
-                )
-                for filename in batch
-            ]
+    # 3. Upload to Hugging Face in chunks
+    for i in range(0, len(files_to_upload), CHUNK_SIZE):
+        batch = files_to_upload[i : i + CHUNK_SIZE]
 
-            try:
-                api.create_commit(
-                    repo_id=REPO_ID,
-                    operations=operations,
-                    commit_message=f"🤖 Batch upload {len(batch)} files",
-                    repo_type="dataset",
-                )
-                print(
-                    f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}",
-                )
-            except Exception as e:
-                print(
-                    f"   ❌ Failed to upload batch starting with {batch[0]}."
-                    f" Error: {e}",
-                )
-                return
+        # Prepare the operations for this specific batch
+        operations = [
+            CommitOperationAdd(
+                path_in_repo=filename,
+                path_or_fileobj=join(LOCAL_DATA_DIR, filename),
+            )
+            for filename in batch
+        ]
+
+        try:
+            api.create_commit(
+                repo_id=REPO_ID,
+                operations=operations,
+                commit_message=f"🤖 Batch upload {len(batch)} files",
+                repo_type="dataset",
+            )
+            print(f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}")
+        except Exception as e:
+            print(f"   ❌ Failed to upload batch starting with {batch[0]}. Error: {e}")
+            return
 
         # 4. Update local tracking CSV
         print(f"📝 Updating {CSV_LIST_FILE}...")
