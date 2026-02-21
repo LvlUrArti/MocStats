@@ -16,6 +16,7 @@ import char_usage as cu
 from comp_rates_config import (
     CHARACTERS,
     F2P_ONLY,
+    PAST_PHASE_PF,
     WHALE_ONLY,
     aa_mode,
     app_rate_threshold,
@@ -26,7 +27,6 @@ from comp_rates_config import (
     json_threshold,
     load,
     moc_mode,
-    past_phase,
     pf_filename,
     pf_mode,
     run_commands,
@@ -462,7 +462,7 @@ def used_comps(
 
     for stage, stage_value in avg_round_stage.items():
         sample_size[stage]["avg_round"] = round(
-            mean(stage_value if stage_value else [0]),
+            mean(stage_value or [0]),
             2,
         )
 
@@ -703,7 +703,7 @@ def char_usages(
     )
     chars_dict: dict[str, cu.CharUsageData] = cu.usages(
         app,
-        past_phase,
+        PAST_PHASE_PF,
         chambers=rooms,
     )
     if (

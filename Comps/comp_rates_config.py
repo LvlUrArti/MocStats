@@ -12,7 +12,7 @@ RECENT_PHASE = "3.8.4"
 
 # if no past phase, leave blank
 # add underscore, i.e. 2.2.1"_pf"
-past_phase = "3.8.3"
+PAST_PHASE = "3.8.3"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
@@ -68,7 +68,7 @@ elif pf_mode:
 elif aa_mode:
     pf_filename = "_aa"
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
-past_phase = past_phase + pf_filename
+PAST_PHASE_PF = PAST_PHASE + pf_filename
 
 run_all_chars = False
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
