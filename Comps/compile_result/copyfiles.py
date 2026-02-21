@@ -2,7 +2,9 @@
 
 import shutil
 from os import listdir, mkdir, path
+from sys import path as sys_path
 
+sys_path.append("../")
 from comp_rates_config import (
     RECENT_PHASE_PF,
     aa_mode,
@@ -22,20 +24,20 @@ else:
     moc_suffix = "moc"
 
 source_dirs = [
-    "../char_results/" + RECENT_PHASE_PF,
-    "../comp_results/" + RECENT_PHASE_PF + "/json",
+    "../../char_results/" + RECENT_PHASE_PF,
+    "../../comp_results/" + RECENT_PHASE_PF + "/json",
 ]
 
-if moc_mode and path.exists("../web_results"):
-    send2trash("../web_results")
-    mkdir("../web_results")
-mkdir("../web_results/" + moc_suffix)
+if moc_mode and path.exists("../../web_results"):
+    send2trash("../../web_results")
+    mkdir("../../web_results")
+mkdir("../../web_results/" + moc_suffix)
 
 for source_dir in source_dirs:
     if "comp_results" in source_dir:
-        target_dir = "../web_results/" + moc_suffix + "/comps"
+        target_dir = "../../web_results/" + moc_suffix + "/comps"
     else:
-        target_dir = "../web_results/" + moc_suffix + "/chars"
+        target_dir = "../../web_results/" + moc_suffix + "/chars"
 
     temp_target_dir = ""
     file_names = listdir(source_dir)
@@ -50,7 +52,7 @@ for source_dir in source_dirs:
         ):
             if common_file:
                 temp_target_dir = target_dir
-                target_dir = "../web_results"
+                target_dir = "../../web_results"
             copyfrom = path.join(source_dir, file_name)
             copyto = path.join(target_dir, file_name)
             shutil.copyfile(copyfrom, copyto)
@@ -58,4 +60,4 @@ for source_dir in source_dirs:
                 target_dir = temp_target_dir
 
 if aa_mode:
-    shutil.make_archive("../results", "zip", "../web_results")
+    shutil.make_archive("../../results", "zip", "../../web_results")

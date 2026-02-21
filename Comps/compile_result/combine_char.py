@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+from sys import path as sys_path
 
+sys_path.append("../")
 from comp_rates_config import DPS_SUB_LIST, RECENT_PHASE
 from pydantic import BaseModel
 from slugify import slugify
@@ -64,10 +66,10 @@ NUMERIC_STATS = [
 # ----------------------------------------------------------------------
 # Load slug mappings and character list
 # ----------------------------------------------------------------------
-with open("../Comps/prydwen-slug.json") as slug_file:
+with open("../prydwen-slug.json") as slug_file:
     SLUG = json.load(slug_file)
 
-with open("../data/characters.json") as char_file:
+with open("../../data/characters.json") as char_file:
     CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
 
@@ -288,7 +290,7 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # ----------------------------------------------------------------------
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
-BASE_PATH = f"../char_results/{RECENT_PHASE}"
+BASE_PATH = f"../../char_results/{RECENT_PHASE}"
 
 moc_raw = load_full_stats(f"{BASE_PATH}/all2.json")
 pf_raw = load_full_stats(f"{BASE_PATH}_pf/all2.json")
@@ -739,7 +741,7 @@ def process_chars() -> None:
     # ----------------------------------------------------------------------
     # Write final JSON
     # ----------------------------------------------------------------------
-    output_path = f"../char_results/{RECENT_PHASE}/builds_new.json"
+    output_path = f"../../char_results/{RECENT_PHASE}/builds_new.json"
     with open(output_path, "w") as out_file:
         json.dump(output_data, out_file, indent=2)
 

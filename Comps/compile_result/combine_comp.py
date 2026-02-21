@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+from sys import path as sys_path
 
+sys_path.append("../")
 from comp_rates_config import RECENT_PHASE, aa_mode, as_mode, pf_mode
 
 file_names = ["top"]
@@ -32,12 +34,12 @@ RECENT_PHASE_PF = RECENT_PHASE + suffix
 for file_name in file_names:
     # Load the JSON files
     with open(
-        "../comp_results/" + RECENT_PHASE_PF + "/json/" + file_name + ".json",
+        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}.json",
     ) as f:
         team_data: list[dict[str, str | float]] = json.load(f)
 
     with open(
-        "../comp_results/" + RECENT_PHASE_PF + "/json/" + file_name + "_C1.json",
+        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}_C1.json",
     ) as f:
         team_c1_data = json.load(f)
 
@@ -81,7 +83,7 @@ for file_name in file_names:
 
     # Write the updated data back to the top.json file
     with open(
-        "../comp_results/" + RECENT_PHASE_PF + "/json/" + file_name + "_combined.json",
+        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}_combined.json",
         "w",
     ) as f:
         json.dump(team_data, f, indent=2)
