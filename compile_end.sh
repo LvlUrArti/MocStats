@@ -2,7 +2,7 @@
 
 set -e # Stop on error
 
-cd Comps/compile_result
+cd scripts/compile_result
 
 python combine_char.py
 python combine_comp.py

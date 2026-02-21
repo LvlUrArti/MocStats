@@ -20,7 +20,7 @@ from matplotlib.pyplot import (
     show as plt_show,  # pyright: ignore[reportUnknownVariableType]
 )
 
-sys_path.append("../Comps/")
+sys_path.append("../scripts/")
 from comp_rates_config import (
     CHAR_NAME_REPLACE,
     RECENT_PHASE,
@@ -63,7 +63,7 @@ else:
 
 with open("../data/light_cones.json") as f:
     LIGHT_CONES = json_load(f)
-with open("../Comps/prydwen-slug.json") as slug_file:
+with open("../scripts/prydwen-slug.json") as slug_file:
     slug = json_load(slug_file)
 
 with open("../char_results/" + RECENT_PHASE_PF + "/all.csv") as f:

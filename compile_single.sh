@@ -2,7 +2,7 @@
 
 set -e # Stop on error
 
-cd Comps
+cd scripts
 
 python comp_rates.py -w &
 python comp_rates.py -f &
@@ -11,5 +11,5 @@ python move.py
 
 cd ../mihomo
 python stats.py
-cd ../Comps
+cd ../scripts
 python move.py

@@ -5,7 +5,7 @@ import json
 import os.path
 import sys
 
-sys.path.append("../Comps/")
+sys.path.append("../scripts/")
 from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
 
 skip_self = False

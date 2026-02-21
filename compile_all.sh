@@ -4,9 +4,9 @@ set -e # Stop on error
 
 # Check for arguments, e.g. `sh compile_all.sh hello`
 if [ -n "$1" ]; then
-	cd Comps
+	cd scripts
 else
-	cd Comps
+	cd scripts
 	python combine_raw_chars.py
 	python csv_to_pickle.py &
 	python csv_to_pickle.py -pf &
@@ -59,28 +59,28 @@ echo ""
 echo "MoC stats"
 cd ../mihomo
 python stats.py
-cd ../Comps
+cd ../scripts
 python move.py
 
 echo ""
 echo "PF stats"
 cd ../mihomo
 python stats.py -pf
-cd ../Comps
+cd ../scripts
 python move.py -pf
 
 echo ""
 echo "AS stats"
 cd ../mihomo
 python stats.py -as
-cd ../Comps
+cd ../scripts
 python move.py -as
 
 echo ""
 echo "AA stats"
 cd ../mihomo
 python stats.py -aa
-cd ../Comps
+cd ../scripts
 python move.py -aa
 
 cd compile_result

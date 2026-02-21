@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 
-sys.path.append("../Comps/")
+sys.path.append("../scripts/")
 
 import os
 from csv import reader as csvreader

@@ -12,9 +12,9 @@ You can find the raw data in the [Hugging Face Dataset](https://huggingface.co/d
 
 Run `pip install -r requirements.txt`
 
-In the `Comps/hf_data` folder, run `python fetch_data.py`
+In the `scripts/hf_data` folder, run `python fetch_data.py`
 
-Change past and recent phase in `Comps/comp_rates_config.py`
+Change past and recent phase in `scripts/comp_rates_config.py`
 
 ## Compile for all gamemodes
 
@@ -26,8 +26,8 @@ Results can be found in the `char_results` and `comp_results` folders.
 
 > By default, this compiles data for MoC, add the argument `-pf` or `-as` at the end of all python commands to compile data for PF or AS. So the command would be `python comp_rates.py -pf`.
 
-In `Comps` folder, run `python comp_rates.py`
+In `scripts` folder, run `python comp_rates.py`
 
-Still in `Comps` folder, run `python move.py`
+Still in `scripts` folder, run `python move.py`
 
 In `mihomo` folder, run `python stats.py`
