@@ -8,11 +8,11 @@ from os.path import dirname as path_dirname
 from os.path import join as path_join
 
 # don't add underscore, i.e. 2.2.1"_pf"
-RECENT_PHASE = "3.8.4"
+RECENT_PHASE = "4.0.1"
 
 # if no past phase, leave blank
 # add underscore, i.e. 2.2.1"_pf"
-PAST_PHASE = "3.8.3"
+PAST_PHASE = "3.8.4"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
@@ -115,6 +115,7 @@ DPS_APPEND_LIST = {
     "Mydei",
     "Anaxa",
     "Evernight",
+    "Sparxie",
 }
 
 SUB_DPS_LIST = {
@@ -155,6 +156,7 @@ HARMONY_LIST = {
     "Cerydra",
     "Cyrene",
     "The Dahlia",
+    "Yao Guang",
 }
 
 HEALER_LIST = {
