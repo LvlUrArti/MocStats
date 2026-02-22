@@ -1,7 +1,5 @@
 """Combine JSON results from different game modes into a unified build dataset."""
 
-from __future__ import annotations
-
 import json
 from sys import path as sys_path
 
@@ -292,36 +290,21 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # ----------------------------------------------------------------------
 BASE_PATH = f"../../char_results/{RECENT_PHASE}"
 
-moc_raw = load_full_stats(f"{BASE_PATH}/all2.json")
-pf_raw = load_full_stats(f"{BASE_PATH}_pf/all2.json")
-as_raw = load_full_stats(f"{BASE_PATH}_as/all2.json")
-aa_raw = load_full_stats(f"{BASE_PATH}_aa/all2.json")
+raw: dict[str, dict[str, BaseCharacterStats]] = {}
+raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 
-moc_raw_e1 = load_base_stats(f"{BASE_PATH}/all_C1.json")
-pf_raw_e1 = load_base_stats(f"{BASE_PATH}_pf/all_C1.json")
-as_raw_e1 = load_base_stats(f"{BASE_PATH}_as/all_C1.json")
-aa_raw_e1 = load_base_stats(f"{BASE_PATH}_aa/all_C1.json")
+for mode in ["moc", "pf", "as", "aa"]:
+    folder_dir = f"{BASE_PATH}_{mode}" if mode != "moc" else BASE_PATH
+    raw_full[mode] = load_full_stats(f"{folder_dir}/all2.json")
+    raw[f"{mode}_e1"] = load_base_stats(f"{folder_dir}/all_C1.json")
+    raw[f"{mode}_s0"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 
-moc_raw_s0 = load_base_stats(f"{BASE_PATH}/all_E0S0.json")
-pf_raw_s0 = load_base_stats(f"{BASE_PATH}_pf/all_E0S0.json")
-as_raw_s0 = load_base_stats(f"{BASE_PATH}_as/all_E0S0.json")
-aa_raw_s0 = load_base_stats(f"{BASE_PATH}_aa/all_E0S0.json")
-
-# Boss-specific data for Apocalyptic Shadow (AA)
-aa_raw_boss_1 = load_base_stats(f"{BASE_PATH}_aa/1-1.json")
-aa_raw_boss_2 = load_base_stats(f"{BASE_PATH}_aa/1-2.json")
-aa_raw_boss_3 = load_base_stats(f"{BASE_PATH}_aa/1-3.json")
-aa_raw_boss_4 = load_base_stats(f"{BASE_PATH}_aa/2-1.json")
-
-aa_raw_boss_1_e1 = load_base_stats(f"{BASE_PATH}_aa/1-1_C1.json")
-aa_raw_boss_2_e1 = load_base_stats(f"{BASE_PATH}_aa/1-2_C1.json")
-aa_raw_boss_3_e1 = load_base_stats(f"{BASE_PATH}_aa/1-3_C1.json")
-aa_raw_boss_4_e1 = load_base_stats(f"{BASE_PATH}_aa/2-1_C1.json")
-
-aa_raw_boss_1_s0 = load_base_stats(f"{BASE_PATH}_aa/1-1_E0S0.json")
-aa_raw_boss_2_s0 = load_base_stats(f"{BASE_PATH}_aa/1-2_E0S0.json")
-aa_raw_boss_3_s0 = load_base_stats(f"{BASE_PATH}_aa/1-3_E0S0.json")
-aa_raw_boss_4_s0 = load_base_stats(f"{BASE_PATH}_aa/2-1_E0S0.json")
+boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")]
+for boss_num, boss_room in boss_configs:
+    file_name = f"{BASE_PATH}_aa/{boss_room}"
+    raw[f"aa_boss_{boss_num}"] = load_base_stats(f"{file_name}.json")
+    raw[f"aa_boss_{boss_num}_e1"] = load_base_stats(f"{file_name}_C1.json")
+    raw[f"aa_boss_{boss_num}_s0"] = load_base_stats(f"{file_name}_E0S0.json")
 
 
 # ----------------------------------------------------------------------
@@ -405,10 +388,10 @@ def build_gear_usage(
 
 
 # Build usage structures for each mode
-moc_usage: dict[str, CharacterGearUsage] = build_gear_usage(moc_raw)
-pf_usage: dict[str, CharacterGearUsage] = build_gear_usage(pf_raw)
-as_usage: dict[str, CharacterGearUsage] = build_gear_usage(as_raw)
-aa_usage: dict[str, CharacterGearUsage] = build_gear_usage(aa_raw)
+moc_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["moc"])
+pf_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["pf"])
+as_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["as"])
+aa_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["aa"])
 
 # ----------------------------------------------------------------------
 # Build list of all character keys (including solo/support variants)
@@ -578,10 +561,10 @@ def process_chars() -> None:
 
         # ----- 1. Simple fields (appearance rates, average cycles, samples) -----
         base_modes = [
-            ("moc", moc_raw, moc_raw_e1, moc_raw_s0),
-            ("pf", pf_raw, pf_raw_e1, pf_raw_s0),
-            ("as", as_raw, as_raw_e1, as_raw_s0),
-            ("aa", aa_raw, aa_raw_e1, aa_raw_s0),
+            ("moc", raw_full["moc"], raw["moc_e1"], raw["moc_s0"]),
+            ("pf", raw_full["pf"], raw["pf_e1"], raw["pf_s0"]),
+            ("as", raw_full["as"], raw["as_e1"], raw["as_s0"]),
+            ("aa", raw_full["aa"], raw["aa_e1"], raw["aa_s0"]),
         ]
         for mode, base, e1, s0 in base_modes:
             stats_base = base[char]
@@ -602,10 +585,10 @@ def process_chars() -> None:
 
         # ----- 2. Boss-specific AA fields -----
         boss_configs = [
-            (1, aa_raw_boss_1, aa_raw_boss_1_e1, aa_raw_boss_1_s0),
-            (2, aa_raw_boss_2, aa_raw_boss_2_e1, aa_raw_boss_2_s0),
-            (3, aa_raw_boss_3, aa_raw_boss_3_e1, aa_raw_boss_3_s0),
-            (4, aa_raw_boss_4, aa_raw_boss_4_e1, aa_raw_boss_4_s0),
+            (1, raw["aa_boss_1"], raw["aa_boss_1_e1"], raw["aa_boss_1_s0"]),
+            (2, raw["aa_boss_2"], raw["aa_boss_2_e1"], raw["aa_boss_2_s0"]),
+            (3, raw["aa_boss_3"], raw["aa_boss_3_e1"], raw["aa_boss_3_s0"]),
+            (4, raw["aa_boss_4"], raw["aa_boss_4_e1"], raw["aa_boss_4_s0"]),
         ]
         for boss_num, base, e1, s0 in boss_configs:
             stats_base = base[char]
@@ -622,7 +605,12 @@ def process_chars() -> None:
             out[f"avg_round_boss_{boss_num}_aa_s0"] = stats_s0.avg_round
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
-        round_modes = [("moc", moc_raw), ("pf", pf_raw), ("as", as_raw), ("aa", aa_raw)]
+        round_modes = [
+            ("moc", raw_full["moc"]),
+            ("pf", raw_full["pf"]),
+            ("as", raw_full["as"]),
+            ("aa", raw_full["aa"]),
+        ]
         for e in range(7):
             out[f"app_{e}"] = 0
             for mode, base in round_modes:
@@ -634,23 +622,27 @@ def process_chars() -> None:
         # ----- 4. Compute mode appearance rates for weighting -----
         # These are used later to weight gear and numeric stats.
         rate_moc = (
-            moc_raw[char].app_rate
-            if moc_raw[char].app_rate != 0 and moc_raw[char].weapon_1_app != 0
+            raw_full["moc"][char].app_rate
+            if raw_full["moc"][char].app_rate != 0
+            and raw_full["moc"][char].weapon_1_app != 0
             else 0
         )
         rate_pf = (
-            pf_raw[char].app_rate
-            if pf_raw[char].app_rate != 0 and pf_raw[char].weapon_1_app != 0
+            raw_full["pf"][char].app_rate
+            if raw_full["pf"][char].app_rate != 0
+            and raw_full["pf"][char].weapon_1_app != 0
             else 0
         )
         rate_as = (
-            as_raw[char].app_rate
-            if as_raw[char].app_rate != 0 and as_raw[char].weapon_1_app != 0
+            raw_full["as"][char].app_rate
+            if raw_full["as"][char].app_rate != 0
+            and raw_full["as"][char].weapon_1_app != 0
             else 0
         )
         rate_aa = (
-            aa_raw[char].app_rate
-            if aa_raw[char].app_rate != 0 and aa_raw[char].weapon_1_app != 0
+            raw_full["aa"][char].app_rate
+            if raw_full["aa"][char].app_rate != 0
+            and raw_full["aa"][char].weapon_1_app != 0
             else 0
         )
         rate_combine = (
@@ -714,10 +706,10 @@ def process_chars() -> None:
 
         # ----- 7. Weighted average of numeric stats -----
         for stat in NUMERIC_STATS:
-            val_moc: float = getattr(moc_raw[char], stat)
-            val_pf: float = getattr(pf_raw[char], stat)
-            val_as: float = getattr(as_raw[char], stat)
-            val_aa: float = getattr(aa_raw[char], stat)
+            val_moc: float = getattr(raw_full["moc"][char], stat)
+            val_pf: float = getattr(raw_full["pf"][char], stat)
+            val_as: float = getattr(raw_full["as"][char], stat)
+            val_aa: float = getattr(raw_full["aa"][char], stat)
 
             dividend = (
                 val_moc * rate_moc
