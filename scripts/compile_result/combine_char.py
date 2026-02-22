@@ -3,8 +3,10 @@
 import json
 from sys import path as sys_path
 
+# TODO: Past phase, histograph
+
 sys_path.append("../")
-from comp_rates_config import DPS_SUB_LIST, RECENT_PHASE
+from comp_rates_config import DPS_SUB_LIST, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
 from slugify import slugify
 
@@ -289,22 +291,25 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
 BASE_PATH = f"../../char_results/{RECENT_PHASE}"
+BASE_PREV_PATH = f"../../char_results/{PAST_PHASE}"
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 
-for mode in ["moc", "pf", "as", "aa"]:
-    folder_dir = f"{BASE_PATH}_{mode}" if mode != "moc" else BASE_PATH
-    raw_full[mode] = load_full_stats(f"{folder_dir}/all2.json")
-    raw[f"{mode}_e1"] = load_base_stats(f"{folder_dir}/all_C1.json")
-    raw[f"{mode}_s0"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
+for read_path in [BASE_PATH, BASE_PREV_PATH]:
+    add = "" if read_path == BASE_PATH else "_prev"
+    for mode in ["moc", "pf", "as", "aa"]:
+        folder_dir = f"{read_path}_{mode}" if mode != "moc" else read_path
+        raw_full[f"{mode}{add}"] = load_full_stats(f"{folder_dir}/all2.json")
+        raw[f"{mode}_e1{add}"] = load_base_stats(f"{folder_dir}/all_C1.json")
+        raw[f"{mode}_s0{add}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 
-boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")]
-for boss_num, boss_room in boss_configs:
-    file_name = f"{BASE_PATH}_aa/{boss_room}"
-    raw[f"aa_boss_{boss_num}"] = load_base_stats(f"{file_name}.json")
-    raw[f"aa_boss_{boss_num}_e1"] = load_base_stats(f"{file_name}_C1.json")
-    raw[f"aa_boss_{boss_num}_s0"] = load_base_stats(f"{file_name}_E0S0.json")
+    boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")]
+    for boss_num, boss_room in boss_configs:
+        file_name = f"{read_path}_aa/{boss_room}"
+        raw[f"aa_boss_{boss_num}{add}"] = load_base_stats(f"{file_name}.json")
+        raw[f"aa_boss_{boss_num}_e1{add}"] = load_base_stats(f"{file_name}_C1.json")
+        raw[f"aa_boss_{boss_num}_s0{add}"] = load_base_stats(f"{file_name}_E0S0.json")
 
 
 # ----------------------------------------------------------------------
@@ -560,49 +565,121 @@ def process_chars() -> None:
         out: dict[str, float | str] = {"char": char}
 
         # ----- 1. Simple fields (appearance rates, average cycles, samples) -----
-        base_modes = [
-            ("moc", raw_full["moc"], raw["moc_e1"], raw["moc_s0"]),
-            ("pf", raw_full["pf"], raw["pf_e1"], raw["pf_s0"]),
-            ("as", raw_full["as"], raw["as_e1"], raw["as_s0"]),
-            ("aa", raw_full["aa"], raw["aa_e1"], raw["aa_s0"]),
-        ]
-        for mode, base, e1, s0 in base_modes:
-            stats_base = base[char]
-            stats_e1 = e1[char]
-            stats_s0 = s0[char]
+        for is_prev_mode in [False, True]:
+            add = "_prev" if is_prev_mode else ""
 
-            out[f"app_rate_{mode}"] = stats_base.app_rate
-            out[f"app_rate_{mode}_e0s1"] = stats_base.app_rate_e0
-            out[f"app_rate_{mode}_e1"] = stats_e1.app_rate
-            out[f"app_rate_{mode}_s0"] = stats_s0.app_rate
+            base_modes = [
+                (
+                    "moc",
+                    raw_full[f"moc{add}"],
+                    raw[f"moc_e1{add}"],
+                    raw[f"moc_s0{add}"],
+                ),
+                (
+                    "pf",
+                    raw_full[f"pf{add}"],
+                    raw[f"pf_e1{add}"],
+                    raw[f"pf_s0{add}"],
+                ),
+                (
+                    "as",
+                    raw_full[f"as{add}"],
+                    raw[f"as_e1{add}"],
+                    raw[f"as_s0{add}"],
+                ),
+                (
+                    "aa",
+                    raw_full[f"aa{add}"],
+                    raw[f"aa_e1{add}"],
+                    raw[f"aa_s0{add}"],
+                ),
+            ]
+            for mode, base, e1, s0 in base_modes:
+                if char in base:
+                    stats_base = base[char]
+                    stats_e1 = e1[char]
+                    stats_s0 = s0[char]
 
-            out[f"avg_round_{mode}"] = stats_base.avg_round
-            out[f"avg_round_{mode}_e1"] = stats_e1.avg_round
-            out[f"avg_round_{mode}_s0"] = stats_s0.avg_round
+                    out[f"app_rate_{mode}{add}"] = stats_base.app_rate
+                    out[f"app_rate_{mode}_e0s1{add}"] = stats_base.app_rate_e0
+                    out[f"app_rate_{mode}_e1{add}"] = stats_e1.app_rate
+                    out[f"app_rate_{mode}_s0{add}"] = stats_s0.app_rate
 
-            out[f"sample_{mode}"] = stats_base.sample
-            out[f"sample_size_players_{mode}"] = stats_base.sample_size_players
+                    out[f"avg_round_{mode}{add}"] = stats_base.avg_round
+                    out[f"avg_round_{mode}_e1{add}"] = stats_e1.avg_round
+                    out[f"avg_round_{mode}_s0{add}"] = stats_s0.avg_round
 
-        # ----- 2. Boss-specific AA fields -----
-        boss_configs = [
-            (1, raw["aa_boss_1"], raw["aa_boss_1_e1"], raw["aa_boss_1_s0"]),
-            (2, raw["aa_boss_2"], raw["aa_boss_2_e1"], raw["aa_boss_2_s0"]),
-            (3, raw["aa_boss_3"], raw["aa_boss_3_e1"], raw["aa_boss_3_s0"]),
-            (4, raw["aa_boss_4"], raw["aa_boss_4_e1"], raw["aa_boss_4_s0"]),
-        ]
-        for boss_num, base, e1, s0 in boss_configs:
-            stats_base = base[char]
-            stats_e1 = e1[char]
-            stats_s0 = s0[char]
+                    out[f"sample_{mode}{add}"] = stats_base.sample
+                    out[f"sample_size_players_{mode}{add}"] = (
+                        stats_base.sample_size_players
+                    )
 
-            out[f"app_rate_aa_boss_{boss_num}"] = stats_base.app_rate
-            out[f"app_rate_aa_boss_{boss_num}_e0s1"] = stats_base.app_rate_e0
-            out[f"app_rate_aa_boss_{boss_num}_e1"] = stats_e1.app_rate
-            out[f"app_rate_aa_boss_{boss_num}_s0"] = stats_s0.app_rate
+                else:
+                    out[f"app_rate_{mode}{add}"] = 0.0
+                    out[f"app_rate_{mode}_e0s1{add}"] = 0.0
+                    out[f"app_rate_{mode}_e1{add}"] = 0.0
+                    out[f"app_rate_{mode}_s0{add}"] = 0.0
 
-            out[f"avg_round_boss_{boss_num}_aa"] = stats_base.avg_round
-            out[f"avg_round_boss_{boss_num}_aa_e1"] = stats_e1.avg_round
-            out[f"avg_round_boss_{boss_num}_aa_s0"] = stats_s0.avg_round
+                    out[f"avg_round_{mode}{add}"] = 0.0
+                    out[f"avg_round_{mode}_e1{add}"] = 0.0
+                    out[f"avg_round_{mode}_s0{add}"] = 0.0
+
+                    out[f"sample_{mode}{add}"] = 0
+                    out[f"sample_size_players_{mode}{add}"] = 0
+
+            # ----- 2. Boss-specific AA fields -----
+
+            boss_configs = [
+                (
+                    1,
+                    raw[f"aa_boss_1{add}"],
+                    raw[f"aa_boss_1_e1{add}"],
+                    raw[f"aa_boss_1_s0{add}"],
+                ),
+                (
+                    2,
+                    raw[f"aa_boss_2{add}"],
+                    raw[f"aa_boss_2_e1{add}"],
+                    raw[f"aa_boss_2_s0{add}"],
+                ),
+                (
+                    3,
+                    raw[f"aa_boss_3{add}"],
+                    raw[f"aa_boss_3_e1{add}"],
+                    raw[f"aa_boss_3_s0{add}"],
+                ),
+                (
+                    4,
+                    raw[f"aa_boss_4{add}"],
+                    raw[f"aa_boss_4_e1{add}"],
+                    raw[f"aa_boss_4_s0{add}"],
+                ),
+            ]
+            for boss_num, base, e1, s0 in boss_configs:
+                if char in base:
+                    stats_base = base[char]
+                    stats_e1 = e1[char]
+                    stats_s0 = s0[char]
+
+                    out[f"app_rate_aa_boss_{boss_num}{add}"] = stats_base.app_rate
+                    out[f"app_rate_aa_boss_{boss_num}_e0s1{add}"] = (
+                        stats_base.app_rate_e0
+                    )
+                    out[f"app_rate_aa_boss_{boss_num}_e1{add}"] = stats_e1.app_rate
+                    out[f"app_rate_aa_boss_{boss_num}_s0{add}"] = stats_s0.app_rate
+
+                    out[f"avg_round_boss_{boss_num}_aa{add}"] = stats_base.avg_round
+                    out[f"avg_round_boss_{boss_num}_aa_e1{add}"] = stats_e1.avg_round
+                    out[f"avg_round_boss_{boss_num}_aa_s0{add}"] = stats_s0.avg_round
+                else:
+                    out[f"app_rate_aa_boss_{boss_num}{add}"] = 0.0
+                    out[f"app_rate_aa_boss_{boss_num}_e0s1{add}"] = 0.0
+                    out[f"app_rate_aa_boss_{boss_num}_e1{add}"] = 0.0
+                    out[f"app_rate_aa_boss_{boss_num}_s0{add}"] = 0.0
+
+                    out[f"avg_round_boss_{boss_num}_aa{add}"] = 0.0
+                    out[f"avg_round_boss_{boss_num}_aa_e1{add}"] = 0.0
+                    out[f"avg_round_boss_{boss_num}_aa_s0{add}"] = 0.0
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
         round_modes = [
@@ -733,7 +810,7 @@ def process_chars() -> None:
     # ----------------------------------------------------------------------
     # Write final JSON
     # ----------------------------------------------------------------------
-    output_path = f"../../char_results/{RECENT_PHASE}/builds_new.json"
+    output_path = f"../../char_results/{RECENT_PHASE}/builds.json"
     with open(output_path, "w") as out_file:
         json.dump(output_data, out_file, indent=2)
 
