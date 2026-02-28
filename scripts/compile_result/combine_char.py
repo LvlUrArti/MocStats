@@ -558,6 +558,20 @@ def process_chars() -> None:
                 out_dict[f"{part}_stats_{i + 1}"] = ""
                 out_dict[f"{part}_stats_{i + 1}_app"] = 0.0
 
+    # Helper to fetch an attribute with a default value
+    def get_val(
+        dict_obj: dict[str, FullCharacterStats] | dict[str, BaseCharacterStats],
+        attr: str,
+        char: str,
+    ) -> float | int:
+        if char in dict_obj:
+            return getattr(dict_obj[char], attr)
+        # TODO: Return 99.99 if moc mode
+        return 0.0 if "app_rate" in attr else 0
+
+    variants = ["", "_e1", "_s0"]
+    fields = ["app_rate", "avg_round"]
+
     output_data: list[dict[str, float | str]] = []
 
     for char in character_keys:
@@ -568,118 +582,43 @@ def process_chars() -> None:
         for is_prev_mode in (False, True):
             suf = "_prev" if is_prev_mode else ""
 
+            # Mode tuples: (name, base)
             base_modes = [
-                (
-                    "moc",
-                    raw_full[f"moc{suf}"],
-                    raw[f"moc_e1{suf}"],
-                    raw[f"moc_s0{suf}"],
-                ),
-                (
-                    "pf",
-                    raw_full[f"pf{suf}"],
-                    raw[f"pf_e1{suf}"],
-                    raw[f"pf_s0{suf}"],
-                ),
-                (
-                    "as",
-                    raw_full[f"as{suf}"],
-                    raw[f"as_e1{suf}"],
-                    raw[f"as_s0{suf}"],
-                ),
-                (
-                    "aa",
-                    raw_full[f"aa{suf}"],
-                    raw[f"aa_e1{suf}"],
-                    raw[f"aa_s0{suf}"],
-                ),
+                ("moc", raw_full[f"moc{suf}"]),
+                ("pf", raw_full[f"pf{suf}"]),
+                ("as", raw_full[f"as{suf}"]),
+                ("aa", raw_full[f"aa{suf}"]),
             ]
-            for mode, base, e1, s0 in base_modes:
-                if char in base:
-                    stats_base = base[char]
-                    stats_e1 = e1[char]
-                    stats_s0 = s0[char]
 
-                    out[f"app_rate_{mode}{suf}"] = stats_base.app_rate
-                    out[f"app_rate_{mode}_e0s1{suf}"] = stats_base.app_rate_e0
-                    out[f"app_rate_{mode}_e1{suf}"] = stats_e1.app_rate
-                    out[f"app_rate_{mode}_s0{suf}"] = stats_s0.app_rate
+            for mode, base in base_modes:
+                boss_suffixes = (
+                    ["", "_boss_1", "_boss_2", "_boss_3", "_boss_4"]
+                    if mode == "aa"
+                    else [""]
+                )
 
-                    out[f"avg_round_{mode}{suf}"] = stats_base.avg_round
-                    out[f"avg_round_{mode}_e1{suf}"] = stats_e1.avg_round
-                    out[f"avg_round_{mode}_s0{suf}"] = stats_s0.avg_round
+                for boss_idx, boss_suf in enumerate(boss_suffixes):
+                    for var_off, var_suf in enumerate(variants):
+                        is_base = boss_idx + var_off == 0
+                        data_dict = (
+                            base if is_base else raw[f"{mode}{boss_suf}{var_suf}{suf}"]
+                        )
 
-                    out[f"sample_{mode}{suf}"] = stats_base.sample
-                    out[f"sample_size_players_{mode}{suf}"] = (
-                        stats_base.sample_size_players
-                    )
+                        # Additional e0s1 field for base variant only
+                        if var_off == 0:
+                            e0s1_key = f"app_rate_{mode}{boss_suf}_e0s1{suf}"
+                            out[e0s1_key] = get_val(data_dict, "app_rate_e0", char)
+                        for field in fields:
+                            key = f"{field}_{mode}{boss_suf}{var_suf}{suf}"
+                            out[key] = get_val(data_dict, field, char)
 
-                else:
-                    out[f"app_rate_{mode}{suf}"] = 0.0
-                    out[f"app_rate_{mode}_e0s1{suf}"] = 0.0
-                    out[f"app_rate_{mode}_e1{suf}"] = 0.0
-                    out[f"app_rate_{mode}_s0{suf}"] = 0.0
-
-                    out[f"avg_round_{mode}{suf}"] = 0.0
-                    out[f"avg_round_{mode}_e1{suf}"] = 0.0
-                    out[f"avg_round_{mode}_s0{suf}"] = 0.0
-
-                    out[f"sample_{mode}{suf}"] = 0
-                    out[f"sample_size_players_{mode}{suf}"] = 0
-
-            # ----- 2. Boss-specific AA fields -----
-
-            boss_configs = [
-                (
-                    1,
-                    raw[f"aa_boss_1{suf}"],
-                    raw[f"aa_boss_1_e1{suf}"],
-                    raw[f"aa_boss_1_s0{suf}"],
-                ),
-                (
-                    2,
-                    raw[f"aa_boss_2{suf}"],
-                    raw[f"aa_boss_2_e1{suf}"],
-                    raw[f"aa_boss_2_s0{suf}"],
-                ),
-                (
-                    3,
-                    raw[f"aa_boss_3{suf}"],
-                    raw[f"aa_boss_3_e1{suf}"],
-                    raw[f"aa_boss_3_s0{suf}"],
-                ),
-                (
-                    4,
-                    raw[f"aa_boss_4{suf}"],
-                    raw[f"aa_boss_4_e1{suf}"],
-                    raw[f"aa_boss_4_s0{suf}"],
-                ),
-            ]
-            for boss_num, base, e1, s0 in boss_configs:
-                if char in base:
-                    stats_base = base[char]
-                    stats_e1 = e1[char]
-                    stats_s0 = s0[char]
-
-                    out[f"app_rate_aa_boss_{boss_num}{suf}"] = stats_base.app_rate
-                    out[f"app_rate_aa_boss_{boss_num}_e0s1{suf}"] = (
-                        stats_base.app_rate_e0
-                    )
-                    out[f"app_rate_aa_boss_{boss_num}_e1{suf}"] = stats_e1.app_rate
-                    out[f"app_rate_aa_boss_{boss_num}_s0{suf}"] = stats_s0.app_rate
-
-                    out[f"avg_round_boss_{boss_num}_aa{suf}"] = stats_base.avg_round
-                    out[f"avg_round_boss_{boss_num}_aa_e1{suf}"] = stats_e1.avg_round
-                    out[f"avg_round_boss_{boss_num}_aa_s0{suf}"] = stats_s0.avg_round
-                else:
-                    out[f"app_rate_aa_boss_{boss_num}{suf}"] = 0.0
-                    out[f"app_rate_aa_boss_{boss_num}_e0s1{suf}"] = 0.0
-                    out[f"app_rate_aa_boss_{boss_num}_e1{suf}"] = 0.0
-                    out[f"app_rate_aa_boss_{boss_num}_s0{suf}"] = 0.0
-
-                    out[f"avg_round_boss_{boss_num}_aa{suf}"] = 0.0
-                    out[f"avg_round_boss_{boss_num}_aa_e1{suf}"] = 0.0
-                    out[f"avg_round_boss_{boss_num}_aa_s0{suf}"] = 0.0
+                # Overall sample info (from base_data, no boss suffix)
+                out[f"sample_{mode}{suf}"] = get_val(base, "sample", char)
+                out[f"sample_size_players_{mode}{suf}"] = get_val(
+                    base,
+                    "sample_size_players",
+                    char,
+                )
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
         round_modes = [
