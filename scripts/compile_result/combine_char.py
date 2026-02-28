@@ -561,17 +561,6 @@ def process_chars() -> None:
                 out_dict[f"{part}_stats_{i + 1}"] = ""
                 out_dict[f"{part}_stats_{i + 1}_app"] = DEFAULT_APP
 
-    # Helper to fetch an attribute with a default value
-    def get_val(
-        dict_obj: dict[str, FullCharacterStats] | dict[str, BaseCharacterStats],
-        attr: str,
-        char: str,
-    ) -> float | int:
-        if char in dict_obj:
-            return getattr(dict_obj[char], attr)
-        # TODO: Return 99.99 if moc mode
-        return DEFAULT_APP if "app_rate" in attr else DEFAULT_SCORE
-
     variants = ["", "_e1", "_s0"]
     fields = ["app_rate", "avg_round"]
 
@@ -594,6 +583,22 @@ def process_chars() -> None:
             ]
 
             for mode, base in base_modes:
+                # Helper to fetch an attribute with a default value
+                def get_val(
+                    dict_obj: dict[str, FullCharacterStats]
+                    | dict[str, BaseCharacterStats],
+                    attr: str,
+                    char: str = char,
+                    mode: str = mode,
+                ) -> float | int:
+                    if char in dict_obj:
+                        return getattr(dict_obj[char], attr)
+                    if "app_rate" in attr:
+                        return DEFAULT_APP
+                    if mode in ("pf", "as") or "sample" in attr:
+                        return DEFAULT_SCORE
+                    return DEFAULT_CYCLE
+
                 boss_suffixes = (
                     ["", "_boss_1", "_boss_2", "_boss_3", "_boss_4"]
                     if mode == "aa"
@@ -610,17 +615,16 @@ def process_chars() -> None:
                         # Additional e0s1 field for base variant only
                         if var_off == 0:
                             e0s1_key = f"app_rate_{mode}{boss_suf}_e0s1{suf}"
-                            out[e0s1_key] = get_val(data_dict, "app_rate_e0", char)
+                            out[e0s1_key] = get_val(data_dict, "app_rate_e0")
                         for field in fields:
                             key = f"{field}_{mode}{boss_suf}{var_suf}{suf}"
-                            out[key] = get_val(data_dict, field, char)
+                            out[key] = get_val(data_dict, field)
 
                 # Overall sample info (from base_data, no boss suffix)
-                out[f"sample_{mode}{suf}"] = get_val(base, "sample", char)
+                out[f"sample_{mode}{suf}"] = get_val(base, "sample")
                 out[f"sample_size_players_{mode}{suf}"] = get_val(
                     base,
                     "sample_size_players",
-                    char,
                 )
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
