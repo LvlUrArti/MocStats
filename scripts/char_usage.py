@@ -1,5 +1,6 @@
 """Compile all HSR character data."""
 
+# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 from __future__ import annotations
 
 from csv import writer as csvwriter
@@ -21,10 +22,7 @@ from comp_rates_config import (
 from composition import Stage
 from line_profiler import profile
 from percentile import calculate_percentile
-from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
-    skew,  # pyright: ignore[reportUnknownVariableType]
-    trim_mean,  # pyright: ignore[reportUnknownVariableType]
-)
+from scipy.stats import skew, trim_mean
 
 if TYPE_CHECKING:
     from player_phase import PlayerPhase
@@ -194,9 +192,7 @@ def appearances(
                         if sustain_count <= 1:
                             app[char].cons_freq[char_con].round_list[
                                 cur_chamber
-                            ].append(
-                                user_round,
-                            )
+                            ].append(user_round)
                         app[char].cons_avg += char_con
 
                     if giga_whale:
@@ -258,10 +254,10 @@ def appearances(
     for char, char_item in app.items():
         all_rounds[char] = {}
         if total > 0:
-            app[char].app = round(char_item.app_flat / total, 2)
-            app[char].app_exclude = round(char_item.app_flat_exclude / total, 2)
+            char_item.app = round(char_item.app_flat / total, 2)
+            char_item.app_exclude = round(char_item.app_flat_exclude / total, 2)
         else:
-            app[char].app = 0.00
+            char_item.app = 0.00
         if char_item.app_flat_exclude >= EXCLUDED_LIMIT:
             avg_round: list[float] = []
             std_dev_round: list[float] = []
@@ -295,10 +291,7 @@ def appearances(
                         )
                         if abs(skewness) > SKEW_LIMIT:
                             avg_round.append(
-                                trim_mean(
-                                    char_item.round_list[room_num],
-                                    0.25,
-                                ),
+                                trim_mean(char_item.round_list[room_num], 0.25),
                             )
                         else:
                             avg_round.append(mean(char_item.round_list[room_num]))
@@ -311,7 +304,7 @@ def appearances(
             if not uses_room:
                 is_count_cycles = False
             elif chambers == SINGLE_CHAMBER:
-                app[char].sample_app_flat = uses_room[
+                char_item.sample_app_flat = uses_room[
                     1 if aa_mode else 4 if pf_mode else 12
                 ]
                 if not aa_mode and len(uses_room) != len(chambers) / 2:
@@ -324,29 +317,26 @@ def appearances(
                     break
 
             if is_count_cycles:
-                app[char].round = round(mean(avg_round), DEFAULT_ROUND)
-                app[char].std_dev_round = round(mean(std_dev_round), DEFAULT_ROUND)
-                app[char].q1_round = round(mean(q1_round), DEFAULT_ROUND)
+                char_item.round = round(mean(avg_round), DEFAULT_ROUND)
+                char_item.std_dev_round = round(mean(std_dev_round), DEFAULT_ROUND)
+                char_item.q1_round = round(mean(q1_round), DEFAULT_ROUND)
             else:
-                app[char].round = DEFAULT_VALUE
-                app[char].q1_round = DEFAULT_VALUE
+                char_item.round = DEFAULT_VALUE
+                char_item.q1_round = DEFAULT_VALUE
         else:
-            app[char].round = DEFAULT_VALUE
-            app[char].q1_round = DEFAULT_VALUE
+            char_item.round = DEFAULT_VALUE
+            char_item.q1_round = DEFAULT_VALUE
 
-        app[char].sample = len(user_chars[char])
+        char_item.sample = len(user_chars[char])
 
         if chambers != SINGLE_CHAMBER:
             continue
         # Calculate constellations
         if char_item.app_flat_all > 0:
-            app[char].cons_avg = round(
-                char_item.cons_avg / char_item.app_flat_all,
-                2,
-            )
-        for cons, cons_freq in char_item.cons_freq.items():
+            char_item.cons_avg = round(char_item.cons_avg / char_item.app_flat_all, 2)
+        for cons_freq in char_item.cons_freq.values():
             if cons_freq.app_flat > 0:
-                app[char].cons_freq[cons].app = round(
+                cons_freq.app = round(
                     cons_freq.app_flat / char_item.app_flat_all * 100,
                     2,
                 )
@@ -361,33 +351,19 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(
-                                        cons_freq.round_list[room_num],
-                                        0.25,
-                                    ),
+                                    trim_mean(cons_freq.round_list[room_num], 0.25),
                                 )
                             else:
-                                avg_round.append(
-                                    mean(
-                                        cons_freq.round_list[room_num],
-                                    ),
-                                )
+                                avg_round.append(mean(cons_freq.round_list[room_num]))
                         else:
-                            avg_round.append(
-                                mean(
-                                    cons_freq.round_list[room_num],
-                                ),
-                            )
+                            avg_round.append(mean(cons_freq.round_list[room_num]))
                 if avg_round:
-                    app[char].cons_freq[cons].round = round(
-                        mean(avg_round),
-                        DEFAULT_ROUND,
-                    )
+                    cons_freq.round = round(mean(avg_round), DEFAULT_ROUND)
                 else:
-                    app[char].cons_freq[cons].round = DEFAULT_VALUE
+                    cons_freq.round = DEFAULT_VALUE
             else:
-                app[char].cons_freq[cons].app = 0.00
-                app[char].cons_freq[cons].round = DEFAULT_VALUE
+                cons_freq.app = 0.00
+                cons_freq.round = DEFAULT_VALUE
 
         app_flat = char_item.owned / 100.0
         # Calculate weapons
@@ -396,8 +372,8 @@ def appearances(
             key=lambda t: t[1].app_flat,
             reverse=True,
         )
-        app[char].weap_freq = dict(sorted_weapons)
-        for weapon, weap_freq in char_item.weap_freq.items():
+        char_item.weap_freq = dict(sorted_weapons)
+        for weap_freq in char_item.weap_freq.values():
             # If a gear appears >15 times, include it
             # Because there might be 1* gears
             # If it's for character infographic, include all gears
@@ -406,10 +382,7 @@ def appearances(
                 or (weap_freq.app_flat / app_flat) > WEAP_APP_THRESHOLD
                 or info_char
             ):
-                app[char].weap_freq[weapon].app = round(
-                    weap_freq.app_flat / app_flat,
-                    2,
-                )
+                weap_freq.app = round(weap_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 13):
                     if weap_freq.round_list[room_num]:
@@ -421,44 +394,30 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(
-                                        weap_freq.round_list[room_num],
-                                        0.25,
-                                    ),
+                                    trim_mean(weap_freq.round_list[room_num], 0.25),
                                 )
                             else:
-                                avg_round.append(
-                                    mean(
-                                        weap_freq.round_list[room_num],
-                                    ),
-                                )
+                                avg_round.append(mean(weap_freq.round_list[room_num]))
                         else:
-                            avg_round.append(
-                                mean(
-                                    weap_freq.round_list[room_num],
-                                ),
-                            )
+                            avg_round.append(mean(weap_freq.round_list[room_num]))
                 if avg_round:
-                    app[char].weap_freq[weapon].round = round(
-                        mean(avg_round),
-                        DEFAULT_ROUND,
-                    )
+                    weap_freq.round = round(mean(avg_round), DEFAULT_ROUND)
                 else:
-                    app[char].weap_freq[weapon].round = DEFAULT_VALUE
+                    weap_freq.round = DEFAULT_VALUE
             else:
-                app[char].weap_freq[weapon].app = 0
-                app[char].weap_freq[weapon].round = DEFAULT_VALUE
+                weap_freq.app = 0
+                weap_freq.round = DEFAULT_VALUE
 
         # Remove flex artifacts
         if "Flex" in char_item.arti_freq:
-            del app[char].arti_freq["Flex"]
+            del char_item.arti_freq["Flex"]
         # Calculate artifacts
         sorted_arti = sorted(
             char_item.arti_freq.items(),
             key=lambda t: t[1].app_flat,
             reverse=True,
         )
-        app[char].arti_freq = dict(sorted_arti)
+        char_item.arti_freq = dict(sorted_arti)
         for arti, arti_freq in char_item.arti_freq.items():
             # If a gear appears >15 times, include it
             # Because there might be 1* gears
@@ -466,10 +425,7 @@ def appearances(
             if (
                 arti_freq.app_flat > GEAR_APP_THRESHOLD or info_char
             ) and arti != "Flex":
-                app[char].arti_freq[arti].app = round(
-                    arti_freq.app_flat / app_flat,
-                    2,
-                )
+                arti_freq.app = round(arti_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 13):
                     if arti_freq.round_list[room_num]:
@@ -481,44 +437,30 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(
-                                        arti_freq.round_list[room_num],
-                                        0.25,
-                                    ),
+                                    trim_mean(arti_freq.round_list[room_num], 0.25),
                                 )
                             else:
-                                avg_round.append(
-                                    mean(
-                                        arti_freq.round_list[room_num],
-                                    ),
-                                )
+                                avg_round.append(mean(arti_freq.round_list[room_num]))
                         else:
-                            avg_round.append(
-                                mean(
-                                    arti_freq.round_list[room_num],
-                                ),
-                            )
+                            avg_round.append(mean(arti_freq.round_list[room_num]))
                 if avg_round:
-                    app[char].arti_freq[arti].round = round(
-                        mean(avg_round),
-                        DEFAULT_ROUND,
-                    )
+                    arti_freq.round = round(mean(avg_round), DEFAULT_ROUND)
                 else:
-                    app[char].arti_freq[arti].round = DEFAULT_VALUE
+                    arti_freq.round = DEFAULT_VALUE
             else:
-                app[char].arti_freq[arti].app = 0
-                app[char].arti_freq[arti].round = DEFAULT_VALUE
+                arti_freq.app = 0
+                arti_freq.round = DEFAULT_VALUE
 
         # Remove flex artifacts
         if "Flex" in char_item.planar_freq:
-            del app[char].planar_freq["Flex"]
+            del char_item.planar_freq["Flex"]
         # Calculate artifacts
         sorted_planars = sorted(
             char_item.planar_freq.items(),
             key=lambda t: t[1].app_flat,
             reverse=True,
         )
-        app[char].planar_freq = dict(sorted_planars)
+        char_item.planar_freq = dict(sorted_planars)
         for planar, planar_freq in char_item.planar_freq.items():
             # If a gear appears >15 times, include it
             # Because there might be 1* gears
@@ -526,10 +468,7 @@ def appearances(
             if (
                 planar_freq.app_flat > GEAR_APP_THRESHOLD or info_char
             ) and planar != "Flex":
-                app[char].planar_freq[planar].app = round(
-                    planar_freq.app_flat / app_flat,
-                    2,
-                )
+                planar_freq.app = round(planar_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 13):
                     if planar_freq.round_list[room_num]:
@@ -541,33 +480,19 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(
-                                        planar_freq.round_list[room_num],
-                                        0.25,
-                                    ),
+                                    trim_mean(planar_freq.round_list[room_num], 0.25),
                                 )
                             else:
-                                avg_round.append(
-                                    mean(
-                                        planar_freq.round_list[room_num],
-                                    ),
-                                )
+                                avg_round.append(mean(planar_freq.round_list[room_num]))
                         else:
-                            avg_round.append(
-                                mean(
-                                    planar_freq.round_list[room_num],
-                                ),
-                            )
+                            avg_round.append(mean(planar_freq.round_list[room_num]))
                 if avg_round:
-                    app[char].planar_freq[planar].round = round(
-                        mean(avg_round),
-                        DEFAULT_ROUND,
-                    )
+                    planar_freq.round = round(mean(avg_round), DEFAULT_ROUND)
                 else:
-                    app[char].planar_freq[planar].round = DEFAULT_VALUE
+                    planar_freq.round = DEFAULT_VALUE
             else:
-                app[char].planar_freq[planar].app = 0
-                app[char].planar_freq[planar].round = DEFAULT_VALUE
+                planar_freq.app = 0
+                planar_freq.round = DEFAULT_VALUE
     if chambers == ["12-1", "12-2"]:
         with open("../char_results/all_rounds.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
@@ -639,26 +564,16 @@ def usages(
 
         if stage in past_usage and char in past_usage[stage]:
             uses[char].diff = str(
-                round(
-                    app_char.app - past_usage[stage][char]["app"],
-                    2,
-                ),
+                round(app_char.app - past_usage[stage][char]["app"], 2),
             )
 
         if stage in past_rounds and char in past_rounds[stage]:
             uses[char].diff_rounds = str(
-                round(
-                    app_char.round - past_rounds[stage][char]["round"],
-                    2,
-                ),
+                round(app_char.round - past_rounds[stage][char]["round"], 2),
             )
 
         for i in range(7):
-            uses[char].cons_usage[i] = {
-                "app": "-",
-                "own": "-",
-                "usage": "-",
-            }
+            uses[char].cons_usage[i] = {"app": "-", "own": "-", "usage": "-"}
 
         if chambers != SINGLE_CHAMBER:
             continue
@@ -676,12 +591,8 @@ def usages(
             uses[char].planars[planars[i]] = app_char.planar_freq[planars[i]]
 
         for i in range(7):
-            uses[char].cons_usage[i]["app"] = str(
-                app_char.cons_freq[i].app,
-            )
-            uses[char].cons_usage[i]["round"] = str(
-                app_char.cons_freq[i].round,
-            )
+            uses[char].cons_usage[i]["app"] = str(app_char.cons_freq[i].app)
+            uses[char].cons_usage[i]["round"] = str(app_char.cons_freq[i].round)
     rates.sort(reverse=True)
     for char, use_char in uses.items():
         # if owns[char]["flat"] > 0:
