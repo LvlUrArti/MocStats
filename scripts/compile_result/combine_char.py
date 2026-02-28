@@ -13,6 +13,9 @@ from slugify import slugify
 # ----------------------------------------------------------------------
 # Constants
 # ----------------------------------------------------------------------
+DEFAULT_CYCLE = 99.99
+DEFAULT_SCORE = 0
+DEFAULT_APP = 0.0
 # How many top items we keep per category (weapons, artifacts, planars, relic stats)
 GEAR_COUNTS = {
     "weapons": 10,
@@ -450,10 +453,10 @@ def process_chars() -> None:
             gear_as = gears_as.get(name)
             gear_aa = gears_aa.get(name)
 
-            app_moc = gear_moc.app if gear_moc else 0.0
-            app_pf = gear_pf.app if gear_pf else 0.0
-            app_as = gear_as.app if gear_as else 0.0
-            app_aa = gear_aa.app if gear_aa else 0.0
+            app_moc = gear_moc.app if gear_moc else DEFAULT_APP
+            app_pf = gear_pf.app if gear_pf else DEFAULT_APP
+            app_as = gear_as.app if gear_as else DEFAULT_APP
+            app_aa = gear_aa.app if gear_aa else DEFAULT_APP
 
             app_moc = app_moc * rate_moc / rate_combine
             app_pf = app_pf * rate_pf / rate_combine
@@ -462,10 +465,10 @@ def process_chars() -> None:
 
             merged[name] = MergedGearStats(
                 app=app_moc + app_pf + app_as + app_aa,
-                round_moc=gear_moc.round if gear_moc else 99.99,
-                round_pf=int(gear_pf.round) if gear_pf else 0,
-                round_as=int(gear_as.round) if gear_as else 0,
-                round_aa=gear_aa.round if gear_aa else 99.99,
+                round_moc=gear_moc.round if gear_moc else DEFAULT_CYCLE,
+                round_pf=int(gear_pf.round) if gear_pf else DEFAULT_SCORE,
+                round_as=int(gear_as.round) if gear_as else DEFAULT_SCORE,
+                round_aa=gear_aa.round if gear_aa else DEFAULT_CYCLE,
                 set1=gear_set.set1,
                 set2=gear_set.set2,
             )
@@ -485,10 +488,10 @@ def process_chars() -> None:
         )
 
         for name in all_stats:
-            app_moc = relic_moc.get(name) or 0.0
-            app_pf = relic_pf.get(name) or 0.0
-            app_as = relic_as.get(name) or 0.0
-            app_aa = relic_aa.get(name) or 0.0
+            app_moc = relic_moc.get(name) or DEFAULT_APP
+            app_pf = relic_pf.get(name) or DEFAULT_APP
+            app_as = relic_as.get(name) or DEFAULT_APP
+            app_aa = relic_aa.get(name) or DEFAULT_APP
 
             app_moc = app_moc * rate_moc / rate_combine
             app_pf = app_pf * rate_pf / rate_combine
@@ -533,11 +536,11 @@ def process_chars() -> None:
                 if category == "artifacts":
                     out_dict[f"{category}_{i + 1}_1"] = ""
                     out_dict[f"{category}_{i + 1}_2"] = ""
-                out_dict[f"{category}_{i + 1}_app"] = 0.0
-                out_dict[f"{category}_{i + 1}_round_moc"] = 99.99
-                out_dict[f"{category}_{i + 1}_round_pf"] = 0
-                out_dict[f"{category}_{i + 1}_round_as"] = 0
-                out_dict[f"{category}_{i + 1}_round_aa"] = 99.99
+                out_dict[f"{category}_{i + 1}_app"] = DEFAULT_APP
+                out_dict[f"{category}_{i + 1}_round_moc"] = DEFAULT_CYCLE
+                out_dict[f"{category}_{i + 1}_round_pf"] = DEFAULT_SCORE
+                out_dict[f"{category}_{i + 1}_round_as"] = DEFAULT_SCORE
+                out_dict[f"{category}_{i + 1}_round_aa"] = DEFAULT_CYCLE
 
     def populate_relic_stat_usage(
         part: str,
@@ -556,7 +559,7 @@ def process_chars() -> None:
                 out_dict[f"{part}_stats_{i + 1}_app"] = round(app, 2)
             else:
                 out_dict[f"{part}_stats_{i + 1}"] = ""
-                out_dict[f"{part}_stats_{i + 1}_app"] = 0.0
+                out_dict[f"{part}_stats_{i + 1}_app"] = DEFAULT_APP
 
     # Helper to fetch an attribute with a default value
     def get_val(
@@ -567,7 +570,7 @@ def process_chars() -> None:
         if char in dict_obj:
             return getattr(dict_obj[char], attr)
         # TODO: Return 99.99 if moc mode
-        return 0.0 if "app_rate" in attr else 0
+        return DEFAULT_APP if "app_rate" in attr else DEFAULT_SCORE
 
     variants = ["", "_e1", "_s0"]
     fields = ["app_rate", "avg_round"]
@@ -628,12 +631,12 @@ def process_chars() -> None:
             ("aa", raw_full["aa"]),
         ]
         for e in range(7):
-            out[f"app_{e}"] = 0
+            out[f"app_{e}"] = DEFAULT_APP
             for mode, base in round_modes:
                 out[f"round_{e}_{mode}"] = getattr(base[char], f"round_{e}")
 
         # Set cons_avg to 0, will be used later
-        out["cons_avg"] = 0.0
+        out["cons_avg"] = DEFAULT_APP
 
         # ----- 4. Compute mode appearance rates for weighting -----
         # These are used later to weight gear and numeric stats.
