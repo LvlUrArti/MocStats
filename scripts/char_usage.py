@@ -265,40 +265,32 @@ def appearances(
             uses_room: dict[int, int] = {}
 
             for room_num in range(1, 13):
+                round_list = char_item.round_list[room_num]
                 if room_num >= MOC_LOWER_LIMIT:
                     all_rounds[char][room_num] = {}
                     for i in range(41):
                         all_rounds[char][room_num][i] = 0
-                if char_item.round_list[room_num]:
+                if round_list:
                     if room_num >= MOC_LOWER_LIMIT:
-                        for round_num_iter in char_item.round_list[room_num]:
+                        for round_num_iter in round_list:
                             all_rounds[char][room_num][round_num_iter] += 1
-                    uses_room[room_num] = len(char_item.round_list[room_num])
-                    if len(char_item.round_list[room_num]) > MIN_APP_LIMIT:
-                        std_dev_round.append(stdev(char_item.round_list[room_num]))
+                    uses_room[room_num] = len(round_list)
+                    if len(round_list) > MIN_APP_LIMIT:
+                        std_dev_round.append(stdev(round_list))
                         q1_round.append(
                             float(
-                                calculate_percentile(
-                                    char_item.round_list[room_num],
-                                    75 if pf_mode else 25,
-                                ),
+                                calculate_percentile(round_list, 75 if pf_mode else 25),
                             ),
                         )
-                        skewness = skew(
-                            char_item.round_list[room_num],
-                            axis=0,
-                            bias=True,
-                        )
+                        skewness = skew(round_list, axis=0, bias=True)
                         if abs(skewness) > SKEW_LIMIT:
-                            avg_round.append(
-                                trim_mean(char_item.round_list[room_num], 0.25),
-                            )
+                            avg_round.append(trim_mean(round_list, 0.25))
                         else:
-                            avg_round.append(mean(char_item.round_list[room_num]))
+                            avg_round.append(mean(round_list))
                     else:
                         std_dev_round.append(0)
                         q1_round.append(0)
-                        avg_round.append(mean(char_item.round_list[room_num]))
+                        avg_round.append(mean(round_list))
 
             is_count_cycles = True
             if not uses_room:

@@ -434,7 +434,7 @@ def used_comps(
             (WHALE_ONLY and not whale_comp)
             or (F2P_ONLY and (not f2p_comp or whale_comp))
             or giga_whale
-            or comp.is_hard_mode
+            or comp.is_hard_mode  # Anomaly arbitration plight
         ):
             continue
 
@@ -537,13 +537,9 @@ def rank_usages(
 
         rounded_avg_round: float
         if avg_round:
-            rounded_avg_round = round(mean(avg_round), 2)
-            if pf_mode:
-                rounded_avg_round = round(rounded_avg_round)
+            rounded_avg_round = round(mean(avg_round), 0 if pf_mode else 2)
         else:
-            rounded_avg_round = 99.99
-            if pf_mode:
-                rounded_avg_round = 0
+            rounded_avg_round = 0 if pf_mode else 99.99
 
         app = (
             int(100.0 * cur_comp.uses / (total_comps * owns_offset) * 200 + 0.5) / 100.0
@@ -1080,9 +1076,9 @@ def char_usages_write(
                 else:
                     out_chars_append["weapon_" + j] = ""
                     out_chars_append["weapon_" + j + "_app"] = "0.0"
-                    out_chars_append["weapon_" + j + "_round"] = "99.99"
-                    if pf_mode:
-                        out_chars_append["weapon_" + j + "_round"] = "0.0"
+                    out_chars_append["weapon_" + j + "_round"] = (
+                        "0.0" if pf_mode else "99.99"
+                    )
             for i in range(arti_len):
                 j = str(i + 1)
                 if i < len(list(cur_char.artifacts)):
@@ -1121,9 +1117,9 @@ def char_usages_write(
                     out_chars_append["artifact_" + j + "_1"] = ""
                     out_chars_append["artifact_" + j + "_2"] = ""
                     out_chars_append["artifact_" + j + "_app"] = "0.0"
-                    out_chars_append["artifact_" + j + "_round"] = "99.99"
-                    if pf_mode:
-                        out_chars_append["artifact_" + j + "_round"] = "0.0"
+                    out_chars_append["artifact_" + j + "_round"] = (
+                        "0.0" if pf_mode else "99.99"
+                    )
             for i in range(planar_len):
                 j = str(i + 1)
                 if i < len(list(cur_char.planars)):
@@ -1138,9 +1134,9 @@ def char_usages_write(
                 else:
                     out_chars_append["planar_" + j] = ""
                     out_chars_append["planar_" + j + "_app"] = "0.0"
-                    out_chars_append["planar_" + j + "_round"] = "99.99"
-                    if pf_mode:
-                        out_chars_append["planar_" + j + "_round"] = "0.0"
+                    out_chars_append["planar_" + j + "_round"] = (
+                        "0.0" if pf_mode else "99.99"
+                    )
             for i in range(7):
                 out_chars_append["app_" + str(i)] = (
                     str(next(iter(list(cur_char.cons_usage.values())[i].values())))
@@ -1156,30 +1152,28 @@ def char_usages_write(
                 j = str(i + 1)
                 out_chars_append["weapon_" + j] = ""
                 out_chars_append["weapon_" + j + "_app"] = "0.0"
-                out_chars_append["weapon_" + j + "_round"] = "99.99"
-                if pf_mode:
-                    out_chars_append["weapon_" + j + "_round"] = "0.0"
+                out_chars_append["weapon_" + j + "_round"] = (
+                    "0.0" if pf_mode else "99.99"
+                )
             for i in range(arti_len):
                 j = str(i + 1)
                 out_chars_append["artifact_" + j] = ""
                 out_chars_append["artifact_" + j + "_1"] = ""
                 out_chars_append["artifact_" + j + "_2"] = ""
                 out_chars_append["artifact_" + j + "_app"] = "0.0"
-                out_chars_append["artifact_" + j + "_round"] = "99.99"
-                if pf_mode:
-                    out_chars_append["artifact_" + j + "_round"] = "0.0"
+                out_chars_append["artifact_" + j + "_round"] = (
+                    "0.0" if pf_mode else "99.99"
+                )
             for i in range(planar_len):
                 j = str(i + 1)
                 out_chars_append["planar_" + j] = ""
                 out_chars_append["planar_" + j + "_app"] = "0.0"
-                out_chars_append["planar_" + j + "_round"] = "99.99"
-                if pf_mode:
-                    out_chars_append["planar_" + j + "_round"] = "0.0"
+                out_chars_append["planar_" + j + "_round"] = (
+                    "0.0" if pf_mode else "99.99"
+                )
             for i in range(7):
                 out_chars_append["app_" + str(i)] = "0.0%"
-                out_chars_append["round_" + str(i)] = "99.99"
-                if pf_mode:
-                    out_chars_append["round_" + str(i)] = "0.0"
+                out_chars_append["round_" + str(i)] = "0.0" if pf_mode else "99.99"
         out_chars_append["cons_avg"] = cur_char.cons_avg
         out_chars_append["sample"] = cur_char.sample
         out_chars_append["sample_app_flat"] = cur_char.sample_app_flat
@@ -1236,18 +1230,14 @@ def char_usages_write(
                     else float(out_chars[i][value])
                 )
             else:
-                out_chars[i][value] = 99.99
-                if pf_mode:
-                    out_chars[i][value] = 0
+                out_chars[i][value] = 0 if pf_mode else 99.99
         for value in iterate_name_arti:
             if out_chars[i][value]:
                 out_chars[i][value] = (
                     str(out_chars[i][value]).replace(".", "").replace("-", "")
                 )
             else:
-                out_chars[i][value] = 99.99
-                if pf_mode:
-                    out_chars[i][value] = 0
+                out_chars[i][value] = 0 if pf_mode else 99.99
     with open("../char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_chars, indent=2))
 
