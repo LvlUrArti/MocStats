@@ -405,12 +405,15 @@ aa_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["aa"])
 # Build list of all character keys (including solo/support variants)
 # ----------------------------------------------------------------------
 character_keys: list[str] = []
+dps_base_slugs: set[str] = set()  # track base slugs of characters in DPS_SUB_LIST
+
 for char_iter in CHARACTERS:
     slugged = slugify(char_iter)
     if slugged in SLUG:
         slugged = SLUG[slugged]
     character_keys.append(slugged)
     if char_iter in DPS_SUB_LIST:
+        dps_base_slugs.add(slugged)
         character_keys.append("solo-" + slugged)
         character_keys.append("supp-" + slugged)
 
@@ -567,8 +570,20 @@ def process_chars() -> None:
     output_data: list[dict[str, float | str]] = []
 
     for char in character_keys:
+        # Determine base slug by stripping known prefixes
+        base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
+
         # Base dictionary for this character (output format)
-        out: dict[str, float | str] = {"char": char}
+        out: dict[str, float | str] = {"char": base_char}
+
+        # Add special_role only if this character belongs to DPS_SUB_LIST
+        if base_char in dps_base_slugs:
+            if char.startswith("solo-"):
+                out["special_role"] = "DPS"
+            elif char.startswith("supp-"):
+                out["special_role"] = "S-DPS"
+            else:
+                out["special_role"] = "ALL"
 
         # ----- 1. Simple fields (appearance rates, average cycles, samples) -----
         for is_prev_mode in (False, True):
