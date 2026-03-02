@@ -3,8 +3,11 @@
 from argparse import ArgumentParser
 from os import listdir
 from os.path import dirname, exists, join
+from sys import path as sys_path
 from time import sleep
 
+sys_path.append("../")
+from comp_rates_config import RECENT_PHASE
 from huggingface_hub import (
     CommitOperationAdd,
     HfApi,
@@ -145,7 +148,7 @@ def scan_upload_and_clean() -> None:
             api.create_commit(
                 repo_id=REPO_ID,
                 operations=operations,
-                commit_message=f"🤖 Batch upload {len(batch)} files",
+                commit_message=f"🤖 Upload {RECENT_PHASE} data",
                 repo_type="dataset",
             )
             print(f"   ✅ Successfully uploaded batch {i // CHUNK_SIZE + 1}: {batch}")
