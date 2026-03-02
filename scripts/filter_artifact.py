@@ -14,7 +14,7 @@ elif pf_mode:
 RECENT_PHASE_PF = RECENT_PHASE + suffix
 
 # Load the data from the JSON file
-with open("../char_results/" + RECENT_PHASE_PF + "/builds.json") as f:
+with open("../results/char_results/" + RECENT_PHASE_PF + "/builds.json") as f:
     data: list[dict[str, str | float]] = json.load(f)
 
 # Define the list of characters to exclude
@@ -172,5 +172,8 @@ for planar in planars:
         results[planar] = {"Sphere": sphere_stats, "Rope": rope_stats}
 
 # Export the results to a JSON file
-with open("../char_results/" + RECENT_PHASE_PF + "/artifact_stats.json", "w") as f:
+with open(
+    "../results/char_results/" + RECENT_PHASE_PF + "/artifact_stats.json",
+    "w",
+) as f:
     json.dump(results, f, indent=2)

@@ -6,16 +6,16 @@ from os import listdir, mkdir, path
 from comp_rates_config import RECENT_PHASE, RECENT_PHASE_PF, aa_mode, pf_filename
 
 source_dirs = [
-    "../char_results",
-    "../comp_results",
-    "../comp_results/json",
+    "../results/char_results",
+    "../results/comp_results",
+    "../results/comp_results/json",
     "../mihomo",
     "../mihomo/results_real",
 ]
 
 for source_dir in source_dirs:
-    if source_dir == "../comp_results/json":
-        target_dir = "../comp_results/" + RECENT_PHASE_PF + "/json"
+    if source_dir == "../results/comp_results/json":
+        target_dir = "../results/comp_results/" + RECENT_PHASE_PF + "/json"
     elif source_dir == "../mihomo":
         target_dir = "../mihomo/results_real"
     elif source_dir == "../mihomo/results_real":

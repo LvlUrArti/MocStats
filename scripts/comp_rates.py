@@ -164,9 +164,9 @@ def main() -> None:
                 )
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
-                with open("../char_results/appearance.json", "w") as out_file:
+                with open("../results/char_results/appearance.json", "w") as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
-                with open("../char_results/rounds.json", "w") as out_file:
+                with open("../results/char_results/rounds.json", "w") as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage:", round(cur_time - start_time, 2), "s")
@@ -184,9 +184,15 @@ def main() -> None:
                 )
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
-                with open("../char_results/appearance_combine.json", "w") as out_file:
+                with open(
+                    "../results/char_results/appearance_combine.json",
+                    "w",
+                ) as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
-                with open("../char_results/rounds_combine.json", "w") as out_file:
+                with open(
+                    "../results/char_results/rounds_combine.json",
+                    "w",
+                ) as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage (combine):", round(cur_time - start_time, 2), "s")
@@ -221,7 +227,7 @@ def main() -> None:
             )
 
         if not WHALE_ONLY and not F2P_ONLY:
-            with open("../char_results/demographic.json", "w") as out_file:
+            with open("../results/char_results/demographic.json", "w") as out_file:
                 out_file.write(dumps(sample_size, indent=2))
         cur_time = time()
         print("done comp stage:", round(cur_time - start_time, 2), "s")
@@ -244,7 +250,7 @@ def main() -> None:
         and not WHALE_ONLY
         and not F2P_ONLY
     ):
-        with open("../comp_results/json/all_comps.json", "w") as out_file:
+        with open("../results/comp_results/json/all_comps.json", "w") as out_file:
             out_file.write(dumps(all_comps_json, indent=2))
 
     if __name__ == "__main__":
@@ -856,7 +862,7 @@ def comp_usages_write(
 
     if floor:
         with open(
-            "../comp_results/comps_usage_" + filename + ".csv",
+            "../results/comp_results/comps_usage_" + filename + ".csv",
             "w",
             newline="",
         ) as f:
@@ -866,7 +872,10 @@ def comp_usages_write(
 
     if not info_char and sort_app:
         all_comps_json[filename] = out_json.copy()
-        with open("../comp_results/json/" + filename + ".json", "w") as out_file:
+        with open(
+            "../results/comp_results/json/" + filename + ".json",
+            "w",
+        ) as out_file:
             out_file.write(dumps(out_json, indent=2))
 
 
@@ -903,7 +912,7 @@ def duo_write(
             out_duos.append(out_duos_append)
     out_duos = sorted(out_duos, key=lambda t: t["app"], reverse=True)
 
-    with open("../char_results/" + filename + ".csv", "w", newline="") as f:
+    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
@@ -996,7 +1005,7 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open("../char_results/duo_check.csv", "w", newline="") as f:
+        with open("../results/char_results/duo_check.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
@@ -1031,7 +1040,7 @@ def duo_write(
                 )
                 if out_duos[i][duo_value] in slug:
                     out_duos[i][duo_value] = slug[out_duos[i][duo_value]]
-    with open("../char_results/" + filename + ".json", "w") as out_file:
+    with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 
@@ -1238,10 +1247,10 @@ def char_usages_write(
                 )
             else:
                 out_chars[i][value] = 0 if pf_mode else 99.99
-    with open("../char_results/" + filename + ".json", "w") as out_file:
+    with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_chars, indent=2))
 
-    with open("../char_results/" + filename + ".csv", "w", newline="") as f:
+    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         for chars in out_chars_csv:

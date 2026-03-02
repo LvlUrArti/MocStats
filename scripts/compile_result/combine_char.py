@@ -293,8 +293,8 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # ----------------------------------------------------------------------
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
-BASE_PATH = f"../../char_results/{RECENT_PHASE}"
-BASE_PREV_PATH = f"../../char_results/{PAST_PHASE}"
+BASE_PATH = f"../../results/char_results/{RECENT_PHASE}"
+BASE_PREV_PATH = f"../../results/char_results/{PAST_PHASE}"
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
@@ -775,7 +775,7 @@ def process_chars() -> None:
     # ----------------------------------------------------------------------
     # Write final JSON
     # ----------------------------------------------------------------------
-    output_path = f"../../char_results/{RECENT_PHASE}/builds.json"
+    output_path = f"../../results/char_results/{RECENT_PHASE}/builds.json"
     with open(output_path, "w") as out_file:
         json.dump(output_data, out_file, indent=2)
 

@@ -307,13 +307,8 @@ mihomo/artistats.py
 mihomo/nohomo_f.py
 mihomo/output*
 mihomo/data
-char_results
-comp_results
-rogue_results
-web_results*
-web_results_pf*
+results
 patch_process_real.txt
 data/simulated_blocks - Copy (2).json
 enka.network/.enka_py
 enka.network/output*
-results.zip

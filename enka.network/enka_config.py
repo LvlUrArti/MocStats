@@ -41,8 +41,8 @@ for char in characters.values():
             trailblazer_id for trailblazer_id in char["trailblazer_ids"]
         )
 
-if os.path.exists("../char_results/uids.csv"):
-    with open("../char_results/uids.csv", encoding="UTF8") as f:
+if os.path.exists("../results/char_results/uids.csv"):
+    with open("../results/char_results/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)
         uids = [int(uid[0]) for uid in uids]

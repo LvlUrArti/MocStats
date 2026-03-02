@@ -34,12 +34,12 @@ RECENT_PHASE_PF = RECENT_PHASE + suffix
 for file_name in file_names:
     # Load the JSON files
     with open(
-        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}.json",
+        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}.json",
     ) as f:
         team_data: list[dict[str, str | float]] = json.load(f)
 
     with open(
-        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}_C1.json",
+        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}_C1.json",
     ) as f:
         team_c1_data = json.load(f)
 
@@ -83,7 +83,7 @@ for file_name in file_names:
 
     # Write the updated data back to the top.json file
     with open(
-        f"../../comp_results/{RECENT_PHASE_PF}/json/{file_name}_combined.json",
+        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}_combined.json",
         "w",
     ) as f:
         json.dump(team_data, f, indent=2)

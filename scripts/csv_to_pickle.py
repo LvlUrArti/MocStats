@@ -75,10 +75,11 @@ def main() -> None:
     print("start")
 
     for make_path in [
-        "../comp_results",
-        "../comp_results/json",
+        "../results",
+        "../results/comp_results",
+        "../results/comp_results/json",
         "../mihomo/results_real",
-        "../char_results",
+        "../results/char_results",
         "../data/pickle",
         "../rogue_results",
     ]:
@@ -216,7 +217,7 @@ def main() -> None:
             all_players[comp.player] = PlayerPhase(comp.player)
         all_players[comp.player].add_comp(comp)
 
-    with open("../char_results/uids.csv", "w", newline="") as f:
+    with open("../results/char_results/uids.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         for uid in uid_freq_comp:
             csv_writer.writerow([uid])

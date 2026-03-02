@@ -66,7 +66,7 @@ with open("../data/light_cones.json") as f:
 with open("../scripts/prydwen-slug.json") as slug_file:
     slug = json_load(slug_file)
 
-with open("../char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
+with open("../results/char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
     build = list(read_csv(f))
 
 archetype = "all"
@@ -375,7 +375,7 @@ else:
 
 
 temp_stats: list[str] = []
-with open("../char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
+with open("../results/char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
     CHARACTERS = json_load(char_file)
 for iter_char, (char, char_stat) in enumerate(stats.items()):
     for i in chain(range(10, 18), range(19, 27)):
@@ -410,10 +410,13 @@ for iter_char, (char, char_stat) in enumerate(stats.items()):
 
     temp_stats.append(CHARACTERS[iter_char] | char_stat.stats_write)
 
-if not path.exists("../char_results/" + RECENT_PHASE_PF):
-    mkdir("../char_results/" + RECENT_PHASE_PF)
+if not path.exists("../results/char_results/" + RECENT_PHASE_PF):
+    mkdir("../results/char_results/" + RECENT_PHASE_PF)
 
-with open("../char_results/" + RECENT_PHASE_PF + "/all2.json", "w") as char_file:
+with open(
+    "../results/char_results/" + RECENT_PHASE_PF + "/all2.json",
+    "w",
+) as char_file:
     char_file.write(json_dumps(temp_stats, indent=2))
 
 print("Average AR: ", (ar / count))

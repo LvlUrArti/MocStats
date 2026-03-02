@@ -486,7 +486,7 @@ def appearances(
                 planar_freq.app = 0
                 planar_freq.round = DEFAULT_VALUE
     if chambers == ["12-1", "12-2"]:
-        with open("../char_results/all_rounds.csv", "w", newline="") as f:
+        with open("../results/char_results/all_rounds.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for char, all_round_char in all_rounds.items():
                 for room_num, all_round_num in all_round_char.items():
@@ -541,9 +541,11 @@ def usages(
     rates: list[float] = []
 
     try:
-        with open("../char_results/" + past_phase + "/appearance.json") as stats:
+        with open(
+            "../results/char_results/" + past_phase + "/appearance.json",
+        ) as stats:
             past_usage = load(stats)
-        with open("../char_results/" + past_phase + "/rounds.json") as stats:
+        with open("../results/char_results/" + past_phase + "/rounds.json") as stats:
             past_rounds = load(stats)
     except FileNotFoundError:
         pass

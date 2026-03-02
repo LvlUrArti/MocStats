@@ -67,7 +67,7 @@ else:
     with open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv") as f:
         spiral = read_csv(f)
 
-with open("../char_results/all.csv") as f:
+with open("../results/char_results/all.csv") as f:
     reader = csvreader(f, delimiter=",")
     col_names_build = next(reader)
     build = nparray(list(reader))
