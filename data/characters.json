@@ -4,13 +4,13 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Wind"
     },
     "Himeko": {
         "id": "1003",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Fire",
         "availability": "Standard 5*",
         "role": "Damage Dealer"
@@ -18,7 +18,7 @@
     "Welt": {
         "id": "1004",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Imaginary",
         "availability": "Standard 5*",
         "role": "Damage Dealer"
@@ -26,7 +26,7 @@
     "Silver Wolf": {
         "id": "1006",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -36,7 +36,7 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Thunder"
     },
     "Asta": {
@@ -44,7 +44,7 @@
         "role": "Amplifier",
         "rarity": 4,
         "availability": "4*",
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Fire"
     },
     "Herta": {
@@ -52,13 +52,13 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Ice"
     },
     "Bronya": {
         "id": "1101",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Wind",
         "availability": "Standard 5*",
         "role": "Amplifier"
@@ -66,7 +66,7 @@
     "Seele": {
         "id": "1102",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -76,13 +76,13 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Thunder"
     },
     "Gepard": {
         "id": "1104",
         "rarity": 5,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Ice",
         "availability": "Standard 5*",
         "role": "Sustain"
@@ -92,7 +92,7 @@
         "role": "Sustain",
         "rarity": 4,
         "availability": "4*",
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Physical"
     },
     "Pela": {
@@ -100,13 +100,13 @@
         "role": "Amplifier",
         "rarity": 4,
         "availability": "4*",
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Ice"
     },
     "Clara": {
         "id": "1107",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Physical",
         "availability": "Standard 5*",
         "role": "Damage Dealer"
@@ -116,7 +116,7 @@
         "role": "Amplifier",
         "rarity": 4,
         "availability": "4*",
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Wind"
     },
     "Hook": {
@@ -124,7 +124,7 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Fire"
     },
     "Qingque": {
@@ -132,7 +132,7 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Quantum"
     },
     "Tingyun": {
@@ -140,13 +140,13 @@
         "role": "Amplifier",
         "rarity": 4,
         "availability": "4*",
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Thunder"
     },
     "Jing Yuan": {
         "id": "1204",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Thunder",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -156,13 +156,13 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Physical"
     },
     "Luocha": {
         "id": "1203",
         "rarity": 5,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -170,7 +170,7 @@
     "Yukong": {
         "id": "1207",
         "rarity": 4,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
         "role": "Amplifier"
@@ -178,7 +178,7 @@
     "Yanqing": {
         "id": "1209",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Ice",
         "availability": "Standard 5*",
         "role": "Damage Dealer"
@@ -186,7 +186,7 @@
     "Bailu": {
         "id": "1211",
         "rarity": 5,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Thunder",
         "availability": "Standard 5*",
         "role": "Sustain"
@@ -196,7 +196,7 @@
         "role": "Damage Dealer",
         "rarity": 4,
         "availability": "4*",
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Physical",
         "trailblazer_ids": [
             "8002"
@@ -205,7 +205,7 @@
     "Fire Trailblazer": {
         "id": "8003",
         "rarity": 4,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Fire",
         "availability": "4*",
         "role": "Sustain",
@@ -216,7 +216,7 @@
     "Blade": {
         "id": "1205",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -224,7 +224,7 @@
     "Kafka": {
         "id": "1005",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -232,7 +232,7 @@
     "Luka": {
         "id": "1111",
         "rarity": 4,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Physical",
         "availability": "4*",
         "role": "Amplifier"
@@ -240,7 +240,7 @@
     "Dan Heng \u2022 Imbibitor Lunae": {
         "id": "1213",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -248,7 +248,7 @@
     "Lynx": {
         "id": "1110",
         "rarity": 4,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Quantum",
         "availability": "4*",
         "role": "Sustain"
@@ -256,7 +256,7 @@
     "Fu Xuan": {
         "id": "1208",
         "rarity": 5,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -264,7 +264,7 @@
     "Topaz & Numby": {
         "id": "1112",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -272,7 +272,7 @@
     "Guinaifen": {
         "id": "1210",
         "rarity": 4,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Fire",
         "availability": "4*",
         "role": "Amplifier"
@@ -280,7 +280,7 @@
     "Jingliu": {
         "id": "1212",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Ice",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -288,7 +288,7 @@
     "Huohuo": {
         "id": "1217",
         "rarity": 5,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -296,7 +296,7 @@
     "Hanya": {
         "id": "1215",
         "rarity": 4,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Physical",
         "availability": "4*",
         "role": "Amplifier"
@@ -304,7 +304,7 @@
     "Argenti": {
         "id": "1302",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -312,7 +312,7 @@
     "Xueyi": {
         "id": "1214",
         "rarity": 4,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Quantum",
         "availability": "4*",
         "role": "Damage Dealer"
@@ -320,7 +320,7 @@
     "Ruan Mei": {
         "id": "1303",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Ice",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -328,7 +328,7 @@
     "Dr. Ratio": {
         "id": "1305",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -336,7 +336,7 @@
     "Black Swan": {
         "id": "1307",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -344,7 +344,7 @@
     "Misha": {
         "id": "1312",
         "rarity": 4,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Ice",
         "availability": "4*",
         "role": "Damage Dealer"
@@ -352,7 +352,7 @@
     "Sparkle": {
         "id": "1306",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -360,7 +360,7 @@
     "Gallagher": {
         "id": "1301",
         "rarity": 4,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Fire",
         "availability": "4*",
         "role": "Sustain"
@@ -368,7 +368,7 @@
     "Acheron": {
         "id": "1308",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -376,7 +376,7 @@
     "Aventurine": {
         "id": "1304",
         "rarity": 5,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -384,7 +384,7 @@
     "Robin": {
         "id": "1309",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -392,7 +392,7 @@
     "Imaginary Trailblazer": {
         "id": "8005",
         "rarity": 4,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
         "trailblazer_ids": [
@@ -403,7 +403,7 @@
     "Boothill": {
         "id": "1315",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -411,7 +411,7 @@
     "Firefly": {
         "id": "1310",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -419,7 +419,7 @@
     "Jade": {
         "id": "1314",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -427,7 +427,7 @@
     "Yunli": {
         "id": "1221",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -435,7 +435,7 @@
     "Ice March 7th": {
         "id": "1001",
         "rarity": 4,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Ice",
         "availability": "4*",
         "role": "Sustain",
@@ -446,7 +446,7 @@
     "Imaginary March 7th": {
         "id": "1224",
         "rarity": 4,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Imaginary",
         "availability": "4*",
         "role": "Damage Dealer",
@@ -457,7 +457,7 @@
     "Jiaoqiu": {
         "id": "1218",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -465,7 +465,7 @@
     "Feixiao": {
         "id": "1220",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -473,7 +473,7 @@
     "Moze": {
         "id": "1223",
         "rarity": 4,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Thunder",
         "availability": "4*",
         "role": "Damage Dealer"
@@ -481,7 +481,7 @@
     "Lingsha": {
         "id": "1222",
         "rarity": 5,
-        "path": "Priest",
+        "path": "Abundance",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -489,7 +489,7 @@
     "Rappa": {
         "id": "1317",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -497,7 +497,7 @@
     "Sunday": {
         "id": "1313",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -505,7 +505,7 @@
     "Fugue": {
         "id": "1225",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -513,7 +513,7 @@
     "The Herta": {
         "id": "1401",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Ice",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -521,7 +521,7 @@
     "Ice Trailblazer": {
         "id": "8007",
         "rarity": 4,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Ice",
         "availability": "4*",
         "trailblazer_ids": [
@@ -532,7 +532,7 @@
     "Aglaea": {
         "id": "1402",
         "rarity": 5,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Thunder",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -540,7 +540,7 @@
     "Tribbie": {
         "id": "1403",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -548,7 +548,7 @@
     "Mydei": {
         "id": "1404",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -556,7 +556,7 @@
     "Castorice": {
         "id": "1407",
         "rarity": 5,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -564,7 +564,7 @@
     "Anaxa": {
         "id": "1405",
         "rarity": 5,
-        "path": "Mage",
+        "path": "Erudition",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -572,7 +572,7 @@
     "Hyacine": {
         "id": "1409",
         "rarity": 5,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -580,7 +580,7 @@
     "Cipher": {
         "id": "1406",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -588,7 +588,7 @@
     "Phainon": {
         "id": "1408",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -596,7 +596,7 @@
     "Saber": {
         "id": "1014",
         "rarity": 5,
-        "path": "Warrior",
+        "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -604,7 +604,7 @@
     "Archer": {
         "id": "1015",
         "rarity": 5,
-        "path": "Rogue",
+        "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -612,7 +612,7 @@
     "Hysilens": {
         "id": "1410",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -620,7 +620,7 @@
     "Cerydra": {
         "id": "1412",
         "rarity": 5,
-        "path": "Shaman",
+        "path": "Harmony",
         "element": "Wind",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -628,7 +628,7 @@
     "Evernight": {
         "id": "1413",
         "rarity": 5,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
         "role": "Damage Dealer"
@@ -636,7 +636,7 @@
     "Dan Heng \u2022 Permansor Terrae": {
         "id": "1414",
         "rarity": 5,
-        "path": "Knight",
+        "path": "Preservation",
         "element": "Physical",
         "availability": "Limited 5*",
         "role": "Sustain"
@@ -644,7 +644,7 @@
     "Cyrene": {
         "id": "1415",
         "rarity": 5,
-        "path": "Memory",
+        "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
         "role": "Amplifier"
@@ -652,7 +652,7 @@
     "The Dahlia": {
         "id": "1321",
         "rarity": 5,
-        "path": "Warlock",
+        "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
         "role": "Amplifier"

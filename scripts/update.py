@@ -102,41 +102,50 @@ download = requests.get(
 ).content.decode("utf-8")
 chars2 = json.load(io.StringIO(download))
 
-for char in chars2:
-    char_name = chars2[char]["name"]
+path_map: dict[str, str] = {
+    "Warlock": "Nihility",
+    "Elation": "Elation",
+    "Rogue": "Hunt",
+    "Mage": "Erudition",
+    "Warrior": "Destruction",
+    "Shaman": "Harmony",
+    "Knight": "Preservation",
+    "Priest": "Abundance",
+    "Memory": "Remembrance",
+}
+
+for char in chars2.values():
+    char_name = char["name"]
     if char_name == "{NICKNAME}":
-        char_name = chars2[char]["element"].capitalize() + " Trailblazer"
+        char_name = char["element"].capitalize() + " Trailblazer"
         if char_name in chars1:
             if "trailblazer_ids" not in chars1[char_name]:
                 chars1[char_name]["trailblazer_ids"] = []
-            if chars2[char]["id"] not in chars1[char_name]["trailblazer_ids"]:
-                chars1[char_name]["trailblazer_ids"].append(chars2[char]["id"])
+            if char["id"] not in chars1[char_name]["trailblazer_ids"]:
+                chars1[char_name]["trailblazer_ids"].append(char["id"])
     elif char_name == "March 7th":
-        char_name = chars2[char]["element"].capitalize() + " March 7th"
+        char_name = char["element"].capitalize() + " March 7th"
         if char_name in chars1:
             if "trailblazer_ids" not in chars1[char_name]:
                 chars1[char_name]["trailblazer_ids"] = []
-            if chars2[char]["id"] not in chars1[char_name]["trailblazer_ids"]:
-                chars1[char_name]["trailblazer_ids"].append(chars2[char]["id"])
+            if char["id"] not in chars1[char_name]["trailblazer_ids"]:
+                chars1[char_name]["trailblazer_ids"].append(char["id"])
     if char_name not in chars1:
         add_char = input("Add " + char_name + "? (y/n): ")
         if add_char == "y":
-            chars1[char_name] = chars2[char].copy()
+            chars1[char_name] = char.copy()
+            chars1[char_name]["path"] = path_map[char["path"]]
 
-            if chars2[char]["rarity"] == 4:
+            if char["rarity"] == 4:
                 chars1[char_name]["availability"] = "4*"
-            elif chars2[char]["rarity"] == 5:
+            elif char["rarity"] == 5:
                 if "Trailblazer" in char_name:
                     chars1[char_name]["rarity"] = 4
                     chars1[char_name]["availability"] = "4*"
                     chars1[char_name]["name"] = "Trailblazer"
-                    chars1[char_name]["trailblazer_ids"] = [chars2[char]["id"]]
+                    chars1[char_name]["trailblazer_ids"] = [char["id"]]
                 else:
-                    # add_char = input("Limited Character? (y/n): ")
-                    # if add_char == "y":
                     chars1[char_name]["availability"] = "Limited 5*"
-                    # else:
-                    #     chars1[char_name]["availability"] = "Standard 5*"
 
             print("Role? 0: DPS, 1: Amplifier, 2: Sustain")
             role_char = input()
