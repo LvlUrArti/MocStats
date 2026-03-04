@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from typing import NamedTuple
 
 from comp_rates_config import (
+    CHARACTERS,
     DOT_LIST,
     DOT_SUPPORT_LIST,
     DPS_APPEND_LIST,
@@ -19,11 +19,6 @@ from comp_rates_config import (
     SUB_DPS_LIST,
     SUPER_BREAK_LIST,
 )
-
-# Set class constants in initialization
-# Load the list of characters from their file
-with open("../data/characters.json") as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
 
 class Stage(NamedTuple):

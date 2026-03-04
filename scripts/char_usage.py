@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from warnings import filterwarnings
 
 from comp_rates_config import (
+    CHARACTERS,
     CONS_LIMIT,
     DPS_SUB_LIST,
     F2P_ONLY,
@@ -44,8 +45,6 @@ SINGLE_CHAMBER: list[str] = (
     if pf_mode
     else ["12-1", "12-2"]
 )
-with open("../data/characters.json") as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = load(char_file)
 
 
 class RoundApp:

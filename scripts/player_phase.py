@@ -10,8 +10,6 @@ if TYPE_CHECKING:
 
 # Set class constants in initialization
 # Load the list of characters from their file
-with open("../data/characters.json") as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 with open("../data/relic_affixes.json") as relic_file:
     articombinations: dict[str, list[str]] = json.load(relic_file)
 
