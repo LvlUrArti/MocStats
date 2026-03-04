@@ -136,6 +136,9 @@ for char in chars2.values():
             chars1[char_name] = char.copy()
             chars1[char_name]["path"] = path_map[char["path"]]
 
+            slug = char_name.lower().replace(" ", "-")
+            chars1[char_name]["slug"] = slug
+
             if char["rarity"] == 4:
                 chars1[char_name]["availability"] = "4*"
             elif char["rarity"] == 5:
@@ -166,7 +169,7 @@ for char in chars2.values():
                 another_role = input()
                 if another_role != "y":
                     break
-                chars1[char_name]["role"] = char_roles
+            chars1[char_name]["role"] = char_roles
 
 with open("../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars1, indent=4))

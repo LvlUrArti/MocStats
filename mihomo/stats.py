@@ -23,6 +23,7 @@ from matplotlib.pyplot import (
 sys_path.append("../scripts/")
 from comp_rates_config import (
     CHAR_NAME_REPLACE,
+    CHARS_INFO,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     pf_filename,
@@ -63,8 +64,6 @@ else:
 
 with open("../data/light_cones.json") as f:
     LIGHT_CONES = json_load(f)
-with open("../scripts/prydwen-slug.json") as slug_file:
-    slug = json_load(slug_file)
 
 with open("../results/char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
     build = list(read_csv(f))
@@ -398,9 +397,7 @@ for iter_char, (char, char_stat) in enumerate(stats.items()):
         else:
             stats[char].stats_write[value] = 0.00
 
-    stats[char].name = char_stat.name.replace(" ", "-").lower()
-    if char_stat.name in slug:
-        stats[char].name = slug[char_stat.name]
+    stats[char].name = CHARS_INFO[char_stat.name].slug
     if char_stat.name == CHARACTERS[iter_char]["char"]:
         del stats[char].name
     else:

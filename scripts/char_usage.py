@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from warnings import filterwarnings
 
 from comp_rates_config import (
-    CHARS_BY_NAME,
+    CHARS_INFO,
     CONS_LIMIT,
     F2P_ONLY,
     WHALE_ONLY,
@@ -80,7 +80,7 @@ class CharApp(RoundApp):
 
 def include_dps(char: str) -> bool:
     """Check if character is a DPS and a sub-DPS character."""
-    return len(CHARS_BY_NAME[char].role) > 1
+    return len(CHARS_INFO[char].role) > 1
 
 
 @profile
@@ -96,7 +96,7 @@ def appearances(
 
     all_uids = set[str]()
 
-    for char in CHARS_BY_NAME:
+    for char in CHARS_INFO:
         user_chars[char] = set[str]()
         app[char] = CharApp()
 
@@ -130,7 +130,7 @@ def appearances(
 
             for char in user_chamber.characters:
                 if (
-                    CHARS_BY_NAME[char].availability == "Limited 5*"
+                    CHARS_INFO[char].availability == "Limited 5*"
                     and user_chamber.char_cons
                     and user_chamber.char_cons[char] > 0
                 ):
@@ -139,14 +139,14 @@ def appearances(
                         giga_whale = True
                 if char in user.owned and user.owned[char].weapon in sig_weaps:
                     f2p_comp = False
-                if "sustain" in CHARS_BY_NAME[char].role:
+                if "sustain" in CHARS_INFO[char].role:
                     sustain_count += 1
 
             if moc_mode:
                 side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
                 for char in user.chambers[side_chamber].characters:
                     if (
-                        CHARS_BY_NAME[char].availability == "Limited 5*"
+                        CHARS_INFO[char].availability == "Limited 5*"
                         and user.chambers[side_chamber].char_cons
                         and user.chambers[side_chamber].char_cons[char] > 0
                     ):
@@ -515,8 +515,8 @@ class CharUsageData(CharApp):
         self.usage = 0
         self.diff = "-"
         self.diff_rounds = "-"
-        self.role = CHARS_BY_NAME[char].role
-        self.rarity = CHARS_BY_NAME[char].availability
+        self.role = CHARS_INFO[char].role
+        self.rarity = CHARS_INFO[char].availability
         self.weapons: dict[str, RoundApp] = {}
         self.weapons_round: dict[str, RoundApp] = {}
         self.artifacts: dict[str, RoundApp] = {}

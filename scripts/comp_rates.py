@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
-    CHARS_BY_NAME,
+    CHARS_INFO,
     F2P_ONLY,
     PAST_PHASE_PF,
     WHALE_ONLY,
@@ -25,7 +25,6 @@ from comp_rates_config import (
     char_infographics,
     duo_dict_len,
     json_threshold,
-    load,
     moc_mode,
     pf_filename,
     pf_mode,
@@ -39,9 +38,6 @@ from scipy.stats import skew, trim_mean  # type: ignore[reportMissingTypeStubs]
 
 if TYPE_CHECKING:
     from player_phase import PlayerPhase
-
-with open("prydwen-slug.json") as slug_file:
-    slug = load(slug_file)
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
@@ -387,20 +383,20 @@ def used_comps(
         for char in range(4):
             comp_char = comp_tuple[char]
             if (
-                CHARS_BY_NAME[comp_char].availability == "Limited 5*"
+                CHARS_INFO[comp_char].availability == "Limited 5*"
                 and comp.char_cons
                 and comp.char_cons[comp_char] > 0
             ):
                 whale_comp = True
                 if comp.char_cons[comp_char] > 2:
                     giga_whale = True
-            if "sustain" in CHARS_BY_NAME[comp_char].role:
+            if "sustain" in CHARS_INFO[comp_char].role:
                 sustain_count += 1
 
         if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
-                    CHARS_BY_NAME[char].availability == "Limited 5*"
+                    CHARS_INFO[char].availability == "Limited 5*"
                     and side_comp.char_cons[char] > 0
                 ):
                     whale_comp = True
@@ -587,14 +583,14 @@ def used_duos(
         sustain_count = 0
         for char in comp.characters:
             if (
-                CHARS_BY_NAME[char].availability == "Limited 5*"
+                CHARS_INFO[char].availability == "Limited 5*"
                 and comp.char_cons
                 and comp.char_cons[char] > 0
             ):
                 whale_comp = True
                 if comp.char_cons[char] > 2:
                     giga_whale = True
-            if "sustain" in CHARS_BY_NAME[char].role:
+            if "sustain" in CHARS_INFO[char].role:
                 sustain_count += 1
 
         side_comp = None
@@ -605,7 +601,7 @@ def used_duos(
         if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
-                    CHARS_BY_NAME[char].availability == "Limited 5*"
+                    CHARS_INFO[char].availability == "Limited 5*"
                     and side_comp.char_cons[char] > 0
                 ):
                     whale_comp = True
@@ -810,9 +806,7 @@ def comp_usages_write(
         ):
             out = list(comp)
             for i in range(4):
-                out[i] = out[i].lower().replace(" ", "-")
-                if out[i] in slug:
-                    out[i] = slug[out[i]]
+                out[i] = CHARS_INFO[out[i]].slug
             out_json_dict: dict[str, str | float] = {
                 "char_one": out[0],
                 "char_two": out[1],
@@ -939,13 +933,13 @@ def duo_write(
                             "avg_round": duo_round_j,
                         }
     if check_duo:
-        char_names = list(CHARS_BY_NAME.keys())
+        char_names = list(CHARS_INFO.keys())
         out_dd: dict[frozenset[str], dict[str, str | float]] = {}
         out_dd_list: list[list[str]] = []
         for char_i in char_names:
             for char_j in char_names:
-                is_char_i_dps = "dps" in CHARS_BY_NAME[char_i].role
-                is_char_j_dps = "dps" in CHARS_BY_NAME[char_j].role
+                is_char_i_dps = "dps" in CHARS_INFO[char_i].role
+                is_char_j_dps = "dps" in CHARS_INFO[char_j].role
                 if is_char_i_dps and is_char_j_dps:
                     if char_j not in out_duos_check:
                         continue
@@ -1010,11 +1004,7 @@ def duo_write(
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value]:
-                out_duos[i][duo_value] = (
-                    str(out_duos[i][duo_value]).lower().replace(" ", "-")
-                )
-                if out_duos[i][duo_value] in slug:
-                    out_duos[i][duo_value] = slug[out_duos[i][duo_value]]
+                out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
     with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
@@ -1192,9 +1182,7 @@ def char_usages_write(
 
     for i in range(len(out_chars)):
         # for i in range(7):
-        out_chars[i]["char"] = str(out_chars[i]["char"]).lower().replace(" ", "-")
-        if out_chars[i]["char"] in slug:
-            out_chars[i]["char"] = slug[out_chars[i]["char"]]
+        out_chars[i]["char"] = CHARS_INFO[str(out_chars[i]["char"])].slug
         for value in iterate_value_app:
             if (
                 str(out_chars[i][value])[:-1]

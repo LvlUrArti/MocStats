@@ -6,9 +6,8 @@ from sys import path as sys_path
 # TODO: histograph
 
 sys_path.append("../")
-from comp_rates_config import DPS_SUB_LIST, PAST_PHASE, RECENT_PHASE
+from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
-from slugify import slugify
 
 # ----------------------------------------------------------------------
 # Constants
@@ -65,15 +64,6 @@ NUMERIC_STATS = [
     "ehr_sub",
     "break_sub",
 ]
-
-# ----------------------------------------------------------------------
-# Load slug mappings and character list
-# ----------------------------------------------------------------------
-with open("../prydwen-slug.json") as slug_file:
-    SLUG = json.load(slug_file)
-
-with open("../../data/characters.json") as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
 
 # ----------------------------------------------------------------------
@@ -405,17 +395,14 @@ aa_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["aa"])
 # Build list of all character keys (including solo/support variants)
 # ----------------------------------------------------------------------
 character_keys: list[str] = []
-dps_base_slugs: set[str] = set()  # track base slugs of characters in DPS_SUB_LIST
+dps_base_slugs: set[str] = set()  # track base slugs of characters with multiple roles
 
-for char_iter in CHARACTERS:
-    slugged = slugify(char_iter)
-    if slugged in SLUG:
-        slugged = SLUG[slugged]
-    character_keys.append(slugged)
-    if char_iter in DPS_SUB_LIST:
-        dps_base_slugs.add(slugged)
-        character_keys.append("solo-" + slugged)
-        character_keys.append("supp-" + slugged)
+for char_info in CHARS_INFO.values():
+    character_keys.append(char_info.slug)
+    if len(char_info.role) > 1:
+        dps_base_slugs.add(char_info.slug)
+        character_keys.append("solo-" + char_info.slug)
+        character_keys.append("supp-" + char_info.slug)
 
 
 def process_chars() -> None:
@@ -576,7 +563,7 @@ def process_chars() -> None:
         # Base dictionary for this character (output format)
         out: dict[str, float | str] = {"char": base_char}
 
-        # Add special_role only if this character belongs to DPS_SUB_LIST
+        # Add special_role only if this character has multiple roles
         if base_char in dps_base_slugs:
             if char.startswith("solo-"):
                 out["special_role"] = "DPS"
@@ -780,4 +767,5 @@ def process_chars() -> None:
         json.dump(output_data, out_file, indent=2)
 
 
-process_chars()
+if __name__ == "__main__":
+    process_chars()

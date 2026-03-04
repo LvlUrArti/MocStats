@@ -9,11 +9,9 @@ from os.path import join as path_join
 
 from pydantic import BaseModel
 
-# don't add underscore, i.e. 2.2.1"_pf"
 RECENT_PHASE = "4.0.1"
 
 # if no past phase, leave blank
-# add underscore, i.e. 2.2.1"_pf"
 PAST_PHASE = "3.8.4"
 
 parser = ArgumentParser()
@@ -317,13 +315,14 @@ class CharInfo(BaseModel):
     path: str
     element: str
     availability: str
+    slug: str
     role: list[str]
     trailblazer_ids: list[str] | None = None
 
 
 with open(relative_path("../data/characters.json")) as char_file:
     raw_characters = load(char_file)
-    CHARS_BY_NAME = {
+    CHARS_INFO = {
         char_name: CharInfo(**item) for char_name, item in raw_characters.items()
     }
 

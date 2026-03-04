@@ -5,6 +5,7 @@
         "path": "Hunt",
         "element": "Wind",
         "availability": "4*",
+        "slug": "dan-heng",
         "role": [
             "dps"
         ]
@@ -15,6 +16,7 @@
         "path": "Erudition",
         "element": "Fire",
         "availability": "Standard 5*",
+        "slug": "himeko",
         "role": [
             "dps"
         ]
@@ -25,6 +27,7 @@
         "path": "Nihility",
         "element": "Imaginary",
         "availability": "Standard 5*",
+        "slug": "welt",
         "role": [
             "specialist"
         ]
@@ -35,6 +38,7 @@
         "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "silver-wolf",
         "role": [
             "amplifier"
         ]
@@ -45,6 +49,7 @@
         "path": "Destruction",
         "element": "Thunder",
         "availability": "4*",
+        "slug": "arlan",
         "role": [
             "dps"
         ]
@@ -55,6 +60,7 @@
         "path": "Harmony",
         "element": "Fire",
         "availability": "4*",
+        "slug": "asta",
         "role": [
             "amplifier"
         ]
@@ -65,6 +71,7 @@
         "path": "Erudition",
         "element": "Ice",
         "availability": "4*",
+        "slug": "herta",
         "role": [
             "specialist"
         ]
@@ -75,6 +82,7 @@
         "path": "Harmony",
         "element": "Wind",
         "availability": "Standard 5*",
+        "slug": "bronya",
         "role": [
             "amplifier"
         ]
@@ -85,6 +93,7 @@
         "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "seele",
         "role": [
             "dps"
         ]
@@ -95,6 +104,7 @@
         "path": "Erudition",
         "element": "Thunder",
         "availability": "4*",
+        "slug": "serval",
         "role": [
             "specialist"
         ]
@@ -105,6 +115,7 @@
         "path": "Preservation",
         "element": "Ice",
         "availability": "Standard 5*",
+        "slug": "gepard",
         "role": [
             "sustain"
         ]
@@ -115,6 +126,7 @@
         "path": "Abundance",
         "element": "Physical",
         "availability": "4*",
+        "slug": "natasha",
         "role": [
             "sustain"
         ]
@@ -125,6 +137,7 @@
         "path": "Nihility",
         "element": "Ice",
         "availability": "4*",
+        "slug": "pela",
         "role": [
             "amplifier"
         ]
@@ -135,6 +148,7 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Standard 5*",
+        "slug": "clara",
         "role": [
             "dps"
         ]
@@ -145,6 +159,7 @@
         "path": "Nihility",
         "element": "Wind",
         "availability": "4*",
+        "slug": "sampo",
         "role": [
             "specialist"
         ]
@@ -155,6 +170,7 @@
         "path": "Destruction",
         "element": "Fire",
         "availability": "4*",
+        "slug": "hook",
         "role": [
             "dps"
         ]
@@ -165,6 +181,7 @@
         "path": "Erudition",
         "element": "Quantum",
         "availability": "4*",
+        "slug": "qingque",
         "role": [
             "dps"
         ]
@@ -175,6 +192,7 @@
         "path": "Harmony",
         "element": "Thunder",
         "availability": "4*",
+        "slug": "tingyun",
         "role": [
             "amplifier"
         ]
@@ -185,6 +203,7 @@
         "path": "Erudition",
         "element": "Thunder",
         "availability": "Limited 5*",
+        "slug": "jing-yuan",
         "role": [
             "dps"
         ]
@@ -195,6 +214,7 @@
         "path": "Hunt",
         "element": "Physical",
         "availability": "4*",
+        "slug": "sushang",
         "role": [
             "dps"
         ]
@@ -205,6 +225,7 @@
         "path": "Abundance",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "luocha",
         "role": [
             "sustain"
         ]
@@ -215,6 +236,7 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
+        "slug": "yukong",
         "role": [
             "amplifier"
         ]
@@ -225,6 +247,7 @@
         "path": "Hunt",
         "element": "Ice",
         "availability": "Standard 5*",
+        "slug": "yanqing",
         "role": [
             "dps"
         ]
@@ -235,6 +258,7 @@
         "path": "Abundance",
         "element": "Thunder",
         "availability": "Standard 5*",
+        "slug": "bailu",
         "role": [
             "sustain"
         ]
@@ -245,6 +269,7 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "4*",
+        "slug": "trailblazer-destruction",
         "role": [
             "dps"
         ],
@@ -258,6 +283,7 @@
         "path": "Preservation",
         "element": "Fire",
         "availability": "4*",
+        "slug": "trailblazer-preservation",
         "role": [
             "sustain"
         ],
@@ -271,6 +297,7 @@
         "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "blade",
         "role": [
             "dps",
             "specialist"
@@ -282,6 +309,7 @@
         "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
+        "slug": "kafka",
         "role": [
             "specialist"
         ]
@@ -292,6 +320,7 @@
         "path": "Nihility",
         "element": "Physical",
         "availability": "4*",
+        "slug": "luka",
         "role": [
             "dps"
         ]
@@ -302,6 +331,7 @@
         "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "imbibitor-lunae",
         "role": [
             "dps"
         ]
@@ -312,6 +342,7 @@
         "path": "Abundance",
         "element": "Quantum",
         "availability": "4*",
+        "slug": "lynx",
         "role": [
             "sustain"
         ]
@@ -322,6 +353,7 @@
         "path": "Preservation",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "fu-xuan",
         "role": [
             "sustain"
         ]
@@ -332,6 +364,7 @@
         "path": "Hunt",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "topaz",
         "role": [
             "specialist"
         ]
@@ -342,6 +375,7 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "4*",
+        "slug": "guinaifen",
         "role": [
             "amplifier"
         ]
@@ -352,6 +386,7 @@
         "path": "Destruction",
         "element": "Ice",
         "availability": "Limited 5*",
+        "slug": "jingliu",
         "role": [
             "dps"
         ]
@@ -362,6 +397,7 @@
         "path": "Abundance",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "huohuo",
         "role": [
             "sustain"
         ]
@@ -372,6 +408,7 @@
         "path": "Harmony",
         "element": "Physical",
         "availability": "4*",
+        "slug": "hanya",
         "role": [
             "amplifier"
         ]
@@ -382,6 +419,7 @@
         "path": "Erudition",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "argenti",
         "role": [
             "dps",
             "specialist"
@@ -393,6 +431,7 @@
         "path": "Destruction",
         "element": "Quantum",
         "availability": "4*",
+        "slug": "xueyi",
         "role": [
             "dps"
         ]
@@ -403,6 +442,7 @@
         "path": "Harmony",
         "element": "Ice",
         "availability": "Limited 5*",
+        "slug": "ruan-mei",
         "role": [
             "amplifier"
         ]
@@ -413,6 +453,7 @@
         "path": "Hunt",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "dr-ratio",
         "role": [
             "dps"
         ]
@@ -423,6 +464,7 @@
         "path": "Nihility",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "black-swan",
         "role": [
             "specialist"
         ]
@@ -433,6 +475,7 @@
         "path": "Destruction",
         "element": "Ice",
         "availability": "4*",
+        "slug": "misha",
         "role": [
             "dps"
         ]
@@ -443,6 +486,7 @@
         "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "sparkle",
         "role": [
             "amplifier"
         ]
@@ -453,6 +497,7 @@
         "path": "Abundance",
         "element": "Fire",
         "availability": "4*",
+        "slug": "gallagher",
         "role": [
             "sustain"
         ]
@@ -463,6 +508,7 @@
         "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
+        "slug": "acheron",
         "role": [
             "dps"
         ]
@@ -473,6 +519,7 @@
         "path": "Preservation",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "aventurine",
         "role": [
             "sustain"
         ]
@@ -483,6 +530,7 @@
         "path": "Harmony",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "robin",
         "role": [
             "amplifier"
         ]
@@ -493,6 +541,7 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
+        "slug": "trailblazer-harmony",
         "role": [
             "amplifier"
         ],
@@ -506,6 +555,7 @@
         "path": "Hunt",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "boothill",
         "role": [
             "dps"
         ]
@@ -516,6 +566,7 @@
         "path": "Destruction",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "firefly",
         "role": [
             "dps"
         ]
@@ -526,6 +577,7 @@
         "path": "Erudition",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "jade",
         "role": [
             "specialist"
         ]
@@ -536,6 +588,7 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "yunli",
         "role": [
             "dps"
         ]
@@ -546,6 +599,7 @@
         "path": "Preservation",
         "element": "Ice",
         "availability": "4*",
+        "slug": "march-7th",
         "role": [
             "sustain"
         ],
@@ -559,6 +613,7 @@
         "path": "Hunt",
         "element": "Imaginary",
         "availability": "4*",
+        "slug": "march-7th-swordmaster",
         "role": [
             "specialist"
         ],
@@ -572,6 +627,7 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "jiaoqiu",
         "role": [
             "amplifier"
         ]
@@ -582,6 +638,7 @@
         "path": "Hunt",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "feixiao",
         "role": [
             "dps"
         ]
@@ -592,6 +649,7 @@
         "path": "Hunt",
         "element": "Thunder",
         "availability": "4*",
+        "slug": "moze",
         "role": [
             "specialist"
         ]
@@ -602,6 +660,7 @@
         "path": "Abundance",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "lingsha",
         "role": [
             "sustain"
         ]
@@ -612,6 +671,7 @@
         "path": "Erudition",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "rappa",
         "role": [
             "dps"
         ]
@@ -622,6 +682,7 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "sunday",
         "role": [
             "amplifier"
         ]
@@ -632,6 +693,7 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "tingyun-fugue",
         "role": [
             "amplifier"
         ]
@@ -642,6 +704,7 @@
         "path": "Erudition",
         "element": "Ice",
         "availability": "Limited 5*",
+        "slug": "the-herta",
         "role": [
             "dps"
         ]
@@ -652,6 +715,7 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "4*",
+        "slug": "trailblazer-remembrance",
         "role": [
             "amplifier"
         ],
@@ -665,6 +729,7 @@
         "path": "Remembrance",
         "element": "Thunder",
         "availability": "Limited 5*",
+        "slug": "aglaea",
         "role": [
             "dps"
         ]
@@ -675,6 +740,7 @@
         "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "tribbie",
         "role": [
             "specialist"
         ]
@@ -685,6 +751,7 @@
         "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
+        "slug": "mydei",
         "role": [
             "dps"
         ]
@@ -695,6 +762,7 @@
         "path": "Remembrance",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "castorice",
         "role": [
             "dps"
         ]
@@ -705,6 +773,7 @@
         "path": "Erudition",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "anaxa",
         "role": [
             "dps",
             "specialist"
@@ -716,6 +785,7 @@
         "path": "Remembrance",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "hyacine",
         "role": [
             "sustain"
         ]
@@ -726,6 +796,7 @@
         "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "cipher",
         "role": [
             "amplifier"
         ]
@@ -736,6 +807,7 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "phainon",
         "role": [
             "dps"
         ]
@@ -746,6 +818,7 @@
         "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "saber",
         "role": [
             "dps"
         ]
@@ -756,6 +829,7 @@
         "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
+        "slug": "archer",
         "role": [
             "dps"
         ]
@@ -766,6 +840,7 @@
         "path": "Nihility",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "hysilens",
         "role": [
             "dps"
         ]
@@ -776,6 +851,7 @@
         "path": "Harmony",
         "element": "Wind",
         "availability": "Limited 5*",
+        "slug": "cerydra",
         "role": [
             "amplifier"
         ]
@@ -786,6 +862,7 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
+        "slug": "march-7th-evernight",
         "role": [
             "dps",
             "specialist"
@@ -797,6 +874,7 @@
         "path": "Preservation",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "dan-heng-permansor-terrae",
         "role": [
             "sustain"
         ]
@@ -807,6 +885,7 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
+        "slug": "cyrene",
         "role": [
             "amplifier"
         ]
@@ -817,6 +896,7 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
+        "slug": "the-dahlia",
         "role": [
             "amplifier"
         ]
@@ -827,6 +907,7 @@
         "path": "Elation",
         "element": "Physical",
         "availability": "Limited 5*",
+        "slug": "yao-guang",
         "role": [
             "amplifier"
         ]
