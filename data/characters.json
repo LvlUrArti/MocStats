@@ -1,11 +1,13 @@
 {
     "Dan Heng": {
         "id": "1002",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Hunt",
-        "element": "Wind"
+        "element": "Wind",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ]
     },
     "Himeko": {
         "id": "1003",
@@ -13,7 +15,9 @@
         "path": "Erudition",
         "element": "Fire",
         "availability": "Standard 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Welt": {
         "id": "1004",
@@ -21,7 +25,9 @@
         "path": "Nihility",
         "element": "Imaginary",
         "availability": "Standard 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Silver Wolf": {
         "id": "1006",
@@ -29,31 +35,39 @@
         "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Arlan": {
         "id": "1008",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Destruction",
-        "element": "Thunder"
+        "element": "Thunder",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ]
     },
     "Asta": {
         "id": "1009",
-        "role": "Amplifier",
         "rarity": 4,
-        "availability": "4*",
         "path": "Harmony",
-        "element": "Fire"
+        "element": "Fire",
+        "availability": "4*",
+        "role": [
+            "amplifier"
+        ]
     },
     "Herta": {
         "id": "1013",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Erudition",
-        "element": "Ice"
+        "element": "Ice",
+        "availability": "4*",
+        "role": [
+            "specialist"
+        ]
     },
     "Bronya": {
         "id": "1101",
@@ -61,7 +75,9 @@
         "path": "Harmony",
         "element": "Wind",
         "availability": "Standard 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Seele": {
         "id": "1102",
@@ -69,15 +85,19 @@
         "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Serval": {
         "id": "1103",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Erudition",
-        "element": "Thunder"
+        "element": "Thunder",
+        "availability": "4*",
+        "role": [
+            "specialist"
+        ]
     },
     "Gepard": {
         "id": "1104",
@@ -85,23 +105,29 @@
         "path": "Preservation",
         "element": "Ice",
         "availability": "Standard 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Natasha": {
         "id": "1105",
-        "role": "Sustain",
         "rarity": 4,
-        "availability": "4*",
         "path": "Abundance",
-        "element": "Physical"
+        "element": "Physical",
+        "availability": "4*",
+        "role": [
+            "sustain"
+        ]
     },
     "Pela": {
         "id": "1106",
-        "role": "Amplifier",
         "rarity": 4,
-        "availability": "4*",
         "path": "Nihility",
-        "element": "Ice"
+        "element": "Ice",
+        "availability": "4*",
+        "role": [
+            "amplifier"
+        ]
     },
     "Clara": {
         "id": "1107",
@@ -109,39 +135,49 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Standard 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Sampo": {
         "id": "1108",
-        "role": "Amplifier",
         "rarity": 4,
-        "availability": "4*",
         "path": "Nihility",
-        "element": "Wind"
+        "element": "Wind",
+        "availability": "4*",
+        "role": [
+            "specialist"
+        ]
     },
     "Hook": {
         "id": "1109",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Destruction",
-        "element": "Fire"
+        "element": "Fire",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ]
     },
     "Qingque": {
         "id": "1201",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Erudition",
-        "element": "Quantum"
+        "element": "Quantum",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ]
     },
     "Tingyun": {
         "id": "1202",
-        "role": "Amplifier",
         "rarity": 4,
-        "availability": "4*",
         "path": "Harmony",
-        "element": "Thunder"
+        "element": "Thunder",
+        "availability": "4*",
+        "role": [
+            "amplifier"
+        ]
     },
     "Jing Yuan": {
         "id": "1204",
@@ -149,15 +185,19 @@
         "path": "Erudition",
         "element": "Thunder",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Sushang": {
         "id": "1206",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Hunt",
-        "element": "Physical"
+        "element": "Physical",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ]
     },
     "Luocha": {
         "id": "1203",
@@ -165,7 +205,9 @@
         "path": "Abundance",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Yukong": {
         "id": "1207",
@@ -173,7 +215,9 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Yanqing": {
         "id": "1209",
@@ -181,7 +225,9 @@
         "path": "Hunt",
         "element": "Ice",
         "availability": "Standard 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Bailu": {
         "id": "1211",
@@ -189,15 +235,19 @@
         "path": "Abundance",
         "element": "Thunder",
         "availability": "Standard 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Physical Trailblazer": {
         "id": "8001",
-        "role": "Damage Dealer",
         "rarity": 4,
-        "availability": "4*",
         "path": "Destruction",
         "element": "Physical",
+        "availability": "4*",
+        "role": [
+            "dps"
+        ],
         "trailblazer_ids": [
             "8002"
         ]
@@ -208,7 +258,9 @@
         "path": "Preservation",
         "element": "Fire",
         "availability": "4*",
-        "role": "Sustain",
+        "role": [
+            "sustain"
+        ],
         "trailblazer_ids": [
             "8004"
         ]
@@ -219,7 +271,10 @@
         "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps",
+            "specialist"
+        ]
     },
     "Kafka": {
         "id": "1005",
@@ -227,7 +282,9 @@
         "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Luka": {
         "id": "1111",
@@ -235,7 +292,9 @@
         "path": "Nihility",
         "element": "Physical",
         "availability": "4*",
-        "role": "Amplifier"
+        "role": [
+            "dps"
+        ]
     },
     "Dan Heng \u2022 Imbibitor Lunae": {
         "id": "1213",
@@ -243,7 +302,9 @@
         "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Lynx": {
         "id": "1110",
@@ -251,7 +312,9 @@
         "path": "Abundance",
         "element": "Quantum",
         "availability": "4*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Fu Xuan": {
         "id": "1208",
@@ -259,7 +322,9 @@
         "path": "Preservation",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Topaz & Numby": {
         "id": "1112",
@@ -267,7 +332,9 @@
         "path": "Hunt",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Guinaifen": {
         "id": "1210",
@@ -275,7 +342,9 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "4*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Jingliu": {
         "id": "1212",
@@ -283,7 +352,9 @@
         "path": "Destruction",
         "element": "Ice",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Huohuo": {
         "id": "1217",
@@ -291,7 +362,9 @@
         "path": "Abundance",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Hanya": {
         "id": "1215",
@@ -299,7 +372,9 @@
         "path": "Harmony",
         "element": "Physical",
         "availability": "4*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Argenti": {
         "id": "1302",
@@ -307,7 +382,10 @@
         "path": "Erudition",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps",
+            "specialist"
+        ]
     },
     "Xueyi": {
         "id": "1214",
@@ -315,7 +393,9 @@
         "path": "Destruction",
         "element": "Quantum",
         "availability": "4*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Ruan Mei": {
         "id": "1303",
@@ -323,7 +403,9 @@
         "path": "Harmony",
         "element": "Ice",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Dr. Ratio": {
         "id": "1305",
@@ -331,7 +413,9 @@
         "path": "Hunt",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Black Swan": {
         "id": "1307",
@@ -339,7 +423,9 @@
         "path": "Nihility",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Misha": {
         "id": "1312",
@@ -347,7 +433,9 @@
         "path": "Destruction",
         "element": "Ice",
         "availability": "4*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Sparkle": {
         "id": "1306",
@@ -355,7 +443,9 @@
         "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Gallagher": {
         "id": "1301",
@@ -363,7 +453,9 @@
         "path": "Abundance",
         "element": "Fire",
         "availability": "4*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Acheron": {
         "id": "1308",
@@ -371,7 +463,9 @@
         "path": "Nihility",
         "element": "Thunder",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Aventurine": {
         "id": "1304",
@@ -379,7 +473,9 @@
         "path": "Preservation",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Robin": {
         "id": "1309",
@@ -387,7 +483,9 @@
         "path": "Harmony",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Imaginary Trailblazer": {
         "id": "8005",
@@ -395,10 +493,12 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "4*",
+        "role": [
+            "amplifier"
+        ],
         "trailblazer_ids": [
             "8006"
-        ],
-        "role": "Amplifier"
+        ]
     },
     "Boothill": {
         "id": "1315",
@@ -406,7 +506,9 @@
         "path": "Hunt",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Firefly": {
         "id": "1310",
@@ -414,7 +516,9 @@
         "path": "Destruction",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Jade": {
         "id": "1314",
@@ -422,7 +526,9 @@
         "path": "Erudition",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Yunli": {
         "id": "1221",
@@ -430,7 +536,9 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Ice March 7th": {
         "id": "1001",
@@ -438,7 +546,9 @@
         "path": "Preservation",
         "element": "Ice",
         "availability": "4*",
-        "role": "Sustain",
+        "role": [
+            "sustain"
+        ],
         "trailblazer_ids": [
             "1001"
         ]
@@ -449,7 +559,9 @@
         "path": "Hunt",
         "element": "Imaginary",
         "availability": "4*",
-        "role": "Damage Dealer",
+        "role": [
+            "specialist"
+        ],
         "trailblazer_ids": [
             "1224"
         ]
@@ -460,7 +572,9 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Feixiao": {
         "id": "1220",
@@ -468,7 +582,9 @@
         "path": "Hunt",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Moze": {
         "id": "1223",
@@ -476,7 +592,9 @@
         "path": "Hunt",
         "element": "Thunder",
         "availability": "4*",
-        "role": "Damage Dealer"
+        "role": [
+            "specialist"
+        ]
     },
     "Lingsha": {
         "id": "1222",
@@ -484,7 +602,9 @@
         "path": "Abundance",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Rappa": {
         "id": "1317",
@@ -492,7 +612,9 @@
         "path": "Erudition",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Sunday": {
         "id": "1313",
@@ -500,7 +622,9 @@
         "path": "Harmony",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Fugue": {
         "id": "1225",
@@ -508,7 +632,9 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "The Herta": {
         "id": "1401",
@@ -516,7 +642,9 @@
         "path": "Erudition",
         "element": "Ice",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Ice Trailblazer": {
         "id": "8007",
@@ -524,10 +652,12 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "4*",
+        "role": [
+            "amplifier"
+        ],
         "trailblazer_ids": [
             "8008"
-        ],
-        "role": "Amplifier"
+        ]
     },
     "Aglaea": {
         "id": "1402",
@@ -535,7 +665,9 @@
         "path": "Remembrance",
         "element": "Thunder",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Tribbie": {
         "id": "1403",
@@ -543,7 +675,9 @@
         "path": "Harmony",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "specialist"
+        ]
     },
     "Mydei": {
         "id": "1404",
@@ -551,7 +685,9 @@
         "path": "Destruction",
         "element": "Imaginary",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Castorice": {
         "id": "1407",
@@ -559,7 +695,9 @@
         "path": "Remembrance",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Anaxa": {
         "id": "1405",
@@ -567,7 +705,10 @@
         "path": "Erudition",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps",
+            "specialist"
+        ]
     },
     "Hyacine": {
         "id": "1409",
@@ -575,7 +716,9 @@
         "path": "Remembrance",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Cipher": {
         "id": "1406",
@@ -583,7 +726,9 @@
         "path": "Nihility",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Phainon": {
         "id": "1408",
@@ -591,7 +736,9 @@
         "path": "Destruction",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Saber": {
         "id": "1014",
@@ -599,7 +746,9 @@
         "path": "Destruction",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Archer": {
         "id": "1015",
@@ -607,7 +756,9 @@
         "path": "Hunt",
         "element": "Quantum",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Hysilens": {
         "id": "1410",
@@ -615,7 +766,9 @@
         "path": "Nihility",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps"
+        ]
     },
     "Cerydra": {
         "id": "1412",
@@ -623,7 +776,9 @@
         "path": "Harmony",
         "element": "Wind",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Evernight": {
         "id": "1413",
@@ -631,7 +786,10 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
-        "role": "Damage Dealer"
+        "role": [
+            "dps",
+            "specialist"
+        ]
     },
     "Dan Heng \u2022 Permansor Terrae": {
         "id": "1414",
@@ -639,7 +797,9 @@
         "path": "Preservation",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Sustain"
+        "role": [
+            "sustain"
+        ]
     },
     "Cyrene": {
         "id": "1415",
@@ -647,7 +807,9 @@
         "path": "Remembrance",
         "element": "Ice",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "The Dahlia": {
         "id": "1321",
@@ -655,7 +817,9 @@
         "path": "Nihility",
         "element": "Fire",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     },
     "Yao Guang": {
         "id": "1502",
@@ -663,6 +827,8 @@
         "path": "Elation",
         "element": "Physical",
         "availability": "Limited 5*",
-        "role": "Amplifier"
+        "role": [
+            "amplifier"
+        ]
     }
 }

@@ -147,19 +147,26 @@ for char in chars2.values():
                 else:
                     chars1[char_name]["availability"] = "Limited 5*"
 
-            print("Role? 0: DPS, 1: Amplifier, 2: Sustain")
-            role_char = input()
-            match str(role_char):
-                case "0":
-                    chars1[char_name]["role"] = "Damage Dealer"
-                case "1":
-                    chars1[char_name]["role"] = "Amplifier"
-                case "2":
-                    chars1[char_name]["role"] = "Sustain"
-                case _:
-                    pass
-            chars1[char_name]["alt_name"] = None
-            chars1[char_name]["out_name"] = False
+            char_roles: list[str] = []
+            while True:
+                print("Role? 0: DPS, 1: Specialist, 2: Amplifier, 3: Sustain")
+                role_char = input()
+                match str(role_char):
+                    case "0":
+                        char_roles.append("dps")
+                    case "1":
+                        char_roles.append("specialist")
+                    case "2":
+                        char_roles.append("amplifier")
+                    case "3":
+                        char_roles.append("sustain")
+                    case _:
+                        pass
+                print("Another role? (y/n)")
+                another_role = input()
+                if another_role != "y":
+                    break
+                chars1[char_name]["role"] = char_roles
 
 with open("../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars1, indent=4))
