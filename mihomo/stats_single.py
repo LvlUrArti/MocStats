@@ -1,5 +1,6 @@
 """Compile stats for single character."""
 
+# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 from __future__ import annotations
 
 import sys
@@ -22,20 +23,12 @@ from comp_rates_config import (
     skip_random,
     skip_self,
 )
-from matplotlib.pyplot import (
-    hist as plt_hist,  # pyright: ignore[reportUnknownVariableType]
-)
-from matplotlib.pyplot import (
-    show as plt_show,  # pyright: ignore[reportUnknownVariableType]
-)
-from nohomo_config import (
-    print_chart,
-)
+from matplotlib.pyplot import hist as plt_hist
+from matplotlib.pyplot import show as plt_show
+from nohomo_config import print_chart
 from numpy import array as nparray
 from pynput import keyboard
-from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
-    skew,  # pyright: ignore[reportUnknownVariableType]
-)
+from scipy.stats import skew
 
 if TYPE_CHECKING:
     from io import TextIOWrapper
@@ -227,7 +220,7 @@ for char in chars:
         if sample[char][weapon] > 0:
             for stat in stats[char][weapon]:
                 skewness = 0
-                if stat not in ["name"]:
+                if stat != "name":
                     if stat in [
                         "char_lvl",
                         "light_cone_lvl",
@@ -315,14 +308,8 @@ for char in chars:
         print()
         print()
         if os.path.exists("results_real"):
-            csv_writer = csvwriter(
-                open("results_real/" + char + "_weapons.csv", "w", newline=""),
-            )
-        else:
-            csv_writer = csvwriter(
-                open("results/" + char + "_weapons.csv", "w", newline=""),
-            )
-            csv_writer.writerow(stats[char][weapons[char][0]].keys())
-        for weapon in weapons[char]:
-            print(weapon + ": " + str(sample[char][weapon]))
-            csv_writer.writerow(stats[char][weapon].values())
+            with open("results_real/" + char + "_weapons.csv", "w", newline="") as f:
+                csv_writer = csvwriter(f)
+                for weapon in weapons[char]:
+                    print(weapon + ": " + str(sample[char][weapon]))
+                    csv_writer.writerow(stats[char][weapon].values())
