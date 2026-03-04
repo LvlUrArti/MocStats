@@ -7,6 +7,8 @@ from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
 
+from pydantic import BaseModel
+
 # don't add underscore, i.e. 2.2.1"_pf"
 RECENT_PHASE = "4.0.1"
 
@@ -73,8 +75,6 @@ PAST_PHASE_PF = PAST_PHASE + pf_filename
 run_all_chars = False
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
 char_infographics = next(iter(run_chars_name))
-
-DPS_SUB_LIST = {"Anaxa", "Argenti", "Blade", "Evernight"}
 
 DPS_LIST = {
     "Yanqing",
@@ -309,8 +309,23 @@ def relative_path(relative_path: str) -> str:
     return path_join(script_dir, relative_path)
 
 
+class CharInfo(BaseModel):
+    """Character info from characters.json."""
+
+    id: str
+    rarity: int
+    path: str
+    element: str
+    availability: str
+    role: list[str]
+    trailblazer_ids: list[str] | None = None
+
+
 with open(relative_path("../data/characters.json")) as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = load(char_file)
+    raw_characters = load(char_file)
+    CHARS_BY_NAME = {
+        char_name: CharInfo(**item) for char_name, item in raw_characters.items()
+    }
 
 with open(relative_path("../data/light_cones.json")) as char_file:
     LIGHT_CONES: dict[str, dict[str, str | int | None]] = load(char_file)

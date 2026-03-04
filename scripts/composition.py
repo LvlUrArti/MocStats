@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 from comp_rates_config import (
-    CHARACTERS,
+    CHARS_BY_NAME,
     DOT_LIST,
     DOT_SUPPORT_LIST,
     DPS_APPEND_LIST,
@@ -106,7 +106,7 @@ class Composition:
             if character == "March 7th":
                 character = "Ice March 7th"
             self.char_presence[character] = True
-            if CHARACTERS[character]["availability"] in ["Limited 5*", "5*"]:
+            if CHARS_BY_NAME[character].availability in ["Limited 5*", "5*"]:
                 fives.append(character)
 
             if character in DPS_LIST:
@@ -133,19 +133,19 @@ class Composition:
             if character in SUPER_BREAK_LIST:
                 self.super_break.append(character)
 
-            if CHARACTERS[character]["element"] == "Ice":
+            if CHARS_BY_NAME[character].element == "Ice":
                 len_element["Ice"] += 1
-            if CHARACTERS[character]["element"] == "Wind":
+            if CHARS_BY_NAME[character].element == "Wind":
                 len_element["Wind"] += 1
-            if CHARACTERS[character]["element"] == "Fire":
+            if CHARS_BY_NAME[character].element == "Fire":
                 len_element["Fire"] += 1
-            if CHARACTERS[character]["element"] == "Imaginary":
+            if CHARS_BY_NAME[character].element == "Imaginary":
                 len_element["Imaginary"] += 1
-            if CHARACTERS[character]["element"] == "Quantum":
+            if CHARS_BY_NAME[character].element == "Quantum":
                 len_element["Quantum"] += 1
-            if CHARACTERS[character]["element"] == "Thunder":
+            if CHARS_BY_NAME[character].element == "Thunder":
                 len_element["Lightning"] += 1
-            if CHARACTERS[character]["element"] == "Physical":
+            if CHARS_BY_NAME[character].element == "Physical":
                 len_element["Physical"] += 1
 
         if (not self.dps and not self.subdps) and "Lingsha" in self.healer:

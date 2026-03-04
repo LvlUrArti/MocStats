@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
-    CHARACTERS,
+    CHARS_BY_NAME,
     F2P_ONLY,
     PAST_PHASE_PF,
     WHALE_ONLY,
@@ -387,20 +387,20 @@ def used_comps(
         for char in range(4):
             comp_char = comp_tuple[char]
             if (
-                CHARACTERS[comp_char]["availability"] == "Limited 5*"
+                CHARS_BY_NAME[comp_char].availability == "Limited 5*"
                 and comp.char_cons
                 and comp.char_cons[comp_char] > 0
             ):
                 whale_comp = True
                 if comp.char_cons[comp_char] > 2:
                     giga_whale = True
-            if CHARACTERS[comp_char]["role"] == "Sustain":
+            if "sustain" in CHARS_BY_NAME[comp_char].role:
                 sustain_count += 1
 
         if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
-                    CHARACTERS[char]["availability"] == "Limited 5*"
+                    CHARS_BY_NAME[char].availability == "Limited 5*"
                     and side_comp.char_cons[char] > 0
                 ):
                     whale_comp = True
@@ -587,14 +587,14 @@ def used_duos(
         sustain_count = 0
         for char in comp.characters:
             if (
-                CHARACTERS[char]["availability"] == "Limited 5*"
+                CHARS_BY_NAME[char].availability == "Limited 5*"
                 and comp.char_cons
                 and comp.char_cons[char] > 0
             ):
                 whale_comp = True
                 if comp.char_cons[char] > 2:
                     giga_whale = True
-            if CHARACTERS[char]["role"] == "Sustain":
+            if "sustain" in CHARS_BY_NAME[char].role:
                 sustain_count += 1
 
         side_comp = None
@@ -605,7 +605,7 @@ def used_duos(
         if side_comp and side_comp.char_cons:
             for char in side_comp.characters:
                 if (
-                    CHARACTERS[char]["availability"] == "Limited 5*"
+                    CHARS_BY_NAME[char].availability == "Limited 5*"
                     and side_comp.char_cons[char] > 0
                 ):
                     whale_comp = True
@@ -808,7 +808,7 @@ def comp_usages_write(
         if not info_char and (
             cur_comp.is_count_round_print and (cur_comp.app_rate >= json_threshold)
         ):
-            out = name_filter(comp, mode="out")
+            out = list(comp)
             for i in range(4):
                 out[i] = out[i].lower().replace(" ", "-")
                 if out[i] in slug:
@@ -939,13 +939,13 @@ def duo_write(
                             "avg_round": duo_round_j,
                         }
     if check_duo:
-        char_names = list(CHARACTERS.keys())
+        char_names = list(CHARS_BY_NAME.keys())
         out_dd: dict[frozenset[str], dict[str, str | float]] = {}
         out_dd_list: list[list[str]] = []
         for char_i in char_names:
             for char_j in char_names:
-                is_char_i_dps = CHARACTERS[char_i]["role"] == "Damage Dealer"
-                is_char_j_dps = CHARACTERS[char_j]["role"] == "Damage Dealer"
+                is_char_i_dps = "dps" in CHARS_BY_NAME[char_i].role
+                is_char_j_dps = "dps" in CHARS_BY_NAME[char_j].role
                 if is_char_i_dps and is_char_j_dps:
                     if char_j not in out_duos_check:
                         continue
@@ -1039,7 +1039,6 @@ def char_usages_write(
             "avg_round": str(cur_char.round),
             "std_dev_round": str(cur_char.std_dev_round),
             "q1_round": str(cur_char.q1_round),
-            "role": cur_char.role,
             "rarity": cur_char.rarity,
             "diff": str(cur_char.diff) + "%",
             "diff_rounds": str(cur_char.diff_rounds),
@@ -1234,19 +1233,6 @@ def char_usages_write(
                 csv_writer.writerow(header)
                 count += 1
             csv_writer.writerow(chars.values())
-
-
-@profile
-def name_filter(comp: list[str], mode: str = "out") -> list[str]:
-    """Filter names."""
-    filtered: list[str] = []
-    if mode == "out":
-        for char in comp:
-            if CHARACTERS[char]["out_name"]:
-                filtered.append(str(CHARACTERS[char]["alt_name"]))
-            else:
-                filtered.append(char)
-    return filtered
 
 
 if __name__ == "__main__":
