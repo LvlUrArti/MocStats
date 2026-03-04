@@ -1,16 +1,20 @@
+"""Update JSON data."""
+
 import io
 import json
 
 import requests
+from comp_rates_config import CHARS_INFO
+from pydantic import BaseModel
 
 download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relic_sets.json"
+    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relic_sets.json",
+    timeout=10,
 ).content.decode("utf-8")
-artifacts = json.load(io.StringIO(download))
+artifacts: dict[str, dict[str, str]] = json.load(io.StringIO(download))
 
 with open("../data/relic_affixes.json") as artifact_file:
-    artifacts2 = json.load(artifact_file)
-# artifacts2 = {}
+    artifacts2: dict[str, list[str]] = json.load(artifact_file)
 
 artifacts_affixes: dict[str, list[str]] = {}
 for artifact in artifacts:
@@ -29,10 +33,9 @@ for artifact in artifacts:
         if "Reduces " in affix:
             affix = affix.replace("Reduces ", "")
             affix = affix.replace("by ", "-")
-            # split = affix.split(" ")
-            # affix = split[1] + " +" + split[0]
 
         affix = affix.replace("CRIT Rate", "CR")
+        affix = affix.replace("CRIT", "CDMG")
         affix = affix.replace("Physical", "Phys")
         affix = affix.replace("Break Effect", "BE")
         affix = affix.replace("Imaginary", "Imag.")
@@ -57,52 +60,41 @@ for artifact in list(artifacts_affixes.keys()):
 print()
 
 with open("../data/relic_sets.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts, indent=4))
+    out_file.write(json.dumps(artifacts, indent=2))
 
 with open("../data/relic_affixes.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts2, indent=4))
+    out_file.write(json.dumps(artifacts2, indent=2))
 
 download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relics.json"
+    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relics.json",
+    timeout=10,
 ).content.decode("utf-8")
 with open("../data/relics.json", "w") as out_file:
-    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=4))
+    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=2))
 
 download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/light_cones.json"
+    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/light_cones.json",
+    timeout=10,
 ).content.decode("utf-8")
 with open("../data/light_cones.json", "w") as out_file:
-    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=4))
+    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=2))
 
-download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/simulated_blessings.json"
-).content.decode("utf-8")
-with open("../data/simulated_blessings.json", "w") as out_file:
-    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=4))
 
-download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/simulated_curios.json"
-).content.decode("utf-8")
-curio_json = json.load(io.StringIO(download))
-curio_json["901"] = curio_json["109"].copy()
-curio_json["902"] = curio_json["109"].copy()
-curio_json["901"]["id"] = "901"
-curio_json["902"]["id"] = "902"
-with open("../data/simulated_curios.json", "w") as out_file:
-    out_file.write(json.dumps(curio_json, indent=4))
+# Characters update
 
-# download = requests.get("https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/simulated_blocks.json").content.decode('utf-8')
-# with open("../data/simulated_blocks.json", "w") as out_file:
-#     out_file.write(json.dumps(json.load(io.StringIO(download)),indent=4))
 
-with open("../data/characters.json") as char_file:
-    chars1 = json.load(char_file)
-download = requests.get(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/characters.json"
-).content.decode("utf-8")
-chars2 = json.load(io.StringIO(download))
+class RawCharInfo(BaseModel):
+    """Character info from characters.json."""
 
-path_map: dict[str, str] = {
+    id: str
+    name: str
+    rarity: int
+    path: str
+    element: str
+    availability: str | None = None
+
+
+PATH_MAP: dict[str, str] = {
     "Warlock": "Nihility",
     "Elation": "Elation",
     "Rogue": "Hunt",
@@ -114,62 +106,84 @@ path_map: dict[str, str] = {
     "Memory": "Remembrance",
 }
 
-for char in chars2.values():
-    char_name = char["name"]
-    if char_name == "{NICKNAME}":
-        char_name = char["element"].capitalize() + " Trailblazer"
-        if char_name in chars1:
-            if "trailblazer_ids" not in chars1[char_name]:
-                chars1[char_name]["trailblazer_ids"] = []
-            if char["id"] not in chars1[char_name]["trailblazer_ids"]:
-                chars1[char_name]["trailblazer_ids"].append(char["id"])
-    elif char_name == "March 7th":
-        char_name = char["element"].capitalize() + " March 7th"
-        if char_name in chars1:
-            if "trailblazer_ids" not in chars1[char_name]:
-                chars1[char_name]["trailblazer_ids"] = []
-            if char["id"] not in chars1[char_name]["trailblazer_ids"]:
-                chars1[char_name]["trailblazer_ids"].append(char["id"])
-    if char_name not in chars1:
+MULTI_ELEM_CHARS: dict[str, str] = {
+    "{NICKNAME}": " Trailblazer",
+    "March 7th": " March 7th",
+}
+
+ROLES = [
+    "DPS",
+    "Specialist",
+    "Amplifier",
+    "Sustain",
+]
+
+with open("../data/characters.json") as char_file:
+    chars_data: dict[str, dict[str, str | int | list[str] | None]] = json.load(
+        char_file,
+    )
+
+download = requests.get(
+    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/characters.json",
+    timeout=10,
+).content.decode("utf-8")
+raw_chars = {
+    char_name: RawCharInfo(**item)
+    for char_name, item in json.load(io.StringIO(download)).items()
+}
+
+for char in raw_chars.values():
+    char_name = char.name
+    trailblazer_id_list = []
+    if char_name in CHARS_INFO:
+        char_trailblazer_ids = CHARS_INFO[char_name].trailblazer_ids
+        if char_trailblazer_ids is not None:
+            trailblazer_id_list = char_trailblazer_ids
+
+    if char_name in MULTI_ELEM_CHARS:
+        char_name = char.element.capitalize() + MULTI_ELEM_CHARS[char_name]
+        if char.id not in trailblazer_id_list:
+            trailblazer_id_list.append(char.id)
+    else:
+        trailblazer_id_list = None
+
+    if char_name not in chars_data:
         add_char = input("Add " + char_name + "? (y/n): ")
         if add_char == "y":
-            chars1[char_name] = char.copy()
-            chars1[char_name]["path"] = path_map[char["path"]]
+            char_add: dict[str, str | int | list[str] | None] = {
+                "id": char.id,
+                "rarity": char.rarity,
+                "path": PATH_MAP[char.path],
+                "element": char.element,
+                "availability": char.availability,
+                "slug": char_name.lower().replace(" ", "-"),
+            }
 
-            slug = char_name.lower().replace(" ", "-")
-            chars1[char_name]["slug"] = slug
-
-            if char["rarity"] == 4:
-                chars1[char_name]["availability"] = "4*"
-            elif char["rarity"] == 5:
+            if char.rarity == 4:
+                char_add["availability"] = "4*"
+            elif char.rarity == 5:
                 if "Trailblazer" in char_name:
-                    chars1[char_name]["rarity"] = 4
-                    chars1[char_name]["availability"] = "4*"
-                    chars1[char_name]["name"] = "Trailblazer"
-                    chars1[char_name]["trailblazer_ids"] = [char["id"]]
+                    char_add["rarity"] = 4
+                    char_add["availability"] = "4*"
+                    char_add["trailblazer_ids"] = [char.id]
                 else:
-                    chars1[char_name]["availability"] = "Limited 5*"
+                    char_add["availability"] = "Limited 5*"
 
             char_roles: list[str] = []
             while True:
-                print("Role? 0: DPS, 1: Specialist, 2: Amplifier, 3: Sustain")
-                role_char = input()
-                match str(role_char):
-                    case "0":
-                        char_roles.append("dps")
-                    case "1":
-                        char_roles.append("specialist")
-                    case "2":
-                        char_roles.append("amplifier")
-                    case "3":
-                        char_roles.append("sustain")
-                    case _:
-                        pass
-                print("Another role? (y/n)")
-                another_role = input()
+                role_char = int(input(f"Role? (0-{len(ROLES)}): {ROLES}: "))
+                if 0 <= role_char < len(ROLES):
+                    char_roles.append(ROLES[role_char].lower())
+
+                another_role = input("Another role? (y/n): ")
                 if another_role != "y":
                     break
-            chars1[char_name]["role"] = char_roles
+
+            char_add["role"] = char_roles
+            chars_data[char_name] = char_add
+
+    if char_name in chars_data and trailblazer_id_list:
+        chars_data[char_name]["trailblazer_ids"] = trailblazer_id_list
 
 with open("../data/characters.json", "w") as out_file:
-    out_file.write(json.dumps(chars1, indent=4))
+    out_file.write(json.dumps(chars_data, indent=2))

@@ -1,28 +1,28 @@
 {
-    "ATK +12%": [
-        "Musketeer of Wild Wheat",
-        "Prisoner in Deep Confinement",
-        "The Wind-Soaring Valorous"
-    ],
-    "BE +16%": [
-        "Thief of Shooting Meteor",
-        "Watchmaker, Master of Dream Machinations",
-        "Iron Cavalry Against the Scourge"
-    ],
-    "SPD +6%": [
-        "Messenger Traversing Hackerspace",
-        "Sacerdos' Relived Ordeal"
-    ],
-    "Quan. +10%": [
-        "Genius of Brilliant Stars",
-        "Poet of Mourning Collapse"
-    ],
-    "CR +8%": [
-        "Scholar Lost in Erudition",
-        "World-Remaking Deliverer"
-    ],
-    "CDMG +16%": [
-        "Wavestrider Captain",
-        "Ever-Glorious Magical Girl"
-    ]
+  "ATK +12%": [
+    "Musketeer of Wild Wheat",
+    "Prisoner in Deep Confinement",
+    "The Wind-Soaring Valorous"
+  ],
+  "BE +16%": [
+    "Thief of Shooting Meteor",
+    "Watchmaker, Master of Dream Machinations",
+    "Iron Cavalry Against the Scourge"
+  ],
+  "SPD +6%": [
+    "Messenger Traversing Hackerspace",
+    "Sacerdos' Relived Ordeal"
+  ],
+  "Quan. +10%": [
+    "Genius of Brilliant Stars",
+    "Poet of Mourning Collapse"
+  ],
+  "CR +8%": [
+    "Scholar Lost in Erudition",
+    "World-Remaking Deliverer"
+  ],
+  "CDMG +16%": [
+    "Wavestrider Captain",
+    "Ever-Glorious Magical Girl"
+  ]
 }

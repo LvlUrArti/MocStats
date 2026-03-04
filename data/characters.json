@@ -1,915 +1,915 @@
 {
-    "Dan Heng": {
-        "id": "1002",
-        "rarity": 4,
-        "path": "Hunt",
-        "element": "Wind",
-        "availability": "4*",
-        "slug": "dan-heng",
-        "role": [
-            "dps"
-        ]
-    },
-    "Himeko": {
-        "id": "1003",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Fire",
-        "availability": "Standard 5*",
-        "slug": "himeko",
-        "role": [
-            "dps"
-        ]
-    },
-    "Welt": {
-        "id": "1004",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Imaginary",
-        "availability": "Standard 5*",
-        "slug": "welt",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Silver Wolf": {
-        "id": "1006",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "silver-wolf",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Arlan": {
-        "id": "1008",
-        "rarity": 4,
-        "path": "Destruction",
-        "element": "Thunder",
-        "availability": "4*",
-        "slug": "arlan",
-        "role": [
-            "dps"
-        ]
-    },
-    "Asta": {
-        "id": "1009",
-        "rarity": 4,
-        "path": "Harmony",
-        "element": "Fire",
-        "availability": "4*",
-        "slug": "asta",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Herta": {
-        "id": "1013",
-        "rarity": 4,
-        "path": "Erudition",
-        "element": "Ice",
-        "availability": "4*",
-        "slug": "herta",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Bronya": {
-        "id": "1101",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Wind",
-        "availability": "Standard 5*",
-        "slug": "bronya",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Seele": {
-        "id": "1102",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "seele",
-        "role": [
-            "dps"
-        ]
-    },
-    "Serval": {
-        "id": "1103",
-        "rarity": 4,
-        "path": "Erudition",
-        "element": "Thunder",
-        "availability": "4*",
-        "slug": "serval",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Gepard": {
-        "id": "1104",
-        "rarity": 5,
-        "path": "Preservation",
-        "element": "Ice",
-        "availability": "Standard 5*",
-        "slug": "gepard",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Natasha": {
-        "id": "1105",
-        "rarity": 4,
-        "path": "Abundance",
-        "element": "Physical",
-        "availability": "4*",
-        "slug": "natasha",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Pela": {
-        "id": "1106",
-        "rarity": 4,
-        "path": "Nihility",
-        "element": "Ice",
-        "availability": "4*",
-        "slug": "pela",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Clara": {
-        "id": "1107",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Physical",
-        "availability": "Standard 5*",
-        "slug": "clara",
-        "role": [
-            "dps"
-        ]
-    },
-    "Sampo": {
-        "id": "1108",
-        "rarity": 4,
-        "path": "Nihility",
-        "element": "Wind",
-        "availability": "4*",
-        "slug": "sampo",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Hook": {
-        "id": "1109",
-        "rarity": 4,
-        "path": "Destruction",
-        "element": "Fire",
-        "availability": "4*",
-        "slug": "hook",
-        "role": [
-            "dps"
-        ]
-    },
-    "Qingque": {
-        "id": "1201",
-        "rarity": 4,
-        "path": "Erudition",
-        "element": "Quantum",
-        "availability": "4*",
-        "slug": "qingque",
-        "role": [
-            "dps"
-        ]
-    },
-    "Tingyun": {
-        "id": "1202",
-        "rarity": 4,
-        "path": "Harmony",
-        "element": "Thunder",
-        "availability": "4*",
-        "slug": "tingyun",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Jing Yuan": {
-        "id": "1204",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Thunder",
-        "availability": "Limited 5*",
-        "slug": "jing-yuan",
-        "role": [
-            "dps"
-        ]
-    },
-    "Sushang": {
-        "id": "1206",
-        "rarity": 4,
-        "path": "Hunt",
-        "element": "Physical",
-        "availability": "4*",
-        "slug": "sushang",
-        "role": [
-            "dps"
-        ]
-    },
-    "Luocha": {
-        "id": "1203",
-        "rarity": 5,
-        "path": "Abundance",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "luocha",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Yukong": {
-        "id": "1207",
-        "rarity": 4,
-        "path": "Harmony",
-        "element": "Imaginary",
-        "availability": "4*",
-        "slug": "yukong",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Yanqing": {
-        "id": "1209",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Ice",
-        "availability": "Standard 5*",
-        "slug": "yanqing",
-        "role": [
-            "dps"
-        ]
-    },
-    "Bailu": {
-        "id": "1211",
-        "rarity": 5,
-        "path": "Abundance",
-        "element": "Thunder",
-        "availability": "Standard 5*",
-        "slug": "bailu",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Physical Trailblazer": {
-        "id": "8001",
-        "rarity": 4,
-        "path": "Destruction",
-        "element": "Physical",
-        "availability": "4*",
-        "slug": "trailblazer-destruction",
-        "role": [
-            "dps"
-        ],
-        "trailblazer_ids": [
-            "8002"
-        ]
-    },
-    "Fire Trailblazer": {
-        "id": "8003",
-        "rarity": 4,
-        "path": "Preservation",
-        "element": "Fire",
-        "availability": "4*",
-        "slug": "trailblazer-preservation",
-        "role": [
-            "sustain"
-        ],
-        "trailblazer_ids": [
-            "8004"
-        ]
-    },
-    "Blade": {
-        "id": "1205",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "blade",
-        "role": [
-            "dps",
-            "specialist"
-        ]
-    },
-    "Kafka": {
-        "id": "1005",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Thunder",
-        "availability": "Limited 5*",
-        "slug": "kafka",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Luka": {
-        "id": "1111",
-        "rarity": 4,
-        "path": "Nihility",
-        "element": "Physical",
-        "availability": "4*",
-        "slug": "luka",
-        "role": [
-            "dps"
-        ]
-    },
-    "Dan Heng \u2022 Imbibitor Lunae": {
-        "id": "1213",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "imbibitor-lunae",
-        "role": [
-            "dps"
-        ]
-    },
-    "Lynx": {
-        "id": "1110",
-        "rarity": 4,
-        "path": "Abundance",
-        "element": "Quantum",
-        "availability": "4*",
-        "slug": "lynx",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Fu Xuan": {
-        "id": "1208",
-        "rarity": 5,
-        "path": "Preservation",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "fu-xuan",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Topaz & Numby": {
-        "id": "1112",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "topaz",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Guinaifen": {
-        "id": "1210",
-        "rarity": 4,
-        "path": "Nihility",
-        "element": "Fire",
-        "availability": "4*",
-        "slug": "guinaifen",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Jingliu": {
-        "id": "1212",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Ice",
-        "availability": "Limited 5*",
-        "slug": "jingliu",
-        "role": [
-            "dps"
-        ]
-    },
-    "Huohuo": {
-        "id": "1217",
-        "rarity": 5,
-        "path": "Abundance",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "huohuo",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Hanya": {
-        "id": "1215",
-        "rarity": 4,
-        "path": "Harmony",
-        "element": "Physical",
-        "availability": "4*",
-        "slug": "hanya",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Argenti": {
-        "id": "1302",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "argenti",
-        "role": [
-            "dps",
-            "specialist"
-        ]
-    },
-    "Xueyi": {
-        "id": "1214",
-        "rarity": 4,
-        "path": "Destruction",
-        "element": "Quantum",
-        "availability": "4*",
-        "slug": "xueyi",
-        "role": [
-            "dps"
-        ]
-    },
-    "Ruan Mei": {
-        "id": "1303",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Ice",
-        "availability": "Limited 5*",
-        "slug": "ruan-mei",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Dr. Ratio": {
-        "id": "1305",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "dr-ratio",
-        "role": [
-            "dps"
-        ]
-    },
-    "Black Swan": {
-        "id": "1307",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "black-swan",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Misha": {
-        "id": "1312",
-        "rarity": 4,
-        "path": "Destruction",
-        "element": "Ice",
-        "availability": "4*",
-        "slug": "misha",
-        "role": [
-            "dps"
-        ]
-    },
-    "Sparkle": {
-        "id": "1306",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "sparkle",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Gallagher": {
-        "id": "1301",
-        "rarity": 4,
-        "path": "Abundance",
-        "element": "Fire",
-        "availability": "4*",
-        "slug": "gallagher",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Acheron": {
-        "id": "1308",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Thunder",
-        "availability": "Limited 5*",
-        "slug": "acheron",
-        "role": [
-            "dps"
-        ]
-    },
-    "Aventurine": {
-        "id": "1304",
-        "rarity": 5,
-        "path": "Preservation",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "aventurine",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Robin": {
-        "id": "1309",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "robin",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Imaginary Trailblazer": {
-        "id": "8005",
-        "rarity": 4,
-        "path": "Harmony",
-        "element": "Imaginary",
-        "availability": "4*",
-        "slug": "trailblazer-harmony",
-        "role": [
-            "amplifier"
-        ],
-        "trailblazer_ids": [
-            "8006"
-        ]
-    },
-    "Boothill": {
-        "id": "1315",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "boothill",
-        "role": [
-            "dps"
-        ]
-    },
-    "Firefly": {
-        "id": "1310",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "firefly",
-        "role": [
-            "dps"
-        ]
-    },
-    "Jade": {
-        "id": "1314",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "jade",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Yunli": {
-        "id": "1221",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "yunli",
-        "role": [
-            "dps"
-        ]
-    },
-    "Ice March 7th": {
-        "id": "1001",
-        "rarity": 4,
-        "path": "Preservation",
-        "element": "Ice",
-        "availability": "4*",
-        "slug": "march-7th",
-        "role": [
-            "sustain"
-        ],
-        "trailblazer_ids": [
-            "1001"
-        ]
-    },
-    "Imaginary March 7th": {
-        "id": "1224",
-        "rarity": 4,
-        "path": "Hunt",
-        "element": "Imaginary",
-        "availability": "4*",
-        "slug": "march-7th-swordmaster",
-        "role": [
-            "specialist"
-        ],
-        "trailblazer_ids": [
-            "1224"
-        ]
-    },
-    "Jiaoqiu": {
-        "id": "1218",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "jiaoqiu",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Feixiao": {
-        "id": "1220",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "feixiao",
-        "role": [
-            "dps"
-        ]
-    },
-    "Moze": {
-        "id": "1223",
-        "rarity": 4,
-        "path": "Hunt",
-        "element": "Thunder",
-        "availability": "4*",
-        "slug": "moze",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Lingsha": {
-        "id": "1222",
-        "rarity": 5,
-        "path": "Abundance",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "lingsha",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Rappa": {
-        "id": "1317",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "rappa",
-        "role": [
-            "dps"
-        ]
-    },
-    "Sunday": {
-        "id": "1313",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "sunday",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Fugue": {
-        "id": "1225",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "tingyun-fugue",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "The Herta": {
-        "id": "1401",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Ice",
-        "availability": "Limited 5*",
-        "slug": "the-herta",
-        "role": [
-            "dps"
-        ]
-    },
-    "Ice Trailblazer": {
-        "id": "8007",
-        "rarity": 4,
-        "path": "Remembrance",
-        "element": "Ice",
-        "availability": "4*",
-        "slug": "trailblazer-remembrance",
-        "role": [
-            "amplifier"
-        ],
-        "trailblazer_ids": [
-            "8008"
-        ]
-    },
-    "Aglaea": {
-        "id": "1402",
-        "rarity": 5,
-        "path": "Remembrance",
-        "element": "Thunder",
-        "availability": "Limited 5*",
-        "slug": "aglaea",
-        "role": [
-            "dps"
-        ]
-    },
-    "Tribbie": {
-        "id": "1403",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "tribbie",
-        "role": [
-            "specialist"
-        ]
-    },
-    "Mydei": {
-        "id": "1404",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Imaginary",
-        "availability": "Limited 5*",
-        "slug": "mydei",
-        "role": [
-            "dps"
-        ]
-    },
-    "Castorice": {
-        "id": "1407",
-        "rarity": 5,
-        "path": "Remembrance",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "castorice",
-        "role": [
-            "dps"
-        ]
-    },
-    "Anaxa": {
-        "id": "1405",
-        "rarity": 5,
-        "path": "Erudition",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "anaxa",
-        "role": [
-            "dps",
-            "specialist"
-        ]
-    },
-    "Hyacine": {
-        "id": "1409",
-        "rarity": 5,
-        "path": "Remembrance",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "hyacine",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Cipher": {
-        "id": "1406",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "cipher",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Phainon": {
-        "id": "1408",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "phainon",
-        "role": [
-            "dps"
-        ]
-    },
-    "Saber": {
-        "id": "1014",
-        "rarity": 5,
-        "path": "Destruction",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "saber",
-        "role": [
-            "dps"
-        ]
-    },
-    "Archer": {
-        "id": "1015",
-        "rarity": 5,
-        "path": "Hunt",
-        "element": "Quantum",
-        "availability": "Limited 5*",
-        "slug": "archer",
-        "role": [
-            "dps"
-        ]
-    },
-    "Hysilens": {
-        "id": "1410",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "hysilens",
-        "role": [
-            "dps"
-        ]
-    },
-    "Cerydra": {
-        "id": "1412",
-        "rarity": 5,
-        "path": "Harmony",
-        "element": "Wind",
-        "availability": "Limited 5*",
-        "slug": "cerydra",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Evernight": {
-        "id": "1413",
-        "rarity": 5,
-        "path": "Remembrance",
-        "element": "Ice",
-        "availability": "Limited 5*",
-        "slug": "march-7th-evernight",
-        "role": [
-            "dps",
-            "specialist"
-        ]
-    },
-    "Dan Heng \u2022 Permansor Terrae": {
-        "id": "1414",
-        "rarity": 5,
-        "path": "Preservation",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "dan-heng-permansor-terrae",
-        "role": [
-            "sustain"
-        ]
-    },
-    "Cyrene": {
-        "id": "1415",
-        "rarity": 5,
-        "path": "Remembrance",
-        "element": "Ice",
-        "availability": "Limited 5*",
-        "slug": "cyrene",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "The Dahlia": {
-        "id": "1321",
-        "rarity": 5,
-        "path": "Nihility",
-        "element": "Fire",
-        "availability": "Limited 5*",
-        "slug": "the-dahlia",
-        "role": [
-            "amplifier"
-        ]
-    },
-    "Yao Guang": {
-        "id": "1502",
-        "rarity": 5,
-        "path": "Elation",
-        "element": "Physical",
-        "availability": "Limited 5*",
-        "slug": "yao-guang",
-        "role": [
-            "amplifier"
-        ]
-    }
+  "Dan Heng": {
+    "id": "1002",
+    "rarity": 4,
+    "path": "Hunt",
+    "element": "Wind",
+    "availability": "4*",
+    "slug": "dan-heng",
+    "role": [
+      "dps"
+    ]
+  },
+  "Himeko": {
+    "id": "1003",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Fire",
+    "availability": "Standard 5*",
+    "slug": "himeko",
+    "role": [
+      "dps"
+    ]
+  },
+  "Welt": {
+    "id": "1004",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Imaginary",
+    "availability": "Standard 5*",
+    "slug": "welt",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Silver Wolf": {
+    "id": "1006",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "silver-wolf",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Arlan": {
+    "id": "1008",
+    "rarity": 4,
+    "path": "Destruction",
+    "element": "Thunder",
+    "availability": "4*",
+    "slug": "arlan",
+    "role": [
+      "dps"
+    ]
+  },
+  "Asta": {
+    "id": "1009",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Fire",
+    "availability": "4*",
+    "slug": "asta",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Herta": {
+    "id": "1013",
+    "rarity": 4,
+    "path": "Erudition",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "herta",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Bronya": {
+    "id": "1101",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Wind",
+    "availability": "Standard 5*",
+    "slug": "bronya",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Seele": {
+    "id": "1102",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "seele",
+    "role": [
+      "dps"
+    ]
+  },
+  "Serval": {
+    "id": "1103",
+    "rarity": 4,
+    "path": "Erudition",
+    "element": "Thunder",
+    "availability": "4*",
+    "slug": "serval",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Gepard": {
+    "id": "1104",
+    "rarity": 5,
+    "path": "Preservation",
+    "element": "Ice",
+    "availability": "Standard 5*",
+    "slug": "gepard",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Natasha": {
+    "id": "1105",
+    "rarity": 4,
+    "path": "Abundance",
+    "element": "Physical",
+    "availability": "4*",
+    "slug": "natasha",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Pela": {
+    "id": "1106",
+    "rarity": 4,
+    "path": "Nihility",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "pela",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Clara": {
+    "id": "1107",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Physical",
+    "availability": "Standard 5*",
+    "slug": "clara",
+    "role": [
+      "dps"
+    ]
+  },
+  "Sampo": {
+    "id": "1108",
+    "rarity": 4,
+    "path": "Nihility",
+    "element": "Wind",
+    "availability": "4*",
+    "slug": "sampo",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Hook": {
+    "id": "1109",
+    "rarity": 4,
+    "path": "Destruction",
+    "element": "Fire",
+    "availability": "4*",
+    "slug": "hook",
+    "role": [
+      "dps"
+    ]
+  },
+  "Qingque": {
+    "id": "1201",
+    "rarity": 4,
+    "path": "Erudition",
+    "element": "Quantum",
+    "availability": "4*",
+    "slug": "qingque",
+    "role": [
+      "dps"
+    ]
+  },
+  "Tingyun": {
+    "id": "1202",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Thunder",
+    "availability": "4*",
+    "slug": "tingyun",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Jing Yuan": {
+    "id": "1204",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Thunder",
+    "availability": "Limited 5*",
+    "slug": "jing-yuan",
+    "role": [
+      "dps"
+    ]
+  },
+  "Sushang": {
+    "id": "1206",
+    "rarity": 4,
+    "path": "Hunt",
+    "element": "Physical",
+    "availability": "4*",
+    "slug": "sushang",
+    "role": [
+      "dps"
+    ]
+  },
+  "Luocha": {
+    "id": "1203",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "luocha",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Yukong": {
+    "id": "1207",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Imaginary",
+    "availability": "4*",
+    "slug": "yukong",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Yanqing": {
+    "id": "1209",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Ice",
+    "availability": "Standard 5*",
+    "slug": "yanqing",
+    "role": [
+      "dps"
+    ]
+  },
+  "Bailu": {
+    "id": "1211",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Thunder",
+    "availability": "Standard 5*",
+    "slug": "bailu",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Physical Trailblazer": {
+    "id": "8001",
+    "rarity": 4,
+    "path": "Destruction",
+    "element": "Physical",
+    "availability": "4*",
+    "slug": "trailblazer-destruction",
+    "role": [
+      "dps"
+    ],
+    "trailblazer_ids": [
+      "8002"
+    ]
+  },
+  "Fire Trailblazer": {
+    "id": "8003",
+    "rarity": 4,
+    "path": "Preservation",
+    "element": "Fire",
+    "availability": "4*",
+    "slug": "trailblazer-preservation",
+    "role": [
+      "sustain"
+    ],
+    "trailblazer_ids": [
+      "8004"
+    ]
+  },
+  "Blade": {
+    "id": "1205",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "blade",
+    "role": [
+      "dps",
+      "specialist"
+    ]
+  },
+  "Kafka": {
+    "id": "1005",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Thunder",
+    "availability": "Limited 5*",
+    "slug": "kafka",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Luka": {
+    "id": "1111",
+    "rarity": 4,
+    "path": "Nihility",
+    "element": "Physical",
+    "availability": "4*",
+    "slug": "luka",
+    "role": [
+      "dps"
+    ]
+  },
+  "Dan Heng \u2022 Imbibitor Lunae": {
+    "id": "1213",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "imbibitor-lunae",
+    "role": [
+      "dps"
+    ]
+  },
+  "Lynx": {
+    "id": "1110",
+    "rarity": 4,
+    "path": "Abundance",
+    "element": "Quantum",
+    "availability": "4*",
+    "slug": "lynx",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Fu Xuan": {
+    "id": "1208",
+    "rarity": 5,
+    "path": "Preservation",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "fu-xuan",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Topaz & Numby": {
+    "id": "1112",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "topaz",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Guinaifen": {
+    "id": "1210",
+    "rarity": 4,
+    "path": "Nihility",
+    "element": "Fire",
+    "availability": "4*",
+    "slug": "guinaifen",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Jingliu": {
+    "id": "1212",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "jingliu",
+    "role": [
+      "dps"
+    ]
+  },
+  "Huohuo": {
+    "id": "1217",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "huohuo",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Hanya": {
+    "id": "1215",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Physical",
+    "availability": "4*",
+    "slug": "hanya",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Argenti": {
+    "id": "1302",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "argenti",
+    "role": [
+      "dps",
+      "specialist"
+    ]
+  },
+  "Xueyi": {
+    "id": "1214",
+    "rarity": 4,
+    "path": "Destruction",
+    "element": "Quantum",
+    "availability": "4*",
+    "slug": "xueyi",
+    "role": [
+      "dps"
+    ]
+  },
+  "Ruan Mei": {
+    "id": "1303",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "ruan-mei",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Dr. Ratio": {
+    "id": "1305",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "dr-ratio",
+    "role": [
+      "dps"
+    ]
+  },
+  "Black Swan": {
+    "id": "1307",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "black-swan",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Misha": {
+    "id": "1312",
+    "rarity": 4,
+    "path": "Destruction",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "misha",
+    "role": [
+      "dps"
+    ]
+  },
+  "Sparkle": {
+    "id": "1306",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "sparkle",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Gallagher": {
+    "id": "1301",
+    "rarity": 4,
+    "path": "Abundance",
+    "element": "Fire",
+    "availability": "4*",
+    "slug": "gallagher",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Acheron": {
+    "id": "1308",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Thunder",
+    "availability": "Limited 5*",
+    "slug": "acheron",
+    "role": [
+      "dps"
+    ]
+  },
+  "Aventurine": {
+    "id": "1304",
+    "rarity": 5,
+    "path": "Preservation",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "aventurine",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Robin": {
+    "id": "1309",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "robin",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Imaginary Trailblazer": {
+    "id": "8005",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Imaginary",
+    "availability": "4*",
+    "slug": "trailblazer-harmony",
+    "role": [
+      "amplifier"
+    ],
+    "trailblazer_ids": [
+      "8006"
+    ]
+  },
+  "Boothill": {
+    "id": "1315",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "boothill",
+    "role": [
+      "dps"
+    ]
+  },
+  "Firefly": {
+    "id": "1310",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "firefly",
+    "role": [
+      "dps"
+    ]
+  },
+  "Jade": {
+    "id": "1314",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "jade",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Yunli": {
+    "id": "1221",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "yunli",
+    "role": [
+      "dps"
+    ]
+  },
+  "Ice March 7th": {
+    "id": "1001",
+    "rarity": 4,
+    "path": "Preservation",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "march-7th",
+    "role": [
+      "sustain"
+    ],
+    "trailblazer_ids": [
+      "1001"
+    ]
+  },
+  "Imaginary March 7th": {
+    "id": "1224",
+    "rarity": 4,
+    "path": "Hunt",
+    "element": "Imaginary",
+    "availability": "4*",
+    "slug": "march-7th-swordmaster",
+    "role": [
+      "specialist"
+    ],
+    "trailblazer_ids": [
+      "1224"
+    ]
+  },
+  "Jiaoqiu": {
+    "id": "1218",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "jiaoqiu",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Feixiao": {
+    "id": "1220",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "feixiao",
+    "role": [
+      "dps"
+    ]
+  },
+  "Moze": {
+    "id": "1223",
+    "rarity": 4,
+    "path": "Hunt",
+    "element": "Thunder",
+    "availability": "4*",
+    "slug": "moze",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Lingsha": {
+    "id": "1222",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "lingsha",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Rappa": {
+    "id": "1317",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "rappa",
+    "role": [
+      "dps"
+    ]
+  },
+  "Sunday": {
+    "id": "1313",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "sunday",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Fugue": {
+    "id": "1225",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "tingyun-fugue",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "The Herta": {
+    "id": "1401",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "the-herta",
+    "role": [
+      "dps"
+    ]
+  },
+  "Ice Trailblazer": {
+    "id": "8007",
+    "rarity": 4,
+    "path": "Remembrance",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "trailblazer-remembrance",
+    "role": [
+      "amplifier"
+    ],
+    "trailblazer_ids": [
+      "8008"
+    ]
+  },
+  "Aglaea": {
+    "id": "1402",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Thunder",
+    "availability": "Limited 5*",
+    "slug": "aglaea",
+    "role": [
+      "dps"
+    ]
+  },
+  "Tribbie": {
+    "id": "1403",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "tribbie",
+    "role": [
+      "specialist"
+    ]
+  },
+  "Mydei": {
+    "id": "1404",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "mydei",
+    "role": [
+      "dps"
+    ]
+  },
+  "Castorice": {
+    "id": "1407",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "castorice",
+    "role": [
+      "dps"
+    ]
+  },
+  "Anaxa": {
+    "id": "1405",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "anaxa",
+    "role": [
+      "dps",
+      "specialist"
+    ]
+  },
+  "Hyacine": {
+    "id": "1409",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "hyacine",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Cipher": {
+    "id": "1406",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "cipher",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Phainon": {
+    "id": "1408",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "phainon",
+    "role": [
+      "dps"
+    ]
+  },
+  "Saber": {
+    "id": "1014",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "saber",
+    "role": [
+      "dps"
+    ]
+  },
+  "Archer": {
+    "id": "1015",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "archer",
+    "role": [
+      "dps"
+    ]
+  },
+  "Hysilens": {
+    "id": "1410",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "hysilens",
+    "role": [
+      "dps"
+    ]
+  },
+  "Cerydra": {
+    "id": "1412",
+    "rarity": 5,
+    "path": "Harmony",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "cerydra",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Evernight": {
+    "id": "1413",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "march-7th-evernight",
+    "role": [
+      "dps",
+      "specialist"
+    ]
+  },
+  "Dan Heng \u2022 Permansor Terrae": {
+    "id": "1414",
+    "rarity": 5,
+    "path": "Preservation",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "dan-heng-permansor-terrae",
+    "role": [
+      "sustain"
+    ]
+  },
+  "Cyrene": {
+    "id": "1415",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "cyrene",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "The Dahlia": {
+    "id": "1321",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "the-dahlia",
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Yao Guang": {
+    "id": "1502",
+    "rarity": 5,
+    "path": "Elation",
+    "element": "Physical",
+    "availability": "Limited 5*",
+    "slug": "yao-guang",
+    "role": [
+      "amplifier"
+    ]
+  }
 }
