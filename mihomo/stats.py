@@ -126,11 +126,13 @@ class StatsChar:
 
 
 chars: list[str] = []
+set_chars: set[str] = set()
 stats: dict[str, StatsChar] = {}
 median: dict[str, dict[str, float]] = {}
 mean: dict[str, dict[str, float]] = {}
 mainstats: dict[str, dict[str, dict[str, float]]] = {}
 chars.extend(row[0] for row in build)
+set_chars.update(chars)
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
@@ -163,9 +165,9 @@ substatkeys: list[str] = list(substats.keys())
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
-        self_uids = next(iter(reader))
+        self_uids = set(next(iter(reader)))
 else:
-    self_uids = []
+    self_uids: set[str] = set()
 
 for row in data:
     char = str(row[2])
@@ -178,7 +180,7 @@ for row in data:
         uid = cur_uid
         ar += int(row[1])
         count += 1
-    if char not in chars:
+    if char not in set_chars:
         if char in CHAR_NAME_REPLACE:
             char = CHAR_NAME_REPLACE[char]
         elif char in {"Trailblazer", "March 7th"}:
@@ -213,7 +215,7 @@ for char in copy_chars:
             if not stats[char].stats_count[stat]:
                 stats[char].stats_write[stat] = 0
             elif stat != "name" and "sample_size" not in stat:
-                if stat in [
+                if stat in {
                     "char_lvl",
                     "light_cone_lvl",
                     "attack_lvl",
@@ -224,7 +226,7 @@ for char in copy_chars:
                     "atk",
                     "dfns",
                     "speed",
-                ]:
+                }:
                     median[char][stat] = round(
                         stat_median(stats[char].stats_count[stat]),
                         2,
@@ -246,7 +248,7 @@ for char in copy_chars:
                     mean[char][stat] > 0
                     and median[char][stat] > 0
                     and stats[char].sample_size > 10
-                ) and stat not in [
+                ) and stat not in {
                     "char_lvl",
                     "light_cone_lvl",
                     "attack_lvl",
@@ -255,7 +257,7 @@ for char in copy_chars:
                     "talent_lvl",
                     "energy_regen",
                     "dmg_boost",
-                ]:
+                }:
                     skewness = round(
                         skew(stats[char].stats_count[stat], axis=0, bias=True),
                         2,
@@ -348,11 +350,9 @@ def write_files(
     """Write the stats to a csv file."""
     csv_writer = csvwriter(f1)
     csv_writer2 = csvwriter(f2)
-    del stats[chars[0]].sample_size
-    csv_writer.writerow(["name", *stats[chars[0]].stats_write.keys()])
+    csv_writer.writerow(["name", *stats[next(iter(chars))].stats_write.keys()])
     for char in chars:
-        if char != chars[0]:
-            del stats[char].sample_size
+        del stats[char].sample_size
         csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
         csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
     f1.close()

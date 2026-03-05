@@ -6,4 +6,4 @@ print_chart = False
 comp_stats = []
 check_char = True
 check_char_name = "Yanqing"
-check_stats: list[str] = []
+check_stats: set[str] = set()
