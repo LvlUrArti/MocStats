@@ -29,6 +29,7 @@ from comp_rates_config import (
     pf_filename,
     pf_mode,
     run_commands,
+    slug_with_prefix,
 )
 from composition import Composition, Stage
 from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
@@ -1003,8 +1004,8 @@ def duo_write(
 
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
-            if out_duos[i][duo_value]:
-                out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
+            if out_duos[i][duo_value] in CHARS_INFO:
+                out_duos[i][duo_value] = CHARS_INFO[out_duos[i][duo_value]].slug
     with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
@@ -1182,7 +1183,7 @@ def char_usages_write(
 
     for i in range(len(out_chars)):
         # for i in range(7):
-        out_chars[i]["char"] = CHARS_INFO[str(out_chars[i]["char"])].slug
+        out_chars[i]["char"] = slug_with_prefix(str(out_chars[i]["char"]))
         for value in iterate_value_app:
             if (
                 str(out_chars[i][value])[:-1]

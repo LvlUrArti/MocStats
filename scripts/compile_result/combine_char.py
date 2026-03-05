@@ -78,7 +78,6 @@ class BaseCharacterStats(BaseModel):
     avg_round: float | int
     std_dev_round: float | int
     q1_round: float | int
-    role: str
     rarity: str
     diff: float
     diff_rounds: float | int

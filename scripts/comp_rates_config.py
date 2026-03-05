@@ -351,3 +351,11 @@ for light_cone in LIGHT_CONES:
         and LIGHT_CONES[light_cone]["name"] not in STAND_WEAPS
     ):
         sig_weaps.add(str(LIGHT_CONES[light_cone]["name"]))
+
+
+def slug_with_prefix(char_name: str) -> str:
+    """Get character slug with prefix."""
+    prefix = char_name[:5] if char_name.startswith(("solo-", "supp-")) else ""
+    slug = CHARS_INFO[char_name[5:] if prefix else char_name].slug
+
+    return f"{prefix}{slug}" if prefix else slug

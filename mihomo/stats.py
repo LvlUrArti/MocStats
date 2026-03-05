@@ -23,13 +23,13 @@ from matplotlib.pyplot import (
 sys_path.append("../scripts/")
 from comp_rates_config import (
     CHAR_NAME_REPLACE,
-    CHARS_INFO,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     pf_filename,
     skew_num,
     skip_random,
     skip_self,
+    slug_with_prefix,
 )
 from csv_to_pickle import PickleData, load_pickle_data
 from nohomo_config import (
@@ -397,7 +397,7 @@ for iter_char, char_stat in enumerate(stats.values()):
         else:
             char_stat.stats_write[value] = 0.00
 
-    char_stat.name = CHARS_INFO[char_stat.name].slug
+    char_stat.name = slug_with_prefix(char_stat.name)
     if char_stat.name == CHARACTERS[iter_char]["char"]:
         del char_stat.name
     else:
