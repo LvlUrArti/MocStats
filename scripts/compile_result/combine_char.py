@@ -3,8 +3,6 @@
 import json
 from sys import path as sys_path
 
-# TODO: histograph
-
 sys_path.append("../")
 from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel

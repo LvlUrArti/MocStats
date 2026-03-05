@@ -45,7 +45,7 @@ for source_dir in source_dirs:
         send2trash(target_dir)
     mkdir(target_dir)
     for file_name in file_names:
-        common_file = file_name in ["builds.json", "boss_names.json"]
+        common_file = file_name in ["builds.json", "boss_names.json", "histograph.json"]
         if ("comp_results" in source_dir and "combined" in file_name) or (
             file_name in {"duo_usages.json", "demographic.json"}
             or (common_file and moc_mode)

@@ -85,6 +85,7 @@ python move.py -aa
 
 cd compile_result
 python combine_char.py
+python histograph.py
 python combine_comp.py
 python combine_comp.py -pf
 python combine_comp.py -as
