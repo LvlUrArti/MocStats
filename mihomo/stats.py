@@ -373,12 +373,12 @@ else:
         write_files(file1, file2)
 
 
-temp_stats: list[str] = []
+temp_stats: list[dict[str, str | float]] = []
 with open("../results/char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
-    CHARACTERS = json_load(char_file)
-for iter_char, (char, char_stat) in enumerate(stats.items()):
+    CHARACTERS: list[dict[str, str]] = json_load(char_file)
+for iter_char, char_stat in enumerate(stats.values()):
     for i in chain(range(10, 18), range(19, 27)):
-        stats[char].stats_write[statkeys[i]] = round(
+        char_stat.stats_write[statkeys[i]] = round(
             float(char_stat.stats_write[statkeys[i]]) * 100,
             2,
         )
@@ -390,16 +390,16 @@ for iter_char, (char, char_stat) in enumerate(stats.items()):
         iterate_value_app.append("rope_stats_" + str(i + 1) + "_app")
     for value in iterate_value_app:
         if isinstance(char_stat.stats_write[value], float):
-            stats[char].stats_write[value] = round(
+            char_stat.stats_write[value] = round(
                 float(char_stat.stats_write[value]) * 100,
                 2,
             )
         else:
-            stats[char].stats_write[value] = 0.00
+            char_stat.stats_write[value] = 0.00
 
-    stats[char].name = CHARS_INFO[char_stat.name].slug
+    char_stat.name = CHARS_INFO[char_stat.name].slug
     if char_stat.name == CHARACTERS[iter_char]["char"]:
-        del stats[char].name
+        del char_stat.name
     else:
         print(char_stat.name)
         print(CHARACTERS[iter_char]["char"])
