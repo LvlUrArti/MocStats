@@ -6,6 +6,7 @@ from sys import path as sys_path
 
 sys_path.append("../")
 from comp_rates_config import (
+    RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
     as_mode,
@@ -59,5 +60,42 @@ for source_dir in source_dirs:
             if common_file:
                 target_dir = temp_target_dir
 
+
+def copy_results() -> None:
+    """Copy results to a specified location."""
+    # Construct full destination path
+    destination = f"../../results/final_results/{RECENT_PHASE}"
+
+    # Check if destination already exists
+    if path.exists(destination):
+        overwrite = input(
+            f"Warning: '{destination}' already exists. Overwrite? (y/n): ",
+        )
+        if overwrite != "y":
+            print("Operation cancelled.")
+            return
+
+        # If it's a directory, remove it first
+        if path.isdir(destination):
+            try:
+                shutil.rmtree(destination)
+                print(f"Removed existing folder: {destination}")
+            except Exception as e:
+                print(f"Error removing existing folder: {e}")
+                return
+
+    # Perform the copy operation
+    try:
+        # Use copytree to copy entire folder
+        shutil.copytree("../../results/web_results", destination)
+
+        print("✅ Folder copied successfully!")
+        print(f"   Destination: {destination}")
+
+    except Exception as e:
+        print(f"Error during copy operation: {e}")
+
+
 if aa_mode:
     shutil.make_archive("../../results/results", "zip", "../../results/web_results")
+    copy_results()

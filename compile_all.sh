@@ -96,4 +96,7 @@ if [ -d "../../results/web_results" ]; then
 	python copyfiles.py -pf
 	python copyfiles.py -as
 	python copyfiles.py -aa
+
+	cd ../hf_data
+	python up_results.py
 fi
