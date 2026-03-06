@@ -2,8 +2,11 @@
 
 # pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false, reportOptionalCall=false
 from os.path import exists
+from sys import path as sys_path
 from time import sleep
 
+sys_path.append("../")
+from comp_rates_config import RECENT_PHASE
 from huggingface_hub import HfApi
 from huggingface_hub.repocard import RepoCard
 from plyer import notification
@@ -47,7 +50,7 @@ def scan_upload_and_clean() -> None:
             folder_path=LOCAL_DATA_DIR,
             repo_id=REPO_ID,
             repo_type="dataset",
-            commit_message="🤖 Upload new data",
+            commit_message=f"🤖 Upload {RECENT_PHASE} data",
         )
         print("✅ Upload successful!")
     except Exception as e:
