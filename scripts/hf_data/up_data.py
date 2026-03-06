@@ -1,13 +1,12 @@
 """Generate a list of configs from a folder of csv files."""
 
-from argparse import ArgumentParser
 from os import listdir
 from os.path import dirname, exists, join
 from sys import path as sys_path
 from time import sleep
 
 sys_path.append("../")
-from comp_rates_config import RECENT_PHASE
+from comp_rates_config import RECENT_PHASE, args
 from huggingface_hub import (
     CommitOperationAdd,
     HfApi,
@@ -16,13 +15,6 @@ from huggingface_hub import (
 from huggingface_hub.repocard import RepoCard
 from plyer import notification  # type: ignore[reportMissingTypeStubs]
 from send2trash import send2trash
-
-# Prompt for real data
-parser = ArgumentParser()
-parser.add_argument("-y", "--yes", action="store_true")
-parser.add_argument("-n", "--no", action="store_true")
-args = parser.parse_args()
-
 
 yes_arg: bool | None = args.yes
 no_arg: bool | None = args.no

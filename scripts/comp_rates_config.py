@@ -24,6 +24,9 @@ parser.add_argument("-cht", "--chars_top", action="store_true")
 parser.add_argument("-ct", "--comps_top", action="store_true")
 parser.add_argument("-w", "--whale", action="store_true")
 parser.add_argument("-f", "--f2p", action="store_true")
+# Prompt for real data (hf data)
+parser.add_argument("-y", "--yes", action="store_true")
+parser.add_argument("-n", "--no", action="store_true")
 
 parser.add_argument(
     "-moc",
