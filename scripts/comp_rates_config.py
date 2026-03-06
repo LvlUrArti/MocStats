@@ -9,10 +9,10 @@ from os.path import join as path_join
 
 from pydantic import BaseModel
 
-RECENT_PHASE = "4.0.1"
+RECENT_PHASE = "4.0.2"
 
 # if no past phase, leave blank
-PAST_PHASE = "3.8.4"
+PAST_PHASE = "4.0.1"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
@@ -94,6 +94,7 @@ DPS_LIST = {
     "Hysilens",
     "Castorice",
     "Archer",
+    "Sparxie",
 }
 
 DPS_APPEND_LIST = {
@@ -113,7 +114,6 @@ DPS_APPEND_LIST = {
     "Mydei",
     "Anaxa",
     "Evernight",
-    "Sparxie",
 }
 
 SUB_DPS_LIST = {
