@@ -568,6 +568,8 @@ def process_chars() -> None:
                 out["special_role"] = "S-DPS"
             else:
                 out["special_role"] = "ALL"
+        else:
+            out["special_role"] = ""
 
         # ----- 1. Simple fields (appearance rates, average cycles, samples) -----
         for is_prev_mode in (False, True):
