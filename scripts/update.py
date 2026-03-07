@@ -4,7 +4,6 @@ import io
 import json
 
 import requests
-from comp_rates_config import CHARS_INFO
 from pydantic import BaseModel
 
 download = requests.get(
@@ -134,18 +133,11 @@ raw_chars = {
 
 for char in raw_chars.values():
     char_name = char.name
-    trailblazer_id_list = []
-    if char_name in CHARS_INFO:
-        char_trailblazer_ids = CHARS_INFO[char_name].trailblazer_ids
-        if char_trailblazer_ids is not None:
-            trailblazer_id_list = char_trailblazer_ids
+    multi_elem_char = False
 
     if char_name in MULTI_ELEM_CHARS:
+        multi_elem_char = True
         char_name = char.element.capitalize() + MULTI_ELEM_CHARS[char_name]
-        if char.id not in trailblazer_id_list:
-            trailblazer_id_list.append(char.id)
-    else:
-        trailblazer_id_list = None
 
     if char_name not in chars_data:
         add_char = input("Add " + char_name + "? (y/n): ")
@@ -165,7 +157,6 @@ for char in raw_chars.values():
                 if "Trailblazer" in char_name:
                     char_add["rarity"] = 4
                     char_add["availability"] = "4*"
-                    char_add["trailblazer_ids"] = [char.id]
                 else:
                     char_add["availability"] = "Limited 5*"
 
@@ -182,7 +173,11 @@ for char in raw_chars.values():
             char_add["role"] = char_roles
             chars_data[char_name] = char_add
 
-    if char_name in chars_data and trailblazer_id_list:
+    if multi_elem_char:
+        trailblazer_id_list: list[str] = []
+        if "trailblazer_ids" in chars_data[char_name]:
+            trailblazer_id_list += chars_data[char_name]["trailblazer_ids"]
+        trailblazer_id_list.append(char.id)
         chars_data[char_name]["trailblazer_ids"] = trailblazer_id_list
 
 with open("../data/characters.json", "w") as out_file:
