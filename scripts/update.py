@@ -4,6 +4,7 @@ import io
 import json
 
 import requests
+from comp_rates_config import RECENT_PHASE
 from pydantic import BaseModel
 
 download = requests.get(
@@ -149,6 +150,7 @@ for char in raw_chars.values():
                 "element": char.element,
                 "availability": char.availability,
                 "slug": char_name.lower().replace(" ", "-"),
+                "release_phase": RECENT_PHASE,
             }
 
             if char.rarity == 4:
@@ -177,7 +179,8 @@ for char in raw_chars.values():
         trailblazer_id_list: list[str] = []
         if "trailblazer_ids" in chars_data[char_name]:
             trailblazer_id_list += chars_data[char_name]["trailblazer_ids"]
-        trailblazer_id_list.append(char.id)
+        if char.id not in trailblazer_id_list:
+            trailblazer_id_list.append(char.id)
         chars_data[char_name]["trailblazer_ids"] = trailblazer_id_list
 
 with open("../data/characters.json", "w") as out_file:
