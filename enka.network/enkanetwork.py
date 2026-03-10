@@ -110,7 +110,7 @@ async def main() -> None:
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))
         uid_iter = -1
-        while not input_list and uid_iter < len(uids):
+        while not input_list and uid_iter < len(uids) - 1:
             uid_iter += 1
             uid = uids[uid_iter]
 
