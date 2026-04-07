@@ -8,13 +8,9 @@ from typing import NamedTuple
 from comp_rates_config import (
     CHARS_INFO,
     DOT_LIST,
-    DOT_SUPPORT_LIST,
     DPS_APPEND_LIST,
     DPS_LIST,
     FUA_LIST,
-    HARMONY_LIST,
-    HEALER_LIST,
-    PRESERVATION_LIST,
     SUB_DPS_APPEND_LIST,
     SUB_DPS_LIST,
     SUPER_BREAK_LIST,
@@ -63,7 +59,7 @@ class Composition:
     buff: str | None
     comp_chars: list[str]
     comp_chars_cons: list[int]
-    is_hard_mode: bool | None
+    is_hard_mode: bool | None  # Anomaly Arbitration plight mode
 
     def __post_init__(self) -> None:
         """Composition constructor."""
@@ -117,13 +113,11 @@ class Composition:
                 self.subdps.insert(0, character)
             elif character in SUB_DPS_APPEND_LIST:
                 self.subdps.append(character)
-            elif character in DOT_SUPPORT_LIST:
+            elif CHARS_INFO[character].role[0] == "specialist":
                 self.anemo.insert(0, character)
-            elif character in HARMONY_LIST:
+            elif CHARS_INFO[character].role[0] == "amplifier":
                 self.anemo.append(character)
-            elif character in HEALER_LIST:
-                self.healer.insert(0, character)
-            elif character in PRESERVATION_LIST:
+            elif CHARS_INFO[character].role[0] == "sustain":
                 self.healer.append(character)
 
             if character in DOT_LIST:
@@ -160,46 +154,8 @@ class Composition:
             self.subdps.remove("Black Swan")
             self.anemo.insert(0, "Black Swan")
 
-        """Name structure creator.
-        """
-        self.comp_name = "-"
-        self.alt_comp_name = "-"
-        self.dual_comp_name = "-"
-
-        if self.comp_name == "-":
-            if len(self.dot) >= 1:
-                if len(self.dot) > 2:
-                    self.alt_comp_name = self.characters[0] + " Triple DoT"
-                elif len(self.dot) > 1:
-                    self.alt_comp_name = self.characters[0] + " Dual DoT"
-            elif len(self.fua) > 1:
-                self.alt_comp_name = self.characters[0] + " Follow-Up"
-
-            # if self.comp_name == "-":
-            archetype = ""
-            if len(self.healer) == 0:
-                archetype = " No Sustain"
-                self.alt_comp_name = self.characters[0] + " No Sustain"
-            elif len(self.super_break) >= 1:
-                archetype = " Super Break"
-            elif len(self.dps) + len(self.subdps) > 1:
-                if (
-                    len(self.dps) + len(self.subdps) > 2
-                    and "Follow-Up" not in self.alt_comp_name
-                ):
-                    archetype = " Triple Carry"
-                else:
-                    archetype = " Dual Carry"
-                self.dual_comp_name = self.characters[1] + archetype
-            elif len(self.healer) > 1:
-                archetype = " Dual Sustain"
-            elif len(self.anemo) > 0:
-                archetype = " Hypercarry"
-
-            if self.dps or self.subdps or self.anemo:
-                self.comp_name = self.characters[0] + archetype
-            else:
-                self.comp_name = "Full Sustain"
+        archetype = " Hypercarry"
+        self.comp_name = self.characters[0] + archetype
 
     def contains_chars(self, chars: list[str]) -> bool:
         """Return a bool whether this comp contains all the chars in included list."""

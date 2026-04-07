@@ -133,52 +133,6 @@ SUB_DPS_APPEND_LIST = {
     "Serval",
     "Herta",
     "Topaz & Numby",
-    "Cipher",
-}
-
-DOT_SUPPORT_LIST = {"Sampo", "Guinaifen"}
-
-HARMONY_LIST = {
-    "Bronya",
-    "Silver Wolf",
-    "Asta",
-    "Tingyun",
-    "Pela",
-    "Yukong",
-    "Hanya",
-    "Ruan Mei",
-    "Sparkle",
-    "Robin",
-    "Imaginary Trailblazer",
-    "Jiaoqiu",
-    "Sunday",
-    "Fugue",
-    "Ice Trailblazer",
-    "Tribbie",
-    "Cerydra",
-    "Cyrene",
-    "The Dahlia",
-    "Yao Guang",
-}
-
-HEALER_LIST = {
-    "Natasha",
-    "Luocha",
-    "Bailu",
-    "Lynx",
-    "Huohuo",
-    "Gallagher",
-    "Hyacine",
-    "Lingsha",
-}
-
-PRESERVATION_LIST = {
-    "Ice March 7th",
-    "Gepard",
-    "Fire Trailblazer",
-    "Fu Xuan",
-    "Aventurine",
-    "Dan Heng • Permansor Terrae",
 }
 
 DOT_LIST = {

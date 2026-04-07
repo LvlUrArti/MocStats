@@ -723,16 +723,12 @@ def comp_usages_write(
             continue
         cur_comp = comps_dict[comp]
         comp_name = cur_comp.comp_name
-        dual_comp_name = cur_comp.dual_comp_name
-        alt_comp_name = cur_comp.alt_comp_name
         # Only one variation of each comp name is included,
         # unless if it's used for a character's infographic
         if (
             (
                 comp_name not in comp_names
                 and comp_name not in dual_comp_names
-                and dual_comp_name not in comp_names
-                and alt_comp_name not in comp_names
                 and cur_comp.round not in {99.99, 0}
             )
             or comp_name == "-"
@@ -750,8 +746,7 @@ def comp_usages_write(
                 cur_comp.app_rate >= thres
                 or (info_char and cur_comp.app_rate > char_app_rate_threshold)
             ):
-                temp_comp_name = "-"
-                temp_comp_name = alt_comp_name if alt_comp_name != "-" else comp_name
+                temp_comp_name = comp_name
 
                 out_comps_append: dict[str, str | int] = {
                     "comp_name": temp_comp_name,
@@ -785,13 +780,9 @@ def comp_usages_write(
 
                 if comp_name != "-":
                     comp_names.append(comp_name)
-                if dual_comp_name != "-":
-                    dual_comp_names.append(dual_comp_name)
-                if alt_comp_name != "-":
-                    comp_names.append(alt_comp_name)
 
         elif comp_name in comp_names:
-            temp_comp_name = alt_comp_name if alt_comp_name != "-" else comp_name
+            temp_comp_name = comp_name
             outvar_comps_append: dict[str, str | int] = {
                 "comp_name": temp_comp_name,
                 "char_1": comp[0],
@@ -1030,6 +1021,7 @@ def char_usages_write(
             "avg_round": str(cur_char.round),
             "std_dev_round": str(cur_char.std_dev_round),
             "q1_round": str(cur_char.q1_round),
+            "role": cur_char.role[0],
             "rarity": cur_char.rarity,
             "diff": str(cur_char.diff) + "%",
             "diff_rounds": str(cur_char.diff_rounds),
