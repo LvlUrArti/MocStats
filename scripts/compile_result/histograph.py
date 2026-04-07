@@ -24,6 +24,7 @@ VERSIONS: list[tuple[str, str]] = [
     ("3.8.4", "as"),
     ("4.0.1", "pf"),
     ("4.0.2", "moc"),
+    ("4.1.1", "pf"),
 ]
 
 CHARS_BY_SLUG: dict[str, CharInfo] = {}

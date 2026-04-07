@@ -1008,5 +1008,18 @@
     "role": [
       "dps"
     ]
+  },
+  "Ashveil": {
+    "id": "1504",
+    "rarity": 5,
+    "path": "Hunt",
+    "element": "Thunder",
+    "availability": "Limited 5*",
+    "slug": "ashveil",
+    "release_phase": "4.0.2",
+    "role": [
+      "dps",
+      "specialist"
+    ]
   }
 }
