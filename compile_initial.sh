@@ -8,3 +8,6 @@ python csv_to_pickle.py -pf &
 python csv_to_pickle.py -aa &
 python csv_to_pickle.py -as &
 python hash.py
+cd hf_data
+python up_data.py -y
+python up_data.py -n
