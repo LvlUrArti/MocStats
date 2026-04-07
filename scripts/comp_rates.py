@@ -115,12 +115,11 @@ def main() -> None:
             one_stage,
             filename="all",
         )
-        if not WHALE_ONLY and not F2P_ONLY:
-            duo_usages(
-                usage,
-                one_stage,
-                check_duo=False,
-            )
+        duo_usages(
+            usage,
+            one_stage,
+            check_duo=False,
+        )
         cur_time = time()
         print("done char 8 - 10:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
@@ -609,7 +608,12 @@ def used_duos(
                     if side_comp.char_cons[char] > 2:
                         giga_whale = True
 
-        if giga_whale:
+        if (
+            (WHALE_ONLY and not whale_comp)
+            or (F2P_ONLY and whale_comp)
+            or giga_whale
+            or comp.is_hard_mode
+        ):
             continue
 
         duos = list(permutations(comp.characters, 2))
@@ -622,7 +626,7 @@ def used_duos(
 
             if is_triple_dps and check_duo:
                 continue
-            if (not whale_comp) and sustain_count <= 1:
+            if (whale_comp == WHALE_ONLY) and sustain_count <= 1:
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
     sorted_duos = sorted(duos_dict.items(), key=lambda t: t[1].app_flat, reverse=True)
@@ -872,6 +876,11 @@ def duo_write(
                     out_duos_append["app_flat_" + j] = 0
             out_duos.append(out_duos_append)
     out_duos = sorted(out_duos, key=lambda t: t["app"], reverse=True)
+
+    if WHALE_ONLY:
+        filename = filename + "_C1"
+    elif F2P_ONLY:
+        filename = filename + "_E0S0"
 
     with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
