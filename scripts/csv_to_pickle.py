@@ -78,7 +78,7 @@ def main() -> None:
         "../results",
         "../results/comp_results",
         "../results/comp_results/json",
-        "../mihomo/results_real",
+        "../results/mihomo",
         "../results/char_results",
         "../data/pickle",
         "../rogue_results",

@@ -353,24 +353,28 @@ def write_files(
     csv_writer.writerow(["name", *stats[next(iter(chars))].stats_write.keys()])
     for char in chars:
         del stats[char].sample_size
-        csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
-        csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
+        if not stats[char].name.startswith(("solo-", "supp-")):
+            csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
+            csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
     f1.close()
     f2.close()
 
 
-if path.exists("results_real"):
-    with (
-        open("results_real/chars.csv", "w", newline="", encoding="UTF8") as file1,
-        open("results_real/demographic.csv", "w", newline="", encoding="UTF8") as file2,
-    ):
-        write_files(file1, file2)
-else:
-    with (
-        open("results/chars.csv", "w", newline="", encoding="UTF8") as file1,
-        open("results/demographic.csv", "w", newline="", encoding="UTF8") as file2,
-    ):
-        write_files(file1, file2)
+with (
+    open(
+        "../results/mihomo/chars.csv",
+        "w",
+        newline="",
+        encoding="UTF8",
+    ) as file1,
+    open(
+        "../results/mihomo/demographic.csv",
+        "w",
+        newline="",
+        encoding="UTF8",
+    ) as file2,
+):
+    write_files(file1, file2)
 
 
 temp_stats: list[dict[str, str | float]] = []

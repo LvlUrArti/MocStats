@@ -9,16 +9,13 @@ source_dirs = [
     "../results/char_results",
     "../results/comp_results",
     "../results/comp_results/json",
-    "../mihomo",
-    "../mihomo/results_real",
+    "../results/mihomo",
 ]
 
 for source_dir in source_dirs:
     if source_dir == "../results/comp_results/json":
         target_dir = "../results/comp_results/" + RECENT_PHASE_PF + "/json"
-    elif source_dir == "../mihomo":
-        target_dir = "../mihomo/results_real"
-    elif source_dir == "../mihomo/results_real":
+    elif source_dir == "../results/mihomo":
         target_dir = source_dir + "/" + RECENT_PHASE
     else:
         target_dir = source_dir + "/" + RECENT_PHASE_PF
@@ -27,19 +24,13 @@ for source_dir in source_dirs:
     if not path.exists(target_dir):
         mkdir(target_dir)
     for file_name in file_names:
-        if (source_dir == "../mihomo" and file_name.startswith("output")) or (
-            source_dir != "../mihomo"
-            and file_name.endswith((".json", ".csv"))
-            and (
-                "demographic_collect" not in file_name
-                or file_name == ("demographic_collect" + pf_filename + ".json")
-                or (aa_mode and file_name == ("boss_names.json"))
-            )
+        if file_name.endswith((".json", ".csv")) and (
+            "demographic_collect" not in file_name
+            or file_name == ("demographic_collect" + pf_filename + ".json")
+            or (aa_mode and file_name == ("boss_names.json"))
         ):
             shutil.move(path.join(source_dir, file_name), target_dir)
-            if source_dir == "../mihomo/results_real" and not file_name.startswith(
-                "output",
-            ):
+            if source_dir == "../results/mihomo":
                 if not path.exists(target_dir + "/" + RECENT_PHASE_PF):
                     mkdir(target_dir + "/" + RECENT_PHASE_PF)
                 shutil.move(
