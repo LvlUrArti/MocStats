@@ -9,10 +9,10 @@ from os.path import join as path_join
 
 from pydantic import BaseModel
 
-RECENT_PHASE = "4.1.1"
+RECENT_PHASE = "4.1.2"
 
 # if no past phase, leave blank
-PAST_PHASE = "4.0.2"
+PAST_PHASE = "4.1.1"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
