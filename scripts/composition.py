@@ -5,16 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from comp_rates_config import (
-    CHARS_INFO,
-    DOT_LIST,
-    DPS_APPEND_LIST,
-    DPS_LIST,
-    FUA_LIST,
-    SUB_DPS_APPEND_LIST,
-    SUB_DPS_LIST,
-    SUPER_BREAK_LIST,
-)
+from comp_rates_config import CHARS_INFO
 
 
 class Stage(NamedTuple):
@@ -77,20 +68,8 @@ class Composition:
         fives: list[str] = []
         self.dps: list[str] = []
         self.subdps: list[str] = []
-        self.anemo: list[str] = []
+        self.amplifier: list[str] = []
         self.healer: list[str] = []
-        self.dot: list[str] = []
-        self.fua: list[str] = []
-        self.super_break: list[str] = []
-        len_element = {
-            "Ice": 0,
-            "Wind": 0,
-            "Fire": 0,
-            "Imaginary": 0,
-            "Quantum": 0,
-            "Lightning": 0,
-            "Physical": 0,
-        }
         if comp_chars_cons:
             for char_iter in range(len(comp_chars)):
                 self.char_cons[comp_chars[char_iter]] = comp_chars_cons[char_iter]
@@ -105,54 +84,28 @@ class Composition:
             if CHARS_INFO[character].availability in ["Limited 5*", "5*"]:
                 fives.append(character)
 
-            if character in DPS_LIST:
+            if CHARS_INFO[character].role == ["dps"]:
                 self.dps.insert(0, character)
-            elif character in DPS_APPEND_LIST:
+            elif CHARS_INFO[character].role == ["dps", "specialist"]:
                 self.dps.append(character)
-            elif character in SUB_DPS_LIST:
-                self.subdps.insert(0, character)
-            elif character in SUB_DPS_APPEND_LIST:
-                self.subdps.append(character)
             elif CHARS_INFO[character].role[0] == "specialist":
-                self.anemo.insert(0, character)
+                self.subdps.append(character)
             elif CHARS_INFO[character].role[0] == "amplifier":
-                self.anemo.append(character)
+                self.amplifier.append(character)
             elif CHARS_INFO[character].role[0] == "sustain":
                 self.healer.append(character)
-
-            if character in DOT_LIST:
-                self.dot.append(character)
-            if character in FUA_LIST:
-                self.fua.append(character)
-            if character in SUPER_BREAK_LIST:
-                self.super_break.append(character)
-
-            if CHARS_INFO[character].element == "Ice":
-                len_element["Ice"] += 1
-            if CHARS_INFO[character].element == "Wind":
-                len_element["Wind"] += 1
-            if CHARS_INFO[character].element == "Fire":
-                len_element["Fire"] += 1
-            if CHARS_INFO[character].element == "Imaginary":
-                len_element["Imaginary"] += 1
-            if CHARS_INFO[character].element == "Quantum":
-                len_element["Quantum"] += 1
-            if CHARS_INFO[character].element == "Thunder":
-                len_element["Lightning"] += 1
-            if CHARS_INFO[character].element == "Physical":
-                len_element["Physical"] += 1
 
         if (not self.dps and not self.subdps) and "Lingsha" in self.healer:
             self.dps.insert(0, "Lingsha")
 
         self.fivecount = len(fives)
-        self.characters = self.dps + self.subdps + self.anemo + self.healer
+        self.characters = self.dps + self.subdps + self.amplifier + self.healer
 
         if (
             "Acheron" in self.dps or "Kafka" in self.dps
         ) and "Black Swan" in self.subdps:
             self.subdps.remove("Black Swan")
-            self.anemo.insert(0, "Black Swan")
+            self.amplifier.insert(0, "Black Swan")
 
         archetype = " Hypercarry"
         self.comp_name = self.characters[0] + archetype

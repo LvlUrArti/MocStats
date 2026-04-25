@@ -77,91 +77,6 @@ run_all_chars = False
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
 char_infographics = next(iter(run_chars_name))
 
-DPS_LIST = {
-    "Yanqing",
-    "Hook",
-    "Seele",
-    "Dan Heng • Imbibitor Lunae",
-    "Dr. Ratio",
-    "Argenti",
-    "Rappa",
-    "Jing Yuan",
-    "Firefly",
-    "Boothill",
-    "Feixiao",
-    "Acheron",
-    "The Herta",
-    "Saber",
-    "Aglaea",
-    "Phainon",
-    "Hysilens",
-    "Castorice",
-    "Archer",
-    "Sparxie",
-}
-
-DPS_APPEND_LIST = {
-    "Xueyi",
-    "Physical Trailblazer",
-    "Sushang",
-    "Misha",
-    "Dan Heng",
-    "Arlan",
-    "Qingque",
-    "Luka",
-    "Clara",
-    "Himeko",
-    "Yunli",
-    "Jingliu",
-    "Blade",
-    "Mydei",
-    "Anaxa",
-    "Evernight",
-    "Ashveil",
-}
-
-SUB_DPS_LIST = {
-    "Black Swan",
-    "Jade",
-    "Kafka",
-}
-
-SUB_DPS_APPEND_LIST = {
-    "Imaginary March 7th",
-    "Moze",
-    "Welt",
-    "Serval",
-    "Herta",
-    "Topaz & Numby",
-}
-
-DOT_LIST = {
-    "Kafka",
-    "Black Swan",
-    "Serval",
-    "Sampo",
-    "Luka",
-    "Guinaifen",
-}
-
-FUA_LIST = {
-    "Topaz & Numby",
-    "Dr. Ratio",
-    "Clara",
-    "Yunli",
-    "Jing Yuan",
-    "Himeko",
-    "Kafka",
-    "Blade",
-    "Herta",
-    "Xueyi",
-    "Jade",
-    "Feixiao",
-    "Moze",
-}
-
-SUPER_BREAK_LIST = {"Imaginary Trailblazer", "Fugue"}
-
 CHAR_NAME_REPLACE = {
     "Dan Heng â€¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
     "Dan Heng Ã¢â,¬Â¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
@@ -280,7 +195,7 @@ class CharInfo(BaseModel):
 
 with open(relative_path("../data/characters.json")) as char_file:
     raw_characters = load(char_file)
-    CHARS_INFO = {
+    CHARS_INFO: dict[str, CharInfo] = {
         char_name: CharInfo(**item) for char_name, item in raw_characters.items()
     }
 
