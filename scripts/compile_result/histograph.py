@@ -12,20 +12,8 @@ from comp_rates_config import CHARS_INFO, RECENT_PHASE, CharInfo
 # ----------------------------------------------------------------------
 # Configuration
 # ----------------------------------------------------------------------
-# TODO: Move this to a JSON file
-VERSIONS: list[tuple[str, str]] = [
-    ("3.6.3", "moc"),
-    ("3.7.1", "as"),
-    ("3.7.2", "pf"),
-    ("3.7.3", "moc"),
-    ("3.8.1", "as"),
-    ("3.8.2", "pf"),
-    ("3.8.3", "moc"),
-    ("3.8.4", "as"),
-    ("4.0.1", "pf"),
-    ("4.0.2", "moc"),
-    ("4.1.1", "pf"),
-]
+with open("../../data/phases.json") as f:
+    PHASES: list[tuple[str, str, bool]] = json.load(f)
 
 CHARS_BY_SLUG: dict[str, CharInfo] = {}
 for char_info in CHARS_INFO.values():
@@ -34,20 +22,19 @@ for char_info in CHARS_INFO.values():
 # ----------------------------------------------------------------------
 # Group versions by mode and collect data dictionaries
 # ----------------------------------------------------------------------
-snapshots = [(v, mode) for v, mode in VERSIONS]  # list of (version, updated_mode)
 modes = ["moc", "pf", "as"]
 
 # Precompute for each snapshot index the last update index for each mode
 # list of dicts: last_update_idx[i][mode]
 # = index of most recent ≤ i where mode was updated
 last_update_idx: list[dict[str, int | None]] = []
-for i, _snapshot in enumerate(snapshots):
+for i, _snapshot in enumerate(PHASES):
     row: dict[str, int | None] = {}
     for m in modes:
         # search backwards from i to find the most recent snapshot where mode == m
         idx = None
         for j in range(i, -1, -1):
-            if snapshots[j][1] == m:
+            if PHASES[j][1] == m:
                 idx = j
                 break
         row[m] = idx
@@ -59,17 +46,18 @@ used_updates: dict[str, set[str]] = {
     m: set() for m in modes
 }  # track underlying update versions already covered
 
-for i in range(len(snapshots) - 1, -1, -1):  # from newest to oldest
-    v, updated_mode = snapshots[i]
+for i in range(len(PHASES) - 1, -1, -1):  # from newest to oldest
+    v, updated_mode, valid_mode = PHASES[i]
+    if not valid_mode:
+        continue
+
     for m in modes:
         if len(selected_versions[m]) >= 3:
             continue
         last_i = last_update_idx[i][m]
         if last_i is None:
             continue  # mode never appears before this snapshot - shouldn't happen here
-        underlying = snapshots[last_i][
-            0
-        ]  # version string of the last update for mode m
+        underlying = PHASES[last_i][0]  # version string of the last update for mode m
         if underlying not in used_updates[m]:
             selected_versions[m].append(v)
             used_updates[m].add(underlying)
@@ -77,7 +65,7 @@ for i in range(len(snapshots) - 1, -1, -1):  # from newest to oldest
 # Reverse each list so that they are in chronological order (oldest first)
 for m in modes:
     selected_versions[m].reverse()
-    print(f"Selected snapshots for {m}: {selected_versions[m]}")
+    print(f"Selected phases for {m}: {selected_versions[m]}")
 
 # Load data for all unique versions
 mode_to_phases: dict[str, list[dict[str, FullCharacterStats]]] = {}
