@@ -1,5 +1,7 @@
 """Compile stats."""
 
+# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
+
 from csv import reader as csvreader
 from csv import writer as csvwriter
 from io import TextIOWrapper
@@ -13,12 +15,8 @@ from statistics import median as stat_median
 from sys import exit as sys_exit
 from sys import path as sys_path
 
-from matplotlib.pyplot import (
-    hist as plt_hist,  # pyright: ignore[reportUnknownVariableType]
-)
-from matplotlib.pyplot import (
-    show as plt_show,  # pyright: ignore[reportUnknownVariableType]
-)
+from matplotlib.pyplot import hist as plt_hist
+from matplotlib.pyplot import show as plt_show
 
 sys_path.append("../scripts/")
 from comp_rates_config import (
@@ -37,12 +35,12 @@ from nohomo_config import (
     check_char_name,
     check_stats,
     print_chart,
+    round_stats,
+    skip_check_skew_stats,
 )
 from player_phase import PlayerPhase
 from pynput import keyboard
-from scipy.stats import (  # pyright: ignore[reportMissingTypeStubs]
-    skew,  # pyright: ignore[reportUnknownVariableType]
-)
+from scipy.stats import skew
 
 
 def read_csv(file: TextIOWrapper) -> list[list[str]]:
@@ -100,6 +98,7 @@ statkeys = [
     "ehr_sub",
     "break_sub",
 ]
+
 substats = {
     "spd_sub": 2.3,
     "hp_sub": 0.03888,
@@ -189,7 +188,6 @@ for row in data:
             print(char)
             sys_exit()
     if cur_uid in spiral_rows and char in spiral_rows[cur_uid]:
-        # if isValidChar:
         stats[char].sample_size_players += 1
         for _i in range(spiral_rows[cur_uid][char]):
             stats[char].stats_count["char_lvl"].append(float(row[3]))
@@ -207,61 +205,25 @@ for row in data:
                 else:
                     mainstats[char][mainstatkeys[j]][row[j + 32]] = 1
 
-copy_chars = chars.copy()
-for char in copy_chars:
-    if stats[char].sample_size > 0:
-        for stat in stats[char].stats_count:
+for char, stat_char in stats.items():
+    if stat_char.sample_size > 0:
+        for stat, stat_count in stat_char.stats_count.items():
             skewness = 0
-            if not stats[char].stats_count[stat]:
-                stats[char].stats_write[stat] = 0
+            if not stat_count:
+                stat_char.stats_write[stat] = 0
             elif stat != "name" and "sample_size" not in stat:
-                if stat in {
-                    "char_lvl",
-                    "light_cone_lvl",
-                    "attack_lvl",
-                    "skill_lvl",
-                    "ultimate_lvl",
-                    "talent_lvl",
-                    "max_hp",
-                    "atk",
-                    "dfns",
-                    "speed",
-                }:
-                    median[char][stat] = round(
-                        stat_median(stats[char].stats_count[stat]),
-                        2,
-                    )
-                    mean[char][stat] = round(
-                        stat_mean(stats[char].stats_count[stat]),
-                        2,
-                    )
+                if stat in round_stats:
+                    median[char][stat] = round(stat_median(stat_count), 2)
+                    mean[char][stat] = round(stat_mean(stat_count), 2)
                 else:
-                    median[char][stat] = round(
-                        stat_median(stats[char].stats_count[stat]),
-                        4,
-                    )
-                    mean[char][stat] = round(
-                        stat_mean(stats[char].stats_count[stat]),
-                        4,
-                    )
+                    median[char][stat] = round(stat_median(stat_count), 4)
+                    mean[char][stat] = round(stat_mean(stat_count), 4)
                 if (
                     mean[char][stat] > 0
                     and median[char][stat] > 0
-                    and stats[char].sample_size > 10
-                ) and stat not in {
-                    "char_lvl",
-                    "light_cone_lvl",
-                    "attack_lvl",
-                    "skill_lvl",
-                    "ultimate_lvl",
-                    "talent_lvl",
-                    "energy_regen",
-                    "dmg_boost",
-                }:
-                    skewness = round(
-                        skew(stats[char].stats_count[stat], axis=0, bias=True),
-                        2,
-                    )
+                    and stat_char.sample_size > 10
+                ) and stat not in skip_check_skew_stats:
+                    skewness = round(skew(stat_count, axis=0, bias=True), 2)
                 if abs(skewness) > skew_num:
                     if print_chart:
                         if (
@@ -276,31 +238,28 @@ for char in copy_chars:
                                 + str(median[char][stat]),
                             )
                             try:
-                                plt_hist(stats[char].stats_count[stat])
+                                plt_hist(stat_count)
                                 plt_show()
                             except Exception:
                                 print("error plt")
+                            print("1 - Mean, 2 - Median: ")
                             with keyboard.Events() as events:
                                 event = events.get(1e6)
                                 if (
                                     event is not None
                                     and event.key == keyboard.KeyCode.from_char("1")
                                 ):
-                                    stats[char].stats_write[stat] = str(
-                                        mean[char][stat],
-                                    )
+                                    stat_char.stats_write[stat] = mean[char][stat]
                                 else:
-                                    stats[char].stats_write[stat] = str(
-                                        median[char][stat],
-                                    )
+                                    stat_char.stats_write[stat] = median[char][stat]
                         else:
-                            stats[char].stats_write[stat] = median[char][stat]
+                            stat_char.stats_write[stat] = median[char][stat]
                     else:
-                        stats[char].stats_write[stat] = median[char][stat]
+                        stat_char.stats_write[stat] = median[char][stat]
                 else:
-                    stats[char].stats_write[stat] = mean[char][stat]
+                    stat_char.stats_write[stat] = mean[char][stat]
 
-        stats[char].stats_write["sample_size_players"] = stats[char].sample_size_players
+        stat_char.stats_write["sample_size_players"] = stat_char.sample_size_players
 
         for stat in mainstats[char]:
             sorted_stats = sorted(
@@ -311,35 +270,33 @@ for char in copy_chars:
             mainstats[char][stat] = dict(sorted_stats)
             for mainstat in mainstats[char][stat]:
                 mainstats[char][stat][mainstat] = round(
-                    mainstats[char][stat][mainstat] / stats[char].sample_size,
+                    mainstats[char][stat][mainstat] / stat_char.sample_size,
                     4,
                 )
             mainstatlist = list(mainstats[char][stat])
             i = 0
             while i < 3:
                 if i >= len(mainstatlist):
-                    stats[char].stats_write[stat + "_" + str(i + 1)] = "-"
-                    stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
+                    stat_char.stats_write[stat + "_" + str(i + 1)] = "-"
+                    stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 else:
-                    stats[char].stats_write[stat + "_" + str(i + 1)] = mainstatlist[i]
-                    stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = (
-                        mainstats[char][stat][mainstatlist[i]]
-                    )
+                    stat_char.stats_write[stat + "_" + str(i + 1)] = mainstatlist[i]
+                    stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = mainstats[
+                        char
+                    ][stat][mainstatlist[i]]
                 i += 1
 
     else:
-        for stat in stats[char].stats_count:
-            if not stats[char].stats_count[stat] or (
-                stat != "name" and "sample_size" not in stat
-            ):
-                stats[char].stats_write[stat] = 0
+        for stat, stat_count in stat_char.stats_count.items():
+            if not stat_count or (stat != "name" and "sample_size" not in stat):
+                stat_char.stats_write[stat] = 0
 
-        stats[char].stats_write["sample_size_players"] = 0
+        stat_char.stats_write["sample_size_players"] = 0
         for stat in mainstats[char]:
             i = 0
             while i < 3:
-                stats[char].stats_write[stat + "_" + str(i + 1)] = "-"
-                stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
+                stat_char.stats_write[stat + "_" + str(i + 1)] = "-"
+                stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 i += 1
 
 
