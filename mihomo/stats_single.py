@@ -12,6 +12,7 @@ from sys import path as sys_path
 
 from matplotlib.pyplot import hist as plt_hist
 from matplotlib.pyplot import show as plt_show
+from send2trash import send2trash
 
 sys_path.append("../scripts/")
 from comp_rates_config import (
@@ -22,8 +23,6 @@ from comp_rates_config import (
     run_all_chars,
     run_chars_name,
     skew_num,
-    skip_random,
-    skip_self,
 )
 from csv_to_pickle import PickleData, load_pickle_data
 from nohomo_config import print_chart, round_stats, skip_check_skew_stats
@@ -38,13 +37,6 @@ def read_csv(file: TextIOWrapper) -> list[list[str]]:
     next(reader)
     return list(reader)
 
-
-if path.isfile("../../uids.csv"):
-    with open("../../uids.csv", encoding="UTF8") as f:
-        reader = csvreader(f, delimiter=",")
-        self_uids = next(iter(reader))
-else:
-    self_uids = []
 
 if path.exists("../data/raw_csvs_real/"):
     with open(
@@ -99,6 +91,10 @@ class StatsWeap:
         self.sample_size_players = 0
 
 
+PATH_PREFIX = f"../results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}"
+
+send2trash(f"{PATH_PREFIX}/char_weapons.csv")
+
 chars: list[str] = []
 set_chars: set[str] = set()
 stats: dict[str, dict[str, StatsWeap]] = {}
@@ -127,10 +123,6 @@ for char in chars:
 for row in data:
     char = str(row[2])
     cur_uid = str(row[0])
-    if skip_self and cur_uid in self_uids:
-        continue
-    if skip_random and cur_uid not in self_uids:
-        continue
     if char in CHAR_NAME_REPLACE:
         char = CHAR_NAME_REPLACE[char]
     elif char in {"Trailblazer", "March 7th"}:
@@ -214,15 +206,16 @@ for char, stat_char in stats.items():
         stat_char_write = dict(
             sorted(stat_char.items(), key=lambda t: t[1].sample_size, reverse=True),
         )
-        with open(
-            f"../results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}/{char}_weapons.csv",
-            "w",
-            newline="",
-        ) as f:
-            csv_writer = csvwriter(f)
+        with open(f"{PATH_PREFIX}/char_weapons.csv", "a", newline="") as file:
+            csv_writer = csvwriter(file)
+
+            if not file.tell():
+                csv_writer.writerow(["char", "weap", *statkeys, "sample_size"])
+
             for stat_weap in stat_char_write.values():
                 csv_writer.writerow(
                     [
+                        char,
                         stat_weap.weap,
                         *stat_weap.stats_write.values(),
                         stat_weap.sample_size,
