@@ -1145,7 +1145,8 @@ def char_usages_write(
         out_chars_append["sample"] = cur_char.sample
         out_chars_append["sample_app_flat"] = cur_char.sample_app_flat
         out_chars.append(out_chars_append)
-        out_chars_csv.append(out_chars_append.copy())
+        if not char.startswith(("solo-", "supp-")):
+            out_chars_csv.append(out_chars_append.copy())
         if char == filename:
             break
 
