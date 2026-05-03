@@ -486,6 +486,7 @@ def rank_usages(
                 else:
                     avg_round.append(mean(cur_round))
 
+        comp_threshold = 10 if cur_comp.healer else 50
         cur_comp.is_count_round = True
         cur_comp.is_count_round_print = True
         if (
@@ -494,20 +495,14 @@ def rank_usages(
             or (aa_mode and rooms == ["1-1", "2-1", "3-1"])
         ):
             for uses_room_num in uses_room.values():
-                if uses_room_num < 15:
-                    if WHALE_ONLY and uses_room_num < 10:
-                        cur_comp.is_count_round = False
-                    else:
-                        cur_comp.is_count_round = False
-                    if uses_room_num < 2:
-                        cur_comp.is_count_round_print = False
-        elif len(rooms) == 1 and cur_comp.uses < 15:
-            if WHALE_ONLY and cur_comp.uses < 10:
-                cur_comp.is_count_round = False
-            else:
-                cur_comp.is_count_round = False
-            if cur_comp.uses < 2:
-                cur_comp.is_count_round_print = False
+                if uses_room_num < comp_threshold:
+                    cur_comp.is_count_round = False
+                if uses_room_num < 2:
+                    cur_comp.is_count_round_print = False
+        elif len(rooms) == 1 and cur_comp.uses < comp_threshold:
+            cur_comp.is_count_round = False
+        if cur_comp.uses < 2:
+            cur_comp.is_count_round_print = False
 
         rounded_avg_round: float
         if avg_round:
