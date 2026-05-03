@@ -136,6 +136,9 @@ for char in raw_chars.values():
     char_name = char.name
     multi_elem_char = False
 
+    if char.element == "Thunder":
+        char.element = "Lightning"
+
     if char_name in MULTI_ELEM_CHARS:
         multi_elem_char = True
         char_name = char.element.capitalize() + MULTI_ELEM_CHARS[char_name]

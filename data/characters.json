@@ -32,7 +32,7 @@
     "slug": "welt",
     "release_phase": "1.0.1",
     "role": [
-      "specialist"
+      "amplifier"
     ]
   },
   "Silver Wolf": {
@@ -51,7 +51,7 @@
     "id": "1008",
     "rarity": 4,
     "path": "Destruction",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "4*",
     "slug": "arlan",
     "release_phase": "1.0.1",
@@ -111,7 +111,7 @@
     "id": "1103",
     "rarity": 4,
     "path": "Erudition",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "4*",
     "slug": "serval",
     "release_phase": "1.0.1",
@@ -207,7 +207,7 @@
     "id": "1202",
     "rarity": 4,
     "path": "Harmony",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "4*",
     "slug": "tingyun",
     "release_phase": "1.0.1",
@@ -219,7 +219,7 @@
     "id": "1204",
     "rarity": 5,
     "path": "Erudition",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "jing-yuan",
     "release_phase": "1.0.1",
@@ -279,7 +279,7 @@
     "id": "1211",
     "rarity": 5,
     "path": "Abundance",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Standard 5*",
     "slug": "bailu",
     "release_phase": "1.0.1",
@@ -336,7 +336,7 @@
     "id": "1005",
     "rarity": 5,
     "path": "Nihility",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "kafka",
     "release_phase": "1.2.1",
@@ -553,7 +553,7 @@
     "id": "1308",
     "rarity": 5,
     "path": "Nihility",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "acheron",
     "release_phase": "2.1.1",
@@ -707,7 +707,7 @@
     "id": "1223",
     "rarity": 4,
     "path": "Hunt",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "4*",
     "slug": "moze",
     "release_phase": "2.5.1",
@@ -795,7 +795,7 @@
     "id": "1402",
     "rarity": 5,
     "path": "Remembrance",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "aglaea",
     "release_phase": "3.0.1",
@@ -1006,20 +1006,49 @@
     "slug": "sparxie",
     "release_phase": "4.0.1",
     "role": [
-      "dps"
+      "dps",
+      "specialist"
     ]
   },
   "Ashveil": {
     "id": "1504",
     "rarity": 5,
     "path": "Hunt",
-    "element": "Thunder",
+    "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "ashveil",
     "release_phase": "4.0.2",
     "role": [
       "dps",
       "specialist"
+    ]
+  },
+  "Silver Wolf LV.999": {
+    "id": "1506",
+    "rarity": 5,
+    "path": "Elation",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "silver-wolf-lv-999",
+    "release_phase": "4.2.1",
+    "role": [
+      "dps"
+    ]
+  },
+  "Lightning Trailblazer": {
+    "id": "8009",
+    "rarity": 4,
+    "path": "Elation",
+    "element": "Lightning",
+    "availability": "4*",
+    "slug": "trailblazer-elation",
+    "release_phase": "4.2.1",
+    "role": [
+      "amplifier"
+    ],
+    "trailblazer_ids": [
+      "8009",
+      "8010"
     ]
   }
 }

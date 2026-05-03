@@ -949,6 +949,16 @@
     "preview": "image/light_cone_preview/22006.png",
     "portrait": "image/light_cone_portrait/22006.png"
   },
+  "22007": {
+    "id": "22007",
+    "name": "Tomorrow, Together",
+    "rarity": 4,
+    "path": "Elation",
+    "desc": "A grand gift swoops down into the livestream.\n\"It's a specially customized third anniversary cake from the fans for everyone!\"\nEvery cherished memory becomes a driving force in this moment, pulling everyone together toward the future.\n\"May everyone move forward happily and safely in the new year!\"\n\"Don't worry, conductor! March Bunny will capture this moment~\"\nIn the heartwarming atmosphere, everyone raises their glasses together, laughter and joy filling every corner.\n\"On this day worth celebrating, let us raise our glasses.\"\n\"To the star-filled tomorrow\u2014\"\n\"Cheers!\"",
+    "icon": "icon/light_cone/22007.png",
+    "preview": "image/light_cone_preview/22007.png",
+    "portrait": "image/light_cone_portrait/22007.png"
+  },
   "23000": {
     "id": "23000",
     "name": "Night on the Milky Way",
@@ -1508,6 +1518,26 @@
     "icon": "icon/light_cone/23056.png",
     "preview": "image/light_cone_preview/23056.png",
     "portrait": "image/light_cone_portrait/23056.png"
+  },
+  "23057": {
+    "id": "23057",
+    "name": "Welcome to the Cosmic City",
+    "rarity": 5,
+    "path": "Elation",
+    "desc": "Above the city, a girl's flamboyant figure bursts free from the teleporter.\nEndless streams of traffic, countless silhouettes of people... the bustle carries on as always.\n\"Sure looks lively, but...\"\nThe screen before her lights up as people's joys and sorrows transform into specks of light, flowing into it.\n\"Even the NPCs' fatigue gauges are about to max out...\"\n\"No way I'm playing a raid this boring.\"\nFollowing the swipe of her finger, the city lights flicker on and off.\nFrom an unnoticed corner comes a startled cry, followed by thunderous cheers echoing through the sky.\n\"All players' Luck doubled, randomized special talents, rewards maxed out...\"\n\"Game loaded successfully! Time to run the show!\"\nThe girl leaps down as familiar notification sounds ring in her ears.\nHer game time has begun.",
+    "icon": "icon/light_cone/23057.png",
+    "preview": "image/light_cone_preview/23057.png",
+    "portrait": "image/light_cone_portrait/23057.png"
+  },
+  "23058": {
+    "id": "23058",
+    "name": "Until the Flowers Bloom Again",
+    "rarity": 5,
+    "path": "Elation",
+    "desc": "A gentle breeze stirs the white curtains, tugging at the young girl's thoughts.\nAs she gazes at the chattering crowd outside her window, her drawing pen unconsciously pauses in place.\n\"How many times have I sat here now?\"\nIn that fleeting moment, a falling petal brushes past her nose, as if in response, as if in reminder.\nA grand game, a once-in-a-lifetime encounter, days and nights of blooming and withering flowers...\nShe recalls her story with this land, from a blank canvas to vibrant colors. With each slumber, she eagerly awaits tomorrow's arrival.\n\"Oh, the comic has been updated! I'll check it out after I finish drawing these cuties...\"\nThe girl receives a notification, her ears perking up as her previously still pen springs back to life.\n\"I wish... by the next flower season, I'll catch up on all the top-rated new releases!\"",
+    "icon": "icon/light_cone/23058.png",
+    "preview": "image/light_cone_preview/23058.png",
+    "portrait": "image/light_cone_portrait/23058.png"
   },
   "24000": {
     "id": "24000",
