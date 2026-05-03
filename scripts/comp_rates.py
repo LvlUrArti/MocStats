@@ -1,6 +1,6 @@
 """Compile all HSR data."""
 
-from __future__ import annotations
+# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 
 from csv import reader as csvreader
 from csv import writer as csvwriter
@@ -10,7 +10,6 @@ from os import path
 from statistics import mean
 from sys import exit as sys_exit
 from time import sleep, time
-from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
@@ -32,13 +31,11 @@ from comp_rates_config import (
     slug_with_prefix,
 )
 from composition import Composition, Stage
-from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
+from csv_to_pickle import PickleData, load_pickle_data
 from line_profiler import profile
-from plyer import notification  # type: ignore[reportMissingTypeStubs]
-from scipy.stats import skew, trim_mean  # type: ignore[reportMissingTypeStubs]
-
-if TYPE_CHECKING:
-    from player_phase import PlayerPhase
+from player_phase import PlayerPhase
+from plyer import notification
+from scipy.stats import skew, trim_mean
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
@@ -1005,7 +1002,7 @@ def duo_write(
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
-                out_duos[i][duo_value] = CHARS_INFO[out_duos[i][duo_value]].slug
+                out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
     with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
