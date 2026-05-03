@@ -277,13 +277,14 @@ async def main() -> None:
                 except enka.errors.PlayerDoesNotExistError:
                     print("Player does not exist.")
                     break
-                except enka.errors.APIRequestTimeoutError:
-                    print("timeout")
-                    await asyncio.sleep(1)
                 except enka.errors.GameMaintenanceError:
                     print("Game is in maintenance.")
                     await asyncio.sleep(1)
-                except asyncio.exceptions.TimeoutError:
+                except (
+                    enka.errors.APIRequestTimeoutError,
+                    enka.errors.EnkaAPIError,
+                    asyncio.exceptions.TimeoutError,
+                ):
                     print("timeout")
                     await asyncio.sleep(1)
                 except AttributeError:
