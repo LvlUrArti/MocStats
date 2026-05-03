@@ -95,8 +95,12 @@ class Composition:
             elif CHARS_INFO[character].role[0] == "sustain":
                 self.healer.append(character)
 
-        if (not self.dps and not self.subdps) and "Lingsha" in self.healer:
-            self.dps.insert(0, "Lingsha")
+        if not self.dps and not self.subdps:
+            for char in ("Lingsha", "Welt"):
+                for role in ("healer", "amplifier"):
+                    if char in getattr(self, role):
+                        getattr(self, role).remove(char)
+                        self.dps.append(char)
 
         self.fivecount = len(fives)
         self.characters = self.dps + self.subdps + self.amplifier + self.healer
