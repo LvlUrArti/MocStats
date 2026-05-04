@@ -102,6 +102,10 @@ class Composition:
                         getattr(self, role).remove(char)
                         self.dps.append(char)
 
+        if not self.healer and "Welt" in self.amplifier:
+            self.amplifier.remove("Welt")
+            self.healer.append("Welt")
+
         self.fivecount = len(fives)
         self.characters = self.dps + self.subdps + self.amplifier + self.healer
 
