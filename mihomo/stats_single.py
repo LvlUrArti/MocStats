@@ -91,9 +91,10 @@ class StatsWeap:
         self.sample_size_players = 0
 
 
-PATH_PREFIX = f"../results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}"
+RESULT_FILE = f"../results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}/char_weapons.csv"
 
-send2trash(f"{PATH_PREFIX}/char_weapons.csv")
+if path.exists(RESULT_FILE):
+    send2trash(RESULT_FILE)
 
 chars: list[str] = []
 set_chars: set[str] = set()
@@ -206,7 +207,7 @@ for char, stat_char in stats.items():
         stat_char_write = dict(
             sorted(stat_char.items(), key=lambda t: t[1].sample_size, reverse=True),
         )
-        with open(f"{PATH_PREFIX}/char_weapons.csv", "a", newline="") as file:
+        with open(RESULT_FILE, "a", newline="") as file:
             csv_writer = csvwriter(file)
 
             if not file.tell():
