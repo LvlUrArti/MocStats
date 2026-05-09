@@ -1,5 +1,5 @@
 {
-  "20000": {
+  "Arrows": {
     "id": "20000",
     "name": "Arrows",
     "rarity": 3,
@@ -9,7 +9,7 @@
     "preview": "image/light_cone_preview/20000.png",
     "portrait": "image/light_cone_portrait/20000.png"
   },
-  "20001": {
+  "Cornucopia": {
     "id": "20001",
     "name": "Cornucopia",
     "rarity": 3,
@@ -19,7 +19,7 @@
     "preview": "image/light_cone_preview/20001.png",
     "portrait": "image/light_cone_portrait/20001.png"
   },
-  "20002": {
+  "Collapsing Sky": {
     "id": "20002",
     "name": "Collapsing Sky",
     "rarity": 3,
@@ -29,7 +29,7 @@
     "preview": "image/light_cone_preview/20002.png",
     "portrait": "image/light_cone_portrait/20002.png"
   },
-  "20003": {
+  "Amber": {
     "id": "20003",
     "name": "Amber",
     "rarity": 3,
@@ -39,7 +39,7 @@
     "preview": "image/light_cone_preview/20003.png",
     "portrait": "image/light_cone_portrait/20003.png"
   },
-  "20004": {
+  "Void": {
     "id": "20004",
     "name": "Void",
     "rarity": 3,
@@ -49,7 +49,7 @@
     "preview": "image/light_cone_preview/20004.png",
     "portrait": "image/light_cone_portrait/20004.png"
   },
-  "20005": {
+  "Chorus": {
     "id": "20005",
     "name": "Chorus",
     "rarity": 3,
@@ -59,7 +59,7 @@
     "preview": "image/light_cone_preview/20005.png",
     "portrait": "image/light_cone_portrait/20005.png"
   },
-  "20006": {
+  "Data Bank": {
     "id": "20006",
     "name": "Data Bank",
     "rarity": 3,
@@ -69,7 +69,7 @@
     "preview": "image/light_cone_preview/20006.png",
     "portrait": "image/light_cone_portrait/20006.png"
   },
-  "20007": {
+  "Darting Arrow": {
     "id": "20007",
     "name": "Darting Arrow",
     "rarity": 3,
@@ -79,7 +79,7 @@
     "preview": "image/light_cone_preview/20007.png",
     "portrait": "image/light_cone_portrait/20007.png"
   },
-  "20008": {
+  "Fine Fruit": {
     "id": "20008",
     "name": "Fine Fruit",
     "rarity": 3,
@@ -89,7 +89,7 @@
     "preview": "image/light_cone_preview/20008.png",
     "portrait": "image/light_cone_portrait/20008.png"
   },
-  "20009": {
+  "Shattered Home": {
     "id": "20009",
     "name": "Shattered Home",
     "rarity": 3,
@@ -99,7 +99,7 @@
     "preview": "image/light_cone_preview/20009.png",
     "portrait": "image/light_cone_portrait/20009.png"
   },
-  "20010": {
+  "Defense": {
     "id": "20010",
     "name": "Defense",
     "rarity": 3,
@@ -109,7 +109,7 @@
     "preview": "image/light_cone_preview/20010.png",
     "portrait": "image/light_cone_portrait/20010.png"
   },
-  "20011": {
+  "Loop": {
     "id": "20011",
     "name": "Loop",
     "rarity": 3,
@@ -119,7 +119,7 @@
     "preview": "image/light_cone_preview/20011.png",
     "portrait": "image/light_cone_portrait/20011.png"
   },
-  "20012": {
+  "Meshing Cogs": {
     "id": "20012",
     "name": "Meshing Cogs",
     "rarity": 3,
@@ -129,7 +129,7 @@
     "preview": "image/light_cone_preview/20012.png",
     "portrait": "image/light_cone_portrait/20012.png"
   },
-  "20013": {
+  "Passkey": {
     "id": "20013",
     "name": "Passkey",
     "rarity": 3,
@@ -139,7 +139,7 @@
     "preview": "image/light_cone_preview/20013.png",
     "portrait": "image/light_cone_portrait/20013.png"
   },
-  "20014": {
+  "Adversarial": {
     "id": "20014",
     "name": "Adversarial",
     "rarity": 3,
@@ -149,7 +149,7 @@
     "preview": "image/light_cone_preview/20014.png",
     "portrait": "image/light_cone_portrait/20014.png"
   },
-  "20015": {
+  "Multiplication": {
     "id": "20015",
     "name": "Multiplication",
     "rarity": 3,
@@ -159,7 +159,7 @@
     "preview": "image/light_cone_preview/20015.png",
     "portrait": "image/light_cone_portrait/20015.png"
   },
-  "20016": {
+  "Mutual Demise": {
     "id": "20016",
     "name": "Mutual Demise",
     "rarity": 3,
@@ -169,7 +169,7 @@
     "preview": "image/light_cone_preview/20016.png",
     "portrait": "image/light_cone_portrait/20016.png"
   },
-  "20017": {
+  "Pioneering": {
     "id": "20017",
     "name": "Pioneering",
     "rarity": 3,
@@ -179,7 +179,7 @@
     "preview": "image/light_cone_preview/20017.png",
     "portrait": "image/light_cone_portrait/20017.png"
   },
-  "20018": {
+  "Hidden Shadow": {
     "id": "20018",
     "name": "Hidden Shadow",
     "rarity": 3,
@@ -189,7 +189,7 @@
     "preview": "image/light_cone_preview/20018.png",
     "portrait": "image/light_cone_portrait/20018.png"
   },
-  "20019": {
+  "Mediation": {
     "id": "20019",
     "name": "Mediation",
     "rarity": 3,
@@ -199,7 +199,7 @@
     "preview": "image/light_cone_preview/20019.png",
     "portrait": "image/light_cone_portrait/20019.png"
   },
-  "20020": {
+  "Sagacity": {
     "id": "20020",
     "name": "Sagacity",
     "rarity": 3,
@@ -209,7 +209,7 @@
     "preview": "image/light_cone_preview/20020.png",
     "portrait": "image/light_cone_portrait/20020.png"
   },
-  "20021": {
+  "Shadowburn": {
     "id": "20021",
     "name": "Shadowburn",
     "rarity": 3,
@@ -219,7 +219,7 @@
     "preview": "image/light_cone_preview/20021.png",
     "portrait": "image/light_cone_portrait/20021.png"
   },
-  "20022": {
+  "Reminiscence": {
     "id": "20022",
     "name": "Reminiscence",
     "rarity": 3,
@@ -229,7 +229,7 @@
     "preview": "image/light_cone_preview/20022.png",
     "portrait": "image/light_cone_portrait/20022.png"
   },
-  "20023": {
+  "Sneering": {
     "id": "20023",
     "name": "Sneering",
     "rarity": 3,
@@ -239,7 +239,7 @@
     "preview": "image/light_cone_preview/20023.png",
     "portrait": "image/light_cone_portrait/20023.png"
   },
-  "20024": {
+  "Lingering Tear": {
     "id": "20024",
     "name": "Lingering Tear",
     "rarity": 3,
@@ -249,7 +249,7 @@
     "preview": "image/light_cone_preview/20024.png",
     "portrait": "image/light_cone_portrait/20024.png"
   },
-  "21000": {
+  "Post-Op Conversation": {
     "id": "21000",
     "name": "Post-Op Conversation",
     "rarity": 4,
@@ -259,7 +259,7 @@
     "preview": "image/light_cone_preview/21000.png",
     "portrait": "image/light_cone_portrait/21000.png"
   },
-  "21001": {
+  "Good Night and Sleep Well": {
     "id": "21001",
     "name": "Good Night and Sleep Well",
     "rarity": 4,
@@ -269,7 +269,7 @@
     "preview": "image/light_cone_preview/21001.png",
     "portrait": "image/light_cone_portrait/21001.png"
   },
-  "21002": {
+  "Day One of My New Life": {
     "id": "21002",
     "name": "Day One of My New Life",
     "rarity": 4,
@@ -279,7 +279,7 @@
     "preview": "image/light_cone_preview/21002.png",
     "portrait": "image/light_cone_portrait/21002.png"
   },
-  "21003": {
+  "Only Silence Remains": {
     "id": "21003",
     "name": "Only Silence Remains",
     "rarity": 4,
@@ -289,7 +289,7 @@
     "preview": "image/light_cone_preview/21003.png",
     "portrait": "image/light_cone_portrait/21003.png"
   },
-  "21004": {
+  "Memories of the Past": {
     "id": "21004",
     "name": "Memories of the Past",
     "rarity": 4,
@@ -299,7 +299,7 @@
     "preview": "image/light_cone_preview/21004.png",
     "portrait": "image/light_cone_portrait/21004.png"
   },
-  "21005": {
+  "The Moles Welcome You": {
     "id": "21005",
     "name": "The Moles Welcome You",
     "rarity": 4,
@@ -309,7 +309,7 @@
     "preview": "image/light_cone_preview/21005.png",
     "portrait": "image/light_cone_portrait/21005.png"
   },
-  "21006": {
+  "The Birth of the Self": {
     "id": "21006",
     "name": "The Birth of the Self",
     "rarity": 4,
@@ -319,7 +319,7 @@
     "preview": "image/light_cone_preview/21006.png",
     "portrait": "image/light_cone_portrait/21006.png"
   },
-  "21007": {
+  "Shared Feeling": {
     "id": "21007",
     "name": "Shared Feeling",
     "rarity": 4,
@@ -329,7 +329,7 @@
     "preview": "image/light_cone_preview/21007.png",
     "portrait": "image/light_cone_portrait/21007.png"
   },
-  "21008": {
+  "Eyes of the Prey": {
     "id": "21008",
     "name": "Eyes of the Prey",
     "rarity": 4,
@@ -339,7 +339,7 @@
     "preview": "image/light_cone_preview/21008.png",
     "portrait": "image/light_cone_portrait/21008.png"
   },
-  "21009": {
+  "Landau's Choice": {
     "id": "21009",
     "name": "Landau's Choice",
     "rarity": 4,
@@ -349,7 +349,7 @@
     "preview": "image/light_cone_preview/21009.png",
     "portrait": "image/light_cone_portrait/21009.png"
   },
-  "21010": {
+  "Swordplay": {
     "id": "21010",
     "name": "Swordplay",
     "rarity": 4,
@@ -359,7 +359,7 @@
     "preview": "image/light_cone_preview/21010.png",
     "portrait": "image/light_cone_portrait/21010.png"
   },
-  "21011": {
+  "Planetary Rendezvous": {
     "id": "21011",
     "name": "Planetary Rendezvous",
     "rarity": 4,
@@ -369,7 +369,7 @@
     "preview": "image/light_cone_preview/21011.png",
     "portrait": "image/light_cone_portrait/21011.png"
   },
-  "21012": {
+  "A Secret Vow": {
     "id": "21012",
     "name": "A Secret Vow",
     "rarity": 4,
@@ -379,7 +379,7 @@
     "preview": "image/light_cone_preview/21012.png",
     "portrait": "image/light_cone_portrait/21012.png"
   },
-  "21013": {
+  "Make the World Clamor": {
     "id": "21013",
     "name": "Make the World Clamor",
     "rarity": 4,
@@ -389,7 +389,7 @@
     "preview": "image/light_cone_preview/21013.png",
     "portrait": "image/light_cone_portrait/21013.png"
   },
-  "21014": {
+  "Perfect Timing": {
     "id": "21014",
     "name": "Perfect Timing",
     "rarity": 4,
@@ -399,7 +399,7 @@
     "preview": "image/light_cone_preview/21014.png",
     "portrait": "image/light_cone_portrait/21014.png"
   },
-  "21015": {
+  "Resolution Shines As Pearls of Sweat": {
     "id": "21015",
     "name": "Resolution Shines As Pearls of Sweat",
     "rarity": 4,
@@ -409,7 +409,7 @@
     "preview": "image/light_cone_preview/21015.png",
     "portrait": "image/light_cone_portrait/21015.png"
   },
-  "21016": {
+  "Trend of the Universal Market": {
     "id": "21016",
     "name": "Trend of the Universal Market",
     "rarity": 4,
@@ -419,7 +419,7 @@
     "preview": "image/light_cone_preview/21016.png",
     "portrait": "image/light_cone_portrait/21016.png"
   },
-  "21017": {
+  "Subscribe for More!": {
     "id": "21017",
     "name": "Subscribe for More!",
     "rarity": 4,
@@ -429,7 +429,7 @@
     "preview": "image/light_cone_preview/21017.png",
     "portrait": "image/light_cone_portrait/21017.png"
   },
-  "21018": {
+  "Dance! Dance! Dance!": {
     "id": "21018",
     "name": "Dance! Dance! Dance!",
     "rarity": 4,
@@ -439,7 +439,7 @@
     "preview": "image/light_cone_preview/21018.png",
     "portrait": "image/light_cone_portrait/21018.png"
   },
-  "21019": {
+  "Under the Blue Sky": {
     "id": "21019",
     "name": "Under the Blue Sky",
     "rarity": 4,
@@ -449,7 +449,7 @@
     "preview": "image/light_cone_preview/21019.png",
     "portrait": "image/light_cone_portrait/21019.png"
   },
-  "21020": {
+  "Geniuses' Repose": {
     "id": "21020",
     "name": "Geniuses' Repose",
     "rarity": 4,
@@ -459,7 +459,7 @@
     "preview": "image/light_cone_preview/21020.png",
     "portrait": "image/light_cone_portrait/21020.png"
   },
-  "21021": {
+  "Quid Pro Quo": {
     "id": "21021",
     "name": "Quid Pro Quo",
     "rarity": 4,
@@ -469,7 +469,7 @@
     "preview": "image/light_cone_preview/21021.png",
     "portrait": "image/light_cone_portrait/21021.png"
   },
-  "21022": {
+  "Fermata": {
     "id": "21022",
     "name": "Fermata",
     "rarity": 4,
@@ -479,7 +479,7 @@
     "preview": "image/light_cone_preview/21022.png",
     "portrait": "image/light_cone_portrait/21022.png"
   },
-  "21023": {
+  "We Are Wildfire": {
     "id": "21023",
     "name": "We Are Wildfire",
     "rarity": 4,
@@ -489,7 +489,7 @@
     "preview": "image/light_cone_preview/21023.png",
     "portrait": "image/light_cone_portrait/21023.png"
   },
-  "21024": {
+  "River Flows in Spring": {
     "id": "21024",
     "name": "River Flows in Spring",
     "rarity": 4,
@@ -499,7 +499,7 @@
     "preview": "image/light_cone_preview/21024.png",
     "portrait": "image/light_cone_portrait/21024.png"
   },
-  "21025": {
+  "Past and Future": {
     "id": "21025",
     "name": "Past and Future",
     "rarity": 4,
@@ -509,7 +509,7 @@
     "preview": "image/light_cone_preview/21025.png",
     "portrait": "image/light_cone_portrait/21025.png"
   },
-  "21026": {
+  "Woof! Walk Time!": {
     "id": "21026",
     "name": "Woof! Walk Time!",
     "rarity": 4,
@@ -519,7 +519,7 @@
     "preview": "image/light_cone_preview/21026.png",
     "portrait": "image/light_cone_portrait/21026.png"
   },
-  "21027": {
+  "The Seriousness of Breakfast": {
     "id": "21027",
     "name": "The Seriousness of Breakfast",
     "rarity": 4,
@@ -529,7 +529,7 @@
     "preview": "image/light_cone_preview/21027.png",
     "portrait": "image/light_cone_portrait/21027.png"
   },
-  "21028": {
+  "Warmth Shortens Cold Nights": {
     "id": "21028",
     "name": "Warmth Shortens Cold Nights",
     "rarity": 4,
@@ -539,7 +539,7 @@
     "preview": "image/light_cone_preview/21028.png",
     "portrait": "image/light_cone_portrait/21028.png"
   },
-  "21029": {
+  "We Will Meet Again": {
     "id": "21029",
     "name": "We Will Meet Again",
     "rarity": 4,
@@ -549,7 +549,7 @@
     "preview": "image/light_cone_preview/21029.png",
     "portrait": "image/light_cone_portrait/21029.png"
   },
-  "21030": {
+  "This Is Me!": {
     "id": "21030",
     "name": "This Is Me!",
     "rarity": 4,
@@ -559,7 +559,7 @@
     "preview": "image/light_cone_preview/21030.png",
     "portrait": "image/light_cone_portrait/21030.png"
   },
-  "21031": {
+  "Return to Darkness": {
     "id": "21031",
     "name": "Return to Darkness",
     "rarity": 4,
@@ -569,7 +569,7 @@
     "preview": "image/light_cone_preview/21031.png",
     "portrait": "image/light_cone_portrait/21031.png"
   },
-  "21032": {
+  "Carve the Moon, Weave the Clouds": {
     "id": "21032",
     "name": "Carve the Moon, Weave the Clouds",
     "rarity": 4,
@@ -579,7 +579,7 @@
     "preview": "image/light_cone_preview/21032.png",
     "portrait": "image/light_cone_portrait/21032.png"
   },
-  "21033": {
+  "Nowhere to Run": {
     "id": "21033",
     "name": "Nowhere to Run",
     "rarity": 4,
@@ -589,7 +589,7 @@
     "preview": "image/light_cone_preview/21033.png",
     "portrait": "image/light_cone_portrait/21033.png"
   },
-  "21034": {
+  "Today Is Another Peaceful Day": {
     "id": "21034",
     "name": "Today Is Another Peaceful Day",
     "rarity": 4,
@@ -599,7 +599,7 @@
     "preview": "image/light_cone_preview/21034.png",
     "portrait": "image/light_cone_portrait/21034.png"
   },
-  "21035": {
+  "What Is Real?": {
     "id": "21035",
     "name": "What Is Real?",
     "rarity": 4,
@@ -609,7 +609,7 @@
     "preview": "image/light_cone_preview/21035.png",
     "portrait": "image/light_cone_portrait/21035.png"
   },
-  "21036": {
+  "Dreamville Adventure": {
     "id": "21036",
     "name": "Dreamville Adventure",
     "rarity": 4,
@@ -619,7 +619,7 @@
     "preview": "image/light_cone_preview/21036.png",
     "portrait": "image/light_cone_portrait/21036.png"
   },
-  "21037": {
+  "Final Victor": {
     "id": "21037",
     "name": "Final Victor",
     "rarity": 4,
@@ -629,7 +629,7 @@
     "preview": "image/light_cone_preview/21037.png",
     "portrait": "image/light_cone_portrait/21037.png"
   },
-  "21038": {
+  "Flames Afar": {
     "id": "21038",
     "name": "Flames Afar",
     "rarity": 4,
@@ -639,7 +639,7 @@
     "preview": "image/light_cone_preview/21038.png",
     "portrait": "image/light_cone_portrait/21038.png"
   },
-  "21039": {
+  "Destiny's Threads Forewoven": {
     "id": "21039",
     "name": "Destiny's Threads Forewoven",
     "rarity": 4,
@@ -649,7 +649,7 @@
     "preview": "image/light_cone_preview/21039.png",
     "portrait": "image/light_cone_portrait/21039.png"
   },
-  "21040": {
+  "The Day The Cosmos Fell": {
     "id": "21040",
     "name": "The Day The Cosmos Fell",
     "rarity": 4,
@@ -659,7 +659,7 @@
     "preview": "image/light_cone_preview/21040.png",
     "portrait": "image/light_cone_portrait/21040.png"
   },
-  "21041": {
+  "It's Showtime": {
     "id": "21041",
     "name": "It's Showtime",
     "rarity": 4,
@@ -669,7 +669,7 @@
     "preview": "image/light_cone_preview/21041.png",
     "portrait": "image/light_cone_portrait/21041.png"
   },
-  "21042": {
+  "Indelible Promise": {
     "id": "21042",
     "name": "Indelible Promise",
     "rarity": 4,
@@ -679,7 +679,7 @@
     "preview": "image/light_cone_preview/21042.png",
     "portrait": "image/light_cone_portrait/21042.png"
   },
-  "21043": {
+  "Concert for Two": {
     "id": "21043",
     "name": "Concert for Two",
     "rarity": 4,
@@ -689,7 +689,7 @@
     "preview": "image/light_cone_preview/21043.png",
     "portrait": "image/light_cone_portrait/21043.png"
   },
-  "21044": {
+  "Boundless Choreo": {
     "id": "21044",
     "name": "Boundless Choreo",
     "rarity": 4,
@@ -699,7 +699,7 @@
     "preview": "image/light_cone_preview/21044.png",
     "portrait": "image/light_cone_portrait/21044.png"
   },
-  "21045": {
+  "After the Charmony Fall": {
     "id": "21045",
     "name": "After the Charmony Fall",
     "rarity": 4,
@@ -709,7 +709,7 @@
     "preview": "image/light_cone_preview/21045.png",
     "portrait": "image/light_cone_portrait/21045.png"
   },
-  "21046": {
+  "Poised to Bloom": {
     "id": "21046",
     "name": "Poised to Bloom",
     "rarity": 4,
@@ -719,7 +719,7 @@
     "preview": "image/light_cone_preview/21046.png",
     "portrait": "image/light_cone_portrait/21046.png"
   },
-  "21047": {
+  "Shadowed by Night": {
     "id": "21047",
     "name": "Shadowed by Night",
     "rarity": 4,
@@ -729,7 +729,7 @@
     "preview": "image/light_cone_preview/21047.png",
     "portrait": "image/light_cone_portrait/21047.png"
   },
-  "21048": {
+  "Dream's Montage": {
     "id": "21048",
     "name": "Dream's Montage",
     "rarity": 4,
@@ -739,7 +739,7 @@
     "preview": "image/light_cone_preview/21048.png",
     "portrait": "image/light_cone_portrait/21048.png"
   },
-  "21050": {
+  "Victory In a Blink": {
     "id": "21050",
     "name": "Victory In a Blink",
     "rarity": 4,
@@ -749,7 +749,7 @@
     "preview": "image/light_cone_preview/21050.png",
     "portrait": "image/light_cone_portrait/21050.png"
   },
-  "21051": {
+  "Geniuses' Greetings": {
     "id": "21051",
     "name": "Geniuses' Greetings",
     "rarity": 4,
@@ -759,7 +759,7 @@
     "preview": "image/light_cone_preview/21051.png",
     "portrait": "image/light_cone_portrait/21051.png"
   },
-  "21052": {
+  "Sweat Now, Cry Less": {
     "id": "21052",
     "name": "Sweat Now, Cry Less",
     "rarity": 4,
@@ -769,7 +769,7 @@
     "preview": "image/light_cone_preview/21052.png",
     "portrait": "image/light_cone_portrait/21052.png"
   },
-  "21053": {
+  "Journey, Forever Peaceful": {
     "id": "21053",
     "name": "Journey, Forever Peaceful",
     "rarity": 4,
@@ -779,7 +779,7 @@
     "preview": "image/light_cone_preview/21053.png",
     "portrait": "image/light_cone_portrait/21053.png"
   },
-  "21054": {
+  "The Story's Next Page": {
     "id": "21054",
     "name": "The Story's Next Page",
     "rarity": 4,
@@ -789,7 +789,7 @@
     "preview": "image/light_cone_preview/21054.png",
     "portrait": "image/light_cone_portrait/21054.png"
   },
-  "21055": {
+  "Unto Tomorrow's Morrow": {
     "id": "21055",
     "name": "Unto Tomorrow's Morrow",
     "rarity": 4,
@@ -799,7 +799,7 @@
     "preview": "image/light_cone_preview/21055.png",
     "portrait": "image/light_cone_portrait/21055.png"
   },
-  "21056": {
+  "In Pursuit of the Wind": {
     "id": "21056",
     "name": "In Pursuit of the Wind",
     "rarity": 4,
@@ -809,7 +809,7 @@
     "preview": "image/light_cone_preview/21056.png",
     "portrait": "image/light_cone_portrait/21056.png"
   },
-  "21057": {
+  "The Flower Remembers": {
     "id": "21057",
     "name": "The Flower Remembers",
     "rarity": 4,
@@ -819,7 +819,7 @@
     "preview": "image/light_cone_preview/21057.png",
     "portrait": "image/light_cone_portrait/21057.png"
   },
-  "21058": {
+  "A Trail of Bygone Blood": {
     "id": "21058",
     "name": "A Trail of Bygone Blood",
     "rarity": 4,
@@ -829,7 +829,7 @@
     "preview": "image/light_cone_preview/21058.png",
     "portrait": "image/light_cone_portrait/21058.png"
   },
-  "21060": {
+  "A Dream Scented in Wheat": {
     "id": "21060",
     "name": "A Dream Scented in Wheat",
     "rarity": 4,
@@ -839,7 +839,7 @@
     "preview": "image/light_cone_preview/21060.png",
     "portrait": "image/light_cone_portrait/21060.png"
   },
-  "21061": {
+  "Holiday Thermae Escapade": {
     "id": "21061",
     "name": "Holiday Thermae Escapade",
     "rarity": 4,
@@ -849,7 +849,7 @@
     "preview": "image/light_cone_preview/21061.png",
     "portrait": "image/light_cone_portrait/21061.png"
   },
-  "21062": {
+  "See You at the End": {
     "id": "21062",
     "name": "See You at the End",
     "rarity": 4,
@@ -859,7 +859,7 @@
     "preview": "image/light_cone_preview/21062.png",
     "portrait": "image/light_cone_portrait/21062.png"
   },
-  "21064": {
+  "Mushy Shroomy's Adventures": {
     "id": "21064",
     "name": "Mushy Shroomy's Adventures",
     "rarity": 4,
@@ -869,7 +869,7 @@
     "preview": "image/light_cone_preview/21064.png",
     "portrait": "image/light_cone_portrait/21064.png"
   },
-  "21065": {
+  "Today's Good Luck": {
     "id": "21065",
     "name": "Today's Good Luck",
     "rarity": 4,
@@ -879,7 +879,7 @@
     "preview": "image/light_cone_preview/21065.png",
     "portrait": "image/light_cone_portrait/21065.png"
   },
-  "22000": {
+  "Before the Tutorial Mission Starts": {
     "id": "22000",
     "name": "Before the Tutorial Mission Starts",
     "rarity": 4,
@@ -889,7 +889,7 @@
     "preview": "image/light_cone_preview/22000.png",
     "portrait": "image/light_cone_portrait/22000.png"
   },
-  "22001": {
+  "Hey, Over Here": {
     "id": "22001",
     "name": "Hey, Over Here",
     "rarity": 4,
@@ -899,7 +899,7 @@
     "preview": "image/light_cone_preview/22001.png",
     "portrait": "image/light_cone_portrait/22001.png"
   },
-  "22002": {
+  "For Tomorrow's Journey": {
     "id": "22002",
     "name": "For Tomorrow's Journey",
     "rarity": 4,
@@ -909,7 +909,7 @@
     "preview": "image/light_cone_preview/22002.png",
     "portrait": "image/light_cone_portrait/22002.png"
   },
-  "22003": {
+  "Ninja Record: Sound Hunt": {
     "id": "22003",
     "name": "Ninja Record: Sound Hunt",
     "rarity": 4,
@@ -919,7 +919,7 @@
     "preview": "image/light_cone_preview/22003.png",
     "portrait": "image/light_cone_portrait/22003.png"
   },
-  "22004": {
+  "The Great Cosmic Enterprise": {
     "id": "22004",
     "name": "The Great Cosmic Enterprise",
     "rarity": 4,
@@ -929,7 +929,7 @@
     "preview": "image/light_cone_preview/22004.png",
     "portrait": "image/light_cone_portrait/22004.png"
   },
-  "22005": {
+  "The Forever Victual": {
     "id": "22005",
     "name": "The Forever Victual",
     "rarity": 4,
@@ -939,7 +939,7 @@
     "preview": "image/light_cone_preview/22005.png",
     "portrait": "image/light_cone_portrait/22005.png"
   },
-  "22006": {
+  "Fly Into a Pink Tomorrow": {
     "id": "22006",
     "name": "Fly Into a Pink Tomorrow",
     "rarity": 4,
@@ -949,7 +949,7 @@
     "preview": "image/light_cone_preview/22006.png",
     "portrait": "image/light_cone_portrait/22006.png"
   },
-  "22007": {
+  "Tomorrow, Together": {
     "id": "22007",
     "name": "Tomorrow, Together",
     "rarity": 4,
@@ -959,7 +959,7 @@
     "preview": "image/light_cone_preview/22007.png",
     "portrait": "image/light_cone_portrait/22007.png"
   },
-  "23000": {
+  "Night on the Milky Way": {
     "id": "23000",
     "name": "Night on the Milky Way",
     "rarity": 5,
@@ -969,7 +969,7 @@
     "preview": "image/light_cone_preview/23000.png",
     "portrait": "image/light_cone_portrait/23000.png"
   },
-  "23001": {
+  "In the Night": {
     "id": "23001",
     "name": "In the Night",
     "rarity": 5,
@@ -979,7 +979,7 @@
     "preview": "image/light_cone_preview/23001.png",
     "portrait": "image/light_cone_portrait/23001.png"
   },
-  "23002": {
+  "Something Irreplaceable": {
     "id": "23002",
     "name": "Something Irreplaceable",
     "rarity": 5,
@@ -989,7 +989,7 @@
     "preview": "image/light_cone_preview/23002.png",
     "portrait": "image/light_cone_portrait/23002.png"
   },
-  "23003": {
+  "But the Battle Isn't Over": {
     "id": "23003",
     "name": "But the Battle Isn't Over",
     "rarity": 5,
@@ -999,7 +999,7 @@
     "preview": "image/light_cone_preview/23003.png",
     "portrait": "image/light_cone_portrait/23003.png"
   },
-  "23004": {
+  "In the Name of the World": {
     "id": "23004",
     "name": "In the Name of the World",
     "rarity": 5,
@@ -1009,7 +1009,7 @@
     "preview": "image/light_cone_preview/23004.png",
     "portrait": "image/light_cone_portrait/23004.png"
   },
-  "23005": {
+  "Moment of Victory": {
     "id": "23005",
     "name": "Moment of Victory",
     "rarity": 5,
@@ -1019,7 +1019,7 @@
     "preview": "image/light_cone_preview/23005.png",
     "portrait": "image/light_cone_portrait/23005.png"
   },
-  "23006": {
+  "Patience Is All You Need": {
     "id": "23006",
     "name": "Patience Is All You Need",
     "rarity": 5,
@@ -1029,7 +1029,7 @@
     "preview": "image/light_cone_preview/23006.png",
     "portrait": "image/light_cone_portrait/23006.png"
   },
-  "23007": {
+  "Incessant Rain": {
     "id": "23007",
     "name": "Incessant Rain",
     "rarity": 5,
@@ -1039,7 +1039,7 @@
     "preview": "image/light_cone_preview/23007.png",
     "portrait": "image/light_cone_portrait/23007.png"
   },
-  "23008": {
+  "Echoes of the Coffin": {
     "id": "23008",
     "name": "Echoes of the Coffin",
     "rarity": 5,
@@ -1049,7 +1049,7 @@
     "preview": "image/light_cone_preview/23008.png",
     "portrait": "image/light_cone_portrait/23008.png"
   },
-  "23009": {
+  "The Unreachable Side": {
     "id": "23009",
     "name": "The Unreachable Side",
     "rarity": 5,
@@ -1059,7 +1059,7 @@
     "preview": "image/light_cone_preview/23009.png",
     "portrait": "image/light_cone_portrait/23009.png"
   },
-  "23010": {
+  "Before Dawn": {
     "id": "23010",
     "name": "Before Dawn",
     "rarity": 5,
@@ -1069,7 +1069,7 @@
     "preview": "image/light_cone_preview/23010.png",
     "portrait": "image/light_cone_portrait/23010.png"
   },
-  "23011": {
+  "She Already Shut Her Eyes": {
     "id": "23011",
     "name": "She Already Shut Her Eyes",
     "rarity": 5,
@@ -1079,7 +1079,7 @@
     "preview": "image/light_cone_preview/23011.png",
     "portrait": "image/light_cone_portrait/23011.png"
   },
-  "23012": {
+  "Sleep Like the Dead": {
     "id": "23012",
     "name": "Sleep Like the Dead",
     "rarity": 5,
@@ -1089,7 +1089,7 @@
     "preview": "image/light_cone_preview/23012.png",
     "portrait": "image/light_cone_portrait/23012.png"
   },
-  "23013": {
+  "Time Waits for No One": {
     "id": "23013",
     "name": "Time Waits for No One",
     "rarity": 5,
@@ -1099,7 +1099,7 @@
     "preview": "image/light_cone_preview/23013.png",
     "portrait": "image/light_cone_portrait/23013.png"
   },
-  "23014": {
+  "I Shall Be My Own Sword": {
     "id": "23014",
     "name": "I Shall Be My Own Sword",
     "rarity": 5,
@@ -1109,7 +1109,7 @@
     "preview": "image/light_cone_preview/23014.png",
     "portrait": "image/light_cone_portrait/23014.png"
   },
-  "23015": {
+  "Brighter Than the Sun": {
     "id": "23015",
     "name": "Brighter Than the Sun",
     "rarity": 5,
@@ -1119,7 +1119,7 @@
     "preview": "image/light_cone_preview/23015.png",
     "portrait": "image/light_cone_portrait/23015.png"
   },
-  "23016": {
+  "Worrisome, Blissful": {
     "id": "23016",
     "name": "Worrisome, Blissful",
     "rarity": 5,
@@ -1129,7 +1129,7 @@
     "preview": "image/light_cone_preview/23016.png",
     "portrait": "image/light_cone_portrait/23016.png"
   },
-  "23017": {
+  "Night of Fright": {
     "id": "23017",
     "name": "Night of Fright",
     "rarity": 5,
@@ -1139,7 +1139,7 @@
     "preview": "image/light_cone_preview/23017.png",
     "portrait": "image/light_cone_portrait/23017.png"
   },
-  "23018": {
+  "An Instant Before A Gaze": {
     "id": "23018",
     "name": "An Instant Before A Gaze",
     "rarity": 5,
@@ -1149,7 +1149,7 @@
     "preview": "image/light_cone_preview/23018.png",
     "portrait": "image/light_cone_portrait/23018.png"
   },
-  "23019": {
+  "Past Self in Mirror": {
     "id": "23019",
     "name": "Past Self in Mirror",
     "rarity": 5,
@@ -1159,7 +1159,7 @@
     "preview": "image/light_cone_preview/23019.png",
     "portrait": "image/light_cone_portrait/23019.png"
   },
-  "23020": {
+  "Baptism of Pure Thought": {
     "id": "23020",
     "name": "Baptism of Pure Thought",
     "rarity": 5,
@@ -1169,7 +1169,7 @@
     "preview": "image/light_cone_preview/23020.png",
     "portrait": "image/light_cone_portrait/23020.png"
   },
-  "23021": {
+  "Earthly Escapade": {
     "id": "23021",
     "name": "Earthly Escapade",
     "rarity": 5,
@@ -1179,7 +1179,7 @@
     "preview": "image/light_cone_preview/23021.png",
     "portrait": "image/light_cone_portrait/23021.png"
   },
-  "23022": {
+  "Reforged Remembrance": {
     "id": "23022",
     "name": "Reforged Remembrance",
     "rarity": 5,
@@ -1189,7 +1189,7 @@
     "preview": "image/light_cone_preview/23022.png",
     "portrait": "image/light_cone_portrait/23022.png"
   },
-  "23023": {
+  "Inherently Unjust Destiny": {
     "id": "23023",
     "name": "Inherently Unjust Destiny",
     "rarity": 5,
@@ -1199,7 +1199,7 @@
     "preview": "image/light_cone_preview/23023.png",
     "portrait": "image/light_cone_portrait/23023.png"
   },
-  "23024": {
+  "Along the Passing Shore": {
     "id": "23024",
     "name": "Along the Passing Shore",
     "rarity": 5,
@@ -1209,7 +1209,7 @@
     "preview": "image/light_cone_preview/23024.png",
     "portrait": "image/light_cone_portrait/23024.png"
   },
-  "23025": {
+  "Whereabouts Should Dreams Rest": {
     "id": "23025",
     "name": "Whereabouts Should Dreams Rest",
     "rarity": 5,
@@ -1219,7 +1219,7 @@
     "preview": "image/light_cone_preview/23025.png",
     "portrait": "image/light_cone_portrait/23025.png"
   },
-  "23026": {
+  "Flowing Nightglow": {
     "id": "23026",
     "name": "Flowing Nightglow",
     "rarity": 5,
@@ -1229,7 +1229,7 @@
     "preview": "image/light_cone_preview/23026.png",
     "portrait": "image/light_cone_portrait/23026.png"
   },
-  "23027": {
+  "Sailing Towards a Second Life": {
     "id": "23027",
     "name": "Sailing Towards a Second Life",
     "rarity": 5,
@@ -1239,7 +1239,7 @@
     "preview": "image/light_cone_preview/23027.png",
     "portrait": "image/light_cone_portrait/23027.png"
   },
-  "23028": {
+  "Yet Hope Is Priceless": {
     "id": "23028",
     "name": "Yet Hope Is Priceless",
     "rarity": 5,
@@ -1249,7 +1249,7 @@
     "preview": "image/light_cone_preview/23028.png",
     "portrait": "image/light_cone_portrait/23028.png"
   },
-  "23029": {
+  "Those Many Springs": {
     "id": "23029",
     "name": "Those Many Springs",
     "rarity": 5,
@@ -1259,7 +1259,7 @@
     "preview": "image/light_cone_preview/23029.png",
     "portrait": "image/light_cone_portrait/23029.png"
   },
-  "23030": {
+  "Dance at Sunset": {
     "id": "23030",
     "name": "Dance at Sunset",
     "rarity": 5,
@@ -1269,7 +1269,7 @@
     "preview": "image/light_cone_preview/23030.png",
     "portrait": "image/light_cone_portrait/23030.png"
   },
-  "23031": {
+  "I Venture Forth to Hunt": {
     "id": "23031",
     "name": "I Venture Forth to Hunt",
     "rarity": 5,
@@ -1279,7 +1279,7 @@
     "preview": "image/light_cone_preview/23031.png",
     "portrait": "image/light_cone_portrait/23031.png"
   },
-  "23032": {
+  "Scent Alone Stays True": {
     "id": "23032",
     "name": "Scent Alone Stays True",
     "rarity": 5,
@@ -1289,7 +1289,7 @@
     "preview": "image/light_cone_preview/23032.png",
     "portrait": "image/light_cone_portrait/23032.png"
   },
-  "23033": {
+  "Ninjutsu Inscription: Dazzling Evilbreaker": {
     "id": "23033",
     "name": "Ninjutsu Inscription: Dazzling Evilbreaker",
     "rarity": 5,
@@ -1299,7 +1299,7 @@
     "preview": "image/light_cone_preview/23033.png",
     "portrait": "image/light_cone_portrait/23033.png"
   },
-  "23034": {
+  "A Grounded Ascent": {
     "id": "23034",
     "name": "A Grounded Ascent",
     "rarity": 5,
@@ -1309,7 +1309,7 @@
     "preview": "image/light_cone_preview/23034.png",
     "portrait": "image/light_cone_portrait/23034.png"
   },
-  "23035": {
+  "Long Road Leads Home": {
     "id": "23035",
     "name": "Long Road Leads Home",
     "rarity": 5,
@@ -1319,7 +1319,7 @@
     "preview": "image/light_cone_preview/23035.png",
     "portrait": "image/light_cone_portrait/23035.png"
   },
-  "23036": {
+  "Time Woven Into Gold": {
     "id": "23036",
     "name": "Time Woven Into Gold",
     "rarity": 5,
@@ -1329,7 +1329,7 @@
     "preview": "image/light_cone_preview/23036.png",
     "portrait": "image/light_cone_portrait/23036.png"
   },
-  "23037": {
+  "Into the Unreachable Veil": {
     "id": "23037",
     "name": "Into the Unreachable Veil",
     "rarity": 5,
@@ -1339,7 +1339,7 @@
     "preview": "image/light_cone_preview/23037.png",
     "portrait": "image/light_cone_portrait/23037.png"
   },
-  "23038": {
+  "If Time Were a Flower": {
     "id": "23038",
     "name": "If Time Were a Flower",
     "rarity": 5,
@@ -1349,7 +1349,7 @@
     "preview": "image/light_cone_preview/23038.png",
     "portrait": "image/light_cone_portrait/23038.png"
   },
-  "23039": {
+  "Flame of Blood, Blaze My Path": {
     "id": "23039",
     "name": "Flame of Blood, Blaze My Path",
     "rarity": 5,
@@ -1359,7 +1359,7 @@
     "preview": "image/light_cone_preview/23039.png",
     "portrait": "image/light_cone_portrait/23039.png"
   },
-  "23040": {
+  "Make Farewells More Beautiful": {
     "id": "23040",
     "name": "Make Farewells More Beautiful",
     "rarity": 5,
@@ -1369,7 +1369,7 @@
     "preview": "image/light_cone_preview/23040.png",
     "portrait": "image/light_cone_portrait/23040.png"
   },
-  "23041": {
+  "Life Should Be Cast to Flames": {
     "id": "23041",
     "name": "Life Should Be Cast to Flames",
     "rarity": 5,
@@ -1379,7 +1379,7 @@
     "preview": "image/light_cone_preview/23041.png",
     "portrait": "image/light_cone_portrait/23041.png"
   },
-  "23042": {
+  "Long May Rainbows Adorn the Sky": {
     "id": "23042",
     "name": "Long May Rainbows Adorn the Sky",
     "rarity": 5,
@@ -1389,7 +1389,7 @@
     "preview": "image/light_cone_preview/23042.png",
     "portrait": "image/light_cone_portrait/23042.png"
   },
-  "23043": {
+  "Lies Dance on the Breeze": {
     "id": "23043",
     "name": "Lies Dance on the Breeze",
     "rarity": 5,
@@ -1399,7 +1399,7 @@
     "preview": "image/light_cone_preview/23043.png",
     "portrait": "image/light_cone_portrait/23043.png"
   },
-  "23044": {
+  "Thus Burns the Dawn": {
     "id": "23044",
     "name": "Thus Burns the Dawn",
     "rarity": 5,
@@ -1409,7 +1409,7 @@
     "preview": "image/light_cone_preview/23044.png",
     "portrait": "image/light_cone_portrait/23044.png"
   },
-  "23045": {
+  "A Thankless Coronation": {
     "id": "23045",
     "name": "A Thankless Coronation",
     "rarity": 5,
@@ -1419,7 +1419,7 @@
     "preview": "image/light_cone_preview/23045.png",
     "portrait": "image/light_cone_portrait/23045.png"
   },
-  "23046": {
+  "The Hell Where Ideals Burn": {
     "id": "23046",
     "name": "The Hell Where Ideals Burn",
     "rarity": 5,
@@ -1429,7 +1429,7 @@
     "preview": "image/light_cone_preview/23046.png",
     "portrait": "image/light_cone_portrait/23046.png"
   },
-  "23047": {
+  "Why Does the Ocean Sing": {
     "id": "23047",
     "name": "Why Does the Ocean Sing",
     "rarity": 5,
@@ -1439,7 +1439,7 @@
     "preview": "image/light_cone_preview/23047.png",
     "portrait": "image/light_cone_portrait/23047.png"
   },
-  "23048": {
+  "Epoch Etched in Golden Blood": {
     "id": "23048",
     "name": "Epoch Etched in Golden Blood",
     "rarity": 5,
@@ -1449,7 +1449,7 @@
     "preview": "image/light_cone_preview/23048.png",
     "portrait": "image/light_cone_portrait/23048.png"
   },
-  "23049": {
+  "To Evernight's Stars": {
     "id": "23049",
     "name": "To Evernight's Stars",
     "rarity": 5,
@@ -1459,7 +1459,7 @@
     "preview": "image/light_cone_preview/23049.png",
     "portrait": "image/light_cone_portrait/23049.png"
   },
-  "23050": {
+  "Never Forget Her Flame": {
     "id": "23050",
     "name": "Never Forget Her Flame",
     "rarity": 5,
@@ -1469,7 +1469,7 @@
     "preview": "image/light_cone_preview/23050.png",
     "portrait": "image/light_cone_portrait/23050.png"
   },
-  "23051": {
+  "Though Worlds Apart": {
     "id": "23051",
     "name": "Though Worlds Apart",
     "rarity": 5,
@@ -1479,7 +1479,7 @@
     "preview": "image/light_cone_preview/23051.png",
     "portrait": "image/light_cone_portrait/23051.png"
   },
-  "23052": {
+  "This Love, Forever": {
     "id": "23052",
     "name": "This Love, Forever",
     "rarity": 5,
@@ -1489,7 +1489,7 @@
     "preview": "image/light_cone_preview/23052.png",
     "portrait": "image/light_cone_portrait/23052.png"
   },
-  "23053": {
+  "Dazzled by a Flowery World": {
     "id": "23053",
     "name": "Dazzled by a Flowery World",
     "rarity": 5,
@@ -1499,7 +1499,7 @@
     "preview": "image/light_cone_preview/23053.png",
     "portrait": "image/light_cone_portrait/23053.png"
   },
-  "23054": {
+  "When She Decided to See": {
     "id": "23054",
     "name": "When She Decided to See",
     "rarity": 5,
@@ -1509,7 +1509,7 @@
     "preview": "image/light_cone_preview/23054.png",
     "portrait": "image/light_cone_portrait/23054.png"
   },
-  "23056": {
+  "The Finale of a Lie": {
     "id": "23056",
     "name": "The Finale of a Lie",
     "rarity": 5,
@@ -1519,7 +1519,7 @@
     "preview": "image/light_cone_preview/23056.png",
     "portrait": "image/light_cone_portrait/23056.png"
   },
-  "23057": {
+  "Welcome to the Cosmic City": {
     "id": "23057",
     "name": "Welcome to the Cosmic City",
     "rarity": 5,
@@ -1529,7 +1529,7 @@
     "preview": "image/light_cone_preview/23057.png",
     "portrait": "image/light_cone_portrait/23057.png"
   },
-  "23058": {
+  "Until the Flowers Bloom Again": {
     "id": "23058",
     "name": "Until the Flowers Bloom Again",
     "rarity": 5,
@@ -1539,7 +1539,7 @@
     "preview": "image/light_cone_preview/23058.png",
     "portrait": "image/light_cone_portrait/23058.png"
   },
-  "24000": {
+  "On the Fall of an Aeon": {
     "id": "24000",
     "name": "On the Fall of an Aeon",
     "rarity": 5,
@@ -1549,7 +1549,7 @@
     "preview": "image/light_cone_preview/24000.png",
     "portrait": "image/light_cone_portrait/24000.png"
   },
-  "24001": {
+  "Cruising in the Stellar Sea": {
     "id": "24001",
     "name": "Cruising in the Stellar Sea",
     "rarity": 5,
@@ -1559,7 +1559,7 @@
     "preview": "image/light_cone_preview/24001.png",
     "portrait": "image/light_cone_portrait/24001.png"
   },
-  "24002": {
+  "Texture of Memories": {
     "id": "24002",
     "name": "Texture of Memories",
     "rarity": 5,
@@ -1569,7 +1569,7 @@
     "preview": "image/light_cone_preview/24002.png",
     "portrait": "image/light_cone_portrait/24002.png"
   },
-  "24003": {
+  "Solitary Healing": {
     "id": "24003",
     "name": "Solitary Healing",
     "rarity": 5,
@@ -1579,7 +1579,7 @@
     "preview": "image/light_cone_preview/24003.png",
     "portrait": "image/light_cone_portrait/24003.png"
   },
-  "24004": {
+  "Eternal Calculus": {
     "id": "24004",
     "name": "Eternal Calculus",
     "rarity": 5,
@@ -1589,7 +1589,7 @@
     "preview": "image/light_cone_preview/24004.png",
     "portrait": "image/light_cone_portrait/24004.png"
   },
-  "24005": {
+  "Memory's Curtain Never Falls": {
     "id": "24005",
     "name": "Memory's Curtain Never Falls",
     "rarity": 5,
@@ -1599,7 +1599,7 @@
     "preview": "image/light_cone_preview/24005.png",
     "portrait": "image/light_cone_portrait/24005.png"
   },
-  "24006": {
+  "Elation Brimming With Blessings": {
     "id": "24006",
     "name": "Elation Brimming With Blessings",
     "rarity": 5,

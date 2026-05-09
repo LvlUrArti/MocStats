@@ -76,8 +76,9 @@ download = requests.get(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/light_cones.json",
     timeout=10,
 ).content.decode("utf-8")
+lc_data = {item["name"]: item for item in json.load(io.StringIO(download)).values()}
 with open("../data/light_cones.json", "w") as out_file:
-    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=2))
+    out_file.write(json.dumps(lc_data, indent=2))
 
 
 # Characters update
