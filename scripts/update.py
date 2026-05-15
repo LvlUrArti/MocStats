@@ -77,6 +77,14 @@ download = requests.get(
     timeout=10,
 ).content.decode("utf-8")
 lc_data = {item["name"]: item for item in json.load(io.StringIO(download)).values()}
+
+alt_lc_names = {
+    "Shadowed by Night": "Shadowed By Night",
+    "Sailing Towards a Second Life": "Sailing Towards A Second Life",
+}
+for alt_lc, alt_name in alt_lc_names.items():
+    lc_data[alt_lc]["alt_name"] = alt_name
+
 with open("../data/light_cones.json", "w") as out_file:
     out_file.write(json.dumps(lc_data, indent=2))
 

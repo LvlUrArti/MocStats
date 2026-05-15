@@ -4,7 +4,7 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
+from comp_rates_config import CHARS_INFO, LIGHT_CONES, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
 
 # ----------------------------------------------------------------------
@@ -509,6 +509,8 @@ def process_chars() -> None:
         for i in range(GEAR_COUNTS[category]):
             if i < len(sorted_items):
                 name, stats = sorted_items[i]
+                if name in LIGHT_CONES and "alt_name" in LIGHT_CONES[name]:
+                    name = LIGHT_CONES[name]["alt_name"]
                 out_dict[f"{category}_{i + 1}"] = name
                 if category == "artifacts":
                     out_dict[f"{category}_{i + 1}_1"] = stats.set1
