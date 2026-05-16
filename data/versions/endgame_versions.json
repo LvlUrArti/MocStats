@@ -1,0 +1,445 @@
+{
+  "Memory of Chaos": {
+    "1.0.1": {
+      "name": "Favor of Amber",
+      "time_start": "26/04/2023",
+      "time_end": "13/05/2023"
+    },
+    "1.0.2": {
+      "name": "Favor of Amber",
+      "time_start": "13/05/2023",
+      "time_end": "27/05/2023"
+    },
+    "1.0.3": {
+      "name": "Favor of Amber",
+      "time_start": "27/05/2023",
+      "time_end": "12/06/2023"
+    },
+    "1.1.1": {
+      "name": "Coldiron Tribulation",
+      "time_start": "12/06/2023",
+      "time_end": "26/06/2023"
+    },
+    "1.1.2": {
+      "name": "Hyperborean Search for Warmth",
+      "time_start": "26/06/2023",
+      "time_end": "10/07/2023"
+    },
+    "1.1.3": {
+      "name": "Stormquell",
+      "time_start": "10/07/2023",
+      "time_end": "24/07/2023"
+    },
+    "1.2.1": {
+      "name": "Adrift in Astral Seas",
+      "time_start": "24/07/2023",
+      "time_end": "07/08/2023"
+    },
+    "1.2.2": {
+      "name": "Raintear Strife",
+      "time_start": "07/08/2023",
+      "time_end": "21/08/2023"
+    },
+    "1.2.3": {
+      "name": "Traces of Sanctus Medicus",
+      "time_start": "21/08/2023",
+      "time_end": "04/09/2023"
+    },
+    "1.3.1": {
+      "name": "Ethereal Shipcraft",
+      "time_start": "04/09/2023",
+      "time_end": "18/09/2023"
+    },
+    "1.3.2": {
+      "name": "A Shot From the Sky",
+      "time_start": "18/09/2023",
+      "time_end": "02/10/2023"
+    },
+    "1.3.3": {
+      "name": "Mara and Null",
+      "time_start": "02/10/2023",
+      "time_end": "16/10/2023"
+    },
+    "1.4.1": {
+      "name": "Living and Flaming Catastrophes",
+      "time_start": "16/10/2023",
+      "time_end": "30/10/2023"
+    },
+    "1.4.2": {
+      "name": "Ambrosial Arbor's Arrival",
+      "time_start": "30/10/2023",
+      "time_end": "13/11/2023"
+    },
+    "1.4.3": {
+      "name": "Divine Root Subdual",
+      "time_start": "13/11/2023",
+      "time_end": "27/11/2023"
+    },
+    "1.5.1": {
+      "name": "Oath of Eternal Alliance",
+      "time_start": "27/11/2023",
+      "time_end": "11/12/2023"
+    },
+    "1.5.2": {
+      "name": "Sedition of Imbibitor Lunae",
+      "time_start": "11/12/2023",
+      "time_end": "27/12/2023"
+    },
+    "1.6.1": {
+      "name": "Enigma in Deep Space",
+      "time_start": "27/12/2023",
+      "time_end": "05/02/2024"
+    },
+    "1.6.2": {
+      "name": "Light of Reignition",
+      "time_start": "22/01/2024",
+      "time_end": "04/03/2024"
+    },
+    "2.0.1": {
+      "name": "Dreamland of Longing",
+      "time_start": "19/02/2024",
+      "time_end": "01/04/2024"
+    },
+    "2.0.2": {
+      "name": "Eve of Wanton Feast",
+      "time_start": "18/03/2024",
+      "time_end": "29/04/2024"
+    },
+    "2.1.1": {
+      "name": "White Night Chronicles",
+      "time_start": "15/04/2024",
+      "time_end": "27/05/2024"
+    },
+    "2.2.1": {
+      "name": "Dream Within Dream",
+      "time_start": "13/05/2024",
+      "time_end": "19/06/2024"
+    },
+    "2.2.2": {
+      "name": "A Song's True Theme",
+      "time_start": "10/06/2024",
+      "time_end": "22/07/2024"
+    },
+    "2.3.1": {
+      "name": "Dissipation of Dreams",
+      "time_start": "22/07/2024",
+      "time_end": "02/09/2024"
+    },
+    "2.4.1": {
+      "name": "The Big Sleep",
+      "time_start": "02/09/2024",
+      "time_end": "14/10/2024"
+    },
+    "2.5.1": {
+      "name": "Scalegorge Tidalflow",
+      "time_start": "14/10/2024",
+      "time_end": "25/11/2024"
+    },
+    "2.6.1": {
+      "name": "Dancing with the Dreams",
+      "time_start": "25/11/2024",
+      "time_end": "06/01/2025"
+    },
+    "2.7.1": {
+      "name": "Troopship Mayhem",
+      "time_start": "06/01/2025",
+      "time_end": "17/02/2025"
+    },
+    "3.0.1": {
+      "name": "Strife of Creation",
+      "time_start": "17/02/2025",
+      "time_end": "31/03/2025"
+    },
+    "3.1.1": {
+      "name": "Out of Home",
+      "time_start": "31/03/2025",
+      "time_end": "12/05/2025"
+    },
+    "3.2.1": {
+      "name": "Breath of the Othershore",
+      "time_start": "12/05/2025",
+      "time_end": "23/06/2025"
+    },
+    "3.3.1": {
+      "name": "Lupine Moon-Devourer",
+      "time_start": "23/06/2025",
+      "time_end": "04/08/2025"
+    },
+    "3.4.1": {
+      "name": "Gambler's Plight",
+      "time_start": "04/08/2025",
+      "time_end": "15/09/2025"
+    },
+    "3.5.1": {
+      "name": "Pillar of Genesis",
+      "time_start": "15/09/2025",
+      "time_end": "27/10/2025"
+    },
+    "3.6.1": {
+      "name": "Category Mistake",
+      "time_start": "27/10/2025",
+      "time_end": "08/12/2025"
+    },
+    "3.7.1": {
+      "name": "Monkey Business",
+      "time_start": "08/12/2025",
+      "time_end": "19/01/2026"
+    },
+    "3.8.1": {
+      "name": "Breached Nest",
+      "time_start": "19/01/2026",
+      "time_end": "02/03/2026"
+    },
+    "4.0.1": {
+      "name": "Cyber Mystery",
+      "time_start": "02/03/2026",
+      "time_end": "13/04/2026"
+    },
+    "4.1.1": {
+      "name": "Grand Finale",
+      "time_start": "13/04/2026",
+      "time_end": "25/05/2026"
+    },
+    "4.2.1": {
+      "name": "Duty Action",
+      "time_start": "25/05/2026",
+      "time_end": "06/07/2026"
+    }
+  },
+  "Pure Fiction": {
+    "1.6.1": {
+      "name": "Youci's Wandering Words",
+      "time_start": "08/01/2024",
+      "time_end": "19/02/2024"
+    },
+    "1.6.2": {
+      "name": "Tales of a Tethered Bird",
+      "time_start": "05/02/2024",
+      "time_end": "18/03/2024"
+    },
+    "2.0.1": {
+      "name": "An Expression of Eloquence",
+      "time_start": "04/03/2024",
+      "time_end": "15/04/2024"
+    },
+    "2.1.1": {
+      "name": "Deceitful Chaos",
+      "time_start": "01/04/2024",
+      "time_end": "13/05/2024"
+    },
+    "2.1.2": {
+      "name": "Fictitious Wordsmithing",
+      "time_start": "29/04/2024",
+      "time_end": "10/06/2024"
+    },
+    "2.2.1": {
+      "name": "Lexical Enigma",
+      "time_start": "27/05/2024",
+      "time_end": "08/07/2024"
+    },
+    "2.3.1": {
+      "name": "Out of Thin Air",
+      "time_start": "08/07/2024",
+      "time_end": "19/08/2024"
+    },
+    "2.4.1": {
+      "name": "Words of Deceit",
+      "time_start": "19/08/2024",
+      "time_end": "30/09/2024"
+    },
+    "2.5.1": {
+      "name": "Volubility",
+      "time_start": "30/09/2024",
+      "time_end": "11/11/2024"
+    },
+    "2.6.1": {
+      "name": "Rumor Mill",
+      "time_start": "11/11/2024",
+      "time_end": "23/12/2024"
+    },
+    "2.7.1": {
+      "name": "Technicality Entrapment",
+      "time_start": "23/12/2024",
+      "time_end": "03/02/2025"
+    },
+    "3.0.1": {
+      "name": "Clich\u00e9d Sayings",
+      "time_start": "03/02/2025",
+      "time_end": "17/03/2025"
+    },
+    "3.1.1": {
+      "name": "Self-Fulfilling Prophecy",
+      "time_start": "17/03/2025",
+      "time_end": "28/04/2025"
+    },
+    "3.2.1": {
+      "name": "Structural Rules",
+      "time_start": "28/04/2025",
+      "time_end": "09/06/2025"
+    },
+    "3.3.1": {
+      "name": "Narrative Analysis",
+      "time_start": "09/06/2025",
+      "time_end": "21/07/2025"
+    },
+    "3.4.1": {
+      "name": "Three Act Structure",
+      "time_start": "21/07/2025",
+      "time_end": "01/09/2025"
+    },
+    "3.5.1": {
+      "name": "Subjective Narrative",
+      "time_start": "01/09/2025",
+      "time_end": "13/10/2025"
+    },
+    "3.6.1": {
+      "name": "Iambic Pentameter",
+      "time_start": "13/10/2025",
+      "time_end": "24/11/2025"
+    },
+    "3.7.1": {
+      "name": "Syntax Rule",
+      "time_start": "24/11/2025",
+      "time_end": "05/01/2026"
+    },
+    "3.8.1": {
+      "name": "Epic Collection",
+      "time_start": "05/01/2026",
+      "time_end": "16/02/2026"
+    },
+    "4.0.1": {
+      "name": "Wordless Novel",
+      "time_start": "16/02/2026",
+      "time_end": "30/03/2026"
+    },
+    "4.1.1": {
+      "name": "Virtual Made Manifest",
+      "time_start": "30/03/2026",
+      "time_end": "11/05/2026"
+    },
+    "4.2.1": {
+      "name": "Illusory Concepts",
+      "time_start": "11/05/2026",
+      "time_end": "22/06/2026"
+    }
+  },
+  "Apocalyptic Shadow": {
+    "2.3.1": {
+      "name": "Stormwind Knight",
+      "time_start": "19/06/2024",
+      "time_end": "05/08/2024"
+    },
+    "2.4.1": {
+      "name": "Dominated Evils",
+      "time_start": "05/08/2024",
+      "time_end": "16/09/2024"
+    },
+    "2.5.1": {
+      "name": "Gamer's Instigation",
+      "time_start": "16/09/2024",
+      "time_end": "28/10/2024"
+    },
+    "2.6.1": {
+      "name": "Sovereign Control",
+      "time_start": "28/10/2024",
+      "time_end": "09/12/2024"
+    },
+    "2.7.1": {
+      "name": "Gusty Primate",
+      "time_start": "09/12/2024",
+      "time_end": "20/01/2025"
+    },
+    "3.0.1": {
+      "name": "Locust's Instigation",
+      "time_start": "20/01/2025",
+      "time_end": "03/03/2025"
+    },
+    "3.1.1": {
+      "name": "Gambling Primate",
+      "time_start": "03/03/2025",
+      "time_end": "14/04/2025"
+    },
+    "3.2.1": {
+      "name": "Warlord of the Locusts",
+      "time_start": "14/04/2025",
+      "time_end": "26/05/2025"
+    },
+    "3.3.1": {
+      "name": "Cutting Mistral",
+      "time_start": "26/05/2025",
+      "time_end": "07/07/2025"
+    },
+    "3.4.1": {
+      "name": "Ichor Beast",
+      "time_start": "07/07/2025",
+      "time_end": "18/08/2025"
+    },
+    "3.5.1": {
+      "name": "Lupine Warhead",
+      "time_start": "18/08/2025",
+      "time_end": "29/09/2025"
+    },
+    "3.6.1": {
+      "name": "Gale of Netherveil",
+      "time_start": "29/09/2025",
+      "time_end": "10/11/2025"
+    },
+    "3.7.1": {
+      "name": "Instigation of the Locusts",
+      "time_start": "10/11/2025",
+      "time_end": "22/12/2025"
+    },
+    "3.8.1": {
+      "name": "Primate Knight",
+      "time_start": "22/12/2025",
+      "time_end": "02/02/2026"
+    },
+    "3.8.2": {
+      "name": "Dominance of Netherveil",
+      "time_start": "02/02/2026",
+      "time_end": "16/03/2026"
+    },
+    "4.0.1": {
+      "name": "Militant Lupine",
+      "time_start": "16/03/2026",
+      "time_end": "27/04/2026"
+    },
+    "4.2.1": {
+      "name": "Idol of the Locusts",
+      "time_start": "27/04/2026",
+      "time_end": "08/06/2026"
+    }
+  },
+  "Anomaly Arbitration": {
+    "3.6.1": {
+      "name": "Intellitron Endgame",
+      "time_start": "24/09/2025",
+      "time_end": "05/11/2025"
+    },
+    "3.7.1": {
+      "name": "Illusory Realm of the Blazing Sun",
+      "time_start": "05/11/2025",
+      "time_end": "17/12/2025"
+    },
+    "3.8.1": {
+      "name": "Dissonance",
+      "time_start": "17/12/2025",
+      "time_end": "13/02/2026"
+    },
+    "4.0.1": {
+      "name": "Cyber Crisis",
+      "time_start": "13/02/2026",
+      "time_end": "25/03/2026"
+    },
+    "4.1.1": {
+      "name": "Don't Mess With Pom-Pom",
+      "time_start": "25/03/2026",
+      "time_end": "22/04/2026"
+    },
+    "4.2.1": {
+      "name": "Happiness Syntax",
+      "time_start": "22/04/2026",
+      "time_end": "02/06/2026"
+    }
+  }
+}

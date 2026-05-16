@@ -1,17 +1,23 @@
 """Update JSON data."""
 
-import io
 import json
+from io import StringIO
+from typing import Any
 
 import requests
 from comp_rates_config import RECENT_PHASE
 from pydantic import BaseModel
 
-download = requests.get(
+
+def load_from_url(url: str) -> Any:  # noqa: ANN401
+    """Load data from URL."""
+    download = requests.get(url, timeout=10).content.decode("utf-8")
+    return json.load(StringIO(download))
+
+
+artifacts: dict[str, dict[str, str]] = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relic_sets.json",
-    timeout=10,
-).content.decode("utf-8")
-artifacts: dict[str, dict[str, str]] = json.load(io.StringIO(download))
+)
 
 with open("../data/relic_affixes.json") as artifact_file:
     artifacts2: dict[str, list[str]] = json.load(artifact_file)
@@ -65,18 +71,16 @@ with open("../data/relic_sets.json", "w") as out_file:
 with open("../data/relic_affixes.json", "w") as out_file:
     out_file.write(json.dumps(artifacts2, indent=2))
 
-download = requests.get(
+download = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relics.json",
-    timeout=10,
-).content.decode("utf-8")
+)
 with open("../data/relics.json", "w") as out_file:
-    out_file.write(json.dumps(json.load(io.StringIO(download)), indent=2))
+    out_file.write(json.dumps(download, indent=2))
 
-download = requests.get(
+download = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/light_cones.json",
-    timeout=10,
-).content.decode("utf-8")
-lc_data = {item["name"]: item for item in json.load(io.StringIO(download)).values()}
+)
+lc_data = {item["name"]: item for item in download.values()}
 
 alt_lc_names = {
     "Shadowed by Night": "Shadowed By Night",
@@ -132,14 +136,10 @@ with open("../data/characters.json") as char_file:
         char_file,
     )
 
-download = requests.get(
+download = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/characters.json",
-    timeout=10,
-).content.decode("utf-8")
-raw_chars = {
-    char_name: RawCharInfo(**item)
-    for char_name, item in json.load(io.StringIO(download)).items()
-}
+)
+raw_chars = {char_name: RawCharInfo(**item) for char_name, item in download.items()}
 
 for char in raw_chars.values():
     char_name = char.name
@@ -197,3 +197,47 @@ for char in raw_chars.values():
 
 with open("../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars_data, indent=2))
+
+
+def add_endgame(versions_dict: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
+    """Add endgame versions."""
+    versions: dict[str, dict[str, str]] = {}
+    for version, version_item in versions_dict.items():
+        version_time = version_item["versionTime"]
+        if version_time != "xx/xx/20xx - xx/xx/20xx":
+            versions[version] = {
+                "name": version_item["versionName"],
+                "time_start": version_time.split(" - ")[0],
+                "time_end": version_time.split(" - ")[1],
+            }
+    return versions
+
+
+# Endgame versions update
+save_entries: dict[str, dict[str, dict[str, str]]] = {}
+
+moc_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
+    "https://www.buhflipexplode.org/hsr/fh/fh-versions.json",
+)
+for entry in moc_data:
+    name = str(entry["name"])
+    if name == "Memory of Chaos":
+        save_entries[name] = add_endgame(entry["versions"])
+
+pf_data: dict[str, dict[str, str]] = load_from_url(
+    "https://www.buhflipexplode.org/hsr/pf/pf-versions.json",
+)
+save_entries["Pure Fiction"] = add_endgame(pf_data)
+
+as_data: dict[str, dict[str, str]] = load_from_url(
+    "https://www.buhflipexplode.org/hsr/as/as-versions.json",
+)
+save_entries["Apocalyptic Shadow"] = add_endgame(as_data)
+
+aa_data: dict[str, dict[str, str]] = load_from_url(
+    "https://www.buhflipexplode.org/hsr/aa/aa-versions.json",
+)
+save_entries["Anomaly Arbitration"] = add_endgame(aa_data)
+
+with open("../data/versions/endgame_versions.json", "w") as out_file:
+    out_file.write(json.dumps(save_entries, indent=2))
