@@ -1,0 +1,29 @@
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "T201",     # print
+  "PTH",      # Use of os.path
+  "BLE001",   # Catch all exceptions (necessary in hsr.py)
+  "ASYNC230", # Use "with open" in async context
+  "ASYNC250", # Use "input" in async context
+  "S301",     # Use pickle package (necessari in hsr.py)
+  "INP001",   # Checks for packages that are missing an __init__.py file
+  "DTZ005",   # Use of naive datetime
+  "DTZ007",   # Use of naive datetime
+  "TD002",    # Missing TODO author
+  "TD003",    # Missing TODO link
+  # Rules below should be enabled again
+  "PLW0603", # Using the global statement
+  "PLR2004", # Magic value used in comparison
+  "C901",    # Complexity
+  "PLR0912", # Too many branches
+  "PLR0915", # Too many statements
+]
+# Enforce typing-related rules
+[tool.pyright]
+typeCheckingMode = "strict"
+extraPaths = ["./MocStats/scripts"]
+[tool.ruff.lint.flake8-builtins]
+strict-checking = true
+[tool.ruff.lint.flake8-type-checking]
+strict = true
