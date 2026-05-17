@@ -2,10 +2,11 @@
 
 # pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 
+from contextlib import suppress
+from csv import DictReader
 from csv import reader as csvreader
 from csv import writer as csvwriter
 from io import TextIOWrapper
-from itertools import chain
 from json import dumps as json_dumps
 from json import load as json_load
 from operator import itemgetter
@@ -43,11 +44,9 @@ from pynput import keyboard
 from scipy.stats import skew
 
 
-def read_csv(file: TextIOWrapper) -> list[list[str]]:
+def read_csv(file: TextIOWrapper) -> list[dict[str, str]]:
     """Read CSV."""
-    reader = csvreader(file, delimiter=",")
-    next(reader)
-    return list(reader)
+    return list(DictReader(file, delimiter=","))
 
 
 if path.exists("../data/raw_csvs_real/"):
@@ -60,44 +59,42 @@ else:
     with open("../data/raw_csvs/" + RECENT_PHASE + "_build.csv", encoding="UTF8") as f:
         data = list(read_csv(f))
 
-with open("../data/light_cones.json") as f:
-    LIGHT_CONES = json_load(f)
-
 with open("../results/char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
     build = list(read_csv(f))
 
 archetype = "all"
 
 
-statkeys = [
-    "char_lvl",
-    "light_cone_lvl",
-    "attack_lvl",
-    "skill_lvl",
-    "ultimate_lvl",
-    "talent_lvl",
-    "max_hp",
-    "atk",
-    "dfns",
-    "speed",
-    "crate",
-    "cdmg",
-    "dmg_boost",
-    "heal_boost",
-    "energy_regen",
-    "effect_res",
-    "effect_rate",
-    "break_effect",
-    "spd_sub",
-    "hp_sub",
-    "atk_sub",
-    "def_sub",
-    "crate_sub",
-    "cdmg_sub",
-    "res_sub",
-    "ehr_sub",
-    "break_sub",
-]
+stats_dict = {
+    "char_lvl": "char_level",
+    "light_cone_lvl": "light_cone_level",
+    "attack_lvl": "attack_lvl",
+    "skill_lvl": "skill_lvl",
+    "ultimate_lvl": "ultimate_lvl",
+    "talent_lvl": "talent_lvl",
+    "max_hp": "HP",
+    "atk": "ATK",
+    "dfns": "DEF",
+    "speed": "SPD",
+    "crate": "CRIT Rate",
+    "cdmg": "CRIT DMG",
+    "dmg_boost": "DMG Boost",
+    "heal_boost": "Outgoing Healing Boost",
+    "energy_regen": "Energy Regeneration Rate",
+    "effect_res": "Effect RES",
+    "effect_rate": "Effect Hit Rate",
+    "break_effect": "Break Effect",
+    "spd_sub": "SPD sub",
+    "hp_sub": "HP sub",
+    "atk_sub": "ATK sub",
+    "def_sub": "DEF sub",
+    "crate_sub": "CRIT Rate sub",
+    "cdmg_sub": "CRIT DMG sub",
+    "res_sub": "Effect RES sub",
+    "ehr_sub": "Effect Hit Rate sub",
+    "break_sub": "Break Effect sub",
+}
+statkeys = list(stats_dict.keys())
 
 substats = {
     "spd_sub": 2.3,
@@ -110,6 +107,34 @@ substats = {
     "ehr_sub": 0.03888,
     "break_sub": 0.05832,
 }
+
+mainstat_dict = {
+    "body_stats": "Body",
+    "feet_stats": "Feet",
+    "sphere_stats": "Sphere",
+    "rope_stats": "Rope",
+}
+
+percent_stats = {
+    "crate",
+    "cdmg",
+    "dmg_boost",
+    "heal_boost",
+    "energy_regen",
+    "effect_res",
+    "effect_rate",
+    "break_effect",
+    "hp_sub",
+    "atk_sub",
+    "def_sub",
+    "crate_sub",
+    "cdmg_sub",
+    "res_sub",
+    "ehr_sub",
+    "break_sub",
+}
+
+NON_STAT_KEYS = {"name", "sample_size", "sample_size_players"}
 
 
 class StatsChar:
@@ -130,7 +155,7 @@ stats: dict[str, StatsChar] = {}
 median: dict[str, dict[str, float]] = {}
 mean: dict[str, dict[str, float]] = {}
 mainstats: dict[str, dict[str, dict[str, float]]] = {}
-chars.extend(row[0] for row in build)
+chars.extend(row["char"] for row in build)
 set_chars.update(chars)
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
@@ -149,16 +174,11 @@ for char in chars:
     stats[char] = StatsChar(char)
     mean[char] = dict.fromkeys(statkeys, 0)
     median[char] = mean[char].copy()
-    mainstats[char] = {
-        "body_stats": {},
-        "feet_stats": {},
-        "sphere_stats": {},
-        "rope_stats": {},
-    }
+    mainstats[char] = {stat: {} for stat in mainstat_dict}
 ar = 0
 count = 0
 uid = "0"
-mainstatkeys: list[str] = list(mainstats[chars[0]].keys())
+mainstatkeys: list[str] = list(mainstat_dict.keys())
 substatkeys: list[str] = list(substats.keys())
 
 if path.isfile("../../uids.csv"):
@@ -169,41 +189,42 @@ else:
     self_uids: set[str] = set()
 
 for row in data:
-    char = str(row[2])
-    cur_uid = str(row[0])
+    char = str(row["character"])
+    cur_uid = str(row["uid"])
     if skip_self and cur_uid in self_uids:
         continue
     if skip_random and cur_uid not in self_uids:
         continue
     if cur_uid != uid:
         uid = cur_uid
-        ar += int(row[1])
+        ar += int(row["player_level"])
         count += 1
     if char not in set_chars:
         if char in CHAR_NAME_REPLACE:
             char = CHAR_NAME_REPLACE[char]
         elif char in {"Trailblazer", "March 7th"}:
-            char = f"{row[4]} {char}"
+            char = f"{row['path']} {char}"
         else:
             print(char)
             sys_exit()
     if cur_uid in spiral_rows and char in spiral_rows[cur_uid]:
         stats[char].sample_size_players += 1
+
+        # The more times a character is used, the more weight it has
         for _i in range(spiral_rows[cur_uid][char]):
-            stats[char].stats_count["char_lvl"].append(float(row[3]))
             stats[char].sample_size += 1
-            stats[char].stats_count["spd_sub"].append(float(row[23]))
-            if row[6].isnumeric():
-                stats[char].stats_count["light_cone_lvl"].append(float(row[6]))
-            for j in range(2, 10):
-                stats[char].stats_count[statkeys[j]].append(float(row[j + 5]))
-            for j in chain(range(10, 18), range(19, 27)):
-                stats[char].stats_count[statkeys[j]].append(float(row[j + 5]) / 100)
-            for j in range(4):
-                if row[j + 32] in mainstats[char][mainstatkeys[j]]:
-                    mainstats[char][mainstatkeys[j]][row[j + 32]] += 1
-                else:
-                    mainstats[char][mainstatkeys[j]][row[j + 32]] = 1
+
+            for key in statkeys:
+                divisor = 100 if key in percent_stats else 1
+                with suppress(ValueError):
+                    dividend = float(row.get(stats_dict[key], 0))
+                    stats[char].stats_count[key].append(dividend / divisor)
+
+            for key in mainstatkeys:
+                mainstat = row.get(mainstat_dict[key], None)
+                if mainstat not in mainstats[char][key]:
+                    mainstats[char][key][mainstat] = 0
+                mainstats[char][key][mainstat] += 1
 
 for char, stat_char in stats.items():
     if stat_char.sample_size > 0:
@@ -211,7 +232,7 @@ for char, stat_char in stats.items():
             skewness = 0
             if not stat_count:
                 stat_char.stats_write[stat] = 0
-            elif stat != "name" and "sample_size" not in stat:
+            elif stat not in NON_STAT_KEYS:
                 if stat in round_stats:
                     median[char][stat] = round(stat_median(stat_count), 2)
                     mean[char][stat] = round(stat_mean(stat_count), 2)
@@ -288,7 +309,7 @@ for char, stat_char in stats.items():
 
     else:
         for stat, stat_count in stat_char.stats_count.items():
-            if not stat_count or (stat != "name" and "sample_size" not in stat):
+            if not stat_count or (stat not in NON_STAT_KEYS):
                 stat_char.stats_write[stat] = 0
 
         stat_char.stats_write["sample_size_players"] = 0
@@ -338,11 +359,12 @@ temp_stats: list[dict[str, str | float]] = []
 with open("../results/char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
     CHARACTERS: list[dict[str, str]] = json_load(char_file)
 for iter_char, char_stat in enumerate(stats.values()):
-    for i in chain(range(10, 18), range(19, 27)):
-        char_stat.stats_write[statkeys[i]] = round(
-            float(char_stat.stats_write[statkeys[i]]) * 100,
-            2,
-        )
+    for key in statkeys:
+        if key in percent_stats:
+            char_stat.stats_write[key] = round(
+                float(char_stat.stats_write[key]) * 100,
+                2,
+            )
     iterate_value_app: list[str] = []
     for i in range(3):
         iterate_value_app.append("body_stats_" + str(i + 1) + "_app")

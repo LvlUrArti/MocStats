@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from csv import DictReader
 from csv import reader as csvreader
 from csv import writer as csvwriter
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
+    CHAR_NAME_REPLACE,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
@@ -21,6 +23,11 @@ from comp_rates_config import (
 )
 from composition import Composition, Stage
 from player_phase import PlayerPhase
+
+EXT_CHAR_NAME_REPLACE = {
+    **CHAR_NAME_REPLACE,
+    "March 7th": "Ice March 7th",
+}
 
 all_players: dict[str, PlayerPhase] = {}
 all_comps: list[Composition] = []
@@ -91,10 +98,7 @@ def main() -> None:
         if path.exists("../data/raw_csvs_real/")
         else open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv")
     ) as f:
-        stats = csvreader(f)
-        reader = stats
-        next(reader)
-        reader = list(reader)
+        reader = list(DictReader(f))
 
     # uid_freq_comp will help detect duplicate UIDs
     if pf_mode:
@@ -108,13 +112,13 @@ def main() -> None:
     skip_uid = False
 
     for line in reader:
-        player = line[0]
-        stage = int(line[1])
-        node = (stage if stage != 4 else 1) if aa_mode else int(line[2])
+        player = line["uid"]
+        stage = int(line["floor"])
+        node = (stage if stage != 4 else 1) if aa_mode else int(line["node"])
         if aa_mode:
             stage = 1 if stage <= 3 else 2
 
-        round_num = int(line[2] if aa_mode else line[3])
+        round_num = int(line["round_num"])
         if skip_self and player in self_uids:
             continue
         if skip_random and player not in self_uids:
@@ -129,33 +133,31 @@ def main() -> None:
         last_uid = player
         if not skip_uid:
             comp_chars_temp: list[str] = []
-            for i in range(4, 8) if aa_mode else range(5, 9):
-                if line[i] != "":
-                    if line[i] == "Topaz and Numby":
-                        line[i] = "Topaz & Numby"
-                    elif line[i] == "March 7th":
-                        line[i] = "Ice March 7th"
-                    comp_chars_temp.append(line[i])
+            for i in range(1, 5):
+                char = line[f"ch{i}"]
+                if char != "":
+                    if char in EXT_CHAR_NAME_REPLACE:
+                        char = EXT_CHAR_NAME_REPLACE[char]
+                    comp_chars_temp.append(char)
+
             cons_chars_temp: list[int] = []
-            if len(line) > 10:
+            if "cons1" in line:
                 cons_chars_temp.extend(
-                    int(float(line[i]))
-                    for i in (range(8, 12) if aa_mode else range(9, 13))
-                    if line[i] != ""
+                    int(float(line[f"cons{i}"]))
+                    for i in (range(1, 5))
+                    if line[f"cons{i}"] != ""
                 )
-                pf_buff = line[13] if pf_mode else None
-            else:
-                pf_buff = line[9] if pf_mode else None
+
             if comp_chars_temp:
                 comp = Composition(
                     player=player,
                     comp_chars=comp_chars_temp,
                     round_num=round_num,
-                    star_num=int(line[3] if aa_mode else line[4]),
+                    star_num=int(line["star_num"]),
                     room=Stage(stage, node),
-                    buff=line[12] if aa_mode else pf_buff,
+                    buff=line.get("buff", None),
                     comp_chars_cons=cons_chars_temp,
-                    is_hard_mode=line[13] == "True" if aa_mode else None,
+                    is_hard_mode=line["hard_mode"] == "True" if aa_mode else None,
                 )
                 all_comps.append(comp)
 
@@ -173,10 +175,7 @@ def main() -> None:
         if path.exists("../data/raw_csvs_real/")
         else open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv")
     ) as f:
-        stats = f
-        reader = csvreader(stats)
-        next(reader)
-        reader = list(reader)
+        reader = list(DictReader(f))
 
     # uid_freq_char and last_uid will help detect duplicate UIDs
     last_uid = "0"
@@ -185,30 +184,28 @@ def main() -> None:
 
     # Append lines
     for line in reader:
-        if line[0] in uid_freq_comp:
-            if line[0] != last_uid:
+        if line["uid"] in uid_freq_comp:
+            if line["uid"] != last_uid:
                 skip_uid = False
-                if line[0] in uid_freq_char:
+                if line["uid"] in uid_freq_char:
                     skip_uid = True
                 else:
-                    uid_freq_char.add(line[0])
+                    uid_freq_char.add(line["uid"])
             if not skip_uid:
-                if line[0] != last_uid:
+                if line["uid"] != last_uid:
                     all_players[last_uid] = player
-                    last_uid = line[0]
+                    last_uid = line["uid"]
                     player = PlayerPhase(last_uid)
-                if line[2] == "Topaz and Numby":
-                    line[2] = "Topaz & Numby"
-                elif line[2] == "March 7th":
-                    line[2] = "Ice March 7th"
+                if line["name"] in EXT_CHAR_NAME_REPLACE:
+                    line["name"] = EXT_CHAR_NAME_REPLACE[line["name"]]
                 player.add_character(
-                    line[2],
-                    line[3],
-                    line[4],
-                    line[5],
-                    line[6],
-                    line[7],
-                    line[8],
+                    line["name"],
+                    line["level"],
+                    line["cons"],
+                    line["weapon"],
+                    line["element"],
+                    line.get("artifacts", ""),
+                    line.get("relics", ""),
                 )
     all_players[last_uid] = player
 
