@@ -313,7 +313,6 @@ class CompUsage(Composition):
         self.whale_count = set[str]()
         self.players = set[str]()
         self.is_count_round: bool
-        self.is_count_round_print: bool
         self.app_rate: float
         self.round: float
         self.usage_rate: float
@@ -488,7 +487,6 @@ def rank_usages(
 
         comp_threshold = 10 if cur_comp.healer else 50
         cur_comp.is_count_round = True
-        cur_comp.is_count_round_print = True
         if (
             (rooms == ["12-1", "12-2"])
             or (pf_mode and rooms == ["4-1", "4-2"])
@@ -497,12 +495,8 @@ def rank_usages(
             for uses_room_num in uses_room.values():
                 if uses_room_num < comp_threshold:
                     cur_comp.is_count_round = False
-                if uses_room_num < 2:
-                    cur_comp.is_count_round_print = False
         elif len(rooms) == 1 and cur_comp.uses < comp_threshold:
             cur_comp.is_count_round = False
-        if cur_comp.uses < 2:
-            cur_comp.is_count_round_print = False
 
         rounded_avg_round: float
         if avg_round:
@@ -789,9 +783,7 @@ def comp_usages_write(
             outvar_comps_append["app_rate"] = str(cur_comp.app_rate) + "%"
             outvar_comps_append["avg_round"] = str(cur_comp.round)
             outvar_comps.append(outvar_comps_append)
-        if not info_char and (
-            cur_comp.is_count_round_print and (cur_comp.app_rate >= json_threshold)
-        ):
+        if not info_char and (cur_comp.app_rate >= json_threshold):
             out = list(comp)
             for i in range(4):
                 out[i] = CHARS_INFO[out[i]].slug
