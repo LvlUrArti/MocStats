@@ -1,11 +1,12 @@
 """Update JSON data."""
 
+# ruff: noqa: N815
+
 import json
 from io import StringIO
 from typing import Any
 
 import requests
-from comp_rates_config import RECENT_PHASE
 from pydantic import BaseModel
 
 
@@ -13,6 +14,9 @@ def load_from_url(url: str) -> Any:  # noqa: ANN401
     """Load data from URL."""
     download = requests.get(url, timeout=10).content.decode("utf-8")
     return json.load(StringIO(download))
+
+
+latest_ver = load_from_url("https://static.nanoka.cc/manifest.json")["hsr"]["latest"]
 
 
 artifacts: dict[str, dict[str, str]] = load_from_url(
@@ -63,7 +67,6 @@ for artifact in list(artifacts_affixes.keys()):
                 artifacts2[artifact] = artifacts_affixes[artifact]
     else:
         del artifacts_affixes[artifact]
-print()
 
 with open("../data/relic_sets.json", "w") as out_file:
     out_file.write(json.dumps(artifacts, indent=2))
@@ -99,12 +102,11 @@ with open("../data/light_cones.json", "w") as out_file:
 class RawCharInfo(BaseModel):
     """Character info from characters.json."""
 
-    id: str
-    name: str
-    rarity: int
-    path: str
-    element: str
-    availability: str | None = None
+    en: str
+    rank: str
+    baseType: str
+    damageType: str
+    release: int | None = None
 
 
 PATH_MAP: dict[str, str] = {
@@ -136,38 +138,34 @@ with open("../data/characters.json") as char_file:
         char_file,
     )
 
-download = load_from_url(
-    "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/characters.json",
-)
-raw_chars = {char_name: RawCharInfo(**item) for char_name, item in download.items()}
+download = load_from_url(f"https://static.nanoka.cc/hsr/{latest_ver}/character.json")
+raw_chars = {char_id: RawCharInfo(**item) for char_id, item in download.items()}
 
-for char in raw_chars.values():
-    char_name = char.name
+for char_id, char in raw_chars.items():
+    char_name = char.en.replace("<unbreak>", "").replace("</unbreak>", "")
     multi_elem_char = False
 
-    if char.element == "Thunder":
-        char.element = "Lightning"
+    if char.damageType == "Thunder":
+        char.damageType = "Lightning"
 
     if char_name in MULTI_ELEM_CHARS:
         multi_elem_char = True
-        char_name = char.element.capitalize() + MULTI_ELEM_CHARS[char_name]
+        char_name = char.damageType.capitalize() + MULTI_ELEM_CHARS[char_name]
 
     if char_name not in chars_data:
         add_char = input("Add " + char_name + "? (y/n): ")
         if add_char == "y":
             char_add: dict[str, str | int | list[str] | None] = {
-                "id": char.id,
-                "rarity": char.rarity,
-                "path": PATH_MAP[char.path],
-                "element": char.element,
-                "availability": char.availability,
+                "id": char_id,
+                "rarity": int("".join(filter(str.isdigit, char.rank))),
+                "path": PATH_MAP[char.baseType],
+                "element": char.damageType,
+                "availability": "4*",
                 "slug": char_name.lower().replace(" ", "-"),
-                "release_phase": RECENT_PHASE,
+                "release": char.release,
             }
 
-            if char.rarity == 4:
-                char_add["availability"] = "4*"
-            elif char.rarity == 5:
+            if char_add["rarity"] == 5:
                 if "Trailblazer" in char_name:
                     char_add["rarity"] = 4
                     char_add["availability"] = "4*"
@@ -191,8 +189,8 @@ for char in raw_chars.values():
         trailblazer_id_list: list[str] = []
         if "trailblazer_ids" in chars_data[char_name]:
             trailblazer_id_list += chars_data[char_name]["trailblazer_ids"]
-        if char.id not in trailblazer_id_list:
-            trailblazer_id_list.append(char.id)
+        if char_id not in trailblazer_id_list:
+            trailblazer_id_list.append(char_id)
         chars_data[char_name]["trailblazer_ids"] = trailblazer_id_list
 
 with open("../data/characters.json", "w") as out_file:

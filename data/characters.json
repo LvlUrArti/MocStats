@@ -6,7 +6,7 @@
     "element": "Wind",
     "availability": "4*",
     "slug": "dan-heng",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -18,7 +18,7 @@
     "element": "Fire",
     "availability": "Standard 5*",
     "slug": "himeko",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -30,7 +30,7 @@
     "element": "Imaginary",
     "availability": "Standard 5*",
     "slug": "welt",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "amplifier"
     ]
@@ -42,7 +42,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "silver-wolf",
-    "release_phase": "1.1.1",
+    "release": 1686128400,
     "role": [
       "amplifier"
     ]
@@ -54,7 +54,7 @@
     "element": "Lightning",
     "availability": "4*",
     "slug": "arlan",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -66,7 +66,7 @@
     "element": "Fire",
     "availability": "4*",
     "slug": "asta",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "amplifier"
     ]
@@ -78,7 +78,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "herta",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "specialist"
     ]
@@ -90,7 +90,7 @@
     "element": "Wind",
     "availability": "Standard 5*",
     "slug": "bronya",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "amplifier"
     ]
@@ -102,7 +102,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "seele",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -114,7 +114,7 @@
     "element": "Lightning",
     "availability": "4*",
     "slug": "serval",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "specialist"
     ]
@@ -126,7 +126,7 @@
     "element": "Ice",
     "availability": "Standard 5*",
     "slug": "gepard",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ]
@@ -138,7 +138,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "natasha",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ]
@@ -150,7 +150,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "pela",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "amplifier"
     ]
@@ -162,7 +162,7 @@
     "element": "Physical",
     "availability": "Standard 5*",
     "slug": "clara",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -174,7 +174,7 @@
     "element": "Wind",
     "availability": "4*",
     "slug": "sampo",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "specialist"
     ]
@@ -186,7 +186,7 @@
     "element": "Fire",
     "availability": "4*",
     "slug": "hook",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -198,7 +198,7 @@
     "element": "Quantum",
     "availability": "4*",
     "slug": "qingque",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -210,7 +210,7 @@
     "element": "Lightning",
     "availability": "4*",
     "slug": "tingyun",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "amplifier"
     ]
@@ -222,7 +222,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "jing-yuan",
-    "release_phase": "1.0.1",
+    "release": 1684335600,
     "role": [
       "dps"
     ]
@@ -234,7 +234,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "sushang",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -246,7 +246,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "luocha",
-    "release_phase": "1.1.1",
+    "release": 1687942800,
     "role": [
       "sustain"
     ]
@@ -258,7 +258,7 @@
     "element": "Imaginary",
     "availability": "4*",
     "slug": "yukong",
-    "release_phase": "1.1.1",
+    "release": 1687942800,
     "role": [
       "amplifier"
     ]
@@ -270,7 +270,7 @@
     "element": "Ice",
     "availability": "Standard 5*",
     "slug": "yanqing",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ]
@@ -282,7 +282,7 @@
     "element": "Lightning",
     "availability": "Standard 5*",
     "slug": "bailu",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ]
@@ -294,7 +294,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "trailblazer-destruction",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "dps"
     ],
@@ -310,7 +310,7 @@
     "element": "Fire",
     "availability": "4*",
     "slug": "trailblazer-preservation",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ],
@@ -326,7 +326,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "blade",
-    "release_phase": "1.2.1",
+    "release": 1689757200,
     "role": [
       "dps",
       "specialist"
@@ -339,7 +339,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "kafka",
-    "release_phase": "1.2.1",
+    "release": 1689757200,
     "role": [
       "specialist"
     ]
@@ -351,7 +351,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "luka",
-    "release_phase": "1.2.1",
+    "release": 1689757200,
     "role": [
       "dps"
     ]
@@ -363,7 +363,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "imbibitor-lunae",
-    "release_phase": "1.3.1",
+    "release": 1693386000,
     "role": [
       "dps"
     ]
@@ -375,7 +375,7 @@
     "element": "Quantum",
     "availability": "4*",
     "slug": "lynx",
-    "release_phase": "1.3.1",
+    "release": 1695200400,
     "role": [
       "sustain"
     ]
@@ -387,7 +387,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "fu-xuan",
-    "release_phase": "1.3.1",
+    "release": 1695200400,
     "role": [
       "sustain"
     ]
@@ -399,7 +399,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "topaz",
-    "release_phase": "1.4.1",
+    "release": 1698483600,
     "role": [
       "specialist"
     ]
@@ -411,7 +411,7 @@
     "element": "Fire",
     "availability": "4*",
     "slug": "guinaifen",
-    "release_phase": "1.4.1",
+    "release": 1698483600,
     "role": [
       "amplifier"
     ]
@@ -423,7 +423,7 @@
     "element": "Ice",
     "availability": "Limited 5*",
     "slug": "jingliu",
-    "release_phase": "1.4.1",
+    "release": 1697014800,
     "role": [
       "dps"
     ]
@@ -435,7 +435,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "huohuo",
-    "release_phase": "1.5.1",
+    "release": 1700042400,
     "role": [
       "sustain"
     ]
@@ -447,7 +447,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "hanya",
-    "release_phase": "1.5.1",
+    "release": 1701856800,
     "role": [
       "amplifier"
     ]
@@ -459,7 +459,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "argenti",
-    "release_phase": "1.5.1",
+    "release": 1701856800,
     "role": [
       "dps",
       "specialist"
@@ -472,7 +472,7 @@
     "element": "Quantum",
     "availability": "4*",
     "slug": "xueyi",
-    "release_phase": "1.6.1",
+    "release": 1703671200,
     "role": [
       "dps"
     ]
@@ -484,7 +484,7 @@
     "element": "Ice",
     "availability": "Limited 5*",
     "slug": "ruan-mei",
-    "release_phase": "1.6.1",
+    "release": 1703671200,
     "role": [
       "amplifier"
     ]
@@ -496,7 +496,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "dr-ratio",
-    "release_phase": "1.6.1",
+    "release": 1705485600,
     "role": [
       "dps"
     ]
@@ -508,7 +508,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "black-swan",
-    "release_phase": "2.0.1",
+    "release": 1707213600,
     "role": [
       "specialist"
     ]
@@ -520,7 +520,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "misha",
-    "release_phase": "2.0.1",
+    "release": 1709200800,
     "role": [
       "dps"
     ]
@@ -532,7 +532,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "sparkle",
-    "release_phase": "2.0.1",
+    "release": 1707213600,
     "role": [
       "amplifier"
     ]
@@ -544,7 +544,7 @@
     "element": "Fire",
     "availability": "4*",
     "slug": "gallagher",
-    "release_phase": "2.1.1",
+    "release": 1711533600,
     "role": [
       "sustain"
     ]
@@ -556,7 +556,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "acheron",
-    "release_phase": "2.1.1",
+    "release": 1711533600,
     "role": [
       "dps"
     ]
@@ -568,7 +568,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "aventurine",
-    "release_phase": "2.1.1",
+    "release": 1713344400,
     "role": [
       "sustain"
     ]
@@ -580,7 +580,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "robin",
-    "release_phase": "2.2.1",
+    "release": 1715158800,
     "role": [
       "amplifier"
     ]
@@ -592,7 +592,7 @@
     "element": "Imaginary",
     "availability": "4*",
     "slug": "trailblazer-harmony",
-    "release_phase": "2.2.1",
+    "release": 1715158800,
     "role": [
       "amplifier"
     ],
@@ -608,7 +608,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "boothill",
-    "release_phase": "2.2.1",
+    "release": 1716973200,
     "role": [
       "dps"
     ]
@@ -620,7 +620,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "firefly",
-    "release_phase": "2.3.1",
+    "release": 1718787600,
     "role": [
       "dps"
     ]
@@ -632,7 +632,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "jade",
-    "release_phase": "2.3.1",
+    "release": 1720602000,
     "role": [
       "specialist"
     ]
@@ -644,7 +644,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "yunli",
-    "release_phase": "2.4.1",
+    "release": 1722416400,
     "role": [
       "dps"
     ]
@@ -656,7 +656,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "march-7th",
-    "release_phase": "1.0.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ],
@@ -671,7 +671,7 @@
     "element": "Imaginary",
     "availability": "4*",
     "slug": "march-7th-swordmaster",
-    "release_phase": "2.4.1",
+    "release": 1722416400,
     "role": [
       "specialist"
     ],
@@ -686,7 +686,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "jiaoqiu",
-    "release_phase": "2.4.1",
+    "release": 1724230800,
     "role": [
       "amplifier"
     ]
@@ -698,7 +698,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "feixiao",
-    "release_phase": "2.5.1",
+    "release": 1725958800,
     "role": [
       "dps"
     ]
@@ -710,7 +710,7 @@
     "element": "Lightning",
     "availability": "4*",
     "slug": "moze",
-    "release_phase": "2.5.1",
+    "release": 1725958800,
     "role": [
       "specialist"
     ]
@@ -722,7 +722,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "lingsha",
-    "release_phase": "2.5.1",
+    "release": 1727859600,
     "role": [
       "sustain"
     ]
@@ -734,7 +734,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "rappa",
-    "release_phase": "2.6.1",
+    "release": 1729674000,
     "role": [
       "dps"
     ]
@@ -746,7 +746,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "sunday",
-    "release_phase": "2.7.1",
+    "release": 1733306400,
     "role": [
       "amplifier"
     ]
@@ -758,7 +758,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "tingyun-fugue",
-    "release_phase": "2.7.1",
+    "release": 1735120800,
     "role": [
       "amplifier"
     ]
@@ -770,7 +770,7 @@
     "element": "Ice",
     "availability": "Limited 5*",
     "slug": "the-herta",
-    "release_phase": "3.0.1",
+    "release": 1736935200,
     "role": [
       "dps"
     ]
@@ -782,7 +782,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "trailblazer-remembrance",
-    "release_phase": "3.0.1",
+    "release": 1736935200,
     "role": [
       "amplifier"
     ],
@@ -798,7 +798,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "aglaea",
-    "release_phase": "3.0.1",
+    "release": 1738749600,
     "role": [
       "dps"
     ]
@@ -810,7 +810,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "tribbie",
-    "release_phase": "3.1.1",
+    "release": 1740564000,
     "role": [
       "amplifier"
     ]
@@ -822,7 +822,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "mydei",
-    "release_phase": "3.1.1",
+    "release": 1742378400,
     "role": [
       "dps"
     ]
@@ -834,7 +834,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "castorice",
-    "release_phase": "3.2.1",
+    "release": 1744189200,
     "role": [
       "dps"
     ]
@@ -846,7 +846,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "anaxa",
-    "release_phase": "3.2.1",
+    "release": 1746003600,
     "role": [
       "dps",
       "specialist"
@@ -859,7 +859,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "hyacine",
-    "release_phase": "3.3.1",
+    "release": 1747818000,
     "role": [
       "sustain"
     ]
@@ -871,7 +871,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "cipher",
-    "release_phase": "3.3.1",
+    "release": 1749632400,
     "role": [
       "amplifier"
     ]
@@ -883,7 +883,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "phainon",
-    "release_phase": "3.4.1",
+    "release": 1751446800,
     "role": [
       "dps"
     ]
@@ -895,7 +895,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "saber",
-    "release_phase": "3.4.1",
+    "release": 1752224400,
     "role": [
       "dps"
     ]
@@ -907,7 +907,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "archer",
-    "release_phase": "3.4.1",
+    "release": 1752224400,
     "role": [
       "dps"
     ]
@@ -919,7 +919,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "hysilens",
-    "release_phase": "3.5.1",
+    "release": 1755075600,
     "role": [
       "dps"
     ]
@@ -931,7 +931,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "cerydra",
-    "release_phase": "3.5.1",
+    "release": 1760518800,
     "role": [
       "amplifier"
     ]
@@ -943,7 +943,7 @@
     "element": "Ice",
     "availability": "Limited 5*",
     "slug": "march-7th-evernight",
-    "release_phase": "3.6.1",
+    "release": 1758790800,
     "role": [
       "dps",
       "specialist"
@@ -956,7 +956,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "dan-heng-permansor-terrae",
-    "release_phase": "3.6.1",
+    "release": 1682460000,
     "role": [
       "sustain"
     ]
@@ -968,7 +968,7 @@
     "element": "Ice",
     "availability": "Limited 5*",
     "slug": "cyrene",
-    "release_phase": "3.7.1",
+    "release": 1762336800,
     "role": [
       "amplifier"
     ]
@@ -980,7 +980,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "the-dahlia",
-    "release_phase": "3.8.1",
+    "release": 1765101600,
     "role": [
       "amplifier"
     ]
@@ -992,7 +992,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "yao-guang",
-    "release_phase": "4.0.1",
+    "release": 1770976800,
     "role": [
       "amplifier"
     ]
@@ -1004,7 +1004,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "sparxie",
-    "release_phase": "4.0.1",
+    "release": 1770976800,
     "role": [
       "dps",
       "specialist"
@@ -1017,7 +1017,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "ashveil",
-    "release_phase": "4.0.2",
+    "release": 1774432800,
     "role": [
       "dps",
       "specialist"
@@ -1030,7 +1030,7 @@
     "element": "Imaginary",
     "availability": "Limited 5*",
     "slug": "silver-wolf-lv-999",
-    "release_phase": "4.2.1",
+    "release": 1776848400,
     "role": [
       "dps"
     ]
@@ -1042,7 +1042,7 @@
     "element": "Lightning",
     "availability": "4*",
     "slug": "trailblazer-elation",
-    "release_phase": "4.2.1",
+    "release": 1776848400,
     "role": [
       "amplifier"
     ],
