@@ -9,10 +9,10 @@ from os.path import join as path_join
 
 from pydantic import BaseModel
 
-RECENT_PHASE = "4.2.1"
+RECENT_PHASE = "4.2.2"
 
 # if no past phase, leave blank
-PAST_PHASE = "4.1.2"
+PAST_PHASE = "4.2.1"
 
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
@@ -73,7 +73,7 @@ elif aa_mode:
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 PAST_PHASE_PF = PAST_PHASE + pf_filename
 
-run_all_chars = False
+run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
 char_infographics = next(iter(run_chars_name))
 
@@ -200,7 +200,7 @@ with open(relative_path("../data/characters.json")) as char_file:
     }
 
 with open(relative_path("../data/light_cones.json")) as char_file:
-    LIGHT_CONES: dict[str, dict[str, str | int | None]] = load(char_file)
+    LIGHT_CONES: dict[str, dict[str, str | int]] = load(char_file)
 
 sig_weaps: set[str] = set()
 STAND_WEAPS = {

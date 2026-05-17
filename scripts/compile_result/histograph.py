@@ -12,7 +12,7 @@ from comp_rates_config import CHARS_INFO, RECENT_PHASE, CharInfo
 # ----------------------------------------------------------------------
 # Configuration
 # ----------------------------------------------------------------------
-with open("../../data/phases.json") as f:
+with open("../../data/versions/phases.json") as f:
     PHASES: list[tuple[str, str, bool]] = json.load(f)
 
 CHARS_BY_SLUG: dict[str, CharInfo] = {}
