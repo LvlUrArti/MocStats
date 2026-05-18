@@ -12,7 +12,10 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
+    BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
+    CHAR_RESULT_PATH,
+    COMP_RESULT_PATH,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
@@ -81,17 +84,15 @@ def main() -> None:
     start_time = time()
     print("start")
 
-    for make_path in [
-        "../results",
-        "../results/comp_results",
-        "../results/comp_results/json",
-        "../results/mihomo",
-        "../results/char_results",
-        "../data/pickle",
-        "../rogue_results",
-    ]:
-        if not path.exists(make_path):
-            makedirs(make_path)
+    if aa_mode:
+        for make_path in [
+            f"../{COMP_RESULT_PATH}/json",
+            f"../{BUILD_RESULT_PATH}",
+            f"../{CHAR_RESULT_PATH}",
+            "../data/pickle",
+        ]:
+            if not path.exists(make_path):
+                makedirs(make_path)
 
     with (
         open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
@@ -214,7 +215,7 @@ def main() -> None:
             all_players[comp.player] = PlayerPhase(comp.player)
         all_players[comp.player].add_comp(comp)
 
-    with open("../results/char_results/uids.csv", "w", newline="") as f:
+    with open(f"../{CHAR_RESULT_PATH}/uids.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         for uid in uid_freq_comp:
             csv_writer.writerow([uid])

@@ -97,6 +97,9 @@ duo_dict_len = 30
 duo_dict_len_print = 10
 LAST_MOC_FLOOR = 12
 CONS_LIMIT = 2
+CHAR_RESULT_PATH = f"results/char_results/{RECENT_PHASE_PF}"
+COMP_RESULT_PATH = f"results/comp_results/{RECENT_PHASE_PF}"
+BUILD_RESULT_PATH = f"results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}"
 
 skip_self = False
 skip_random = False

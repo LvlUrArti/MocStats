@@ -6,8 +6,9 @@ from sys import path as sys_path
 
 sys_path.append("../")
 from comp_rates_config import (
+    CHAR_RESULT_PATH,
+    COMP_RESULT_PATH,
     RECENT_PHASE,
-    RECENT_PHASE_PF,
     aa_mode,
     as_mode,
     moc_mode,
@@ -25,8 +26,8 @@ else:
     moc_suffix = "moc"
 
 source_dirs = [
-    "../../results/char_results/" + RECENT_PHASE_PF,
-    "../../results/comp_results/" + RECENT_PHASE_PF + "/json",
+    f"../../{CHAR_RESULT_PATH}",
+    f"../../{COMP_RESULT_PATH}/json",
 ]
 
 if moc_mode and path.exists("../../results/web_results"):
@@ -97,5 +98,4 @@ def copy_results() -> None:
 
 
 if aa_mode:
-    shutil.make_archive("../../results/results", "zip", "../../results/web_results")
     copy_results()

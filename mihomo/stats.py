@@ -10,7 +10,7 @@ from io import TextIOWrapper
 from json import dumps as json_dumps
 from json import load as json_load
 from operator import itemgetter
-from os import mkdir, path
+from os import path
 from statistics import mean as stat_mean
 from statistics import median as stat_median
 from sys import exit as sys_exit
@@ -21,9 +21,10 @@ from matplotlib.pyplot import show as plt_show
 
 sys_path.append("../scripts/")
 from comp_rates_config import (
+    BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
+    CHAR_RESULT_PATH,
     RECENT_PHASE,
-    RECENT_PHASE_PF,
     pf_filename,
     skew_num,
     skip_random,
@@ -49,17 +50,24 @@ def read_csv(file: TextIOWrapper) -> list[dict[str, str]]:
     return list(DictReader(file, delimiter=","))
 
 
-if path.exists("../data/raw_csvs_real/"):
-    with open(
-        "../data/raw_csvs_real/" + RECENT_PHASE + "_build.csv",
-        encoding="UTF8",
-    ) as f:
-        data = list(read_csv(f))
-else:
-    with open("../data/raw_csvs/" + RECENT_PHASE + "_build.csv", encoding="UTF8") as f:
-        data = list(read_csv(f))
+try:
+    if path.exists("../data/raw_csvs_real/"):
+        with open(
+            "../data/raw_csvs_real/" + RECENT_PHASE + "_build.csv",
+            encoding="UTF8",
+        ) as f:
+            data = list(read_csv(f))
+    else:
+        with open(
+            "../data/raw_csvs/" + RECENT_PHASE + "_build.csv",
+            encoding="UTF8",
+        ) as f:
+            data = list(read_csv(f))
+except FileNotFoundError:
+    print("No build data found.")
+    data = []
 
-with open("../results/char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
+with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
     build = list(read_csv(f))
 
 archetype = "all"
@@ -181,7 +189,7 @@ uid = "0"
 mainstatkeys: list[str] = list(mainstat_dict.keys())
 substatkeys: list[str] = list(substats.keys())
 
-if path.isfile("../../uids.csv"):
+if (skip_self or skip_random) and path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csvreader(f, delimiter=",")
         self_uids = set(next(iter(reader)))
@@ -340,13 +348,13 @@ def write_files(
 
 with (
     open(
-        "../results/mihomo/chars.csv",
+        f"../{BUILD_RESULT_PATH}/chars.csv",
         "w",
         newline="",
         encoding="UTF8",
     ) as file1,
     open(
-        "../results/mihomo/demographic.csv",
+        f"../{BUILD_RESULT_PATH}/demographic.csv",
         "w",
         newline="",
         encoding="UTF8",
@@ -356,7 +364,7 @@ with (
 
 
 temp_stats: list[dict[str, str | float]] = []
-with open("../results/char_results/" + RECENT_PHASE_PF + "/all.json") as char_file:
+with open(f"../{CHAR_RESULT_PATH}/all.json") as char_file:
     CHARACTERS: list[dict[str, str]] = json_load(char_file)
 for iter_char, char_stat in enumerate(stats.values()):
     for key in statkeys:
@@ -390,13 +398,7 @@ for iter_char, char_stat in enumerate(stats.values()):
 
     temp_stats.append(CHARACTERS[iter_char] | char_stat.stats_write)
 
-if not path.exists("../results/char_results/" + RECENT_PHASE_PF):
-    mkdir("../results/char_results/" + RECENT_PHASE_PF)
-
-with open(
-    "../results/char_results/" + RECENT_PHASE_PF + "/all2.json",
-    "w",
-) as char_file:
+with open(f"../{CHAR_RESULT_PATH}/all2.json", "w") as char_file:
     char_file.write(json_dumps(temp_stats, indent=2))
 
 print("Average AR: ", (ar / count))

@@ -13,7 +13,9 @@ from time import sleep, time
 
 import char_usage as cu
 from comp_rates_config import (
+    CHAR_RESULT_PATH,
     CHARS_INFO,
+    COMP_RESULT_PATH,
     F2P_ONLY,
     PAST_PHASE_PF,
     WHALE_ONLY,
@@ -132,9 +134,9 @@ def main() -> None:
                 )
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
-                with open("../results/char_results/appearance.json", "w") as out_file:
+                with open(f"../{CHAR_RESULT_PATH}/appearance.json", "w") as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
-                with open("../results/char_results/rounds.json", "w") as out_file:
+                with open(f"../{CHAR_RESULT_PATH}/rounds.json", "w") as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage:", round(cur_time - start_time, 2), "s")
@@ -153,12 +155,12 @@ def main() -> None:
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
                 with open(
-                    "../results/char_results/appearance_combine.json",
+                    f"../{CHAR_RESULT_PATH}/appearance_combine.json",
                     "w",
                 ) as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
                 with open(
-                    "../results/char_results/rounds_combine.json",
+                    f"../{CHAR_RESULT_PATH}/rounds_combine.json",
                     "w",
                 ) as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
@@ -195,7 +197,7 @@ def main() -> None:
             )
 
         if not WHALE_ONLY and not F2P_ONLY:
-            with open("../results/char_results/demographic.json", "w") as out_file:
+            with open(f"../{CHAR_RESULT_PATH}/demographic.json", "w") as out_file:
                 out_file.write(dumps(sample_size, indent=2))
         cur_time = time()
         print("done comp stage:", round(cur_time - start_time, 2), "s")
@@ -218,7 +220,7 @@ def main() -> None:
         and not WHALE_ONLY
         and not F2P_ONLY
     ):
-        with open("../results/comp_results/json/all_comps.json", "w") as out_file:
+        with open(f"../{COMP_RESULT_PATH}/json/all_comps.json", "w") as out_file:
             out_file.write(dumps(all_comps_json, indent=2))
 
     if __name__ == "__main__":
@@ -811,7 +813,7 @@ def comp_usages_write(
 
     if floor:
         with open(
-            "../results/comp_results/comps_usage_" + filename + ".csv",
+            f"../{COMP_RESULT_PATH}/comps_usage_{filename}.csv",
             "w",
             newline="",
         ) as f:
@@ -822,7 +824,7 @@ def comp_usages_write(
     if not info_char and sort_app:
         all_comps_json[filename] = out_json.copy()
         with open(
-            "../results/comp_results/json/" + filename + ".json",
+            f"../{COMP_RESULT_PATH}/json/{filename}.json",
             "w",
         ) as out_file:
             out_file.write(dumps(out_json, indent=2))
@@ -866,7 +868,7 @@ def duo_write(
     elif F2P_ONLY:
         filename = filename + "_E0S0"
 
-    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
@@ -959,7 +961,7 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open("../results/char_results/duo_check.csv", "w", newline="") as f:
+        with open(f"../{CHAR_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
@@ -990,7 +992,7 @@ def duo_write(
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open("../results/char_results/" + filename + ".json", "w") as out_file:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 
@@ -1195,10 +1197,10 @@ def char_usages_write(
                 )
             else:
                 out_chars[i][value] = 0 if pf_mode else 99.99
-    with open("../results/char_results/" + filename + ".json", "w") as out_file:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_chars, indent=2))
 
-    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         for chars in out_chars_csv:

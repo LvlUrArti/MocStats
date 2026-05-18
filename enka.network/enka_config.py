@@ -6,7 +6,13 @@ import os.path
 import sys
 
 sys.path.append("../scripts/")
-from comp_rates_config import RECENT_PHASE, as_mode, pf_mode
+from comp_rates_config import (
+    CHAR_RESULT_PATH,
+    CHARS_INFO,
+    RECENT_PHASE,
+    as_mode,
+    pf_mode,
+)
 
 skip_self = False
 skip_random = False
@@ -31,18 +37,15 @@ elif pf_mode:
 with open("../data/relics.json") as f:
     relics_data = json.load(f)
 
-with open("../data/characters.json") as f:
-    characters = json.load(f)
-
 trailblazer_ids: list[str] = []
-for char in characters.values():
-    if "trailblazer_ids" in char:
+for char in CHARS_INFO.values():
+    if char.trailblazer_ids:
         trailblazer_ids.extend(
-            trailblazer_id for trailblazer_id in char["trailblazer_ids"]
+            trailblazer_id for trailblazer_id in char.trailblazer_ids
         )
 
-if os.path.exists("../results/char_results/uids.csv"):
-    with open("../results/char_results/uids.csv", encoding="UTF8") as f:
+if os.path.exists(f"../{CHAR_RESULT_PATH}/uids.csv"):
+    with open(f"../{CHAR_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)
         uids = [int(uid[0]) for uid in uids]

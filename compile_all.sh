@@ -24,64 +24,48 @@ echo "MoC"
 python comp_rates.py -w &
 python comp_rates.py -f &
 python comp_rates.py -a
-echo ""
-echo "Move MoC"
-python move.py
 
 echo ""
 echo "PF"
 python comp_rates.py -w -pf &
 python comp_rates.py -f -pf &
 python comp_rates.py -a -pf
-echo ""
-echo "Move PF"
-python move.py -pf
 
 echo ""
 echo "AS"
 python comp_rates.py -w -as &
 python comp_rates.py -f -as &
 python comp_rates.py -a -as
-echo ""
-echo "Move AS"
-python move.py -as
 
 echo ""
 echo "AA"
 python comp_rates.py -w -aa &
 python comp_rates.py -f -aa &
 python comp_rates.py -a -aa
-echo ""
-echo "Move AA"
-python move.py -aa
 
 echo ""
 echo "MoC stats"
 cd ../mihomo
 python stats.py
 cd ../scripts
-python move.py
 
 echo ""
 echo "PF stats"
 cd ../mihomo
 python stats.py -pf
 cd ../scripts
-python move.py -pf
 
 echo ""
 echo "AS stats"
 cd ../mihomo
 python stats.py -as
 cd ../scripts
-python move.py -as
 
 echo ""
 echo "AA stats"
 cd ../mihomo
 python stats.py -aa
 cd ../scripts
-python move.py -aa
 
 cd compile_result
 python combine_char.py

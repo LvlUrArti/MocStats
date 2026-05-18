@@ -6,7 +6,7 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import RECENT_PHASE, aa_mode, as_mode, pf_mode
+from comp_rates_config import COMP_RESULT_PATH, aa_mode, pf_mode
 
 file_names = ["top"]
 moc_names = ["12-1", "12-2"]
@@ -21,26 +21,12 @@ elif aa_mode:
 else:
     file_names.extend(moc_names)
 
-suffix = ""
-if as_mode:
-    suffix = "_as"
-elif pf_mode:
-    suffix = "_pf"
-elif aa_mode:
-    suffix = "_aa"
-
-RECENT_PHASE_PF = RECENT_PHASE + suffix
-
 for file_name in file_names:
     # Load the JSON files
-    with open(
-        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}.json",
-    ) as f:
+    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}.json") as f:
         team_data: list[dict[str, str | float]] = json.load(f)
 
-    with open(
-        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}_C1.json",
-    ) as f:
+    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}_C1.json") as f:
         team_c1_data = json.load(f)
 
     # Create a dictionary to store the matched teams
@@ -82,8 +68,5 @@ for file_name in file_names:
     ]
 
     # Write the updated data back to the top.json file
-    with open(
-        f"../../results/comp_results/{RECENT_PHASE_PF}/json/{file_name}_combined.json",
-        "w",
-    ) as f:
+    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}_combined.json", "w") as f:
         json.dump(team_data, f, indent=2)
