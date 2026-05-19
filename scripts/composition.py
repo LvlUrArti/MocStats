@@ -64,13 +64,14 @@ class Composition:
         a list (alphabetically ordered) of the character names.
         """
         self.char_presence: dict[str, bool] = {}
-        self.char_cons: dict[str, int] = {}
+        self.char_cons: dict[str, int] | None = None
         fives: list[str] = []
         self.dps: list[str] = []
         self.subdps: list[str] = []
         self.amplifier: list[str] = []
         self.healer: list[str] = []
         if comp_chars_cons:
+            self.char_cons = {}
             for char_iter in range(len(comp_chars)):
                 self.char_cons[comp_chars[char_iter]] = comp_chars_cons[char_iter]
         comp_chars.sort()

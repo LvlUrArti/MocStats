@@ -129,13 +129,19 @@ def appearances(
             sustain_count = 0
 
             for char in user_chamber.characters:
+                char_cons = None
+                if user_chamber.char_cons:
+                    char_cons = user_chamber.char_cons[char]
+                elif char in user.owned:
+                    char_cons = user.owned[char].cons
+
                 if (
                     CHARS_INFO[char].availability == "Limited 5*"
-                    and user_chamber.char_cons
-                    and user_chamber.char_cons[char] > 0
+                    and char_cons is not None
+                    and char_cons > 0
                 ):
                     whale_comp = True
-                    if user_chamber.char_cons[char] > CONS_LIMIT:
+                    if char_cons > CONS_LIMIT:
                         giga_whale = True
                 if char in user.owned and user.owned[char].weapon in sig_weaps:
                     f2p_comp = False
@@ -144,14 +150,21 @@ def appearances(
 
             if moc_mode:
                 side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
-                for char in user.chambers[side_chamber].characters:
+                user_side_chamber = user.chambers[side_chamber]
+                for char in user_side_chamber.characters:
+                    char_cons = None
+                    if user_side_chamber.char_cons:
+                        char_cons = user_side_chamber.char_cons[char]
+                    elif char in user.owned:
+                        char_cons = user.owned[char].cons
+
                     if (
                         CHARS_INFO[char].availability == "Limited 5*"
-                        and user.chambers[side_chamber].char_cons
-                        and user.chambers[side_chamber].char_cons[char] > 0
+                        and char_cons is not None
+                        and char_cons > 0
                     ):
                         whale_comp = True
-                        if user.chambers[side_chamber].char_cons[char] > CONS_LIMIT:
+                        if char_cons > CONS_LIMIT:
                             giga_whale = True
                     if char in user.owned and user.owned[char].weapon in sig_weaps:
                         f2p_comp = False
@@ -182,10 +195,16 @@ def appearances(
 
                 for char in loop_char:
                     user_round = user_chamber.round_num
-
                     app[char].app_flat_all += 1
-                    if user_chamber.char_cons and chambers == SINGLE_CHAMBER:
-                        char_con = user_chamber.char_cons[comp_char]
+
+                    char_con = None
+                    if chambers == SINGLE_CHAMBER:
+                        if user_chamber.char_cons:
+                            char_con = user_chamber.char_cons[comp_char]
+                        elif comp_char in user.owned:
+                            char_con = user.owned[comp_char].cons
+
+                    if char_con is not None:
                         app[char].cons_freq[char_con].app_flat += 1
                         if sustain_count <= 1:
                             app[char].cons_freq[char_con].round_list[

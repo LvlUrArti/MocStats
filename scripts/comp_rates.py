@@ -380,25 +380,40 @@ def used_comps(
         sustain_count = 0
         for char in range(4):
             comp_char = comp_tuple[char]
+            char_cons = None
+
+            if comp.char_cons:
+                char_cons = comp.char_cons[comp_char]
+            elif comp_char in all_players[comp.player].owned:
+                char_cons = all_players[comp.player].owned[comp_char].cons
+
             if (
                 CHARS_INFO[comp_char].availability == "Limited 5*"
-                and comp.char_cons
-                and comp.char_cons[comp_char] > 0
+                and char_cons is not None
+                and char_cons > 0
             ):
                 whale_comp = True
-                if comp.char_cons[comp_char] > 2:
+                if char_cons > 2:
                     giga_whale = True
             if "sustain" in CHARS_INFO[comp_char].role:
                 sustain_count += 1
 
-        if side_comp and side_comp.char_cons:
+        if side_comp:
             for char in side_comp.characters:
+                char_cons = None
+
+                if side_comp.char_cons:
+                    char_cons = side_comp.char_cons[char]
+                elif char in all_players[side_comp.player].owned:
+                    char_cons = all_players[side_comp.player].owned[char].cons
+
                 if (
                     CHARS_INFO[char].availability == "Limited 5*"
-                    and side_comp.char_cons[char] > 0
+                    and char_cons is not None
+                    and char_cons > 0
                 ):
                     whale_comp = True
-                    if side_comp.char_cons[char] > 2:
+                    if char_cons > 2:
                         giga_whale = True
 
         if whale_comp:
@@ -570,13 +585,19 @@ def used_duos(
         giga_whale = False
         sustain_count = 0
         for char in comp.characters:
+            char_cons = None
+            if comp.char_cons:
+                char_cons = comp.char_cons[char]
+            elif char in all_players[comp.player].owned:
+                char_cons = all_players[comp.player].owned[char].cons
+
             if (
                 CHARS_INFO[char].availability == "Limited 5*"
-                and comp.char_cons
-                and comp.char_cons[char] > 0
+                and char_cons is not None
+                and char_cons > 0
             ):
                 whale_comp = True
-                if comp.char_cons[char] > 2:
+                if char_cons > 2:
                     giga_whale = True
             if "sustain" in CHARS_INFO[char].role:
                 sustain_count += 1
@@ -586,14 +607,21 @@ def used_duos(
             side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
             side_comp = all_players[comp.player].chambers[side_chamber]
 
-        if side_comp and side_comp.char_cons:
+        if side_comp:
             for char in side_comp.characters:
+                char_cons = None
+                if side_comp.char_cons:
+                    char_cons = side_comp.char_cons[char]
+                elif char in all_players[side_comp.player].owned:
+                    char_cons = all_players[side_comp.player].owned[char].cons
+
                 if (
                     CHARS_INFO[char].availability == "Limited 5*"
-                    and side_comp.char_cons[char] > 0
+                    and char_cons is not None
+                    and char_cons > 0
                 ):
                     whale_comp = True
-                    if side_comp.char_cons[char] > 2:
+                    if char_cons > 2:
                         giga_whale = True
 
         if (
