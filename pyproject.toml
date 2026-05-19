@@ -9,6 +9,7 @@ ignore = [
   "S301",     # Use pickle package (necessari in hsr.py)
   "INP001",   # Checks for packages that are missing an __init__.py file
   "DTZ005",   # Use of naive datetime
+  "DTZ006",   # Use of naive datetime
   "DTZ007",   # Use of naive datetime
   "TD002",    # Missing TODO author
   "TD003",    # Missing TODO link
