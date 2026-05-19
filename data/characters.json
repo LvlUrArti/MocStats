@@ -35,18 +35,6 @@
       "amplifier"
     ]
   },
-  "Silver Wolf": {
-    "id": "1006",
-    "rarity": 5,
-    "path": "Nihility",
-    "element": "Quantum",
-    "availability": "Limited 5*",
-    "slug": "silver-wolf",
-    "release": 1686128400,
-    "role": [
-      "amplifier"
-    ]
-  },
   "Arlan": {
     "id": "1008",
     "rarity": 4,
@@ -215,18 +203,6 @@
       "amplifier"
     ]
   },
-  "Jing Yuan": {
-    "id": "1204",
-    "rarity": 5,
-    "path": "Erudition",
-    "element": "Lightning",
-    "availability": "Limited 5*",
-    "slug": "jing-yuan",
-    "release": 1684335600,
-    "role": [
-      "dps"
-    ]
-  },
   "Sushang": {
     "id": "1206",
     "rarity": 4,
@@ -237,30 +213,6 @@
     "release": 1682460000,
     "role": [
       "dps"
-    ]
-  },
-  "Luocha": {
-    "id": "1203",
-    "rarity": 5,
-    "path": "Abundance",
-    "element": "Imaginary",
-    "availability": "Limited 5*",
-    "slug": "luocha",
-    "release": 1687942800,
-    "role": [
-      "sustain"
-    ]
-  },
-  "Yukong": {
-    "id": "1207",
-    "rarity": 4,
-    "path": "Harmony",
-    "element": "Imaginary",
-    "availability": "4*",
-    "slug": "yukong",
-    "release": 1687942800,
-    "role": [
-      "amplifier"
     ]
   },
   "Yanqing": {
@@ -319,6 +271,69 @@
       "8004"
     ]
   },
+  "Ice March 7th": {
+    "id": "1001",
+    "rarity": 4,
+    "path": "Preservation",
+    "element": "Ice",
+    "availability": "4*",
+    "slug": "march-7th",
+    "release": 1682460000,
+    "role": [
+      "sustain"
+    ],
+    "trailblazer_ids": [
+      "1001"
+    ]
+  },
+  "Jing Yuan": {
+    "id": "1204",
+    "rarity": 5,
+    "path": "Erudition",
+    "element": "Lightning",
+    "availability": "Limited 5*",
+    "slug": "jing-yuan",
+    "release": 1684335600,
+    "role": [
+      "dps"
+    ]
+  },
+  "Silver Wolf": {
+    "id": "1006",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "silver-wolf",
+    "release": 1686128400,
+    "role": [
+      "amplifier"
+    ]
+  },
+  "Luocha": {
+    "id": "1203",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Imaginary",
+    "availability": "Limited 5*",
+    "slug": "luocha",
+    "release": 1687942800,
+    "role": [
+      "sustain"
+    ]
+  },
+  "Yukong": {
+    "id": "1207",
+    "rarity": 4,
+    "path": "Harmony",
+    "element": "Imaginary",
+    "availability": "4*",
+    "slug": "yukong",
+    "release": 1687942800,
+    "role": [
+      "amplifier"
+    ]
+  },
   "Blade": {
     "id": "1205",
     "rarity": 5,
@@ -339,7 +354,7 @@
     "element": "Lightning",
     "availability": "Limited 5*",
     "slug": "kafka",
-    "release": 1689757200,
+    "release": 1691571600,
     "role": [
       "specialist"
     ]
@@ -351,7 +366,7 @@
     "element": "Physical",
     "availability": "4*",
     "slug": "luka",
-    "release": 1689757200,
+    "release": 1691571600,
     "role": [
       "dps"
     ]
@@ -392,6 +407,18 @@
       "sustain"
     ]
   },
+  "Jingliu": {
+    "id": "1212",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "jingliu",
+    "release": 1697014800,
+    "role": [
+      "dps"
+    ]
+  },
   "Topaz & Numby": {
     "id": "1112",
     "rarity": 5,
@@ -414,18 +441,6 @@
     "release": 1698483600,
     "role": [
       "amplifier"
-    ]
-  },
-  "Jingliu": {
-    "id": "1212",
-    "rarity": 5,
-    "path": "Destruction",
-    "element": "Ice",
-    "availability": "Limited 5*",
-    "slug": "jingliu",
-    "release": 1697014800,
-    "role": [
-      "dps"
     ]
   },
   "Huohuo": {
@@ -520,7 +535,7 @@
     "element": "Ice",
     "availability": "4*",
     "slug": "misha",
-    "release": 1709200800,
+    "release": 1707213600,
     "role": [
       "dps"
     ]
@@ -532,7 +547,7 @@
     "element": "Quantum",
     "availability": "Limited 5*",
     "slug": "sparkle",
-    "release": 1707213600,
+    "release": 1709200800,
     "role": [
       "amplifier"
     ]
@@ -647,21 +662,6 @@
     "release": 1722416400,
     "role": [
       "dps"
-    ]
-  },
-  "Ice March 7th": {
-    "id": "1001",
-    "rarity": 4,
-    "path": "Preservation",
-    "element": "Ice",
-    "availability": "4*",
-    "slug": "march-7th",
-    "release": 1682460000,
-    "role": [
-      "sustain"
-    ],
-    "trailblazer_ids": [
-      "1001"
     ]
   },
   "Imaginary March 7th": {
@@ -931,7 +931,7 @@
     "element": "Wind",
     "availability": "Limited 5*",
     "slug": "cerydra",
-    "release": 1760518800,
+    "release": 1756803600,
     "role": [
       "amplifier"
     ]
@@ -956,7 +956,7 @@
     "element": "Physical",
     "availability": "Limited 5*",
     "slug": "dan-heng-permansor-terrae",
-    "release": 1682460000,
+    "release": 1760518800,
     "role": [
       "sustain"
     ]
@@ -980,7 +980,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "the-dahlia",
-    "release": 1765101600,
+    "release": 1765965600,
     "role": [
       "amplifier"
     ]
@@ -1004,7 +1004,7 @@
     "element": "Fire",
     "availability": "Limited 5*",
     "slug": "sparxie",
-    "release": 1770976800,
+    "release": 1772532000,
     "role": [
       "dps",
       "specialist"
