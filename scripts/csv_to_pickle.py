@@ -84,15 +84,14 @@ def main() -> None:
     start_time = time()
     print("start")
 
-    if aa_mode:
-        for make_path in [
-            f"../{COMP_RESULT_PATH}/json",
-            f"../{BUILD_RESULT_PATH}",
-            f"../{CHAR_RESULT_PATH}",
-            "../data/pickle",
-        ]:
-            if not path.exists(make_path):
-                makedirs(make_path)
+    for make_path in [
+        f"../{COMP_RESULT_PATH}/json",
+        f"../{BUILD_RESULT_PATH}",
+        f"../{CHAR_RESULT_PATH}",
+        "../data/pickle",
+    ]:
+        if not path.exists(make_path):
+            makedirs(make_path)
 
     with (
         open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
