@@ -55,6 +55,9 @@ for file_name in file_names:
     # Iterate over the matched_teams_c1 and add the avg_round to the matched teams
     for team_key in matched_teams:  # noqa: PLC0206
         if team_key in matched_teams_c1:
+            matched_teams[team_key]["app_rate_c1"] = matched_teams_c1[team_key][
+                "app_rate"
+            ]
             matched_teams[team_key]["avg_round_c1"] = matched_teams_c1[team_key][
                 "avg_round"
             ]
