@@ -1,16 +1,16 @@
 """Update JSON data."""
 
-# ruff: noqa: N815
+# ruff: noqa: N815, ANN401, D101, D102
 
 import json
 from io import StringIO
 from typing import Any
 
 import requests
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
-def load_from_url(url: str) -> Any:  # noqa: ANN401
+def load_from_url(url: str) -> Any:
     """Load data from URL."""
     download = requests.get(url, timeout=10).content.decode("utf-8")
     return json.load(StringIO(download))
@@ -197,14 +197,57 @@ with open("../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars_data, indent=2))
 
 
+class EndgameEnemy(BaseModel):
+    id: str
+
+
+class EndgameWave(BaseModel):
+    enemies: list[EndgameEnemy]
+
+
+class EndgameSide(BaseModel):
+    waves: list[EndgameWave]
+
+
+class EndgameSides(BaseModel):
+    sides: list[EndgameSide]
+
+    @field_validator("sides", mode="before")
+    @classmethod
+    def normalize_waves(cls, value: list[dict[str, str]]) -> list[dict[str, Any]]:
+        # If the input has 'enemies' but no 'waves', wrap it into a waves array
+        if "enemies" in value[0]:
+            return [{"waves": value}]
+        return value
+
+
+class EndgameNodes(BaseModel):
+    nodes: list[EndgameSides]
+
+
+class EndgameConfig(BaseModel):
+    versionTime: str
+    versionName: str
+    versionEnemies: EndgameNodes  # Always expect nodes after normalization
+
+    @field_validator("versionEnemies", mode="before")
+    @classmethod
+    def normalize_enemies(cls, value: dict[str, Any]) -> dict[str, list[Any]]:
+        # If the input has 'sides' but no 'nodes', wrap it into a nodes array
+        if "sides" in value:
+            return {"nodes": [value]}
+        return value
+
+
 def add_endgame(versions_dict: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
     """Add endgame versions."""
-    versions: dict[str, dict[str, str]] = {}
+    versions: dict[str, dict[str, Any]] = {}
     for version, version_item in versions_dict.items():
-        version_time = version_item["versionTime"]
+        config = EndgameConfig(**version_item)
+        version_time = config.versionTime
         if version_time != "xx/xx/20xx - xx/xx/20xx":
             versions[version] = {
-                "name": version_item["versionName"],
+                "name": config.versionName,
                 "time_start": version_time.split(" - ")[0],
                 "time_end": version_time.split(" - ")[1],
             }
