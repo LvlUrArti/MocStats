@@ -281,13 +281,13 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
 BASE_PATH = f"../../results/char_results/{RECENT_PHASE}"
-BASE_PREV_PATH = f"../../results/char_results/{PAST_PHASE}"
+BASE_PREV_PATH = f"../../results/char_results/{PAST_PHASE or RECENT_PHASE}"
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 
-for read_path in [BASE_PATH, BASE_PREV_PATH]:
-    suf = "" if read_path == BASE_PATH else "_prev"
+for index, read_path in enumerate([BASE_PATH, BASE_PREV_PATH]):
+    suf = "" if index == 0 else "_prev"
     for mode in ["moc", "pf", "as", "aa"]:
         folder_dir = f"{read_path}_{mode}" if mode != "moc" else read_path
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all2.json")
