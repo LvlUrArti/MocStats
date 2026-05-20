@@ -239,7 +239,7 @@ class EndgameConfig(BaseModel):
         return value
 
 
-def add_endgame(versions_dict: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
+def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str, str]]:
     """Add endgame versions."""
     versions: dict[str, dict[str, Any]] = {}
     for version, version_item in versions_dict.items():
