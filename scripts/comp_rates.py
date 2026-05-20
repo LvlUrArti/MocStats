@@ -25,7 +25,6 @@ from comp_rates_config import (
     char_app_rate_threshold,
     char_infographics,
     duo_dict_len,
-    json_threshold,
     moc_mode,
     pf_filename,
     pf_mode,
@@ -813,7 +812,7 @@ def comp_usages_write(
             outvar_comps_append["app_rate"] = str(cur_comp.app_rate) + "%"
             outvar_comps_append["avg_round"] = str(cur_comp.round)
             outvar_comps.append(outvar_comps_append)
-        if not info_char and (cur_comp.app_rate >= json_threshold):
+        if not info_char:
             out = list(comp)
             for i in range(4):
                 out[i] = CHARS_INFO[out[i]].slug
