@@ -133,9 +133,15 @@ def main() -> None:
                 )
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
-                with open(f"../{CHAR_RESULT_PATH}/appearance.json", "w") as out_file:
+                with open(
+                    f"../{CHAR_RESULT_PATH}/compile/appearance.json",
+                    "w",
+                ) as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
-                with open(f"../{CHAR_RESULT_PATH}/rounds.json", "w") as out_file:
+                with open(
+                    f"../{CHAR_RESULT_PATH}/compile/rounds.json",
+                    "w",
+                ) as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage:", round(cur_time - start_time, 2), "s")
@@ -154,12 +160,12 @@ def main() -> None:
             appearances_write, rounds_write = compile_app_round(char_chambers)
             if not WHALE_ONLY and not F2P_ONLY:
                 with open(
-                    f"../{CHAR_RESULT_PATH}/appearance_combine.json",
+                    f"../{CHAR_RESULT_PATH}/compile/appearance_combine.json",
                     "w",
                 ) as out_file:
                     out_file.write(dumps(appearances_write, indent=2))
                 with open(
-                    f"../{CHAR_RESULT_PATH}/rounds_combine.json",
+                    f"../{CHAR_RESULT_PATH}/compile/rounds_combine.json",
                     "w",
                 ) as out_file:
                     out_file.write(dumps(rounds_write, indent=2))
@@ -700,8 +706,8 @@ def char_usages(
         chambers=rooms,
     )
     if (
-        (moc_mode and rooms == ["12-1", "12-2"])
-        or (pf_mode and rooms == ["4-1", "4-2"])
+        (moc_mode and rooms == ["12-1", "12-2"] and filename != "12")
+        or (pf_mode and rooms == ["4-1", "4-2"] and filename != "4")
         or (aa_mode and filename not in ["1", "2"])
     ):
         char_usages_write(chars_dict, filename)
@@ -895,7 +901,7 @@ def duo_write(
     elif F2P_ONLY:
         filename = filename + "_E0S0"
 
-    with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
+    with open(f"../{CHAR_RESULT_PATH}/duos/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
@@ -988,7 +994,7 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open(f"../{CHAR_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
+        with open(f"../{CHAR_RESULT_PATH}/duos/duo_check.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
@@ -1019,7 +1025,7 @@ def duo_write(
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
+    with open(f"../{CHAR_RESULT_PATH}/duos/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 
@@ -1174,6 +1180,9 @@ def char_usages_write(
         filename = filename + "_C1"
     elif F2P_ONLY:
         filename = filename + "_E0S0"
+
+    if filename != "all":
+        filename = f"single/{filename}"
 
     iterate_value_app = ["app_rate", "app_rate_e0", "diff"]
     iterate_value_round = ["avg_round", "std_dev_round", "q1_round", "diff_rounds"]

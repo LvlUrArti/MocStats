@@ -559,10 +559,10 @@ def usages(
 
     try:
         with open(
-            "../results/char_results/" + past_phase + "/appearance.json",
+            f"../results/char_results/{past_phase}/compile/appearance.json",
         ) as stats:
             past_usage = load(stats)
-        with open("../results/char_results/" + past_phase + "/rounds.json") as stats:
+        with open(f"../results/char_results/{past_phase}/compile/rounds.json") as stats:
             past_rounds = load(stats)
     except FileNotFoundError:
         pass

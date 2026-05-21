@@ -81,7 +81,7 @@ for mode, versions in selected_versions.items():
         if mode not in mode_to_phases:
             mode_to_phases[mode] = []
         folder = f"{version}_{mode}" if mode != "moc" else version
-        file_path = f"../../results/char_results/{folder}/all2.json"
+        file_path = f"../../results/char_results/{folder}/all.json"
         try:
             data = load_full_stats(file_path)
             mode_to_phases[mode].append(data)

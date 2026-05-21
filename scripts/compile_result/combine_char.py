@@ -271,7 +271,7 @@ def load_base_stats(file_path: str) -> dict[str, BaseCharacterStats]:
 
 
 def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
-    """Load full stats (all2.json files with extended info)."""
+    """Load full stats (all.json files with extended info)."""
     with open(file_path) as file:
         data = json.load(file)
     return {item["char"]: FullCharacterStats(**item) for item in data}
@@ -290,7 +290,7 @@ for index, read_path in enumerate([BASE_PATH, BASE_PREV_PATH]):
     suf = "" if index == 0 else "_prev"
     for mode in ["moc", "pf", "as", "aa"]:
         folder_dir = f"{read_path}_{mode}" if mode != "moc" else read_path
-        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all2.json")
+        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all.json")
         raw[f"{mode}_e1{suf}"] = load_base_stats(f"{folder_dir}/all_C1.json")
         raw[f"{mode}_s0{suf}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 

@@ -18,6 +18,7 @@ from sys import path as sys_path
 
 from matplotlib.pyplot import hist as plt_hist
 from matplotlib.pyplot import show as plt_show
+from send2trash import send2trash
 
 sys_path.append("../scripts/")
 from comp_rates_config import (
@@ -398,7 +399,8 @@ for iter_char, char_stat in enumerate(stats.values()):
 
     temp_stats.append(CHARACTERS[iter_char] | char_stat.stats_write)
 
-with open(f"../{CHAR_RESULT_PATH}/all2.json", "w") as char_file:
+send2trash(f"../{CHAR_RESULT_PATH}/all.json")
+with open(f"../{CHAR_RESULT_PATH}/all.json", "w") as char_file:
     char_file.write(json_dumps(temp_stats, indent=2))
 
 print("Average AR: ", (ar / count))

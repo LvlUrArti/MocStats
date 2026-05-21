@@ -29,6 +29,7 @@ else:
 
 source_dirs = [
     f"../../{CHAR_RESULT_PATH}",
+    f"../../{CHAR_RESULT_PATH}/duos",
     f"../../{COMP_RESULT_PATH}/json",
 ]
 

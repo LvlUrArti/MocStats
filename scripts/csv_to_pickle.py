@@ -87,7 +87,9 @@ def main() -> None:
     for make_path in [
         f"../{COMP_RESULT_PATH}/json",
         f"../{BUILD_RESULT_PATH}",
-        f"../{CHAR_RESULT_PATH}",
+        f"../{CHAR_RESULT_PATH}/compile",
+        f"../{CHAR_RESULT_PATH}/single",
+        f"../{CHAR_RESULT_PATH}/duos",
         "../data/pickle",
     ]:
         if not path.exists(make_path):
