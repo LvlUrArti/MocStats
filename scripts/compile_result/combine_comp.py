@@ -7,6 +7,7 @@ from sys import path as sys_path
 
 sys_path.append("../")
 from comp_rates_config import COMP_RESULT_PATH, aa_mode, pf_mode
+from send2trash import send2trash
 
 file_names = ["top"]
 moc_names = ["12-1", "12-2"]
@@ -22,11 +23,13 @@ else:
     file_names.extend(moc_names)
 
 for file_name in file_names:
+    combine_path = f"../../{COMP_RESULT_PATH}/json/{file_name}"
+
     # Load the JSON files
-    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}.json") as f:
+    with open(f"{combine_path}.json") as f:
         team_data: list[dict[str, str | float]] = json.load(f)
 
-    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}_C1.json") as f:
+    with open(f"{combine_path}_C1.json") as f:
         team_c1_data = json.load(f)
 
     # Create a dictionary to store the matched teams
@@ -71,5 +74,8 @@ for file_name in file_names:
     ]
 
     # Write the updated data back to the top.json file
-    with open(f"../../{COMP_RESULT_PATH}/json/{file_name}_combined.json", "w") as f:
+    with open(f"{combine_path}_combined.json", "w") as f:
         json.dump(team_data, f, indent=2)
+
+    send2trash(f"{combine_path}.json")
+    send2trash(f"{combine_path}_C1.json")
