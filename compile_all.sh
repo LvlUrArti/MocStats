@@ -16,6 +16,7 @@ else
 	cd hf_data
 	python up_data.py -y
 	python up_data.py -n
+	python generate_config.py
 	cd ../
 fi
 
