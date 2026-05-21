@@ -81,7 +81,7 @@ with open(relative_path("../data/versions/config.json")) as f:
     ENDGAME_INFOS: dict[str, EndgameConfig] = {
         char_name: EndgameConfig(**item) for char_name, item in raw_config.items()
     }
-    ENDGAME_INFO: EndgameConfig = ENDGAME_INFOS[RECENT_PHASE]
+    ENDGAME_INFO: EndgameConfig | None = ENDGAME_INFOS.get(RECENT_PHASE)
 
 
 moc_mode: bool = args.memory_of_chaos
@@ -96,19 +96,20 @@ if not as_mode:
 
 pf_filename = ""
 if as_mode:
-    if not ENDGAME_INFO.as_ver:
+    if ENDGAME_INFO and not ENDGAME_INFO.as_ver:
         sys_exit()
     pf_filename = "_as"
 elif pf_mode:
-    if not ENDGAME_INFO.pf_ver:
+    if ENDGAME_INFO and not ENDGAME_INFO.pf_ver:
         sys_exit()
     pf_filename = "_pf"
 elif aa_mode:
-    if not ENDGAME_INFO.aa_ver:
+    if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
         sys_exit()
     pf_filename = "_aa"
-elif moc_mode and not ENDGAME_INFO.moc_ver:
+elif moc_mode and ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
     sys_exit()
+
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 PAST_PHASE_PF = PAST_PHASE + pf_filename
 
@@ -240,7 +241,10 @@ with open(relative_path("../data/characters.json")) as char_file:
     CHARS_INFO: dict[str, CharInfo] = {
         char_name: CharInfo(**item)
         for char_name, item in raw_characters.items()
-        if datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date
+        if (
+            not ENDGAME_INFO
+            or (datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date)
+        )
     }
 
 with open(relative_path("../data/light_cones.json")) as char_file:

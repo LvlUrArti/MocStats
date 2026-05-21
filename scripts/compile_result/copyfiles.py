@@ -99,7 +99,7 @@ def copy_results() -> None:
         print(f"Error during copy operation: {e}")
 
 
-if aa_mode:
+if aa_mode and ENDGAME_INFO:
     with open("../../data/versions/aa_boss_names.json") as f:
         boss_names = json.load(f)
 
