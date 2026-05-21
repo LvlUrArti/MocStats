@@ -7,14 +7,11 @@ import json
 
 # Import your existing models and loader
 from combine_char import FullCharacterStats, dps_base_slugs, load_full_stats
-from comp_rates_config import CHARS_INFO, RECENT_PHASE, CharInfo
+from comp_rates_config import CHARS_INFO, ENDGAME_INFOS, RECENT_PHASE, CharInfo
 
 # ----------------------------------------------------------------------
 # Configuration
 # ----------------------------------------------------------------------
-with open("../../data/versions/phases.json") as f:
-    PHASES: list[tuple[str, str, bool]] = json.load(f)
-
 CHARS_BY_SLUG: dict[str, CharInfo] = {}
 for char_info in CHARS_INFO.values():
     CHARS_BY_SLUG[char_info.slug] = char_info
@@ -24,47 +21,56 @@ for char_info in CHARS_INFO.values():
 # ----------------------------------------------------------------------
 modes = ["moc", "pf", "as"]
 
-# Precompute for each snapshot index the last update index for each mode
-# list of dicts: last_update_idx[i][mode]
-# = index of most recent ≤ i where mode was updated
-last_update_idx: list[dict[str, int | None]] = []
-for i, _snapshot in enumerate(PHASES):
-    row: dict[str, int | None] = {}
-    for m in modes:
-        # search backwards from i to find the most recent snapshot where mode == m
-        idx = None
-        for j in range(i, -1, -1):
-            if PHASES[j][1] == m:
-                idx = j
-                break
-        row[m] = idx
-    last_update_idx.append(row)
 
-# Collect up to 3 snapshots per mode, starting from the most recent overall version
-selected_versions: dict[str, list[str]] = {m: [] for m in modes}
-used_updates: dict[str, set[str]] = {
-    m: set() for m in modes
-}  # track underlying update versions already covered
+def get_latest_unique_versions(
+    modes: list[str],
+    count: int = 3,
+) -> dict[str, list[str]]:
+    """Get unique versions.
 
-for i in range(len(PHASES) - 1, -1, -1):  # from newest to oldest
-    v, updated_mode, valid_mode = PHASES[i]
-    if not valid_mode:
-        continue
+    For each mode, collect versions in order of appearance.
+    then return the last `count` unique versions in chronological order.
+    """
+    # Initialize list for each mode
+    mode_versions: dict[str, list[tuple[str, str]]] = {mode: [] for mode in modes}
 
-    for m in modes:
-        if len(selected_versions[m]) >= 3:
-            continue
-        last_i = last_update_idx[i][m]
-        if last_i is None:
-            continue  # mode never appears before this snapshot - shouldn't happen here
-        underlying = PHASES[last_i][0]  # version string of the last update for mode m
-        if underlying not in used_updates[m]:
-            selected_versions[m].append(v)
-            used_updates[m].add(underlying)
+    # Iterate over outer keys
+    for patch_ver, patch_data in ENDGAME_INFOS.items():
+        for mode in modes:
+            match mode:
+                case "pf":
+                    version = patch_data.pf_ver
+                case "aa":
+                    version = patch_data.aa_ver
+                case "as":
+                    version = patch_data.as_ver
+                case "moc" | _:
+                    version = patch_data.moc_ver
+            if version:
+                mode_versions[mode].append((patch_ver, version))
 
-# Reverse each list so that they are in chronological order (oldest first)
+    # Extract latest unique versions
+    result: dict[str, list[str]] = {}
+    for mode, versions in mode_versions.items():
+        # Get unique versions in reverse order of appearance
+        unique_ver: list[str] = []
+        seen: set[str] = set()
+        for ver, v in reversed(versions):
+            if v not in seen:
+                seen.add(v)
+                unique_ver.append(ver)
+                if len(unique_ver) == count:
+                    break
+        # Reverse back to chronological order
+        result[mode] = list(reversed(unique_ver))
+
+    return result
+
+
+modes = ["moc", "pf", "as"]
+selected_versions = get_latest_unique_versions(modes)
+
 for m in modes:
-    selected_versions[m].reverse()
     print(f"Selected phases for {m}: {selected_versions[m]}")
 
 # Load data for all unique versions
