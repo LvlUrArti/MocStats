@@ -7,6 +7,7 @@ from datetime import datetime
 from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
+from sys import exit as sys_exit
 
 from pydantic import BaseModel, field_validator
 
@@ -83,6 +84,7 @@ with open(relative_path("../data/versions/config.json")) as f:
     ENDGAME_INFO: EndgameConfig = ENDGAME_INFOS[RECENT_PHASE]
 
 
+moc_mode: bool = args.memory_of_chaos
 pf_mode: bool = args.pure_fic or args.apoc_shadow
 as_mode: bool = args.apoc_shadow
 aa_mode: bool = args.anomaly_arbitration
@@ -92,15 +94,21 @@ if not pf_mode:
 if not as_mode:
     as_mode = False
 
-moc_mode = not pf_mode and not aa_mode
-
 pf_filename = ""
 if as_mode:
+    if not ENDGAME_INFO.as_ver:
+        sys_exit()
     pf_filename = "_as"
 elif pf_mode:
+    if not ENDGAME_INFO.pf_ver:
+        sys_exit()
     pf_filename = "_pf"
 elif aa_mode:
+    if not ENDGAME_INFO.aa_ver:
+        sys_exit()
     pf_filename = "_aa"
+elif moc_mode and not ENDGAME_INFO.moc_ver:
+    sys_exit()
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 PAST_PHASE_PF = PAST_PHASE + pf_filename
 
@@ -216,14 +224,23 @@ class CharInfo(BaseModel):
     element: str
     availability: str
     slug: str
+    release: datetime
     role: list[str]
     trailblazer_ids: list[str] | None = None
+
+    @field_validator("release", mode="before")
+    @classmethod
+    def parse_epoch(cls, value: int) -> datetime:
+        """Convert epoch timestamp to datetime."""
+        return datetime.fromtimestamp(value)
 
 
 with open(relative_path("../data/characters.json")) as char_file:
     raw_characters = load(char_file)
     CHARS_INFO: dict[str, CharInfo] = {
-        char_name: CharInfo(**item) for char_name, item in raw_characters.items()
+        char_name: CharInfo(**item)
+        for char_name, item in raw_characters.items()
+        if datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date
     }
 
 with open(relative_path("../data/light_cones.json")) as char_file:
