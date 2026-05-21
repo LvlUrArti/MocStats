@@ -21,8 +21,8 @@ from comp_rates_config import (
 )
 from composition import Stage
 from line_profiler import profile
-from percentile import calculate_percentile
 from scipy.stats import skew, trim_mean
+from utils.percentile import calculate_percentile
 
 if TYPE_CHECKING:
     from player_phase import PlayerPhase
