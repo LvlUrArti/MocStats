@@ -1,13 +1,15 @@
 """Copy files to web_results."""
 
-import shutil
+import json
 from os import listdir, mkdir, path
+from shutil import copyfile, copytree, rmtree
 from sys import path as sys_path
 
 sys_path.append("../")
 from comp_rates_config import (
     CHAR_RESULT_PATH,
     COMP_RESULT_PATH,
+    ENDGAME_INFO,
     RECENT_PHASE,
     aa_mode,
     as_mode,
@@ -47,7 +49,7 @@ for source_dir in source_dirs:
         send2trash(target_dir)
     mkdir(target_dir)
     for file_name in file_names:
-        common_file = file_name in ["builds.json", "boss_names.json", "histograph.json"]
+        common_file = file_name in {"builds.json", "histograph.json"}
         if ("comp_results" in source_dir and "combined" in file_name) or (
             file_name in {"duo_usages.json", "demographic.json"}
             or (common_file and moc_mode)
@@ -57,7 +59,7 @@ for source_dir in source_dirs:
                 target_dir = "../../results/web_results"
             copyfrom = path.join(source_dir, file_name)
             copyto = path.join(target_dir, file_name)
-            shutil.copyfile(copyfrom, copyto)
+            copyfile(copyfrom, copyto)
             if common_file:
                 target_dir = temp_target_dir
 
@@ -79,7 +81,7 @@ def copy_results() -> None:
         # If it's a directory, remove it first
         if path.isdir(destination):
             try:
-                shutil.rmtree(destination)
+                rmtree(destination)
                 print(f"Removed existing folder: {destination}")
             except Exception as e:
                 print(f"Error removing existing folder: {e}")
@@ -88,7 +90,7 @@ def copy_results() -> None:
     # Perform the copy operation
     try:
         # Use copytree to copy entire folder
-        shutil.copytree("../../results/web_results", destination)
+        copytree("../../results/web_results", destination)
 
         print("✅ Folder copied successfully!")
         print(f"   Destination: {destination}")
@@ -98,4 +100,10 @@ def copy_results() -> None:
 
 
 if aa_mode:
+    with open("../../data/versions/aa_boss_names.json") as f:
+        boss_names = json.load(f)
+
+    with open("../../results/web_results/boss_names.json", "w") as f:
+        json.dump(boss_names[ENDGAME_INFO.aa_ver], f, indent=2)
+
     copy_results()
