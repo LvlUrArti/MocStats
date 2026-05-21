@@ -8,7 +8,7 @@ if [ -n "$1" ]; then
 else
 	cd scripts
 	python combine_raw_chars.py
-	python csv_to_pickle.py &
+	python csv_to_pickle.py -moc &
 	python csv_to_pickle.py -pf &
 	python csv_to_pickle.py -aa &
 	python csv_to_pickle.py -as &
@@ -21,9 +21,9 @@ fi
 
 echo ""
 echo "MoC"
-python comp_rates.py -w &
-python comp_rates.py -f &
-python comp_rates.py -a
+python comp_rates.py -w -moc &
+python comp_rates.py -f -moc &
+python comp_rates.py -a -moc
 
 echo ""
 echo "PF"
@@ -43,40 +43,33 @@ python comp_rates.py -w -aa &
 python comp_rates.py -f -aa &
 python comp_rates.py -a -aa
 
+cd ../mihomo
 echo ""
 echo "MoC stats"
-cd ../mihomo
-python stats.py
-cd ../scripts
+python stats.py -moc
 
 echo ""
 echo "PF stats"
-cd ../mihomo
 python stats.py -pf
-cd ../scripts
 
 echo ""
 echo "AS stats"
-cd ../mihomo
 python stats.py -as
-cd ../scripts
 
 echo ""
 echo "AA stats"
-cd ../mihomo
 python stats.py -aa
-cd ../scripts
 
-cd compile_result
+cd ../scripts/compile_result
 python combine_char.py
 python histograph.py
-python combine_comp.py
+python combine_comp.py -moc
 python combine_comp.py -pf
 python combine_comp.py -as
 python combine_comp.py -aa
 
 if [ -d "../../results/web_results" ]; then
-	python copyfiles.py
+	python copyfiles.py -moc
 	python copyfiles.py -pf
 	python copyfiles.py -as
 	python copyfiles.py -aa
