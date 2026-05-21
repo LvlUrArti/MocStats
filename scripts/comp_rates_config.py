@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
+from datetime import datetime
 from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 RECENT_PHASE = "4.2.2"
 
@@ -50,6 +51,36 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
+
+
+def relative_path(relative_path: str) -> str:
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    script_dir = path_dirname(__file__)
+    return path_join(script_dir, relative_path)
+
+
+class EndgameConfig(BaseModel):
+    """Endgame collect date and version info."""
+
+    collect_date: datetime
+    moc_ver: str | None
+    pf_ver: str | None
+    as_ver: str | None
+    aa_ver: str | None
+
+    @field_validator("collect_date", mode="before")
+    @classmethod
+    def parse_collect_date(cls, value: str) -> datetime:
+        """Convert string to datetime."""
+        return datetime.strptime(value, "%d/%m/%Y")
+
+
+with open(relative_path("../data/versions/config.json")) as f:
+    raw_config = load(f)
+    ENDGAME_INFOS: dict[str, EndgameConfig] = {
+        char_name: EndgameConfig(**item) for char_name, item in raw_config.items()
+    }
+    ENDGAME_INFO: EndgameConfig = ENDGAME_INFOS[RECENT_PHASE]
 
 
 pf_mode: bool = args.pure_fic or args.apoc_shadow
@@ -174,12 +205,6 @@ elif args.duos:
 alt_comps = "Character specific infographics" in run_commands
 if alt_comps and char_app_rate_threshold > app_rate_threshold:
     app_rate_threshold = char_app_rate_threshold
-
-
-def relative_path(relative_path: str) -> str:
-    """Get absolute path to resource, works for dev and for PyInstaller."""
-    script_dir = path_dirname(__file__)
-    return path_join(script_dir, relative_path)
 
 
 class CharInfo(BaseModel):
