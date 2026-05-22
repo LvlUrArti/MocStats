@@ -3,7 +3,6 @@
 # pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 from __future__ import annotations
 
-from csv import writer as csvwriter
 from statistics import mean, stdev
 from typing import TYPE_CHECKING
 from warnings import filterwarnings
@@ -502,21 +501,6 @@ def appearances(
             else:
                 planar_freq.app = 0
                 planar_freq.round = DEFAULT_VALUE
-    if chambers == ["12-1", "12-2"]:
-        with open("../results/char_results/all_rounds.csv", "w", newline="") as f:
-            csv_writer = csvwriter(f)
-            for char, all_round_char in all_rounds.items():
-                for room_num, all_round_num in all_round_char.items():
-                    for round_num_iter in all_round_num:
-                        csv_writer.writerow(
-                            [
-                                "2/21/2024",
-                                char,
-                                room_num,
-                                round_num_iter,
-                                all_round_num[round_num_iter],
-                            ],
-                        )
     return app
 
 
