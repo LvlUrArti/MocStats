@@ -13,11 +13,11 @@ from time import sleep, time
 
 import char_usage as cu
 from comp_rates_config import (
+    BASE_RESULT_PATH,
     CHAR_RESULT_PATH,
     CHARS_INFO,
     COMP_RESULT_PATH,
     F2P_ONLY,
-    PAST_PHASE_PF,
     WHALE_ONLY,
     aa_mode,
     app_rate_threshold,
@@ -44,7 +44,6 @@ all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps
 avg_round_stage: dict[int, list[int]] = loaded_data.avg_round_stage
 sample_size: dict[int | str, dict[str, int | float]] = loaded_data.sample_size
-all_comps_json: dict[str, list[dict[str, str | float]]] = {}
 
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
@@ -113,16 +112,17 @@ def main() -> None:
             one_stage,
             filename="all",
         )
-        duo_usages(
-            usage,
-            one_stage,
-            check_duo=False,
-        )
+        if not F2P_ONLY:
+            duo_usages(
+                usage,
+                one_stage,
+                check_duo=False,
+            )
         cur_time = time()
         print("done char 8 - 10:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
 
-        if "Char usages for each stage" in run_commands:
+        if "Char usages for each stage" in run_commands and aa_mode:
             char_chambers: dict[str, dict[str, cu.CharUsageData]] = {
                 "all": usage.copy(),
             }
@@ -131,18 +131,6 @@ def main() -> None:
                     [room],
                     filename=room,
                 )
-            appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open(
-                    f"../{CHAR_RESULT_PATH}/compile/appearance.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(dumps(appearances_write, indent=2))
-                with open(
-                    f"../{CHAR_RESULT_PATH}/compile/rounds.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage:", round(cur_time - start_time, 2), "s")
             start_time = cur_time
@@ -157,18 +145,6 @@ def main() -> None:
                     room,
                     filename=room[0].split("-")[0],
                 )
-            appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open(
-                    f"../{CHAR_RESULT_PATH}/compile/appearance_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(dumps(appearances_write, indent=2))
-                with open(
-                    f"../{CHAR_RESULT_PATH}/compile/rounds_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(dumps(rounds_write, indent=2))
             cur_time = time()
             print("done char stage (combine):", round(cur_time - start_time, 2), "s")
             start_time = cur_time
@@ -202,7 +178,7 @@ def main() -> None:
             )
 
         if not WHALE_ONLY and not F2P_ONLY:
-            with open(f"../{CHAR_RESULT_PATH}/demographic.json", "w") as out_file:
+            with open(f"../{BASE_RESULT_PATH}/demographic.json", "w") as out_file:
                 out_file.write(dumps(sample_size, indent=2))
         cur_time = time()
         print("done comp stage:", round(cur_time - start_time, 2), "s")
@@ -219,15 +195,6 @@ def main() -> None:
         print("done char infographics:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
 
-    if (
-        "Comp usage 8 - 10" in run_commands
-        and "Comp usages for each stage" in run_commands
-        and not WHALE_ONLY
-        and not F2P_ONLY
-    ):
-        with open(f"../{COMP_RESULT_PATH}/json/all_comps.json", "w") as out_file:
-            out_file.write(dumps(all_comps_json, indent=2))
-
     if __name__ == "__main__":
         notification.notify(
             title="Finished",
@@ -237,53 +204,6 @@ def main() -> None:
         )  # pyright: ignore[reportOptionalCall]
         # waiting time
         sleep(2)
-
-
-def compile_app_round(
-    char_chambers: dict[str, dict[str, cu.CharUsageData]],
-) -> tuple[
-    dict[str, dict[str, dict[str, float | str]]],
-    dict[str, dict[str, dict[str, float | str]]],
-]:
-    """Compile appearance and round data."""
-    appearances: dict[str, dict[str, cu.CharUsageData]] = {}
-    rounds: dict[str, dict[str, cu.CharUsageData]] = {}
-    appearances_write: dict[
-        str,
-        dict[str, dict[str, float | str]],
-    ] = {}
-    rounds_write: dict[str, dict[str, dict[str, float | str]]] = {}
-    for room, char_cham in char_chambers.items():
-        appearances[room] = dict(
-            sorted(
-                char_cham.items(),
-                key=lambda t: t[1].app,
-                reverse=True,
-            ),
-        )
-        appearances_write[room] = {}
-        rounds_write[room] = {}
-        rounds[room] = dict(
-            sorted(
-                char_cham.items(),
-                key=lambda t: t[1].round,
-                reverse=pf_mode,
-            ),
-        )
-        for char in char_cham:
-            appearances_write[room][char] = {
-                "app": char_cham[char].app,
-                "rarity": char_cham[char].rarity,
-                "diff": char_cham[char].diff,
-            }
-            if char_cham[char].round == 0:
-                continue
-            rounds_write[room][char] = {
-                "round": char_cham[char].round,
-                "rarity": char_cham[char].rarity,
-                "diff": char_cham[char].diff_rounds,
-            }
-    return (appearances_write, rounds_write)
 
 
 @profile
@@ -700,11 +620,7 @@ def char_usages(
         chambers=rooms,
         info_char=False,
     )
-    chars_dict: dict[str, cu.CharUsageData] = cu.usages(
-        app,
-        PAST_PHASE_PF,
-        chambers=rooms,
-    )
+    chars_dict: dict[str, cu.CharUsageData] = cu.usages(app, chambers=rooms)
     if (
         (moc_mode and rooms == ["12-1", "12-2"] and filename != "12")
         or (pf_mode and rooms == ["4-1", "4-2"] and filename != "4")
@@ -855,9 +771,8 @@ def comp_usages_write(
                 csv_writer.writerow(comps.values())
 
     if not info_char and sort_app:
-        all_comps_json[filename] = out_json.copy()
         with open(
-            f"../{COMP_RESULT_PATH}/json/{filename}.json",
+            f"../{COMP_RESULT_PATH}/{filename}.json",
             "w",
         ) as out_file:
             out_file.write(dumps(out_json, indent=2))
@@ -901,7 +816,7 @@ def duo_write(
     elif F2P_ONLY:
         filename = filename + "_E0S0"
 
-    with open(f"../{CHAR_RESULT_PATH}/duos/{filename}.csv", "w", newline="") as f:
+    with open(f"../{BASE_RESULT_PATH}/duos/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
@@ -994,7 +909,7 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open(f"../{CHAR_RESULT_PATH}/duos/duo_check.csv", "w", newline="") as f:
+        with open(f"../{BASE_RESULT_PATH}/duos/duo_check.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
@@ -1025,7 +940,7 @@ def duo_write(
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open(f"../{CHAR_RESULT_PATH}/duos/{filename}.json", "w") as out_file:
+    with open(f"../{BASE_RESULT_PATH}/duos/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 
@@ -1051,10 +966,8 @@ def char_usages_write(
             "q1_round": str(cur_char.q1_round),
             "role": cur_char.role[0],
             "rarity": cur_char.rarity,
-            "diff": str(cur_char.diff) + "%",
-            "diff_rounds": str(cur_char.diff_rounds),
         }
-        for i in ["app_rate", "app_rate_e0", "diff", "diff_rounds"]:
+        for i in ["app_rate", "app_rate_e0"]:
             if out_chars_append[i] == "-%":
                 out_chars_append[i] = "-"
         if list(cur_char.weapons):
@@ -1181,11 +1094,8 @@ def char_usages_write(
     elif F2P_ONLY:
         filename = filename + "_E0S0"
 
-    if filename != "all":
-        filename = f"single/{filename}"
-
-    iterate_value_app = ["app_rate", "app_rate_e0", "diff"]
-    iterate_value_round = ["avg_round", "std_dev_round", "q1_round", "diff_rounds"]
+    iterate_value_app = ["app_rate", "app_rate_e0"]
+    iterate_value_round = ["avg_round", "std_dev_round", "q1_round"]
     iterate_name_arti: list[str] = []
     for i in range(weap_len):
         j = str(i + 1)

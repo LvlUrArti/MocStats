@@ -7,6 +7,7 @@ from sys import path as sys_path
 
 sys_path.append("../")
 from comp_rates_config import (
+    BASE_RESULT_PATH,
     CHAR_RESULT_PATH,
     COMP_RESULT_PATH,
     ENDGAME_INFO,
@@ -29,8 +30,9 @@ else:
 
 source_dirs = [
     f"../../{CHAR_RESULT_PATH}",
-    f"../../{CHAR_RESULT_PATH}/duos",
-    f"../../{COMP_RESULT_PATH}/json",
+    f"../../results/all_results/{RECENT_PHASE}",
+    f"../../{BASE_RESULT_PATH}/duos",
+    f"../../{COMP_RESULT_PATH}",
 ]
 
 if moc_mode and path.exists("../../results/web_results"):
@@ -39,7 +41,8 @@ if moc_mode and path.exists("../../results/web_results"):
 mkdir("../../results/web_results/" + moc_suffix)
 
 for source_dir in source_dirs:
-    if "comp_results" in source_dir:
+    comp_mode = source_dir == f"../../{COMP_RESULT_PATH}"
+    if comp_mode:
         target_dir = "../../results/web_results/" + moc_suffix + "/comps"
     else:
         target_dir = "../../results/web_results/" + moc_suffix + "/chars"
@@ -51,7 +54,7 @@ for source_dir in source_dirs:
     mkdir(target_dir)
     for file_name in file_names:
         common_file = file_name in {"builds.json", "histograph.json"}
-        if ("comp_results" in source_dir and "combined" in file_name) or (
+        if (comp_mode and "combined" in file_name) or (
             file_name in {"duo_usages.json", "demographic.json"}
             or (common_file and moc_mode)
         ):

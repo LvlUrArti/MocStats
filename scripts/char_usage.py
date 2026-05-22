@@ -13,7 +13,6 @@ from comp_rates_config import (
     F2P_ONLY,
     WHALE_ONLY,
     aa_mode,
-    load,
     moc_mode,
     pf_mode,
     sig_weaps,
@@ -516,8 +515,6 @@ class CharUsageData(CharApp):
         super().__init__()
         self.__dict__.update(char_app.__dict__)
         self.usage = 0
-        self.diff = "-"
-        self.diff_rounds = "-"
         self.role = CHARS_INFO[char].role
         self.rarity = CHARS_INFO[char].availability
         self.weapons: dict[str, RoundApp] = {}
@@ -532,40 +529,15 @@ class CharUsageData(CharApp):
 @profile
 def usages(
     app: dict[str, CharApp],
-    past_phase: str,
     chambers: list[str],
 ) -> dict[str, CharUsageData]:
     """Calculate usage data for each character."""
     uses: dict[str, CharUsageData] = {}
-    past_usage: dict[str, dict[str, dict[str, float]]] = {}
-    past_rounds: dict[str, dict[str, dict[str, float]]] = {}
     rates: list[float] = []
-
-    try:
-        with open(
-            f"../results/char_results/{past_phase}/compile/appearance.json",
-        ) as stats:
-            past_usage = load(stats)
-        with open(f"../results/char_results/{past_phase}/compile/rounds.json") as stats:
-            past_rounds = load(stats)
-    except FileNotFoundError:
-        pass
 
     for char, app_char in app.items():
         uses[char] = CharUsageData(app_char, char)
         rates.append(uses[char].app)
-
-        stage = "all" if chambers == SINGLE_CHAMBER else chambers[0]
-
-        if stage in past_usage and char in past_usage[stage]:
-            uses[char].diff = str(
-                round(app_char.app - past_usage[stage][char]["app"], 2),
-            )
-
-        if stage in past_rounds and char in past_rounds[stage]:
-            uses[char].diff_rounds = str(
-                round(app_char.round - past_rounds[stage][char]["round"], 2),
-            )
 
         for i in range(7):
             uses[char].cons_usage[i] = {"app": "-", "own": "-", "usage": "-"}

@@ -23,7 +23,7 @@ else:
     file_names.extend(moc_names)
 
 for file_name in file_names:
-    combine_path = f"../../{COMP_RESULT_PATH}/json/{file_name}"
+    combine_path = f"../../{COMP_RESULT_PATH}/{file_name}"
 
     # Load the JSON files
     with open(f"{combine_path}.json") as f:

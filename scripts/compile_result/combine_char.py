@@ -1,10 +1,18 @@
 """Combine JSON results from different game modes into a unified build dataset."""
 
 import json
+from os.path import exists
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import CHARS_INFO, LIGHT_CONES, PAST_PHASE, RECENT_PHASE
+
+from comp_rates_config import (
+    CHARS_INFO,
+    ENDGAME_INFO,
+    ENDGAME_INFOS,
+    LIGHT_CONES,
+    RECENT_PHASE,
+)
 from pydantic import BaseModel
 
 # ----------------------------------------------------------------------
@@ -77,8 +85,6 @@ class BaseCharacterStats(BaseModel):
     std_dev_round: float | int
     q1_round: float | int
     rarity: str
-    diff: float
-    diff_rounds: float | int
 
     # Weapons 1-10
     weapon_1: str
@@ -280,23 +286,46 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # ----------------------------------------------------------------------
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
-BASE_PATH = f"../../results/char_results/{RECENT_PHASE}"
-BASE_PREV_PATH = f"../../results/char_results/{PAST_PHASE or RECENT_PHASE}"
+def get_read_path(ver: str, mode: str) -> str:
+    """Get the path to read data from."""
+    return f"../../results/all_results/{ver}/{ver}_{mode}/chars"
+
+
+def get_previous_mode_phase(mode: str) -> str:
+    """Get the previous phase of a mode."""
+    mode_key = f"{mode}_ver"  # e.g., "aa_ver"
+    prev_phase = RECENT_PHASE
+    check_ver = getattr(ENDGAME_INFO, mode_key)
+
+    for phase, inner in ENDGAME_INFOS.items():
+        cur_ver = getattr(inner, mode_key)
+        if cur_ver == check_ver:
+            break
+        prev_phase = phase
+
+    if exists(get_read_path(prev_phase, mode)):
+        return prev_phase
+    return RECENT_PHASE
+
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
+modes = ["moc", "pf", "as", "aa"]
 
-for index, read_path in enumerate([BASE_PATH, BASE_PREV_PATH]):
-    suf = "" if index == 0 else "_prev"
-    for mode in ["moc", "pf", "as", "aa"]:
-        folder_dir = f"{read_path}_{mode}" if mode != "moc" else read_path
+for suf in ["", "_prev"]:
+    phases = {
+        mode: get_previous_mode_phase(mode) if suf else RECENT_PHASE for mode in modes
+    }
+    for mode in modes:
+        folder_dir = get_read_path(phases[mode], mode)
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all.json")
         raw[f"{mode}_e1{suf}"] = load_base_stats(f"{folder_dir}/all_C1.json")
         raw[f"{mode}_s0{suf}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 
+    read_path = get_read_path(phases["aa"], "aa")
     boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")]
     for boss_num, boss_room in boss_configs:
-        file_name = f"{read_path}_aa/{boss_room}"
+        file_name = f"{read_path}/{boss_room}"
         raw[f"aa_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
         raw[f"aa_boss_{boss_num}_e1{suf}"] = load_base_stats(f"{file_name}_C1.json")
         raw[f"aa_boss_{boss_num}_s0{suf}"] = load_base_stats(f"{file_name}_E0S0.json")
@@ -763,7 +792,7 @@ def process_chars() -> None:
     # ----------------------------------------------------------------------
     # Write final JSON
     # ----------------------------------------------------------------------
-    output_path = f"../../results/char_results/{RECENT_PHASE}/builds.json"
+    output_path = f"../../results/all_results/{RECENT_PHASE}/builds.json"
     with open(output_path, "w") as out_file:
         json.dump(output_data, out_file, indent=2)
 

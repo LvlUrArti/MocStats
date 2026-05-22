@@ -12,6 +12,7 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
+    BASE_RESULT_PATH,
     BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
     CHAR_RESULT_PATH,
@@ -85,20 +86,20 @@ def main() -> None:
     print("start")
 
     for make_path in [
-        f"../{COMP_RESULT_PATH}/json",
+        f"../{COMP_RESULT_PATH}",
         f"../{BUILD_RESULT_PATH}",
-        f"../{CHAR_RESULT_PATH}/compile",
-        f"../{CHAR_RESULT_PATH}/single",
-        f"../{CHAR_RESULT_PATH}/duos",
+        f"../{CHAR_RESULT_PATH}",
+        f"../{BASE_RESULT_PATH}/duos",
         "../data/pickle",
     ]:
         if not path.exists(make_path):
             makedirs(make_path)
 
+    filename = RECENT_PHASE_PF.replace("_moc", "")
     with (
-        open("../data/raw_csvs_real/" + RECENT_PHASE_PF + ".csv")
+        open(f"../data/raw_csvs_real/{filename}.csv")
         if path.exists("../data/raw_csvs_real/")
-        else open("../data/raw_csvs/" + RECENT_PHASE_PF + ".csv")
+        else open(f"../data/raw_csvs/{filename}.csv")
     ) as f:
         reader = list(DictReader(f))
 
@@ -216,7 +217,7 @@ def main() -> None:
             all_players[comp.player] = PlayerPhase(comp.player)
         all_players[comp.player].add_comp(comp)
 
-    with open(f"../{CHAR_RESULT_PATH}/uids.csv", "w", newline="") as f:
+    with open(f"../{BASE_RESULT_PATH}/uids.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         for uid in uid_freq_comp:
             csv_writer.writerow([uid])

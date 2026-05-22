@@ -16,9 +16,10 @@ from send2trash import send2trash
 
 sys_path.append("../scripts/")
 from comp_rates_config import (
+    BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
+    CHAR_RESULT_PATH,
     RECENT_PHASE,
-    RECENT_PHASE_PF,
     pf_filename,
     run_all_chars,
     run_chars_name,
@@ -48,7 +49,7 @@ else:
     with open("../data/raw_csvs/" + RECENT_PHASE + "_build.csv", encoding="UTF8") as f:
         data = list(read_csv(f))
 
-with open("../results/char_results/" + RECENT_PHASE_PF + "/all.csv") as f:
+with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
     reader = csvreader(f, delimiter=",")
     col_names_build = next(reader)
     build = list(read_csv(f))
@@ -91,7 +92,7 @@ class StatsWeap:
         self.sample_size_players = 0
 
 
-RESULT_FILE = f"../results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}/char_weapons.csv"
+RESULT_FILE = f"../{BUILD_RESULT_PATH}/char_weapons.csv"
 
 if path.exists(RESULT_FILE):
     send2trash(RESULT_FILE)

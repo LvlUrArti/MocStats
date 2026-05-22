@@ -7,7 +7,7 @@ import sys
 
 sys.path.append("../scripts/")
 from comp_rates_config import (
-    CHAR_RESULT_PATH,
+    BASE_RESULT_PATH,
     CHARS_INFO,
     RECENT_PHASE,
     as_mode,
@@ -44,8 +44,8 @@ for char in CHARS_INFO.values():
             trailblazer_id for trailblazer_id in char.trailblazer_ids
         )
 
-if os.path.exists(f"../{CHAR_RESULT_PATH}/uids.csv"):
-    with open(f"../{CHAR_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
+if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
+    with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)
         uids = [int(uid[0]) for uid in uids]

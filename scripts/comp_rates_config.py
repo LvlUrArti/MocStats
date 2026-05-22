@@ -13,9 +13,6 @@ from pydantic import BaseModel, field_validator
 
 RECENT_PHASE = "4.2.2"
 
-# if no past phase, leave blank
-PAST_PHASE = "4.2.1"
-
 parser = ArgumentParser()
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-cha", "--chars_all", action="store_true")
@@ -107,11 +104,12 @@ elif aa_mode:
     if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
         sys_exit()
     pf_filename = "_aa"
-elif moc_mode and ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
-    sys_exit()
+elif moc_mode:
+    if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
+        sys_exit()
+    pf_filename = "_moc"
 
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
-PAST_PHASE_PF = PAST_PHASE + pf_filename
 
 run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
@@ -136,9 +134,10 @@ duo_dict_len = 30
 duo_dict_len_print = 10
 LAST_MOC_FLOOR = 12
 CONS_LIMIT = 2
-CHAR_RESULT_PATH = f"results/char_results/{RECENT_PHASE_PF}"
-COMP_RESULT_PATH = f"results/comp_results/{RECENT_PHASE_PF}"
-BUILD_RESULT_PATH = f"results/mihomo/{RECENT_PHASE}/{RECENT_PHASE_PF}"
+BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}"
+CHAR_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/chars"
+COMP_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/comps"
+BUILD_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/builds"
 
 skip_self = False
 skip_random = False
@@ -151,7 +150,6 @@ run_commands = {
     # "Duos check",
     "Char usages 8 - 10",
     "Char usages for each stage",
-    "Char usages for each stage (combined)",
     "Comp usage 8 - 10",
     "Comp usages for each stage",
     # "Character specific infographics",
@@ -163,7 +161,6 @@ if args.top or args.f2p:
     run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
-        "Comp usage 8 - 10",
     }
 
 elif args.whale:
@@ -188,7 +185,6 @@ elif args.all:
     run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
-        "Char usages for each stage (combined)",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
     }
@@ -196,8 +192,6 @@ elif args.all:
 elif args.chars_all:
     run_commands = {
         "Char usages 8 - 10",
-        "Char usages for each stage",
-        "Char usages for each stage (combined)",
     }
 
 elif args.comps_all:

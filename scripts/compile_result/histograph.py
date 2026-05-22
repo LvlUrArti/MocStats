@@ -80,8 +80,9 @@ for mode, versions in selected_versions.items():
     for version in versions:
         if mode not in mode_to_phases:
             mode_to_phases[mode] = []
-        folder = f"{version}_{mode}" if mode != "moc" else version
-        file_path = f"../../results/char_results/{folder}/all.json"
+        file_path = (
+            f"../../results/all_results/{version}/{version}_{mode}/chars/all.json"
+        )
         try:
             data = load_full_stats(file_path)
             mode_to_phases[mode].append(data)
@@ -170,6 +171,6 @@ for char in sorted(all_chars):
 # ----------------------------------------------------------------------
 # Save to JSON
 # ----------------------------------------------------------------------
-output_path = f"../../results/char_results/{RECENT_PHASE}/histograph.json"
+output_path = f"../../results/all_results/{RECENT_PHASE}/histograph.json"
 with open(output_path, "w") as f:
     json.dump(results, f, indent=2)
