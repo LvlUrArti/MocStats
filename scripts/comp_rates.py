@@ -1146,15 +1146,16 @@ def char_usages_write(
     with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_chars, indent=2))
 
-    with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
-        csv_writer = csvwriter(f)
-        count = 0
-        for chars in out_chars_csv:
-            if count == 0:
-                header = chars.keys()
-                csv_writer.writerow(header)
-                count += 1
-            csv_writer.writerow(chars.values())
+    if filename.startswith("all"):
+        with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
+            csv_writer = csvwriter(f)
+            count = 0
+            for chars in out_chars_csv:
+                if count == 0:
+                    header = chars.keys()
+                    csv_writer.writerow(header)
+                    count += 1
+                csv_writer.writerow(chars.values())
 
 
 if __name__ == "__main__":
