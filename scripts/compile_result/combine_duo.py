@@ -103,5 +103,5 @@ if __name__ == "__main__":
     combine_duo_files(
         f"../../{BASE_RESULT_PATH}/duos/duo_usages.json",
         f"../../{BASE_RESULT_PATH}/duos/duo_usages_C1.json",
-        f"../../{BASE_RESULT_PATH}/duos/duo_combine.json",
+        f"../../{BASE_RESULT_PATH}/duos/duo_usages.json",
     )
