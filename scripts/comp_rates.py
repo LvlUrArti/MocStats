@@ -9,7 +9,7 @@ from json import dumps
 from os import path
 from statistics import mean
 from sys import exit as sys_exit
-from time import sleep, time
+from time import time
 
 import char_usage as cu
 from comp_rates_config import (
@@ -35,7 +35,6 @@ from composition import Composition, Stage
 from csv_to_pickle import PickleData, load_pickle_data
 from line_profiler import profile
 from player_phase import PlayerPhase
-from plyer import notification
 from scipy.stats import skew, trim_mean
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
@@ -194,16 +193,6 @@ def main() -> None:
         cur_time = time()
         print("done char infographics:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
-
-    if __name__ == "__main__":
-        notification.notify(
-            title="Finished",
-            message="Finished executing comp_rates",
-            # displaying time
-            timeout=2,
-        )  # pyright: ignore[reportOptionalCall]
-        # waiting time
-        sleep(2)
 
 
 @profile
@@ -925,15 +914,6 @@ def duo_write(
                 + ", "
                 + str(out_dd[out_dd_print]["avg_round"]),
             )
-        if __name__ == "__main__":
-            notification.notify(
-                title="Finished",
-                message="Finished executing comp_rates",
-                # displaying time
-                timeout=2,
-            )  # pyright: ignore[reportOptionalCall]
-            # waiting time
-            sleep(1)
         sys_exit()
 
     for i in range(len(out_duos)):

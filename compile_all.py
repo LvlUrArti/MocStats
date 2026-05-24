@@ -5,6 +5,8 @@ from subprocess import CalledProcessError, Popen, run
 from sys import argv, executable
 from sys import exit as sys_exit
 
+from scripts.utils.notif import send_notification
+
 # Define absolute directory tracks relative to where this script is launched
 BASE_DIR = getcwd()
 SCRIPTS_DIR = path.join(BASE_DIR, "scripts")
@@ -138,6 +140,14 @@ if __name__ == "__main__":
     try:
         main()
         print("\n🎉 Full pipeline executed successfully!")
+        send_notification(
+            "🎉 Pipeline Complete",
+            "All compilation and stats tasks have finished successfully.",
+        )
     except CalledProcessError as e:
         print(f"\n🛑 Pipeline halted. Sequential command failed: {e.cmd}")
+        send_notification(
+            "❌ Pipeline Stopped",
+            f"Sequential process failed: {e.cmd[1]}",
+        )
         sys_exit(1)

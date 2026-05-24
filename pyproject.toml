@@ -7,6 +7,7 @@ ignore = [
   "ASYNC250", # Use "input" in async context
   "S301",     # Use pickle package
   "S603",     # Use of subprocess
+  "S607",     # Use of check_output
   "INP001",   # Checks for packages that are missing an __init__.py file
   "DTZ005",   # Use of naive datetime
   "DTZ006",   # Use of naive datetime
