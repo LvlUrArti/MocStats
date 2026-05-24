@@ -11,9 +11,8 @@ from sys import exit as sys_exit
 
 from pydantic import BaseModel, field_validator
 
-RECENT_PHASE = "4.2.2"
-
 parser = ArgumentParser()
+parser.add_argument("-v", "--version", help="Version to compile")
 parser.add_argument("-m", "--mode", help="Set which mode to compile (moc/pf/as/aa)")
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-cha", "--chars_all", action="store_true")
@@ -29,6 +28,8 @@ parser.add_argument("-y", "--yes", action="store_true")
 parser.add_argument("-n", "--no", action="store_true")
 
 args = parser.parse_args()
+
+RECENT_PHASE: str = args.version or "4.2.2"
 
 
 def relative_path(relative_path: str) -> str:

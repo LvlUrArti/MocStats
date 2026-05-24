@@ -2,7 +2,6 @@
 
 from os import getcwd, path
 from subprocess import CalledProcessError, Popen, run
-from sys import argv
 from sys import executable as exe
 from sys import exit as sys_exit
 
@@ -50,45 +49,47 @@ def run_parallel(cmds: list[list[str]], cwd: str) -> None:
         sys_exit(1)
 
 
-def main() -> None:
-    """Entrypoint of pipeline."""
-    # Check for arguments
-    has_argument = len(argv) > 1
+def main(add_args: list[str] | None = None) -> None:
+    """Entrypoint of pipeline.
 
-    if not has_argument:
-        if NEW_DATA:
-            run_sequential([exe, "combine_raw_chars.py"], cwd=SCRIPTS_DIR)
-            run_sequential([exe, "hash.py"], cwd=SCRIPTS_DIR)
-            run_sequential([exe, "up_data.py", "-y"], cwd=HF_DATA_DIR)
-            run_sequential([exe, "up_data.py", "-n"], cwd=HF_DATA_DIR)
-            run_sequential([exe, "generate_config.py"], cwd=HF_DATA_DIR)
+    add_args: Additional arguments to pass.
+    """
+    if add_args is None:
+        add_args = []
 
-        run_parallel(
-            [
-                [exe, "csv_to_pickle.py", "-m", "moc"],
-                [exe, "csv_to_pickle.py", "-m", "pf"],
-                [exe, "csv_to_pickle.py", "-m", "aa"],
-                [exe, "csv_to_pickle.py", "-m", "as"],
-            ],
-            cwd=SCRIPTS_DIR,
-        )
+    if NEW_DATA:
+        run_sequential([exe, "combine_raw_chars.py"], cwd=SCRIPTS_DIR)
+        run_sequential([exe, "hash.py"], cwd=SCRIPTS_DIR)
+        run_sequential([exe, "up_data.py", "-y"], cwd=HF_DATA_DIR)
+        run_sequential([exe, "up_data.py", "-n"], cwd=HF_DATA_DIR)
+        run_sequential([exe, "generate_config.py"], cwd=HF_DATA_DIR)
+
+    run_parallel(
+        [
+            [exe, "csv_to_pickle.py", "-m", "moc", *add_args],
+            [exe, "csv_to_pickle.py", "-m", "pf", *add_args],
+            [exe, "csv_to_pickle.py", "-m", "aa", *add_args],
+            [exe, "csv_to_pickle.py", "-m", "as", *add_args],
+        ],
+        cwd=SCRIPTS_DIR,
+    )
 
     # --- Compile Section ---
     print("\nCompile")
     run_parallel(
         [
-            [exe, "comp_rates.py", "-w", "-m", "moc"],
-            [exe, "comp_rates.py", "-f", "-m", "moc"],
-            [exe, "comp_rates.py", "-a", "-m", "moc"],
-            [exe, "comp_rates.py", "-w", "-m", "pf"],
-            [exe, "comp_rates.py", "-f", "-m", "pf"],
-            [exe, "comp_rates.py", "-a", "-m", "pf"],
-            [exe, "comp_rates.py", "-w", "-m", "as"],
-            [exe, "comp_rates.py", "-f", "-m", "as"],
-            [exe, "comp_rates.py", "-a", "-m", "as"],
-            [exe, "comp_rates.py", "-w", "-m", "aa"],
-            [exe, "comp_rates.py", "-f", "-m", "aa"],
-            [exe, "comp_rates.py", "-a", "-m", "aa"],
+            [exe, "comp_rates.py", "-w", "-m", "moc", *add_args],
+            [exe, "comp_rates.py", "-f", "-m", "moc", *add_args],
+            [exe, "comp_rates.py", "-a", "-m", "moc", *add_args],
+            [exe, "comp_rates.py", "-w", "-m", "pf", *add_args],
+            [exe, "comp_rates.py", "-f", "-m", "pf", *add_args],
+            [exe, "comp_rates.py", "-a", "-m", "pf", *add_args],
+            [exe, "comp_rates.py", "-w", "-m", "as", *add_args],
+            [exe, "comp_rates.py", "-f", "-m", "as", *add_args],
+            [exe, "comp_rates.py", "-a", "-m", "as", *add_args],
+            [exe, "comp_rates.py", "-w", "-m", "aa", *add_args],
+            [exe, "comp_rates.py", "-f", "-m", "aa", *add_args],
+            [exe, "comp_rates.py", "-a", "-m", "aa", *add_args],
         ],
         cwd=SCRIPTS_DIR,
     )
@@ -97,10 +98,10 @@ def main() -> None:
     print("\nStats")
     run_parallel(
         [
-            [exe, "stats.py", "-m", "moc"],
-            [exe, "stats.py", "-m", "pf"],
-            [exe, "stats.py", "-m", "as"],
-            [exe, "stats.py", "-m", "aa"],
+            [exe, "stats.py", "-m", "moc", *add_args],
+            [exe, "stats.py", "-m", "pf", *add_args],
+            [exe, "stats.py", "-m", "as", *add_args],
+            [exe, "stats.py", "-m", "aa", *add_args],
         ],
         cwd=MIHOMO_DIR,
     )
@@ -109,27 +110,38 @@ def main() -> None:
     print("\nProcessing Compile Results")
     run_parallel(
         [
-            [exe, "combine_char.py"],
-            [exe, "histograph.py"],
-            [exe, "combine_comp.py", "-m", "moc"],
-            [exe, "combine_comp.py", "-m", "pf"],
-            [exe, "combine_comp.py", "-m", "as"],
-            [exe, "combine_comp.py", "-m", "aa"],
-            [exe, "combine_duo.py", "-m", "moc"],
-            [exe, "combine_duo.py", "-m", "pf"],
-            [exe, "combine_duo.py", "-m", "as"],
-            [exe, "combine_duo.py", "-m", "aa"],
+            [exe, "combine_char.py", *add_args],
+            [exe, "histograph.py", *add_args],
+            [exe, "combine_comp.py", "-m", "moc", *add_args],
+            [exe, "combine_comp.py", "-m", "pf", *add_args],
+            [exe, "combine_comp.py", "-m", "as", *add_args],
+            [exe, "combine_comp.py", "-m", "aa", *add_args],
+            [exe, "combine_duo.py", "-m", "moc", *add_args],
+            [exe, "combine_duo.py", "-m", "pf", *add_args],
+            [exe, "combine_duo.py", "-m", "as", *add_args],
+            [exe, "combine_duo.py", "-m", "aa", *add_args],
         ],
         cwd=COMPILE_RESULT_DIR,
     )
 
     # --- Optional Web Results Deployment ---
     if path.isdir(WEB_RESULTS_DIR):
-        print("\nWeb results directory found. Copying files...")
-        run_sequential([exe, "copyfiles.py", "-m", "moc"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([exe, "copyfiles.py", "-m", "pf"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([exe, "copyfiles.py", "-m", "as"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([exe, "copyfiles.py", "-m", "aa"], cwd=COMPILE_RESULT_DIR)
+        run_sequential(
+            [exe, "copyfiles.py", "-m", "moc", *add_args],
+            cwd=COMPILE_RESULT_DIR,
+        )
+        run_sequential(
+            [exe, "copyfiles.py", "-m", "pf", *add_args],
+            cwd=COMPILE_RESULT_DIR,
+        )
+        run_sequential(
+            [exe, "copyfiles.py", "-m", "as", *add_args],
+            cwd=COMPILE_RESULT_DIR,
+        )
+        run_sequential(
+            [exe, "copyfiles.py", "-m", "aa", *add_args],
+            cwd=COMPILE_RESULT_DIR,
+        )
 
         if NEW_DATA:
             run_sequential([exe, "up_results.py"], cwd=HF_DATA_DIR)
@@ -138,8 +150,12 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    versions_to_process = ["3.0.1", "3.0.2"]
+
     try:
-        main()
+        for ver in versions_to_process:
+            main(["-v", ver])
+
         print("\n🎉 Full pipeline executed successfully!")
         send_notification(
             "🎉 Pipeline Complete",
