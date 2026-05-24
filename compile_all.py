@@ -2,7 +2,8 @@
 
 from os import getcwd, path
 from subprocess import CalledProcessError, Popen, run
-from sys import argv, executable
+from sys import argv
+from sys import executable as exe
 from sys import exit as sys_exit
 
 from scripts.utils.notif import send_notification
@@ -56,18 +57,18 @@ def main() -> None:
 
     if not has_argument:
         if NEW_DATA:
-            run_sequential([executable, "combine_raw_chars.py"], cwd=SCRIPTS_DIR)
-            run_sequential([executable, "hash.py"], cwd=SCRIPTS_DIR)
-            run_sequential([executable, "up_data.py", "-y"], cwd=HF_DATA_DIR)
-            run_sequential([executable, "up_data.py", "-n"], cwd=HF_DATA_DIR)
-            run_sequential([executable, "generate_config.py"], cwd=HF_DATA_DIR)
+            run_sequential([exe, "combine_raw_chars.py"], cwd=SCRIPTS_DIR)
+            run_sequential([exe, "hash.py"], cwd=SCRIPTS_DIR)
+            run_sequential([exe, "up_data.py", "-y"], cwd=HF_DATA_DIR)
+            run_sequential([exe, "up_data.py", "-n"], cwd=HF_DATA_DIR)
+            run_sequential([exe, "generate_config.py"], cwd=HF_DATA_DIR)
 
         run_parallel(
             [
-                [executable, "csv_to_pickle.py", "-moc"],
-                [executable, "csv_to_pickle.py", "-pf"],
-                [executable, "csv_to_pickle.py", "-aa"],
-                [executable, "csv_to_pickle.py", "-as"],
+                [exe, "csv_to_pickle.py", "-m", "moc"],
+                [exe, "csv_to_pickle.py", "-m", "pf"],
+                [exe, "csv_to_pickle.py", "-m", "aa"],
+                [exe, "csv_to_pickle.py", "-m", "as"],
             ],
             cwd=SCRIPTS_DIR,
         )
@@ -76,18 +77,18 @@ def main() -> None:
     print("\nCompile")
     run_parallel(
         [
-            [executable, "comp_rates.py", "-w", "-moc"],
-            [executable, "comp_rates.py", "-f", "-moc"],
-            [executable, "comp_rates.py", "-a", "-moc"],
-            [executable, "comp_rates.py", "-w", "-pf"],
-            [executable, "comp_rates.py", "-f", "-pf"],
-            [executable, "comp_rates.py", "-a", "-pf"],
-            [executable, "comp_rates.py", "-w", "-as"],
-            [executable, "comp_rates.py", "-f", "-as"],
-            [executable, "comp_rates.py", "-a", "-as"],
-            [executable, "comp_rates.py", "-w", "-aa"],
-            [executable, "comp_rates.py", "-f", "-aa"],
-            [executable, "comp_rates.py", "-a", "-aa"],
+            [exe, "comp_rates.py", "-w", "-m", "moc"],
+            [exe, "comp_rates.py", "-f", "-m", "moc"],
+            [exe, "comp_rates.py", "-a", "-m", "moc"],
+            [exe, "comp_rates.py", "-w", "-m", "pf"],
+            [exe, "comp_rates.py", "-f", "-m", "pf"],
+            [exe, "comp_rates.py", "-a", "-m", "pf"],
+            [exe, "comp_rates.py", "-w", "-m", "as"],
+            [exe, "comp_rates.py", "-f", "-m", "as"],
+            [exe, "comp_rates.py", "-a", "-m", "as"],
+            [exe, "comp_rates.py", "-w", "-m", "aa"],
+            [exe, "comp_rates.py", "-f", "-m", "aa"],
+            [exe, "comp_rates.py", "-a", "-m", "aa"],
         ],
         cwd=SCRIPTS_DIR,
     )
@@ -96,10 +97,10 @@ def main() -> None:
     print("\nStats")
     run_parallel(
         [
-            [executable, "stats.py", "-moc"],
-            [executable, "stats.py", "-pf"],
-            [executable, "stats.py", "-as"],
-            [executable, "stats.py", "-aa"],
+            [exe, "stats.py", "-m", "moc"],
+            [exe, "stats.py", "-m", "pf"],
+            [exe, "stats.py", "-m", "as"],
+            [exe, "stats.py", "-m", "aa"],
         ],
         cwd=MIHOMO_DIR,
     )
@@ -108,16 +109,16 @@ def main() -> None:
     print("\nProcessing Compile Results")
     run_parallel(
         [
-            [executable, "combine_char.py"],
-            [executable, "histograph.py"],
-            [executable, "combine_comp.py", "-moc"],
-            [executable, "combine_comp.py", "-pf"],
-            [executable, "combine_comp.py", "-as"],
-            [executable, "combine_comp.py", "-aa"],
-            [executable, "combine_duo.py", "-moc"],
-            [executable, "combine_duo.py", "-pf"],
-            [executable, "combine_duo.py", "-as"],
-            [executable, "combine_duo.py", "-aa"],
+            [exe, "combine_char.py"],
+            [exe, "histograph.py"],
+            [exe, "combine_comp.py", "-m", "moc"],
+            [exe, "combine_comp.py", "-m", "pf"],
+            [exe, "combine_comp.py", "-m", "as"],
+            [exe, "combine_comp.py", "-m", "aa"],
+            [exe, "combine_duo.py", "-m", "moc"],
+            [exe, "combine_duo.py", "-m", "pf"],
+            [exe, "combine_duo.py", "-m", "as"],
+            [exe, "combine_duo.py", "-m", "aa"],
         ],
         cwd=COMPILE_RESULT_DIR,
     )
@@ -125,13 +126,13 @@ def main() -> None:
     # --- Optional Web Results Deployment ---
     if path.isdir(WEB_RESULTS_DIR):
         print("\nWeb results directory found. Copying files...")
-        run_sequential([executable, "copyfiles.py", "-moc"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([executable, "copyfiles.py", "-pf"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([executable, "copyfiles.py", "-as"], cwd=COMPILE_RESULT_DIR)
-        run_sequential([executable, "copyfiles.py", "-aa"], cwd=COMPILE_RESULT_DIR)
+        run_sequential([exe, "copyfiles.py", "-m", "moc"], cwd=COMPILE_RESULT_DIR)
+        run_sequential([exe, "copyfiles.py", "-m", "pf"], cwd=COMPILE_RESULT_DIR)
+        run_sequential([exe, "copyfiles.py", "-m", "as"], cwd=COMPILE_RESULT_DIR)
+        run_sequential([exe, "copyfiles.py", "-m", "aa"], cwd=COMPILE_RESULT_DIR)
 
         if NEW_DATA:
-            run_sequential([executable, "up_results.py"], cwd=HF_DATA_DIR)
+            run_sequential([exe, "up_results.py"], cwd=HF_DATA_DIR)
     else:
         print("\nWeb results directory not found. Skipping copy and upload.")
 

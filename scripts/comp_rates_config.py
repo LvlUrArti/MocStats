@@ -14,6 +14,7 @@ from pydantic import BaseModel, field_validator
 RECENT_PHASE = "4.2.2"
 
 parser = ArgumentParser()
+parser.add_argument("-m", "--mode", help="Set which mode to compile (moc/pf/as/aa)")
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-cha", "--chars_all", action="store_true")
 parser.add_argument("-ca", "--comps_all", action="store_true")
@@ -26,27 +27,6 @@ parser.add_argument("-f", "--f2p", action="store_true")
 # Prompt for real data (hf data)
 parser.add_argument("-y", "--yes", action="store_true")
 parser.add_argument("-n", "--no", action="store_true")
-
-parser.add_argument(
-    "-moc",
-    "--memory_of_chaos",
-    action="store_true",
-)
-parser.add_argument(
-    "-pf",
-    "--pure_fic",
-    action="store_true",
-)
-parser.add_argument(
-    "-as",
-    "--apoc_shadow",
-    action="store_true",
-)
-parser.add_argument(
-    "-aa",
-    "--anomaly_arbitration",
-    action="store_true",
-)
 
 args = parser.parse_args()
 
@@ -81,35 +61,33 @@ with open(relative_path("../data/versions/config.json")) as f:
     ENDGAME_INFO: EndgameConfig | None = ENDGAME_INFOS.get(RECENT_PHASE)
 
 
-moc_mode: bool = args.memory_of_chaos
-pf_mode: bool = args.pure_fic or args.apoc_shadow
-as_mode: bool = args.apoc_shadow
-aa_mode: bool = args.anomaly_arbitration
+moc_mode: bool = args.mode == "moc"
+pf_mode: bool = args.mode in {"pf", "as"}
+as_mode: bool = args.mode == "as"
+aa_mode: bool = args.mode == "aa"
 
 if not pf_mode:
     pf_mode = False
 if not as_mode:
     as_mode = False
 
-pf_filename = ""
-if as_mode:
-    if ENDGAME_INFO and not ENDGAME_INFO.as_ver:
-        sys_exit()
-    pf_filename = "_as"
-elif pf_mode:
-    if ENDGAME_INFO and not ENDGAME_INFO.pf_ver:
-        sys_exit()
-    pf_filename = "_pf"
-elif aa_mode:
-    if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
-        sys_exit()
-    pf_filename = "_aa"
-elif moc_mode:
-    if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
-        sys_exit()
-    pf_filename = "_moc"
-
-RECENT_PHASE_PF = RECENT_PHASE + pf_filename
+match args.mode:
+    case "as":
+        if ENDGAME_INFO and not ENDGAME_INFO.as_ver:
+            sys_exit()
+        pf_filename = "_as"
+    case "pf":
+        if ENDGAME_INFO and not ENDGAME_INFO.pf_ver:
+            sys_exit()
+        pf_filename = "_pf"
+    case "aa":
+        if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
+            sys_exit()
+        pf_filename = "_aa"
+    case "moc" | _:
+        if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
+            sys_exit()
+        pf_filename = "_moc"
 
 run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
@@ -128,12 +106,12 @@ char_app_rate_threshold = 0.25
 # threshold for comps, not inclusive
 app_rate_threshold = 0.1
 app_rate_threshold_round = 0
-f2p_app_rate_threshold = 0.1
 skew_num = 0.8
 duo_dict_len = 30
 duo_dict_len_print = 10
-LAST_MOC_FLOOR = 12
 CONS_LIMIT = 2
+
+RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}"
 CHAR_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/chars"
 COMP_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/comps"
@@ -141,11 +119,9 @@ BUILD_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/build
 
 skip_self = False
 skip_random = False
-archetype = "all"
 WHALE_ONLY: bool = args.whale
 F2P_ONLY: bool = args.f2p
 
-# Char infographics should be separated from overall comp rankings
 run_commands = {
     # "Duos check",
     "Char usages 8 - 10",
