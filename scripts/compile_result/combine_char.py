@@ -271,16 +271,22 @@ class FullCharacterStats(BaseCharacterStats):
 # ----------------------------------------------------------------------
 def load_base_stats(file_path: str) -> dict[str, BaseCharacterStats]:
     """Load basic stats (e0s1, e1, s0 files)."""
-    with open(file_path) as file:
-        data = json.load(file)
-    return {item["char"]: BaseCharacterStats(**item) for item in data}
+    try:
+        with open(file_path) as file:
+            data = json.load(file)
+        return {item["char"]: BaseCharacterStats(**item) for item in data}
+    except FileNotFoundError:
+        return {}
 
 
 def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
     """Load full stats (all.json files with extended info)."""
-    with open(file_path) as file:
-        data = json.load(file)
-    return {item["char"]: FullCharacterStats(**item) for item in data}
+    try:
+        with open(file_path) as file:
+            data = json.load(file)
+        return {item["char"]: FullCharacterStats(**item) for item in data}
+    except FileNotFoundError:
+        return {}
 
 
 # ----------------------------------------------------------------------
@@ -412,10 +418,12 @@ def build_gear_usage(
 
 
 # Build usage structures for each mode
-moc_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["moc"])
-pf_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["pf"])
-as_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["as"])
-aa_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["aa"])
+usage_dicts: dict[str, dict[str, CharacterGearUsage]] = {
+    "moc": build_gear_usage(raw_full["moc"]),
+    "pf": build_gear_usage(raw_full["pf"]),
+    "as": build_gear_usage(raw_full["as"]),
+    "aa": build_gear_usage(raw_full["aa"]),
+}
 
 # ----------------------------------------------------------------------
 # Build list of all character keys (including solo/support variants)
@@ -474,10 +482,10 @@ def process_chars() -> None:
             app_as = gear_as.app if gear_as else DEFAULT_APP
             app_aa = gear_aa.app if gear_aa else DEFAULT_APP
 
-            app_moc = app_moc * rate_moc / rate_combine
-            app_pf = app_pf * rate_pf / rate_combine
-            app_as = app_as * rate_as / rate_combine
-            app_aa = app_aa * rate_aa / rate_combine
+            app_moc = app_moc * rate["moc"] / rate_combine
+            app_pf = app_pf * rate["pf"] / rate_combine
+            app_as = app_as * rate["as"] / rate_combine
+            app_aa = app_aa * rate["aa"] / rate_combine
 
             merged[name] = MergedGearStats(
                 app=app_moc + app_pf + app_as + app_aa,
@@ -509,10 +517,10 @@ def process_chars() -> None:
             app_as = relic_as.get(name) or DEFAULT_APP
             app_aa = relic_aa.get(name) or DEFAULT_APP
 
-            app_moc = app_moc * rate_moc / rate_combine
-            app_pf = app_pf * rate_pf / rate_combine
-            app_as = app_as * rate_as / rate_combine
-            app_aa = app_aa * rate_aa / rate_combine
+            app_moc = app_moc * rate["moc"] / rate_combine
+            app_pf = app_pf * rate["pf"] / rate_combine
+            app_as = app_as * rate["as"] / rate_combine
+            app_aa = app_aa * rate["aa"] / rate_combine
 
             merged[name] = app_moc + app_pf + app_as + app_aa
 
@@ -532,7 +540,7 @@ def process_chars() -> None:
         """
         sorted_items = sorted(
             merged_gear.items(),
-            key=lambda x: x[1].app,
+            key=lambda x: (x[1].app, x[0]),
             reverse=True,
         )
         for i in range(GEAR_COUNTS[category]):
@@ -569,7 +577,11 @@ def process_chars() -> None:
 
         Write with keys like body_stats_1, body_stats_1_app, etc.
         """
-        sorted_items = sorted(merged_stats.items(), key=lambda x: x[1], reverse=True)
+        sorted_items = sorted(
+            merged_stats.items(),
+            key=lambda x: (x[1], x[0]),
+            reverse=True,
+        )
         for i in range(GEAR_COUNTS[part]):
             if i < len(sorted_items):
                 name, app = sorted_items[i]
@@ -661,125 +673,77 @@ def process_chars() -> None:
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
         round_modes = [
-            ("moc", raw_full["moc"]),
-            ("pf", raw_full["pf"]),
-            ("as", raw_full["as"]),
-            ("aa", raw_full["aa"]),
+            ("moc", raw_full["moc"], DEFAULT_CYCLE),
+            ("pf", raw_full["pf"], DEFAULT_SCORE),
+            ("as", raw_full["as"], DEFAULT_SCORE),
+            ("aa", raw_full["aa"], DEFAULT_CYCLE),
         ]
         for e in range(7):
             out[f"app_{e}"] = DEFAULT_APP
-            for mode, base in round_modes:
-                out[f"round_{e}_{mode}"] = getattr(base[char], f"round_{e}")
+            for mode, base, default in round_modes:
+                out[f"round_{e}_{mode}"] = (
+                    getattr(base[char], f"round_{e}") if char in base else default
+                )
 
         # Set cons_avg to 0, will be used later
         out["cons_avg"] = DEFAULT_APP
 
         # ----- 4. Compute mode appearance rates for weighting -----
         # These are used later to weight gear and numeric stats.
-        rate_moc = (
-            raw_full["moc"][char].app_rate
-            if raw_full["moc"][char].app_rate != 0
-            and raw_full["moc"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_pf = (
-            raw_full["pf"][char].app_rate
-            if raw_full["pf"][char].app_rate != 0
-            and raw_full["pf"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_as = (
-            raw_full["as"][char].app_rate
-            if raw_full["as"][char].app_rate != 0
-            and raw_full["as"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_aa = (
-            raw_full["aa"][char].app_rate
-            if raw_full["aa"][char].app_rate != 0
-            and raw_full["aa"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_combine = (
-            rate_moc + rate_pf + rate_as + rate_aa or 1
-        )  # avoid division by zero
-
-        # ----- 5. Merge gear stats from MoC, PF, AS -----
-        merged_weapons: dict[str, MergedGearStats] = merge_gear_stats(
-            moc_usage[char].weapons,
-            pf_usage[char].weapons,
-            as_usage[char].weapons,
-            aa_usage[char].weapons,
-        )
-        merged_artifacts: dict[str, MergedGearStats] = merge_gear_stats(
-            moc_usage[char].artifacts,
-            pf_usage[char].artifacts,
-            as_usage[char].artifacts,
-            aa_usage[char].artifacts,
-        )
-        merged_planars: dict[str, MergedGearStats] = merge_gear_stats(
-            moc_usage[char].planars,
-            pf_usage[char].planars,
-            as_usage[char].planars,
-            aa_usage[char].planars,
-        )
-
-        merged_body: dict[str, float] = merge_relic_stats(
-            moc_usage[char].body_stats,
-            pf_usage[char].body_stats,
-            as_usage[char].body_stats,
-            aa_usage[char].body_stats,
-        )
-        merged_feet: dict[str, float] = merge_relic_stats(
-            moc_usage[char].feet_stats,
-            pf_usage[char].feet_stats,
-            as_usage[char].feet_stats,
-            aa_usage[char].feet_stats,
-        )
-        merged_sphere: dict[str, float] = merge_relic_stats(
-            moc_usage[char].sphere_stats,
-            pf_usage[char].sphere_stats,
-            as_usage[char].sphere_stats,
-            aa_usage[char].sphere_stats,
-        )
-        merged_rope: dict[str, float] = merge_relic_stats(
-            moc_usage[char].rope_stats,
-            pf_usage[char].rope_stats,
-            as_usage[char].rope_stats,
-            aa_usage[char].rope_stats,
-        )
-
-        # ----- 6. Populate output with top gear and relic stats -----
-        populate_gear_usage("weapons", merged_weapons, out)
-        populate_gear_usage("artifacts", merged_artifacts, out)
-        populate_gear_usage("planars", merged_planars, out)
-
-        populate_relic_stat_usage("body", merged_body, out)
-        populate_relic_stat_usage("feet", merged_feet, out)
-        populate_relic_stat_usage("sphere", merged_sphere, out)
-        populate_relic_stat_usage("rope", merged_rope, out)
-
-        # ----- 7. Weighted average of numeric stats -----
-        for stat in NUMERIC_STATS:
-            val_moc: float = getattr(raw_full["moc"][char], stat)
-            val_pf: float = getattr(raw_full["pf"][char], stat)
-            val_as: float = getattr(raw_full["as"][char], stat)
-            val_aa: float = getattr(raw_full["aa"][char], stat)
-
-            dividend = (
-                val_moc * rate_moc
-                + val_pf * rate_pf
-                + val_as * rate_as
-                + val_aa * rate_aa
+        rate: dict[str, float] = {}
+        for mode in modes:
+            rate[mode] = (
+                raw_full[mode][char].app_rate
+                if (
+                    char in raw_full[mode]
+                    and raw_full[mode][char].app_rate != 0
+                    and raw_full[mode][char].weapon_1_app != 0
+                )
+                else 0
             )
+        rate_combine = sum(rate.values()) or 1  # avoid division by zero
+
+        # ----- 5. Populate output with top gear and relic stats -----
+        def get_gear(
+            usage_dict: dict[str, CharacterGearUsage],
+            char: str,
+            attr: str,
+        ) -> dict[str, GearStats]:
+            obj = usage_dict.get(char)
+            return getattr(obj, attr) if obj is not None else {}
+
+        def get_app(
+            usage_dict: dict[str, CharacterGearUsage],
+            char: str,
+            attr: str,
+        ) -> dict[str, float]:
+            obj = usage_dict.get(char)
+            return getattr(obj, attr) if obj is not None else {}
+
+        for stat in ["weapons", "artifacts", "planars"]:
+            merged_gear: dict[str, MergedGearStats] = merge_gear_stats(
+                *(get_gear(usage_dicts[m], char, stat) for m in modes),
+            )
+            populate_gear_usage(stat, merged_gear, out)
+
+        for stat in ["body", "feet", "sphere", "rope"]:
+            merged: dict[str, float] = merge_relic_stats(
+                *(get_app(usage_dicts[m], char, f"{stat}_stats") for m in modes),
+            )
+            populate_relic_stat_usage(stat, merged, out)
+
+        # ----- 6. Weighted average of numeric stats -----
+        for stat in NUMERIC_STATS:
+            vals: dict[str, float] = {}
+            for mode in modes:
+                vals[mode] = (
+                    getattr(raw_full[mode][char], stat) if char in raw_full[mode] else 0
+                )
+
+            dividend = sum(vals[mode] * rate[mode] for mode in vals)
 
             # Only modes where the stat is non-zero contribute to the denominator
-            divisor = (
-                (rate_moc if val_moc != 0 else 0)
-                + (rate_pf if val_pf != 0 else 0)
-                + (rate_as if val_as != 0 else 0)
-                + (rate_aa if val_aa != 0 else 0)
-            ) or 1
+            divisor = sum(rate[mode] for mode in vals if vals[mode] != 0) or 1
 
             out[stat] = round(
                 # Eidolon data should still be divided with rate_combine
