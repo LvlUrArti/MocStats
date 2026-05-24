@@ -48,6 +48,8 @@ def get_latest_unique_versions(
                     version = patch_data.moc_ver
             if version:
                 mode_versions[mode].append((patch_ver, version))
+        if patch_ver == RECENT_PHASE:
+            break
 
     # Extract latest unique versions
     result: dict[str, list[str]] = {}
