@@ -1,5 +1,6 @@
 """Copy files to web_results."""
 
+import json
 from os import path
 from pathlib import Path
 from shutil import copytree, make_archive, rmtree
@@ -30,6 +31,13 @@ if ENDGAME_INFO:
         Path(f"../../results/all_results/{RECENT_PHASE}"),
         Path("../../results/web_results"),
     )
+
+    if ENDGAME_INFO.aa_ver:
+        with open("../../data/versions/aa_boss_names.json") as f:
+            boss_names = json.load(f)
+
+        with open("../../results/web_results/boss_names.json", "w") as f:
+            json.dump(boss_names[ENDGAME_INFO.aa_ver], f, indent=2)
 
     make_archive("../../results/results", "zip", "../../results/web_results")
     copy_results()
