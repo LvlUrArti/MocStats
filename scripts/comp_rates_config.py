@@ -85,10 +85,12 @@ match args.mode:
         if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
             sys_exit()
         pf_filename = "_aa"
-    case "moc" | _:
+    case "moc":
         if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
             sys_exit()
         pf_filename = "_moc"
+    case _:
+        pf_filename = ""
 
 run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
