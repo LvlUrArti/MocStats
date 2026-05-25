@@ -6,7 +6,11 @@ Calculate over the last three phases of MoC, PF, and AS.
 import json
 
 # Import your existing models and loader
-from combine_char import FullCharacterStats, dps_base_slugs, load_full_stats
+from combine_char import (
+    BaseCharacterStats,
+    dps_base_slugs,
+    load_base_stats,
+)
 from comp_rates_config import CHARS_INFO, ENDGAME_INFOS, RECENT_PHASE, CharInfo
 
 # ----------------------------------------------------------------------
@@ -69,25 +73,28 @@ def get_latest_unique_versions(
     return result
 
 
-modes = ["moc", "pf", "as"]
 selected_versions = get_latest_unique_versions(modes)
 
 for m in modes:
     print(f"Selected phases for {m}: {selected_versions[m]}")
 
 # Load data for all unique versions
-mode_to_phases: dict[str, list[dict[str, FullCharacterStats]]] = {}
+e0_data: dict[str, list[dict[str, BaseCharacterStats]]] = {}
+e1_data: dict[str, list[dict[str, BaseCharacterStats]]] = {}
 
 for mode, versions in selected_versions.items():
+    e0_data[mode] = []
+    e1_data[mode] = []
+
     for version in versions:
-        if mode not in mode_to_phases:
-            mode_to_phases[mode] = []
-        file_path = (
-            f"../../results/all_results/{version}/{version}_{mode}/chars/all.json"
-        )
+        base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
+        e0_path = f"{base_path}/all.json"
+        e1_path = f"{base_path}/all_C1.json"
         try:
-            data = load_full_stats(file_path)
-            mode_to_phases[mode].append(data)
+            data_e0 = load_base_stats(e0_path)
+            data_e1 = load_base_stats(e1_path)
+            e0_data[mode].append(data_e0)
+            e1_data[mode].append(data_e1)
         except FileNotFoundError:
             print(f"Warning: File not found for version {version} ({mode}), skipping.")
             continue
@@ -99,9 +106,21 @@ results: list[dict[str, float | int | str | None]] = []
 
 # Determine all character names from the input data
 all_chars: set[str] = set()
-for phases in mode_to_phases.values():
+for phases in e0_data.values():
     for phase_data in phases:
         all_chars.update(phase_data.keys())
+
+modes_phases_data: dict[str, dict[str, list[dict[str, BaseCharacterStats]]]] = {
+    "": e0_data,
+    "_e1": e1_data,
+}
+
+default_values = {
+    "moc": 11,
+    "pf": 22000,
+    "as": 3000,
+    "aa": 6,
+}
 
 for char in sorted(all_chars):
     # Determine base slug by stripping known prefixes
@@ -124,47 +143,49 @@ for char in sorted(all_chars):
         entry["role"] = CHARS_BY_SLUG[base_char].role[0]
 
     # Process each mode
-    for mode in ["moc", "pf", "as"]:
-        invalid_value = 99.99 if mode == "moc" else 0
-        if mode == "moc":
-            default_value = 11
-        elif mode == "pf":
-            default_value = 22000
-        else:
-            default_value = 3000
-        phases = mode_to_phases.get(mode, [])
-
-        # Appearance rate: average over phases where character exists
-        app_rates: list[float] = []
-        app_rates.extend(
-            phase_data[char].app_rate for phase_data in phases if char in phase_data
-        )
-        if app_rates:
-            entry[f"{mode}_usage"] = round(sum(app_rates) / len(app_rates), 2)
-        else:
-            entry[f"{mode}_usage"] = 0.0
-
-        # Average rounds: average over phases where character exists
-        avg_rounds: list[float | int] = []
+    for mode in modes:
         valid_rounds = 0
 
-        for phase_data in phases:
-            if char in phase_data:
-                stats = phase_data[char]
+        for suffix, mode_phases_data in modes_phases_data.items():
+            invalid_value = 99.99 if mode == "moc" else 0
+            phases_data = mode_phases_data.get(mode, [])
 
-                valid_rounds += 1
-                if stats.avg_round != invalid_value:
-                    avg_rounds.append(stats.avg_round)
-                else:
-                    avg_rounds.append(default_value)
-        if avg_rounds:
-            value = round(
-                sum(avg_rounds) / len(avg_rounds),
-                2 if mode == "moc" else 0,
+            # Appearance rate: average over phases where character exists
+            app_rates: list[float] = []
+            app_rates.extend(
+                phase_data[char].app_rate
+                for phase_data in phases_data
+                if char in phase_data
             )
-            entry[f"{mode}_score"] = int(value) if mode != "moc" else value
-        else:
-            entry[f"{mode}_score"] = default_value
+            if app_rates:
+                entry[f"{mode}_usage{suffix}"] = round(
+                    sum(app_rates) / len(app_rates),
+                    2,
+                )
+            else:
+                entry[f"{mode}_usage{suffix}"] = 0.0
+
+            # Average rounds: average over phases where character exists
+            avg_rounds: list[float | int] = []
+            valid_rounds = 0
+
+            for phase_data in phases_data:
+                if char in phase_data:
+                    stats = phase_data[char]
+
+                    valid_rounds += 1
+                    if stats.avg_round != invalid_value:
+                        avg_rounds.append(stats.avg_round)
+                    else:
+                        avg_rounds.append(default_values[mode])
+            if avg_rounds:
+                value = round(
+                    sum(avg_rounds) / len(avg_rounds),
+                    2 if mode == "moc" else 0,
+                )
+                entry[f"{mode}_score{suffix}"] = int(value) if mode != "moc" else value
+            else:
+                entry[f"{mode}_score{suffix}"] = default_values[mode]
 
         entry[f"{mode}_new"] = valid_rounds <= 1
 
