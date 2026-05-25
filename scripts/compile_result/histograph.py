@@ -23,7 +23,7 @@ for char_info in CHARS_INFO.values():
 # ----------------------------------------------------------------------
 # Group versions by mode and collect data dictionaries
 # ----------------------------------------------------------------------
-modes = ["moc", "pf", "as"]
+modes = ["moc", "pf", "as", "aa"]
 
 
 def get_latest_unique_versions(
@@ -122,6 +122,8 @@ default_values = {
     "aa": 6,
 }
 
+cycle_modes = {"moc", "aa"}
+
 for char in sorted(all_chars):
     # Determine base slug by stripping known prefixes
     base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
@@ -147,7 +149,7 @@ for char in sorted(all_chars):
         valid_rounds = 0
 
         for suffix, mode_phases_data in modes_phases_data.items():
-            invalid_value = 99.99 if mode == "moc" else 0
+            invalid_value = 99.99 if mode in cycle_modes else 0
             phases_data = mode_phases_data.get(mode, [])
 
             # Appearance rate: average over phases where character exists
@@ -181,9 +183,11 @@ for char in sorted(all_chars):
             if avg_rounds:
                 value = round(
                     sum(avg_rounds) / len(avg_rounds),
-                    2 if mode == "moc" else 0,
+                    2 if mode in cycle_modes else 0,
                 )
-                entry[f"{mode}_score{suffix}"] = int(value) if mode != "moc" else value
+                entry[f"{mode}_score{suffix}"] = (
+                    int(value) if mode not in cycle_modes else value
+                )
             else:
                 entry[f"{mode}_score{suffix}"] = default_values[mode]
 
