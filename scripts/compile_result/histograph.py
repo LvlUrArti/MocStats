@@ -90,14 +90,12 @@ for mode, versions in selected_versions.items():
         base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
         e0_path = f"{base_path}/all.json"
         e1_path = f"{base_path}/all_C1.json"
-        try:
-            data_e0 = load_base_stats(e0_path)
-            data_e1 = load_base_stats(e1_path)
+        data_e0 = load_base_stats(e0_path)
+        data_e1 = load_base_stats(e1_path)
+        if data_e0:
             e0_data[mode].append(data_e0)
+        if data_e1:
             e1_data[mode].append(data_e1)
-        except FileNotFoundError:
-            print(f"Warning: File not found for version {version} ({mode}), skipping.")
-            continue
 
 # ----------------------------------------------------------------------
 # Compute averages per character
