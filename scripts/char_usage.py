@@ -14,6 +14,7 @@ from comp_rates_config import (
     WHALE_ONLY,
     aa_mode,
     moc_mode,
+    one_stage,
     pf_mode,
     sig_weaps,
 )
@@ -35,13 +36,6 @@ SKEW_APP_LIMIT = 10
 EXCLUDED_LIMIT = 8
 DEFAULT_VALUE: float = 0 if pf_mode else 99.99
 DEFAULT_ROUND: int = 0 if pf_mode else 2
-SINGLE_CHAMBER: list[str] = (
-    ["1-1", "1-2", "1-3"]
-    if aa_mode
-    else ["4-1", "4-2"]
-    if pf_mode
-    else ["12-1", "12-2"]
-)
 
 
 class RoundApp:
@@ -196,7 +190,7 @@ def appearances(
                     app[char].app_flat_all += 1
 
                     char_con = None
-                    if chambers == SINGLE_CHAMBER:
+                    if chambers == one_stage:
                         if user_chamber.char_cons:
                             char_con = user_chamber.char_cons[comp_char]
                         elif comp_char in user.owned:
@@ -215,7 +209,7 @@ def appearances(
 
                     # to print the amount of players using a character,
                     # for char infographics
-                    if chambers == SINGLE_CHAMBER:
+                    if chambers == one_stage:
                         user_chars[char].add(user.player)
 
                     app[char].app_flat += 1
@@ -229,7 +223,7 @@ def appearances(
                     ):
                         app[char].round_list[cur_chamber].append(user_round)
 
-                    if chambers != (SINGLE_CHAMBER):
+                    if chambers != one_stage:
                         continue
                     if comp_char not in user.owned:
                         continue
@@ -310,14 +304,8 @@ def appearances(
             is_count_cycles = True
             if not uses_room:
                 is_count_cycles = False
-            elif chambers == SINGLE_CHAMBER:
-                char_item.sample_app_flat = uses_room[
-                    1 if aa_mode else 4 if pf_mode else 12
-                ]
-                if not aa_mode and len(uses_room) != len(chambers) / 2:
-                    # If, for example, calculating cycles from chambers 10 to 12,
-                    # the character should be used in all of those chambers
-                    is_count_cycles = False
+            elif chambers == one_stage:
+                char_item.sample_app_flat = sum(uses_room.values())
             for uses_room_num in uses_room.values():
                 if uses_room_num < MIN_APP_LIMIT:
                     is_count_cycles = False
@@ -336,7 +324,7 @@ def appearances(
 
         char_item.sample = len(user_chars[char])
 
-        if chambers != SINGLE_CHAMBER:
+        if chambers != one_stage:
             continue
         # Calculate constellations
         if char_item.app_flat_all > 0:
@@ -542,7 +530,7 @@ def usages(
         for i in range(7):
             uses[char].cons_usage[i] = {"app": "-", "own": "-", "usage": "-"}
 
-        if chambers != SINGLE_CHAMBER:
+        if chambers != one_stage:
             continue
 
         weapons = list(app_char.weap_freq)

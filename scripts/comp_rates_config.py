@@ -77,18 +77,26 @@ match args.mode:
         if ENDGAME_INFO and not ENDGAME_INFO.as_ver:
             sys_exit()
         pf_filename = "_as"
+        all_stages = ["4-1", "4-2"]
+        one_stage = ["4-1", "4-2"]
     case "pf":
         if ENDGAME_INFO and not ENDGAME_INFO.pf_ver:
             sys_exit()
         pf_filename = "_pf"
+        all_stages = ["4-1", "4-2"]
+        one_stage = ["4-1", "4-2"]
     case "aa":
         if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
             sys_exit()
         pf_filename = "_aa"
+        all_stages = ["1-1", "1-2", "1-3", "2-1"]
+        one_stage = ["1-1", "1-2", "1-3"]
     case "moc":
         if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
             sys_exit()
         pf_filename = "_moc"
+        all_stages = ["12-1", "12-2"]
+        one_stage = ["12-1", "12-2"]
     case _:
         pf_filename = ""
 
@@ -127,55 +135,53 @@ F2P_ONLY: bool = args.f2p
 
 run_commands = {
     # "Duos check",
-    "Char usages 8 - 10",
+    "Char usages all stages",
     "Char usages for each stage",
-    "Comp usage 8 - 10",
+    "Comp usage all stages",
     "Comp usages for each stage",
     # "Character specific infographics",
-    # "Char usages all stages",
-    # "Comp usage all stages",
 }
 
 if args.top or args.f2p:
     run_commands = {
-        "Char usages 8 - 10",
+        "Char usages all stages",
         "Char usages for each stage",
     }
 
 elif args.whale:
     run_commands = {
-        "Char usages 8 - 10",
+        "Char usages all stages",
         "Char usages for each stage",
-        "Comp usage 8 - 10",
+        "Comp usage all stages",
         "Comp usages for each stage",
     }
 
 elif args.chars_top:
     run_commands = {
-        "Char usages 8 - 10",
+        "Char usages all stages",
     }
 
 elif args.comps_top:
     run_commands = {
-        "Comp usage 8 - 10",
+        "Comp usage all stages",
     }
 
 elif args.all:
     run_commands = {
-        "Char usages 8 - 10",
+        "Char usages all stages",
         "Char usages for each stage",
-        "Comp usage 8 - 10",
+        "Comp usage all stages",
         "Comp usages for each stage",
     }
 
 elif args.chars_all:
     run_commands = {
-        "Char usages 8 - 10",
+        "Char usages all stages",
     }
 
 elif args.comps_all:
     run_commands = {
-        "Comp usage 8 - 10",
+        "Comp usage all stages",
         "Comp usages for each stage",
     }
 

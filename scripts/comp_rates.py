@@ -20,12 +20,14 @@ from comp_rates_config import (
     F2P_ONLY,
     WHALE_ONLY,
     aa_mode,
+    all_stages,
     app_rate_threshold,
     app_rate_threshold_round,
     char_app_rate_threshold,
     char_infographics,
     duo_dict_len,
     moc_mode,
+    one_stage,
     pf_filename,
     pf_mode,
     run_commands,
@@ -70,43 +72,18 @@ def main() -> None:
     start_time = time()
     print("start")
 
-    if pf_mode:
-        three_stages = ["4-1", "4-2"]
-        three_double_stages = [["4-1", "4-2"]]
-        one_stage = ["4-1", "4-2"]
-        all_stages = ["4-1", "4-2"]
-    elif aa_mode:
-        three_stages = ["1-1", "1-2", "1-3", "2-1"]
-        three_double_stages = [["1-1", "1-2", "1-3"], ["2-1"]]
-        one_stage = ["1-1", "1-2", "1-3"]
-        all_stages = ["1-1", "1-2", "1-3", "2-1"]
-    else:
-        three_stages = ["12-1", "12-2"]
-        three_double_stages = [["12-1", "12-2"]]
-        one_stage = ["12-1", "12-2"]
-        all_stages = ["12-1", "12-2"]
-
-    if "Char usages all stages" in run_commands:
-        char_usages(
-            all_stages,
-            filename="all",
-        )
-        cur_time = time()
-        print("done char:", round(cur_time - start_time, 2), "s")
-        start_time = cur_time
-
     if "Duos check" in run_commands:
         usage = char_usages(
-            three_stages,
+            all_stages,
             filename="all",
         )
         duo_usages(
             usage,
-            three_stages,
+            all_stages,
             check_duo=True,
         )
 
-    if "Char usages 8 - 10" in run_commands:
+    if "Char usages all stages" in run_commands:
         usage = char_usages(
             one_stage,
             filename="all",
@@ -118,14 +95,14 @@ def main() -> None:
                 check_duo=False,
             )
         cur_time = time()
-        print("done char 8 - 10:", round(cur_time - start_time, 2), "s")
+        print("done char:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
 
         if "Char usages for each stage" in run_commands and aa_mode:
             char_chambers: dict[str, dict[str, cu.CharUsageData]] = {
                 "all": usage.copy(),
             }
-            for room in three_stages:
+            for room in all_stages:
                 char_chambers[room] = char_usages(
                     [room],
                     filename=room,
@@ -134,42 +111,18 @@ def main() -> None:
             print("done char stage:", round(cur_time - start_time, 2), "s")
             start_time = cur_time
 
-        if "Char usages for each stage (combined)" in run_commands:
-            char_chambers: dict[str, dict[str, cu.CharUsageData]] = {
-                "all": usage.copy(),
-            }
-            # for room in all_double_stages:
-            for room in three_double_stages:
-                char_chambers[room[0]] = char_usages(
-                    room,
-                    filename=room[0].split("-")[0],
-                )
-            cur_time = time()
-            print("done char stage (combine):", round(cur_time - start_time, 2), "s")
-            start_time = cur_time
-
     if "Comp usage all stages" in run_commands:
-        comp_usages(
-            all_stages,
-            filename="all",
-            floor=True,
-        )
-        cur_time = time()
-        print("done comp all:", round(cur_time - start_time, 2), "s")
-        start_time = cur_time
-
-    if "Comp usage 8 - 10" in run_commands:
         comp_usages(
             one_stage,
             filename="top",
             floor=True,
         )
         cur_time = time()
-        print("done comp 8 - 10:", round(cur_time - start_time, 2), "s")
+        print("done comp all:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
 
     if "Comp usages for each stage" in run_commands:
-        for room in three_stages:
+        for room in all_stages:
             comp_usages(
                 [room],
                 filename=room,
@@ -733,8 +686,8 @@ def comp_usages_write(
                 "char_three": out[2],
                 "char_four": out[3],
             }
-            out_json_dict["app_rate"] = cur_comp.app_rate
             out_json_dict["rank"] = cur_comp.app_rank
+            out_json_dict["app_rate"] = cur_comp.app_rate
             out_json_dict["avg_round"] = cur_comp.round
             out_json.append(out_json_dict)
 
