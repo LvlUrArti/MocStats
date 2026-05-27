@@ -371,11 +371,7 @@ def rank_usages(
 
         comp_threshold = 10 if cur_comp.healer else 50
         cur_comp.is_count_round = True
-        if (
-            (rooms == ["12-1", "12-2"])
-            or (pf_mode and rooms == ["4-1", "4-2"])
-            or (aa_mode and rooms == ["1-1", "2-1", "3-1"])
-        ):
+        if rooms == all_stages:
             for uses_room_num in uses_room.values():
                 if uses_room_num < comp_threshold:
                     cur_comp.is_count_round = False
@@ -563,10 +559,8 @@ def char_usages(
         info_char=False,
     )
     chars_dict: dict[str, cu.CharUsageData] = cu.usages(app, chambers=rooms)
-    if (
-        (moc_mode and rooms == ["12-1", "12-2"] and filename != "12")
-        or (pf_mode and rooms == ["4-1", "4-2"] and filename != "4")
-        or (aa_mode and filename not in ["1", "2"])
+    if (rooms == all_stages and filename == "all") or (
+        aa_mode and filename not in ["1", "2"]
     ):
         char_usages_write(chars_dict, filename)
     return chars_dict
