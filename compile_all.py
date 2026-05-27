@@ -59,11 +59,11 @@ def main(add_args: list[str] | None = None) -> None:
         add_args = []
 
     if NEW_DATA:
-        run_sequential([exe, "combine_raw_chars.py"], cwd=SCRIPTS_DIR)
-        run_sequential([exe, "hash.py"], cwd=SCRIPTS_DIR)
-        run_sequential([exe, "up_data.py", "-y"], cwd=HF_DATA_DIR)
-        run_sequential([exe, "up_data.py", "-n"], cwd=HF_DATA_DIR)
-        run_sequential([exe, "generate_config.py"], cwd=HF_DATA_DIR)
+        run_sequential([exe, "combine_raw_chars.py", *add_args], cwd=SCRIPTS_DIR)
+        run_sequential([exe, "hash.py", *add_args], cwd=SCRIPTS_DIR)
+        run_sequential([exe, "up_data.py", "-y", *add_args], cwd=HF_DATA_DIR)
+        run_sequential([exe, "up_data.py", "-n", *add_args], cwd=HF_DATA_DIR)
+        run_sequential([exe, "generate_config.py", *add_args], cwd=HF_DATA_DIR)
 
     run_parallel(
         [
@@ -160,7 +160,7 @@ def main(add_args: list[str] | None = None) -> None:
         run_sequential([exe, "copy_common.py", *add_args], cwd=COMPILE_RESULT_DIR)
 
         if NEW_DATA:
-            run_sequential([exe, "up_results.py"], cwd=HF_DATA_DIR)
+            run_sequential([exe, "up_results.py", *add_args], cwd=HF_DATA_DIR)
     else:
         print("\nWeb results directory not found. Skipping copy and upload.")
 
@@ -170,6 +170,7 @@ if __name__ == "__main__":
 
     try:
         for ver in versions_to_process:
+            print(f"\nProcessing {ver}")
             main(["-v", ver])
 
         print("\n🎉 Full pipeline executed successfully!")
