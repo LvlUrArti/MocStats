@@ -214,8 +214,8 @@ for row in data:
         elif char in {"Trailblazer", "March 7th"}:
             char = f"{row['path']} {char}"
         else:
-            print(char)
-            sys_exit()
+            msg = f"Unknown character: {char}"
+            raise ValueError(msg)
     if cur_uid in spiral_rows and char in spiral_rows[cur_uid]:
         stats[char].sample_size_players += 1
 
@@ -231,9 +231,10 @@ for row in data:
 
             for key in mainstatkeys:
                 mainstat = row.get(mainstat_dict[key], None)
-                if mainstat not in mainstats[char][key]:
-                    mainstats[char][key][mainstat] = 0
-                mainstats[char][key][mainstat] += 1
+                if mainstat:
+                    if mainstat not in mainstats[char][key]:
+                        mainstats[char][key][mainstat] = 0
+                    mainstats[char][key][mainstat] += 1
 
 for char, stat_char in stats.items():
     if stat_char.sample_size > 0:
@@ -402,5 +403,3 @@ for iter_char, char_stat in enumerate(stats.values()):
 send2trash(f"../{CHAR_RESULT_PATH}/all.json")
 with open(f"../{CHAR_RESULT_PATH}/all.json", "w") as char_file:
     char_file.write(json_dumps(temp_stats, indent=2))
-
-print("Average AR: ", (ar / count))
