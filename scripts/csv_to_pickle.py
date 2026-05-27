@@ -130,7 +130,6 @@ def main() -> None:
             skip_uid = False
             if player in uid_freq_comp:
                 skip_uid = True
-                print("duplicate UID in comp: " + player)
             else:
                 uid_freq_comp[player] = 1
         last_uid = player
