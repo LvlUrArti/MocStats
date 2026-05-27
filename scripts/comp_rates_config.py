@@ -97,6 +97,10 @@ match args.mode:
         pf_filename = "_moc"
         all_stages = ["12-1", "12-2"]
         one_stage = ["12-1", "12-2"]
+        # Floor 11 & 12 added in version 1.6.1
+        if ENDGAME_INFO and datetime(2023, 12, 27) >= ENDGAME_INFO.collect_date:
+            all_stages = ["10-1", "10-2"]
+            one_stage = ["10-1", "10-2"]
     case _:
         pf_filename = ""
 

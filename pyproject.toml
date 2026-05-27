@@ -9,6 +9,7 @@ ignore = [
   "S603",     # Use of subprocess
   "S607",     # Use of check_output
   "INP001",   # Checks for packages that are missing an __init__.py file
+  "DTZ001",   # Use of naive datetime
   "DTZ005",   # Use of naive datetime
   "DTZ006",   # Use of naive datetime
   "DTZ007",   # Use of naive datetime
