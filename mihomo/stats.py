@@ -15,6 +15,7 @@ from statistics import mean as stat_mean
 from statistics import median as stat_median
 from sys import exit as sys_exit
 from sys import path as sys_path
+from time import time
 
 from matplotlib.pyplot import hist as plt_hist
 from matplotlib.pyplot import show as plt_show
@@ -169,6 +170,7 @@ set_chars.update(chars)
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
+start_time = time()
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 spiral_rows: dict[str, dict[str, int]] = {}
 for cur_uid, cur_player in all_players.items():
@@ -235,6 +237,9 @@ for row in data:
                     if mainstat not in mainstats[char][key]:
                         mainstats[char][key][mainstat] = 0
                     mainstats[char][key][mainstat] += 1
+cur_time = time()
+print("done stats:", round(cur_time - start_time, 2), "s")
+start_time = cur_time
 
 for char, stat_char in stats.items():
     if stat_char.sample_size > 0:
@@ -329,6 +334,9 @@ for char, stat_char in stats.items():
                 stat_char.stats_write[stat + "_" + str(i + 1)] = "-"
                 stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 i += 1
+cur_time = time()
+print("done compile:", round(cur_time - start_time, 2), "s")
+start_time = cur_time
 
 
 def write_files(
