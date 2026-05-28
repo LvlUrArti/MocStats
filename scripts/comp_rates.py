@@ -26,6 +26,7 @@ from comp_rates_config import (
     char_app_rate_threshold,
     char_infographics,
     duo_dict_len,
+    include_dual_sustain,
     moc_mode,
     one_stage,
     pf_filename,
@@ -309,7 +310,7 @@ def used_comps(
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
-            if sustain_count <= 1:
+            if sustain_count <= 1 or include_dual_sustain:
                 avg_round_stage[cur_room].append(comp.round_num)
                 if (pf_mode or (aa_mode and cur_room == 2)) and comp.buff:
                     if "buff_" + comp.buff not in sample_size[cur_room]:
@@ -509,7 +510,9 @@ def used_duos(
 
             if is_triple_dps and check_duo:
                 continue
-            if (whale_comp == WHALE_ONLY) and sustain_count <= 1:
+            if (whale_comp == WHALE_ONLY) and (
+                sustain_count <= 1 or include_dual_sustain
+            ):
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
     sorted_duos = sorted(duos_dict.items(), key=lambda t: t[1].app_flat, reverse=True)

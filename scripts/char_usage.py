@@ -13,6 +13,7 @@ from comp_rates_config import (
     F2P_ONLY,
     WHALE_ONLY,
     aa_mode,
+    include_dual_sustain,
     moc_mode,
     one_stage,
     pf_mode,
@@ -140,6 +141,8 @@ def appearances(
                 if "sustain" in CHARS_INFO[char].role:
                     sustain_count += 1
 
+            check_sustain_count = sustain_count <= 1 or include_dual_sustain
+
             if moc_mode:
                 side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
                 if side_chamber not in user.chambers:
@@ -200,7 +203,7 @@ def appearances(
 
                     if char_con is not None:
                         app[char].cons_freq[char_con].app_flat += 1
-                        if sustain_count <= 1:
+                        if check_sustain_count:
                             app[char].cons_freq[char_con].round_list[
                                 cur_chamber
                             ].append(user_round)
@@ -221,7 +224,7 @@ def appearances(
                     if (
                         whale_comp == WHALE_ONLY
                         and (not F2P_ONLY or f2p_comp)
-                        and (sustain_count <= 1)
+                        and check_sustain_count
                     ):
                         app[char].round_list[cur_chamber].append(user_round)
 
@@ -237,7 +240,7 @@ def appearances(
                         if user_char.weapon not in app[char].weap_freq:
                             app[char].weap_freq[user_char.weapon] = RoundApp()
                         app[char].weap_freq[user_char.weapon].app_flat += 1
-                        if not whale_comp and (sustain_count <= 1):
+                        if not whale_comp and check_sustain_count:
                             app[char].weap_freq[user_char.weapon].round_list[
                                 cur_chamber
                             ].append(user_round)
@@ -246,7 +249,7 @@ def appearances(
                         if user_char.artifacts not in app[char].arti_freq:
                             app[char].arti_freq[user_char.artifacts] = RoundApp()
                         app[char].arti_freq[user_char.artifacts].app_flat += 1
-                        if not whale_comp and (sustain_count <= 1):
+                        if not whale_comp and check_sustain_count:
                             app[char].arti_freq[user_char.artifacts].round_list[
                                 cur_chamber
                             ].append(user_round)
@@ -255,7 +258,7 @@ def appearances(
                         if user_char.planars not in app[char].planar_freq:
                             app[char].planar_freq[user_char.planars] = RoundApp()
                         app[char].planar_freq[user_char.planars].app_flat += 1
-                        if not whale_comp and (sustain_count <= 1):
+                        if not whale_comp and check_sustain_count:
                             app[char].planar_freq[user_char.planars].round_list[
                                 cur_chamber
                             ].append(user_round)

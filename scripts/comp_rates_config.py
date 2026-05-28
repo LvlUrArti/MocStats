@@ -66,6 +66,7 @@ moc_mode: bool = args.mode == "moc"
 pf_mode: bool = args.mode in {"pf", "as"}
 as_mode: bool = args.mode == "as"
 aa_mode: bool = args.mode == "aa"
+include_dual_sustain = False
 
 if not pf_mode:
     pf_mode = False
@@ -101,6 +102,7 @@ match args.mode:
         if ENDGAME_INFO and datetime(2023, 12, 27) >= ENDGAME_INFO.collect_date:
             all_stages = ["10-1", "10-2"]
             one_stage = ["10-1", "10-2"]
+            include_dual_sustain = True
     case _:
         pf_filename = ""
 
