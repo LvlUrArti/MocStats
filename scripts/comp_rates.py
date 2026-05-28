@@ -223,6 +223,8 @@ def used_comps(
         side_comp = None
         if moc_mode:
             side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
+            if side_chamber not in all_players[comp.player].chambers:
+                continue
             side_comp = all_players[comp.player].chambers[side_chamber]
 
         comp_tuple = tuple(comp.characters)
@@ -468,6 +470,8 @@ def used_duos(
         side_comp = None
         if moc_mode:
             side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
+            if side_chamber not in all_players[comp.player].chambers:
+                continue
             side_comp = all_players[comp.player].chambers[side_chamber]
 
         if side_comp:

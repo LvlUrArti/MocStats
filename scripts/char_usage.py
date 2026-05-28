@@ -142,6 +142,8 @@ def appearances(
 
             if moc_mode:
                 side_chamber = Stage(chamber.stage, 2 if chamber.node == 1 else 1)
+                if side_chamber not in user.chambers:
+                    continue
                 user_side_chamber = user.chambers[side_chamber]
                 for char in user_side_chamber.characters:
                     char_cons = None
