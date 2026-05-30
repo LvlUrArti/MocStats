@@ -67,6 +67,7 @@ pf_mode: bool = args.mode in {"pf", "as"}
 as_mode: bool = args.mode == "as"
 aa_mode: bool = args.mode == "aa"
 include_dual_sustain = False
+star_num_threshold = 3
 
 if not pf_mode:
     pf_mode = False
@@ -98,11 +99,22 @@ match args.mode:
         pf_filename = "_moc"
         all_stages = ["12-1", "12-2"]
         one_stage = ["12-1", "12-2"]
-        # Floor 11 & 12 added in version 1.6.1
-        if ENDGAME_INFO and datetime(2023, 12, 27) >= ENDGAME_INFO.collect_date:
-            all_stages = ["10-1", "10-2"]
-            one_stage = ["10-1", "10-2"]
-            include_dual_sustain = True
+
+        if ENDGAME_INFO:
+            thresholds = [
+                # Due to lack of sample, include <= 2* clears and adjust stages
+                # for versions 1.0 - 1.1
+                (datetime(2023, 6, 26), ["3-1", "3-2", "4-1", "4-2", "5-1", "5-2"], 1),
+                (datetime(2023, 7, 24), ["6-1", "6-2", "7-1", "7-2", "8-1", "8-2"], 1),
+                # Floor 11 & 12 added in version 1.6.1
+                (datetime(2023, 12, 27), ["10-1", "10-2"], 3),
+            ]
+            for date, stages, star_num in thresholds:
+                if ENDGAME_INFO.collect_date <= date:
+                    include_dual_sustain = True
+                    all_stages = one_stage = stages
+                    star_num_threshold = star_num
+                    break
     case _:
         pf_filename = ""
 

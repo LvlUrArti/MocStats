@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from comp_rates_config import CHARS_INFO, aa_mode
+from comp_rates_config import CHARS_INFO, aa_mode, star_num_threshold
 
 
 class Stage(NamedTuple):
@@ -57,7 +57,7 @@ class Composition:
         self.player = str(self.player)
 
         self.valid_clear = False
-        if (self.star_num == 3) or (
+        if (self.star_num >= star_num_threshold) or (
             aa_mode
             and (
                 (2 < self.round_num <= 4 and self.star_num == 2)
