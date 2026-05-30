@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from comp_rates_config import CHARS_INFO
+from comp_rates_config import CHARS_INFO, aa_mode
 
 
 class Stage(NamedTuple):
@@ -55,6 +55,17 @@ class Composition:
     def __post_init__(self) -> None:
         """Composition constructor."""
         self.player = str(self.player)
+
+        self.valid_clear = False
+        if (self.star_num == 3) or (
+            aa_mode
+            and (
+                (2 < self.round_num <= 4 and self.star_num == 2)
+                or (self.round_num > 4 and self.star_num == 1)
+            )
+        ):
+            self.valid_clear = True
+
         self.char_structs(self.comp_chars, self.comp_chars_cons)
 
     def char_structs(self, comp_chars: list[str], comp_chars_cons: list[int]) -> None:

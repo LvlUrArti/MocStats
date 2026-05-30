@@ -207,18 +207,8 @@ def used_comps(
     f2p_count = 0
 
     for comp in all_comps:
-        invalid_clear = True
-        if (
-            aa_mode
-            and (
-                (2 < comp.round_num <= 4 and comp.star_num == 2)
-                or (comp.round_num > 4 and comp.star_num == 1)
-            )
-        ) or (comp.star_num == 3):
-            invalid_clear = False
-
         # Check if the comp is used in the rooms that are being checked
-        if str(comp.room) not in rooms or invalid_clear:
+        if str(comp.room) not in rooms or not comp.valid_clear:
             continue
 
         side_comp = None
@@ -433,18 +423,12 @@ def used_duos(
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
 
     for comp in comps:
-        invalid_clear = True
-        if (
-            aa_mode
-            and (
-                (2 < comp.round_num <= 4 and comp.star_num == 2)
-                or (comp.round_num > 4 and comp.star_num == 1)
-            )
-        ) or (comp.star_num == 3):
-            invalid_clear = False
-
         cur_room = comp.room.stage
-        if len(comp.characters) < 2 or str(comp.room) not in rooms or invalid_clear:
+        if (
+            len(comp.characters) < 2
+            or str(comp.room) not in rooms
+            or not comp.valid_clear
+        ):
             continue
 
         whale_comp = False

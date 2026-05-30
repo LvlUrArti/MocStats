@@ -12,7 +12,6 @@ from comp_rates_config import (
     CONS_LIMIT,
     F2P_ONLY,
     WHALE_ONLY,
-    aa_mode,
     include_dual_sustain,
     moc_mode,
     one_stage,
@@ -102,18 +101,8 @@ def appearances(
 
     for user in users.values():
         for chamber, user_chamber in user.chambers.items():
-            invalid_clear = True
-            if (
-                aa_mode
-                and (
-                    (2 < user_chamber.round_num <= 4 and user_chamber.star_num == 2)
-                    or (user_chamber.round_num > 4 and user_chamber.star_num == 1)
-                )
-            ) or (user_chamber.star_num == 3):
-                invalid_clear = False
-
             cur_chamber = chamber.stage
-            if str(chamber) not in chambers or invalid_clear:
+            if str(chamber) not in chambers or not user_chamber.valid_clear:
                 continue
             all_uids.add(user.player)
             whale_comp = False
