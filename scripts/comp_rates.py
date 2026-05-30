@@ -311,10 +311,11 @@ def used_comps(
         comps_dict[comp_tuple] = comp_data
 
     for stage, stage_value in avg_round_stage.items():
-        sample_size[stage]["avg_round"] = round(
-            mean(stage_value or [0]),
-            2,
-        )
+        if stage_value:
+            sample_size[stage]["avg_round"] = round(
+                mean(stage_value or [0]),
+                2,
+            )
 
     if "-" in filename:
         chamber_num = Stage.from_string(filename)
