@@ -128,7 +128,6 @@ async def main() -> None:
                         line_chars: list[str | int | float | None] = []
                         line.append(uid)
                         line_chars.append(uid)
-                        line_chars.append("2.2b")
                         line.append(data.player.level)
                         if str(character.id) in trailblazer_ids:
                             if "March 7th" in character.name:
