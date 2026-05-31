@@ -66,6 +66,8 @@ else:
     star_db_uids = set[str]()
     hoyobuddy_uids = set[str]()
 
+total_comps: dict[int, int] = {}
+
 
 @profile
 def main() -> None:
@@ -127,7 +129,6 @@ def main() -> None:
             comp_usages(
                 [room],
                 filename=room,
-                offset=2,
             )
 
         if not WHALE_ONLY and not F2P_ONLY:
@@ -153,7 +154,6 @@ def main() -> None:
 def comp_usages(
     rooms: list[str],
     filename: str = "comp_usages",
-    offset: int = 1,
     *,
     info_char: bool = False,
     floor: bool = False,
@@ -165,7 +165,7 @@ def comp_usages(
         rooms,
         filename,
     )
-    rank_usages(comps_dict, rooms, owns_offset=offset)
+    rank_usages(comps_dict, rooms)
     comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=True)
     comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=False)
 
@@ -197,8 +197,14 @@ def used_comps(
 ) -> dict[tuple[str, ...], CompUsage]:
     """Return the dictionary of all the comps used and how many times they were used."""
     comps_dict: dict[tuple[str, ...], CompUsage] = {}
-    global total_comps
-    total_comps = 0
+
+    comps_all_uids: dict[int, set[str]] = {}
+
+    for room in rooms:
+        stage = Stage.from_string(room).stage
+        comps_all_uids[stage] = set[str]()
+        total_comps[stage] = 0
+
     total_self_comps = 0
     total_random_comps = 0
     total_star_db_comps = 0
@@ -220,7 +226,7 @@ def used_comps(
 
         comp_tuple = tuple(comp.characters)
 
-        total_comps += 1
+        comps_all_uids[comp.room.stage].add(comp.player)
         if comp.player in self_uids:
             total_self_comps += 1
         if comp.player in random_uids:
@@ -317,10 +323,13 @@ def used_comps(
                 2,
             )
 
+    for room, uids in comps_all_uids.items():
+        total_comps[room] += len(uids)
+
     if "-" in filename:
         chamber_num = Stage.from_string(filename)
         if chamber_num.node == 1:
-            sample_size[chamber_num.stage]["total"] = total_comps
+            sample_size[chamber_num.stage]["total"] = total_comps[chamber_num.stage]
             sample_size[chamber_num.stage]["prydwen"] = total_self_comps
             sample_size[chamber_num.stage]["random"] = total_random_comps
             sample_size[chamber_num.stage]["stardb"] = total_star_db_comps
@@ -332,7 +341,6 @@ def used_comps(
 def rank_usages(
     comps_dict: dict[tuple[str, ...], CompUsage],
     rooms: list[str],
-    owns_offset: int = 1,
 ) -> None:
     """Calculate the usage rate and sort the comps according to it."""
     rates: list[float] = []
@@ -378,8 +386,10 @@ def rank_usages(
         else:
             rounded_avg_round = 0 if pf_mode else 99.99
 
+        total = sum(total_comps.values())
         app = (
-            int(100.0 * cur_comp.uses / (total_comps * owns_offset) * 200 + 0.5) / 100.0
+            # Add 0.5 to the int to round up
+            int(100.0 * cur_comp.uses / total * 100 + 0.5) / 100.0
         )
         cur_comp.app_rate = app
         cur_comp.round = rounded_avg_round
