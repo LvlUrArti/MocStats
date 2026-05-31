@@ -55,6 +55,7 @@ for file_name in file_names:
                 "avg_round"
             ]
         else:
+            matched_teams[team_key]["app_rate_c1"] = 0
             matched_teams[team_key]["avg_round_c1"] = exclude_value
 
     team_data = [
