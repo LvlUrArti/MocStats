@@ -243,7 +243,6 @@ def used_comps(
         whale_comp = False
         giga_whale = False
         f2p_comp = True
-        sustain_count = 0
         for char in range(4):
             comp_char = comp_tuple[char]
             char_cons = None
@@ -261,8 +260,6 @@ def used_comps(
                 whale_comp = True
                 if char_cons > 2:
                     giga_whale = True
-            if "sustain" in CHARS_INFO[comp_char].role:
-                sustain_count += 1
 
         if side_comp:
             for char in side_comp.characters:
@@ -306,12 +303,11 @@ def used_comps(
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
-            if sustain_count <= 1 or include_dual_sustain:
-                avg_round_stage[cur_room].append(comp.round_num)
-                if (pf_mode or (aa_mode and cur_room == 2)) and comp.buff:
-                    if "buff_" + comp.buff not in sample_size[cur_room]:
-                        sample_size[cur_room]["buff_" + comp.buff] = 0
-                    sample_size[cur_room]["buff_" + comp.buff] += 1
+            avg_round_stage[cur_room].append(comp.round_num)
+            if (pf_mode or (aa_mode and cur_room == 2)) and comp.buff:
+                if "buff_" + comp.buff not in sample_size[cur_room]:
+                    sample_size[cur_room]["buff_" + comp.buff] = 0
+                sample_size[cur_room]["buff_" + comp.buff] += 1
 
         # Set the current comp to the temporary variable
         comps_dict[comp_tuple] = comp_data
