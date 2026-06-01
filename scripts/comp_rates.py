@@ -66,8 +66,6 @@ else:
     star_db_uids = set[str]()
     hoyobuddy_uids = set[str]()
 
-total_comps: dict[int, int] = {}
-
 
 @profile
 def main() -> None:
@@ -161,11 +159,11 @@ def comp_usages(
     """Comp usage."""
     global top_comps_app
     top_comps_app = {}
-    comps_dict: list[dict[tuple[str, ...], CompUsage]] = used_comps(
+    comps_dict, total_comps = used_comps(
         rooms,
         filename,
     )
-    rank_usages(comps_dict, rooms)
+    rank_usages(comps_dict, rooms, total_comps)
     comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=True)
     comp_usages_write(comps_dict, filename, floor, info_char=info_char, sort_app=False)
 
@@ -194,11 +192,12 @@ class CompUsage(Composition):
 def used_comps(
     rooms: list[str],
     filename: str,
-) -> dict[tuple[str, ...], CompUsage]:
+) -> tuple[dict[tuple[str, ...], CompUsage], dict[int, int]]:
     """Return the dictionary of all the comps used and how many times they were used."""
     comps_dict: dict[tuple[str, ...], CompUsage] = {}
 
     comps_all_uids: dict[int, set[str]] = {}
+    total_comps: dict[int, int] = {}
 
     for room in rooms:
         stage = Stage.from_string(room).stage
@@ -330,13 +329,14 @@ def used_comps(
             sample_size[chamber_num.stage]["random"] = total_random_comps
             sample_size[chamber_num.stage]["stardb"] = total_star_db_comps
             sample_size[chamber_num.stage]["hoyobuddy"] = total_hoyobuddy_comps
-    return comps_dict
+    return comps_dict, total_comps
 
 
 @profile
 def rank_usages(
     comps_dict: dict[tuple[str, ...], CompUsage],
     rooms: list[str],
+    total_comps: dict[int, int],
 ) -> None:
     """Calculate the usage rate and sort the comps according to it."""
     rates: list[float] = []
