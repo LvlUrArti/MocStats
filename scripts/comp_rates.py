@@ -226,7 +226,6 @@ def used_comps(
 
         comp_tuple = tuple(comp.characters)
 
-        comps_all_uids[comp.room.stage].add(comp.player)
         if comp.player in self_uids:
             total_self_comps += 1
         if comp.player in random_uids:
@@ -294,6 +293,7 @@ def used_comps(
         if comp_tuple not in comps_dict:
             comps_dict[comp_tuple] = CompUsage(comp)
 
+        comps_all_uids[comp.room.stage].add(comp.player)
         comp_data = comps_dict[comp_tuple]
         comp_data.uses += 1
         comp_data.players.add(comp.player)
@@ -320,7 +320,7 @@ def used_comps(
             )
 
     for room, uids in comps_all_uids.items():
-        total_comps[room] += len(uids)
+        total_comps[room] = len(uids)
 
     if "-" in filename:
         chamber_num = Stage.from_string(filename)

@@ -108,7 +108,6 @@ def appearances(
             cur_chamber = chamber.stage
             if str(chamber) not in chambers or not user_chamber.valid_clear:
                 continue
-            all_uids[cur_chamber].add(user.player)
             whale_comp = False
             giga_whale = False
             f2p_comp = True
@@ -205,20 +204,18 @@ def appearances(
                     if giga_whale:
                         continue
 
-                    # to print the amount of players using a character,
-                    # for char infographics
                     if chambers == one_stage:
                         user_chars[char].add(user.player)
 
+                    all_uids[cur_chamber].add(user.player)
                     app[char].app_flat += 1
-                    if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
-                        app[char].app_flat_exclude += 1
 
                     if (
                         whale_comp == WHALE_ONLY
                         and (not F2P_ONLY or f2p_comp)
                         and check_sustain_count
                     ):
+                        app[char].app_flat_exclude += 1
                         app[char].round_list[cur_chamber].append(user_round)
 
                     if chambers != one_stage:
