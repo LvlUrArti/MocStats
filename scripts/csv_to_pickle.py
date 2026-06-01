@@ -36,7 +36,6 @@ EXT_CHAR_NAME_REPLACE = {
 all_players: dict[str, PlayerPhase] = {}
 all_comps: list[Composition] = []
 avg_round_stage: dict[int, list[int]] = {}
-sample_size: dict[int | str, dict[str, int | float]] = {}
 
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
@@ -65,7 +64,6 @@ class PickleData:
     all_players: dict[str, PlayerPhase]
     all_comps: list[Composition]
     avg_round_stage: dict[int, list[int]]
-    sample_size: dict[int | str, dict[str, int | float]]
 
 
 def save_pickle_data(filename: str, data: PickleData) -> None:
@@ -168,8 +166,6 @@ def main() -> None:
     start_time = cur_time
 
     for chamber_num in all_chambers:
-        sample_size[chamber_num] = {}
-    for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
 
     with (
@@ -225,7 +221,6 @@ def main() -> None:
         all_players=all_players,
         all_comps=all_comps,
         avg_round_stage=avg_round_stage,
-        sample_size=sample_size,
     )
 
     save_pickle_data("../data/pickle/data" + pf_filename + ".pkl", data)

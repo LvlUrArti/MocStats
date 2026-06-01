@@ -45,7 +45,7 @@ loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename +
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps
 avg_round_stage: dict[int, list[int]] = loaded_data.avg_round_stage
-sample_size: dict[int | str, dict[str, int | float]] = loaded_data.sample_size
+sample_size: dict[int | str, dict[str, int | float]] = {}
 
 if path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
@@ -198,16 +198,22 @@ def used_comps(
 
     comps_all_uids: dict[int, set[str]] = {}
     total_comps: dict[int, int] = {}
+    total_self_comps: dict[int, int] = {}
+    total_random_comps: dict[int, int] = {}
+    total_star_db_comps: dict[int, int] = {}
+    total_hoyobuddy_comps: dict[int, int] = {}
 
     for room in rooms:
         stage = Stage.from_string(room).stage
+        if stage not in sample_size:
+            sample_size[stage] = {}
         comps_all_uids[stage] = set[str]()
         total_comps[stage] = 0
+        total_self_comps[stage] = 0
+        total_random_comps[stage] = 0
+        total_star_db_comps[stage] = 0
+        total_hoyobuddy_comps[stage] = 0
 
-    total_self_comps = 0
-    total_random_comps = 0
-    total_star_db_comps = 0
-    total_hoyobuddy_comps = 0
     whale_count = 0
     f2p_count = 0
 
@@ -225,14 +231,6 @@ def used_comps(
 
         comp_tuple = tuple(comp.characters)
 
-        if comp.player in self_uids:
-            total_self_comps += 1
-        if comp.player in random_uids:
-            total_random_comps += 1
-        if comp.player in star_db_uids:
-            total_star_db_comps += 1
-        if comp.player in hoyobuddy_uids:
-            total_hoyobuddy_comps += 1
         if len(comp_tuple) < 4:
             continue
         if side_comp and len(side_comp.characters) < 4:
@@ -320,15 +318,28 @@ def used_comps(
 
     for room, uids in comps_all_uids.items():
         total_comps[room] = len(uids)
+        # Count sample size for each sample group
+        for uid in uids:
+            if uid in self_uids:
+                total_self_comps[room] += 1
+            if uid in random_uids:
+                total_random_comps[room] += 1
+            if uid in star_db_uids:
+                total_star_db_comps[room] += 1
+            if uid in hoyobuddy_uids:
+                total_hoyobuddy_comps[room] += 1
 
     if "-" in filename:
         chamber_num = Stage.from_string(filename)
         if chamber_num.node == 1:
-            sample_size[chamber_num.stage]["total"] = total_comps[chamber_num.stage]
-            sample_size[chamber_num.stage]["prydwen"] = total_self_comps
-            sample_size[chamber_num.stage]["random"] = total_random_comps
-            sample_size[chamber_num.stage]["stardb"] = total_star_db_comps
-            sample_size[chamber_num.stage]["hoyobuddy"] = total_hoyobuddy_comps
+            sample_size[chamber_num.stage] = {
+                **sample_size[chamber_num.stage],
+                "total": total_comps[chamber_num.stage],
+                "prydwen": total_self_comps[chamber_num.stage],
+                "random": total_random_comps[chamber_num.stage],
+                "stardb": total_star_db_comps[chamber_num.stage],
+                "hoyobuddy": total_hoyobuddy_comps[chamber_num.stage],
+            }
     return comps_dict, total_comps
 
 
