@@ -17,7 +17,6 @@ parser.add_argument("-m", "--mode", help="Set which mode to compile (moc/pf/as/a
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-cha", "--chars_all", action="store_true")
 parser.add_argument("-ca", "--comps_all", action="store_true")
-parser.add_argument("-d", "--duos", action="store_true")
 parser.add_argument("-t", "--top", action="store_true")
 parser.add_argument("-cht", "--chars_top", action="store_true")
 parser.add_argument("-ct", "--comps_top", action="store_true")
@@ -152,7 +151,6 @@ WHALE_ONLY: bool = args.whale
 F2P_ONLY: bool = args.f2p
 
 run_commands = {
-    # "Duos check",
     "Char usages all stages",
     "Char usages for each stage",
     "Comp usage all stages",
@@ -201,11 +199,6 @@ elif args.comps_all:
     run_commands = {
         "Comp usage all stages",
         "Comp usages for each stage",
-    }
-
-elif args.duos:
-    run_commands = {
-        "Duos check",
     }
 
 alt_comps = "Character specific infographics" in run_commands

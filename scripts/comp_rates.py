@@ -73,17 +73,6 @@ def main() -> None:
     start_time = time()
     print("start")
 
-    if "Duos check" in run_commands:
-        usage = char_usages(
-            all_stages,
-            filename="all",
-        )
-        duo_usages(
-            usage,
-            all_stages,
-            check_duo=True,
-        )
-
     if "Char usages all stages" in run_commands:
         usage = char_usages(
             one_stage,
@@ -568,9 +557,7 @@ def char_usages(
         info_char=False,
     )
     chars_dict: dict[str, cu.CharUsageData] = cu.usages(app, chambers=rooms)
-    if (rooms == all_stages and filename == "all") or (
-        aa_mode and filename not in ["1", "2"]
-    ):
+    if filename == "all" or (aa_mode and filename not in ["1", "2"]):
         char_usages_write(chars_dict, filename)
     return chars_dict
 
