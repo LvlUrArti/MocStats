@@ -120,7 +120,10 @@ async def main() -> None:
                 if i == 5:
                     print("error")
                 try:
-                    print(f"{uid_iter + 1} / {len(uids)} : {uid}, {i}")
+                    print(
+                        f"\x1b[1K\r{uid_iter + 1} / {len(uids)} : {uid}, {i}",
+                        end=" ",
+                    )
                     data = await client.fetch_showcase(uid)
                     for character in data.characters:
                         element_name = character.element.name.capitalize()
