@@ -32,6 +32,12 @@ if ENDGAME_INFO:
         Path("../../results/web_results"),
     )
 
+    with open("../../data/versions/config.json") as f:
+        config = json.load(f)
+
+    with open("../../results/web_results/config.json", "w") as f:
+        json.dump(config[RECENT_PHASE], f, indent=2)
+
     if ENDGAME_INFO.aa_ver:
         with open("../../data/versions/aa_boss_names.json") as f:
             boss_names = json.load(f)
