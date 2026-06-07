@@ -101,17 +101,26 @@ match args.mode:
 
         if ENDGAME_INFO:
             thresholds = [
-                # Due to lack of sample, include <= 2* clears and adjust stages
-                # for versions 1.0 - 1.1
-                (datetime(2023, 6, 26), ["3-1", "3-2", "4-1", "4-2", "5-1", "5-2"], 1),
-                (datetime(2023, 7, 24), ["6-1", "6-2", "7-1", "7-2", "8-1", "8-2"], 1),
+                (
+                    datetime(2023, 6, 26),  # Before phase 1.1.2
+                    [f"{i}-{j}" for i in range(3, 11) for j in (1, 2)],  # stages 3-10
+                    [f"{i}-{j}" for i in range(3, 6) for j in (1, 2)],  # stages 3-5
+                    1,
+                ),
+                (
+                    datetime(2023, 7, 24),  # Before phase 1.2.1
+                    [f"{i}-{j}" for i in range(6, 11) for j in (1, 2)],  # stages 6-10
+                    [f"{i}-{j}" for i in range(6, 9) for j in (1, 2)],  # stages 6-8
+                    1,
+                ),
                 # Floor 11 & 12 added in version 1.6.1
-                (datetime(2023, 12, 27), ["10-1", "10-2"], 3),
+                (datetime(2023, 12, 27), ["10-1", "10-2"], ["10-1", "10-2"], 3),
             ]
-            for date, stages, star_num in thresholds:
+            for date, stages, one_stages, star_num in thresholds:
                 if ENDGAME_INFO.collect_date <= date:
                     include_dual_sustain = True
-                    all_stages = one_stage = stages
+                    all_stages = stages
+                    one_stage = one_stages
                     star_num_threshold = star_num
                     break
     case _:
