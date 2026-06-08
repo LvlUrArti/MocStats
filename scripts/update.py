@@ -16,27 +16,21 @@ def load_from_url(url: str) -> Any:
     return json.load(StringIO(download))
 
 
-latest_ver = load_from_url("https://static.nanoka.cc/manifest.json")["hsr"]["latest"]
-
-
-artifacts: dict[str, dict[str, str]] = load_from_url(
+relic_sets: dict[str, dict[str, str]] = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relic_sets.json",
 )
 
-with open("../data/relic_affixes.json") as artifact_file:
-    artifacts2: dict[str, list[str]] = json.load(artifact_file)
+with open("../data/relic_affixes.json") as file:
+    relic_affixes: dict[str, list[str]] = json.load(file)
 
-artifacts_affixes: dict[str, list[str]] = {}
-for artifact in artifacts:
-    if artifacts[artifact]["id"][0] == "1":
-        affix = artifacts[artifact]["desc"][0]
+relics_affixes: dict[str, list[str]] = {}
+for relic in relic_sets.values():
+    if relic["id"][0] == "1":
+        affix = relic["desc"][0]
 
         if affix[-1] == ".":
             affix = affix[:-1]
-        for i in ["DMG "]:
-            affix = affix.replace(i, "")
 
-        affix = affix.replace("increases by ", "+")
         if "Increases " in affix:
             affix = affix.replace("Increases ", "")
             affix = affix.replace("by ", "+")
@@ -44,35 +38,41 @@ for artifact in artifacts:
             affix = affix.replace("Reduces ", "")
             affix = affix.replace("by ", "-")
 
-        affix = affix.replace("CRIT Rate", "CR")
-        affix = affix.replace("CRIT", "CDMG")
-        affix = affix.replace("Physical", "Phys")
-        affix = affix.replace("Break Effect", "BE")
-        affix = affix.replace("Imaginary", "Imag.")
-        affix = affix.replace("Quantum", "Quan.")
-        affix = affix.replace("Lightning", "Light.")
-        affix = affix.replace("Outgoing Healing", "Heal")
+        replacements = {
+            "increases by ": "+",
+            "DMG ": "",
+            "CRIT Rate": "CR",
+            "CRIT": "CDMG",
+            "Physical": "Phys",
+            "Break Effect": "BE",
+            "Imaginary": "Imag.",
+            "Quantum": "Quan.",
+            "Lightning": "Light.",
+            "Outgoing Healing": "Heal",
+        }
+        for old, new in replacements.items():
+            affix = affix.replace(old, new)
 
-        if affix not in artifacts_affixes:
-            artifacts_affixes[affix] = []
-        artifacts_affixes[affix].append(artifacts[artifact]["name"])
+        if affix not in relics_affixes:
+            relics_affixes[affix] = []
+        relics_affixes[affix].append(relic["name"])
 
-for artifact in list(artifacts_affixes.keys()):
-    if len(artifacts_affixes[artifact]) > 1 and artifact not in artifacts2:
-        if len(artifact) > 12:
-            print("Set name too long: " + artifact)
+for relic in list(relics_affixes.keys()):
+    if len(relics_affixes[relic]) > 1 and relic not in relic_affixes:
+        if len(relic) > 12:
+            print("Set name too long: " + relic)
         else:
-            add_arti = input("Add " + artifact + "? (y/n): ")
+            add_arti = input("Add " + relic + "? (y/n): ")
             if add_arti == "y":
-                artifacts2[artifact] = artifacts_affixes[artifact]
+                relic_affixes[relic] = relics_affixes[relic]
     else:
-        del artifacts_affixes[artifact]
+        del relics_affixes[relic]
 
 with open("../data/relic_sets.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts, indent=2))
+    out_file.write(json.dumps(relic_sets, indent=2))
 
 with open("../data/relic_affixes.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts2, indent=2))
+    out_file.write(json.dumps(relic_affixes, indent=2))
 
 download = load_from_url(
     "https://github.com/Mar-7th/StarRailRes/raw/master/index_new/en/relics.json",
@@ -138,6 +138,9 @@ with open("../data/characters.json") as char_file:
         char_file,
     )
 
+latest_ver: str = load_from_url("https://static.nanoka.cc/manifest.json")["hsr"][
+    "latest"
+]
 download = load_from_url(f"https://static.nanoka.cc/hsr/{latest_ver}/character.json")
 raw_chars = {char_id: RawCharInfo(**item) for char_id, item in download.items()}
 
