@@ -66,65 +66,99 @@ pf_mode: bool = args.mode in {"pf", "as"}
 as_mode: bool = args.mode == "as"
 aa_mode: bool = args.mode == "aa"
 include_dual_sustain = False
-star_num_threshold = 3
 
 if not pf_mode:
     pf_mode = False
 if not as_mode:
     as_mode = False
 
-match args.mode:
-    case "as":
-        if ENDGAME_INFO and not ENDGAME_INFO.as_ver:
-            sys_exit()
-        pf_filename = "_as"
-        all_stages = ["4-1", "4-2"]
-        one_stage = ["4-1", "4-2"]
-    case "pf":
-        if ENDGAME_INFO and not ENDGAME_INFO.pf_ver:
-            sys_exit()
-        pf_filename = "_pf"
-        all_stages = ["4-1", "4-2"]
-        one_stage = ["4-1", "4-2"]
-    case "aa":
-        if ENDGAME_INFO and not ENDGAME_INFO.aa_ver:
-            sys_exit()
-        pf_filename = "_aa"
-        all_stages = ["1-1", "1-2", "1-3", "2-1"]
-        one_stage = ["1-1", "1-2", "1-3"]
-    case "moc":
-        if ENDGAME_INFO and not ENDGAME_INFO.moc_ver:
-            sys_exit()
-        pf_filename = "_moc"
-        all_stages = ["12-1", "12-2"]
-        one_stage = ["12-1", "12-2"]
 
-        if ENDGAME_INFO:
-            thresholds = [
-                (
-                    datetime(2023, 6, 26),  # Before phase 1.1.2
-                    [f"{i}-{j}" for i in range(3, 11) for j in (1, 2)],  # stages 3-10
-                    [f"{i}-{j}" for i in range(3, 6) for j in (1, 2)],  # stages 3-5
-                    1,
-                ),
-                (
-                    datetime(2023, 7, 24),  # Before phase 1.2.1
-                    [f"{i}-{j}" for i in range(6, 11) for j in (1, 2)],  # stages 6-10
-                    [f"{i}-{j}" for i in range(6, 9) for j in (1, 2)],  # stages 6-8
-                    1,
-                ),
-                # Floor 11 & 12 added in version 1.6.1
-                (datetime(2023, 12, 27), ["10-1", "10-2"], ["10-1", "10-2"], 3),
-            ]
-            for date, stages, one_stages, star_num in thresholds:
-                if ENDGAME_INFO.collect_date <= date:
-                    include_dual_sustain = True
-                    all_stages = stages
-                    one_stage = one_stages
-                    star_num_threshold = star_num
-                    break
-    case _:
-        pf_filename = ""
+class ModeConfig(BaseModel):
+    """Configuration for a game mode."""
+
+    default_stages: list[str]
+    default_one_stage: list[str]
+    star_num_default: int
+    thresholds: list[tuple[datetime, list[str], list[str], int, bool]]
+
+
+# Mode configurations
+MODES_CONFIG: dict[str, ModeConfig] = {
+    "as": ModeConfig(
+        default_stages=["4-1", "4-2", "4-3"],
+        default_one_stage=["4-1", "4-2", "4-3"],
+        star_num_default=4,
+        # Starward Mode added in phase 4.3.1
+        thresholds=[(datetime(2026, 6, 8), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
+    ),
+    "pf": ModeConfig(
+        default_stages=["4-1", "4-2", "4-3"],
+        default_one_stage=["4-1", "4-2", "4-3"],
+        star_num_default=4,
+        # Starward Mode added in phase 4.3.1
+        thresholds=[(datetime(2026, 6, 22), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
+    ),
+    "aa": ModeConfig(
+        default_stages=["1-1", "1-2", "1-3", "2-1"],
+        default_one_stage=["1-1", "1-2", "1-3"],
+        star_num_default=3,
+        thresholds=[],
+    ),
+    "moc": ModeConfig(
+        default_stages=["12-1", "12-2", "12-3"],
+        default_one_stage=["12-1", "12-2", "12-3"],
+        star_num_default=4,
+        thresholds=[
+            (
+                datetime(2023, 6, 26),  # Before phase 1.1.2
+                [f"{i}-{j}" for i in range(3, 11) for j in (1, 2)],  # stages 3-10
+                [f"{i}-{j}" for i in range(3, 6) for j in (1, 2)],  # stages 3-5
+                1,
+                True,
+            ),
+            (
+                datetime(2023, 7, 24),  # Before phase 1.2.1
+                [f"{i}-{j}" for i in range(6, 11) for j in (1, 2)],  # stages 6-10
+                [f"{i}-{j}" for i in range(6, 9) for j in (1, 2)],  # stages 6-8
+                1,
+                True,
+            ),
+            # Floor 11 & 12 added in version 1.6.1
+            (datetime(2023, 12, 27), ["10-1", "10-2"], ["10-1", "10-2"], 3, True),
+            # Starward Mode added in phase 4.3.1
+            (datetime(2026, 7, 6), ["12-1", "12-2"], ["12-1", "12-2"], 3, False),
+        ],
+    ),
+}
+
+
+cfg = MODES_CONFIG.get(args.mode)
+
+if cfg is None:
+    pf_filename = ""
+    all_stages: list[str] = []
+    one_stage: list[str] = []
+    star_num_threshold = 3
+else:
+    # Check version exists
+    if ENDGAME_INFO and not getattr(ENDGAME_INFO, f"{args.mode}_ver"):
+        sys_exit()
+
+    # Initial values
+    pf_filename = f"_{args.mode}"
+    all_stages = cfg.default_stages
+    one_stage = cfg.default_one_stage
+    star_num_threshold = cfg.star_num_default
+
+    # Apply thresholds if any
+    if ENDGAME_INFO and cfg.thresholds:
+        for date, stages, one_stages, star_num, set_dual_sustain in cfg.thresholds:
+            if ENDGAME_INFO.collect_date <= date:
+                include_dual_sustain = set_dual_sustain
+                all_stages = stages
+                one_stage = one_stages
+                star_num_threshold = star_num
+                break
 
 run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
