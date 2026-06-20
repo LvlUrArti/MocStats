@@ -204,6 +204,11 @@
       "name": "Duty Action",
       "time_start": "25/05/2026",
       "time_end": "06/07/2026"
+    },
+    "4.3.1": {
+      "name": "Academy Ghost Story",
+      "time_start": "06/07/2026",
+      "time_end": "17/08/2026"
     }
   },
   "Pure Fiction": {
@@ -321,6 +326,11 @@
       "name": "Illusory Concepts",
       "time_start": "11/05/2026",
       "time_end": "22/06/2026"
+    },
+    "4.3.1": {
+      "name": "Falsehood to Fact",
+      "time_start": "22/06/2026",
+      "time_end": "03/08/2026"
     }
   },
   "Apocalyptic Shadow": {
@@ -408,38 +418,48 @@
       "name": "Idol of the Locusts",
       "time_start": "27/04/2026",
       "time_end": "08/06/2026"
+    },
+    "4.3.1": {
+      "name": "Gale of Forgetting",
+      "time_start": "08/06/2026",
+      "time_end": "20/07/2026"
     }
   },
   "Anomaly Arbitration": {
     "3.6.1": {
       "name": "Intellitron Endgame",
-      "time_start": "24/09/2025",
-      "time_end": "05/11/2025"
+      "time_start": "23/09/2025",
+      "time_end": "04/11/2025"
     },
     "3.7.1": {
       "name": "Illusory Realm of the Blazing Sun",
-      "time_start": "05/11/2025",
-      "time_end": "17/12/2025"
+      "time_start": "04/11/2025",
+      "time_end": "16/12/2025"
     },
     "3.8.1": {
       "name": "Dissonance",
-      "time_start": "17/12/2025",
-      "time_end": "13/02/2026"
+      "time_start": "16/12/2025",
+      "time_end": "12/02/2026"
     },
     "4.0.1": {
       "name": "Cyber Crisis",
-      "time_start": "13/02/2026",
-      "time_end": "25/03/2026"
+      "time_start": "12/02/2026",
+      "time_end": "24/03/2026"
     },
     "4.1.1": {
       "name": "Don't Mess With Pom-Pom",
-      "time_start": "25/03/2026",
-      "time_end": "22/04/2026"
+      "time_start": "24/03/2026",
+      "time_end": "21/04/2026"
     },
     "4.2.1": {
       "name": "Happiness Syntax",
-      "time_start": "22/04/2026",
-      "time_end": "02/06/2026"
+      "time_start": "21/04/2026",
+      "time_end": "31/05/2026"
+    },
+    "4.3.1": {
+      "name": "The Humming Laughter",
+      "time_start": "31/05/2026",
+      "time_end": "12/07/2026"
     }
   }
 }

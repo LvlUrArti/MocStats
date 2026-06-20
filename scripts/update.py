@@ -41,6 +41,7 @@ for relic in relic_sets.values():
         replacements = {
             "increases by ": "+",
             "DMG ": "",
+            "Max HP": "HP",
             "CRIT Rate": "CR",
             "CRIT": "CDMG",
             "Physical": "Phys",

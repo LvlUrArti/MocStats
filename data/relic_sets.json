@@ -544,6 +544,42 @@
     ],
     "icon": "icon/relic/130.png"
   },
+  "131": {
+    "id": "131",
+    "name": "As Navigator Isee Sees It",
+    "desc": [
+      "Increases ATK by 12%.",
+      "When the wearer enters combat or uses Skill, the DMG dealt by their Skill and Ultimate increases by 18%, stacking up to 3 time(s). At the start of the wearer's turn or after using Ultimate, removes 1 stack(s) of this effect."
+    ],
+    "properties": [
+      [
+        {
+          "type": "AttackAddedRatio",
+          "value": 0.12
+        }
+      ],
+      []
+    ],
+    "icon": "icon/relic/131.png"
+  },
+  "132": {
+    "id": "132",
+    "name": "Divine-Querying Master Smith",
+    "desc": [
+      "Increases Max HP by 12%.",
+      "Increases the wearer's CRIT DMG dealt to enemy targets in the DEF reduction state by 28%. After the wearer inflicts the DEF reduction state on an enemy target, all allies gain \"Comburent\" for 2 turn(s). This effect cannot be stacked. The DMG dealt by ally targets with \"Comburent\" increases by 15%. This effect can be triggered again after the wearer uses an attack."
+    ],
+    "properties": [
+      [
+        {
+          "type": "HPAddedRatio",
+          "value": 0.12
+        }
+      ],
+      []
+    ],
+    "icon": "icon/relic/132.png"
+  },
   "301": {
     "id": "301",
     "name": "Space Sealing Station",

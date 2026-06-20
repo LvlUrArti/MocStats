@@ -1062,5 +1062,17 @@
     "role": [
       "dps"
     ]
+  },
+  "Mortenax Blade": {
+    "id": "1507",
+    "rarity": 5,
+    "path": "Nihility",
+    "element": "Fire",
+    "availability": "Limited 5*",
+    "slug": "blade-mortenax",
+    "release": 1780304400,
+    "role": [
+      "amplifier"
+    ]
   }
 }

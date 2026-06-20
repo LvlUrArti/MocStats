@@ -15,7 +15,7 @@ HF_DATA_DIR = path.join(SCRIPTS_DIR, "hf_data")
 MIHOMO_DIR = path.join(BASE_DIR, "mihomo")
 COMPILE_RESULT_DIR = path.join(SCRIPTS_DIR, "compile_result")
 WEB_RESULTS_DIR = path.join(BASE_DIR, "results", "web_results")
-NEW_DATA = False
+NEW_DATA = True
 
 
 def run_sequential(cmd: list[str], cwd: str) -> None:
@@ -166,7 +166,7 @@ def main(add_args: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    versions_to_process = ["3.0.1", "3.0.2"]
+    versions_to_process = ["4.3.1"]
 
     try:
         for ver in versions_to_process:

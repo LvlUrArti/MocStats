@@ -1541,6 +1541,16 @@
     "preview": "image/light_cone_preview/23058.png",
     "portrait": "image/light_cone_portrait/23058.png"
   },
+  "Reforged in Hellfire": {
+    "id": "23059",
+    "name": "Reforged in Hellfire",
+    "rarity": 5,
+    "path": "Warlock",
+    "desc": "One moment, a rushing tide. The body sinks, plunging into the deepest reaches of the azure abyss.\nOne moment, a desolate isle. Echoes of the past resonate through the mist, drifting further and further away.\nOne moment, a field of crimson blooms of the farshore. Broken blades are scorched and reshaped in the raging inferno, finally becoming one.\n\"Since my time has not yet come, I shall forge myself anew.\"\nWith despair as the furnace and this body as the catalyst, he has lost count of how many times he has endured such agony.\n\"I shall take death as my hammer, and I will... sever this fate!!\"\nAt the instant of rebirth, the flames scatter and surge toward the heavens, burning all the way to the edge of the farshore.\nIn that moment, all karmic debts are settled. The new body, tempered through a thousand trials, has finally been forged.",
+    "icon": "icon/light_cone/23059.png",
+    "preview": "image/light_cone_preview/23059.png",
+    "portrait": "image/light_cone_portrait/23059.png"
+  },
   "On the Fall of an Aeon": {
     "id": "24000",
     "name": "On the Fall of an Aeon",
