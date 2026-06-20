@@ -15,6 +15,7 @@ from enka_config import (
     trailblazer_ids,
     uids,
 )
+from utils.notif import send_notification
 
 print(len(uids))
 
@@ -91,7 +92,6 @@ async def main() -> None:
 
         header = [
             "uid",
-            "phase",
             "name",
             "level",
             "cons",
@@ -221,7 +221,7 @@ async def main() -> None:
                             mainstats[relics_data[str(relic.id)]["type"]] = (
                                 relic.main_stat.name
                             )
-                            if relics_data[str(relic.id)]["type"] in ["OBJECT", "NECK"]:
+                            if relics_data[str(relic.id)]["type"] in {"OBJECT", "NECK"}:
                                 if relic.set_name not in ornaments:
                                     ornaments[relic.set_name] = 1
                                 else:
@@ -308,11 +308,7 @@ async def main() -> None:
                         break
 
         print("\nFinished")
-
-        # if len(error_uids):
-        # 	print('Error with UIDs:')
-        # 	for i in error_uids:
-        # 		print(i)
+        send_notification("Data Collect Done", "Data Collect Done")
 
 
 asyncio.run(main())

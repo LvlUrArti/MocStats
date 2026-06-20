@@ -37,10 +37,10 @@ elif pf_mode:
 with open("../data/relics.json") as f:
     relics_data = json.load(f)
 
-trailblazer_ids: list[str] = []
+trailblazer_ids: set[str] = set()
 for char in CHARS_INFO.values():
     if char.trailblazer_ids:
-        trailblazer_ids.extend(
+        trailblazer_ids.update(
             trailblazer_id for trailblazer_id in char.trailblazer_ids
         )
 
