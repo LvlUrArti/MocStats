@@ -1,590 +1,1465 @@
 {
   "1.0.3": {
     "collect_date": "11/06/2023",
-    "moc_ver": "1.0.3",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.0.3",
+      "name": "Favor of Amber",
+      "start": "27/05/2023",
+      "end": "12/06/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.1.1": {
     "collect_date": "17/06/2023",
-    "moc_ver": "1.1.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.1.1",
+      "name": "Coldiron Tribulation",
+      "start": "12/06/2023",
+      "end": "26/06/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.1.1.2": {
     "collect_date": "24/06/2023",
-    "moc_ver": "1.1.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.1.1",
+      "name": "Coldiron Tribulation",
+      "start": "12/06/2023",
+      "end": "26/06/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.1.2": {
     "collect_date": "01/07/2023",
-    "moc_ver": "1.1.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.1.2",
+      "name": "Hyperborean Search for Warmth",
+      "start": "26/06/2023",
+      "end": "10/07/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.1.2.2": {
     "collect_date": "07/07/2023",
-    "moc_ver": "1.1.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.1.2",
+      "name": "Hyperborean Search for Warmth",
+      "start": "26/06/2023",
+      "end": "10/07/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.1.3": {
     "collect_date": "21/07/2023",
-    "moc_ver": "1.1.3",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.1.3",
+      "name": "Stormquell",
+      "start": "10/07/2023",
+      "end": "24/07/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.2.1": {
     "collect_date": "03/08/2023",
-    "moc_ver": "1.2.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.2.1",
+      "name": "Adrift in Astral Seas",
+      "start": "24/07/2023",
+      "end": "07/08/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.2.2": {
     "collect_date": "18/08/2023",
-    "moc_ver": "1.2.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.2.2",
+      "name": "Raintear Strife",
+      "start": "07/08/2023",
+      "end": "21/08/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.2.3": {
     "collect_date": "26/08/2023",
-    "moc_ver": "1.2.3",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.2.3",
+      "name": "Traces of Sanctus Medicus",
+      "start": "21/08/2023",
+      "end": "04/09/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.3.1": {
     "collect_date": "08/09/2023",
-    "moc_ver": "1.3.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.3.1",
+      "name": "Ethereal Shipcraft",
+      "start": "04/09/2023",
+      "end": "18/09/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.3.2": {
     "collect_date": "23/09/2023",
-    "moc_ver": "1.3.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.3.2",
+      "name": "A Shot From the Sky",
+      "start": "18/09/2023",
+      "end": "02/10/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.3.3": {
     "collect_date": "06/10/2023",
-    "moc_ver": "1.3.3",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.3.3",
+      "name": "Mara and Null",
+      "start": "02/10/2023",
+      "end": "16/10/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.4.1": {
     "collect_date": "20/10/2023",
-    "moc_ver": "1.4.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.4.1",
+      "name": "Living and Flaming Catastrophes",
+      "start": "16/10/2023",
+      "end": "30/10/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.4.2": {
     "collect_date": "03/11/2023",
-    "moc_ver": "1.4.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.4.2",
+      "name": "Ambrosial Arbor's Arrival",
+      "start": "30/10/2023",
+      "end": "13/11/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.4.3": {
     "collect_date": "18/11/2023",
-    "moc_ver": "1.4.3",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.4.3",
+      "name": "Divine Root Subdual",
+      "start": "13/11/2023",
+      "end": "27/11/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.5.1": {
     "collect_date": "01/12/2023",
-    "moc_ver": "1.5.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.5.1",
+      "name": "Oath of Eternal Alliance",
+      "start": "27/11/2023",
+      "end": "11/12/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.5.2": {
     "collect_date": "14/12/2023",
-    "moc_ver": "1.5.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.5.2",
+      "name": "Sedition of Imbibitor Lunae",
+      "start": "11/12/2023",
+      "end": "27/12/2023"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.6.1": {
     "collect_date": "01/01/2024",
-    "moc_ver": "1.6.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.6.1",
+      "name": "Enigma in Deep Space",
+      "start": "27/12/2023",
+      "end": "05/02/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "1.6.2": {
     "collect_date": "11/01/2024",
-    "moc_ver": null,
-    "pf_ver": "1.6.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "1.6.1",
+      "name": "Youci's Wandering Words",
+      "start": "08/01/2024",
+      "end": "19/02/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "1.6.3": {
     "collect_date": "25/01/2024",
-    "moc_ver": "1.6.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "1.6.2",
+      "name": "Light of Reignition",
+      "start": "22/01/2024",
+      "end": "04/03/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.0.1": {
     "collect_date": "09/02/2024",
-    "moc_ver": null,
-    "pf_ver": "1.6.2",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "1.6.2",
+      "name": "Tales of a Tethered Bird",
+      "start": "05/02/2024",
+      "end": "18/03/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.0.2": {
     "collect_date": "24/02/2024",
-    "moc_ver": "2.0.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.0.1",
+      "name": "Dreamland of Longing",
+      "start": "19/02/2024",
+      "end": "01/04/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.0.3": {
     "collect_date": "07/03/2024",
-    "moc_ver": null,
-    "pf_ver": "2.0.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.0.1",
+      "name": "An Expression of Eloquence",
+      "start": "04/03/2024",
+      "end": "15/04/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.0.4": {
     "collect_date": "20/03/2024",
-    "moc_ver": "2.0.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.0.2",
+      "name": "Eve of Wanton Feast",
+      "start": "18/03/2024",
+      "end": "29/04/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.1.1": {
     "collect_date": "05/04/2024",
-    "moc_ver": null,
-    "pf_ver": "2.1.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.1.1",
+      "name": "Deceitful Chaos",
+      "start": "01/04/2024",
+      "end": "13/05/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.1.2": {
     "collect_date": "20/04/2024",
-    "moc_ver": "2.1.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.1.1",
+      "name": "White Night Chronicles",
+      "start": "15/04/2024",
+      "end": "27/05/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.1.3": {
     "collect_date": "07/05/2024",
-    "moc_ver": null,
-    "pf_ver": "2.1.2",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.1.2",
+      "name": "Fictitious Wordsmithing",
+      "start": "29/04/2024",
+      "end": "10/06/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.1.4": {
     "collect_date": "17/05/2024",
-    "moc_ver": "2.2.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.2.1",
+      "name": "Dream Within Dream",
+      "start": "13/05/2024",
+      "end": "19/06/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.2.1": {
     "collect_date": "31/05/2024",
-    "moc_ver": null,
-    "pf_ver": "2.2.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.2.1",
+      "name": "Lexical Enigma",
+      "start": "27/05/2024",
+      "end": "08/07/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.2.2": {
     "collect_date": "13/06/2024",
-    "moc_ver": "2.2.2",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.2.2",
+      "name": "A Song's True Theme",
+      "start": "10/06/2024",
+      "end": "22/07/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.3.1": {
     "collect_date": "23/06/2024",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "2.3.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "2.3.1",
+      "name": "Stormwind Knight",
+      "start": "19/06/2024",
+      "end": "05/08/2024"
+    },
+    "aa": null
   },
   "2.3.2": {
     "collect_date": "12/07/2024",
-    "moc_ver": null,
-    "pf_ver": "2.3.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.3.1",
+      "name": "Out of Thin Air",
+      "start": "08/07/2024",
+      "end": "19/08/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.3.3": {
     "collect_date": "26/07/2024",
-    "moc_ver": "2.3.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.3.1",
+      "name": "Dissipation of Dreams",
+      "start": "22/07/2024",
+      "end": "02/09/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.4.1": {
     "collect_date": "10/08/2024",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "2.4.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "2.4.1",
+      "name": "Dominated Evils",
+      "start": "05/08/2024",
+      "end": "16/09/2024"
+    },
+    "aa": null
   },
   "2.4.2": {
     "collect_date": "24/08/2024",
-    "moc_ver": null,
-    "pf_ver": "2.4.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.4.1",
+      "name": "Words of Deceit",
+      "start": "19/08/2024",
+      "end": "30/09/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.4.3": {
     "collect_date": "07/09/2024",
-    "moc_ver": "2.4.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.4.1",
+      "name": "The Big Sleep",
+      "start": "02/09/2024",
+      "end": "14/10/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.5.1": {
     "collect_date": "21/09/2024",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "2.5.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "2.5.1",
+      "name": "Gamer's Instigation",
+      "start": "16/09/2024",
+      "end": "28/10/2024"
+    },
+    "aa": null
   },
   "2.5.2": {
     "collect_date": "05/10/2024",
-    "moc_ver": null,
-    "pf_ver": "2.5.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.5.1",
+      "name": "Volubility",
+      "start": "30/09/2024",
+      "end": "11/11/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.5.3": {
     "collect_date": "19/10/2024",
-    "moc_ver": "2.5.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.5.1",
+      "name": "Scalegorge Tidalflow",
+      "start": "14/10/2024",
+      "end": "25/11/2024"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.6.1": {
     "collect_date": "01/11/2024",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "2.6.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "2.6.1",
+      "name": "Sovereign Control",
+      "start": "28/10/2024",
+      "end": "09/12/2024"
+    },
+    "aa": null
   },
   "2.6.2": {
     "collect_date": "15/11/2024",
-    "moc_ver": null,
-    "pf_ver": "2.6.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.6.1",
+      "name": "Rumor Mill",
+      "start": "11/11/2024",
+      "end": "23/12/2024"
+    },
+    "as": null,
+    "aa": null
   },
   "2.6.3": {
     "collect_date": "29/11/2024",
-    "moc_ver": "2.6.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.6.1",
+      "name": "Dancing with the Dreams",
+      "start": "25/11/2024",
+      "end": "06/01/2025"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "2.7.1": {
     "collect_date": "13/12/2024",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "2.7.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "2.7.1",
+      "name": "Gusty Primate",
+      "start": "09/12/2024",
+      "end": "20/01/2025"
+    },
+    "aa": null
   },
   "2.7.2": {
     "collect_date": "01/01/2025",
-    "moc_ver": null,
-    "pf_ver": "2.7.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "2.7.1",
+      "name": "Technicality Entrapment",
+      "start": "23/12/2024",
+      "end": "03/02/2025"
+    },
+    "as": null,
+    "aa": null
   },
   "2.7.3_old": {
     "collect_date": "11/01/2025",
-    "moc_ver": "2.7.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.7.1",
+      "name": "Troopship Mayhem",
+      "start": "06/01/2025",
+      "end": "17/02/2025"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "3.0.1": {
     "collect_date": "23/01/2025",
-    "moc_ver": null,
-    "pf_ver": null,
-    "as_ver": "3.0.1",
-    "aa_ver": null
+    "moc": null,
+    "pf": null,
+    "as": {
+      "ver": "3.0.1",
+      "name": "Locust's Instigation",
+      "start": "20/01/2025",
+      "end": "03/03/2025"
+    },
+    "aa": null
   },
   "3.0.2": {
     "collect_date": "08/02/2025",
-    "moc_ver": null,
-    "pf_ver": "3.0.1",
-    "as_ver": null,
-    "aa_ver": null
+    "moc": null,
+    "pf": {
+      "ver": "3.0.1",
+      "name": "Clich\u00e9d Sayings",
+      "start": "03/02/2025",
+      "end": "17/03/2025"
+    },
+    "as": null,
+    "aa": null
   },
   "2.7.3": {
     "collect_date": "16/02/2025",
-    "moc_ver": "2.7.1",
-    "pf_ver": null,
-    "as_ver": null,
-    "aa_ver": null
+    "moc": {
+      "ver": "2.7.1",
+      "name": "Troopship Mayhem",
+      "start": "06/01/2025",
+      "end": "17/02/2025"
+    },
+    "pf": null,
+    "as": null,
+    "aa": null
   },
   "3.0.3": {
     "collect_date": "21/02/2025",
-    "moc_ver": "3.0.1",
-    "pf_ver": "3.0.1",
-    "as_ver": "3.0.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.0.1",
+      "name": "Strife of Creation",
+      "start": "17/02/2025",
+      "end": "31/03/2025"
+    },
+    "pf": {
+      "ver": "3.0.1",
+      "name": "Clich\u00e9d Sayings",
+      "start": "03/02/2025",
+      "end": "17/03/2025"
+    },
+    "as": {
+      "ver": "3.0.1",
+      "name": "Locust's Instigation",
+      "start": "20/01/2025",
+      "end": "03/03/2025"
+    },
+    "aa": null
   },
   "3.1.1": {
     "collect_date": "07/03/2025",
-    "moc_ver": "3.0.1",
-    "pf_ver": "3.0.1",
-    "as_ver": "3.1.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.0.1",
+      "name": "Strife of Creation",
+      "start": "17/02/2025",
+      "end": "31/03/2025"
+    },
+    "pf": {
+      "ver": "3.0.1",
+      "name": "Clich\u00e9d Sayings",
+      "start": "03/02/2025",
+      "end": "17/03/2025"
+    },
+    "as": {
+      "ver": "3.1.1",
+      "name": "Gambling Primate",
+      "start": "03/03/2025",
+      "end": "14/04/2025"
+    },
+    "aa": null
   },
   "3.1.2": {
     "collect_date": "24/03/2025",
-    "moc_ver": "3.0.1",
-    "pf_ver": "3.1.1",
-    "as_ver": "3.1.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.0.1",
+      "name": "Strife of Creation",
+      "start": "17/02/2025",
+      "end": "31/03/2025"
+    },
+    "pf": {
+      "ver": "3.1.1",
+      "name": "Self-Fulfilling Prophecy",
+      "start": "17/03/2025",
+      "end": "28/04/2025"
+    },
+    "as": {
+      "ver": "3.1.1",
+      "name": "Gambling Primate",
+      "start": "03/03/2025",
+      "end": "14/04/2025"
+    },
+    "aa": null
   },
   "3.1.3": {
     "collect_date": "05/04/2025",
-    "moc_ver": "3.1.1",
-    "pf_ver": "3.1.1",
-    "as_ver": "3.1.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.1.1",
+      "name": "Out of Home",
+      "start": "31/03/2025",
+      "end": "12/05/2025"
+    },
+    "pf": {
+      "ver": "3.1.1",
+      "name": "Self-Fulfilling Prophecy",
+      "start": "17/03/2025",
+      "end": "28/04/2025"
+    },
+    "as": {
+      "ver": "3.1.1",
+      "name": "Gambling Primate",
+      "start": "03/03/2025",
+      "end": "14/04/2025"
+    },
+    "aa": null
   },
   "3.2.1": {
     "collect_date": "18/04/2025",
-    "moc_ver": "3.1.1",
-    "pf_ver": "3.1.1",
-    "as_ver": "3.2.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.1.1",
+      "name": "Out of Home",
+      "start": "31/03/2025",
+      "end": "12/05/2025"
+    },
+    "pf": {
+      "ver": "3.1.1",
+      "name": "Self-Fulfilling Prophecy",
+      "start": "17/03/2025",
+      "end": "28/04/2025"
+    },
+    "as": {
+      "ver": "3.2.1",
+      "name": "Warlord of the Locusts",
+      "start": "14/04/2025",
+      "end": "26/05/2025"
+    },
+    "aa": null
   },
   "3.2.2": {
     "collect_date": "02/05/2025",
-    "moc_ver": "3.1.1",
-    "pf_ver": "3.2.1",
-    "as_ver": "3.2.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.1.1",
+      "name": "Out of Home",
+      "start": "31/03/2025",
+      "end": "12/05/2025"
+    },
+    "pf": {
+      "ver": "3.2.1",
+      "name": "Structural Rules",
+      "start": "28/04/2025",
+      "end": "09/06/2025"
+    },
+    "as": {
+      "ver": "3.2.1",
+      "name": "Warlord of the Locusts",
+      "start": "14/04/2025",
+      "end": "26/05/2025"
+    },
+    "aa": null
   },
   "3.2.3": {
     "collect_date": "17/05/2025",
-    "moc_ver": "3.2.1",
-    "pf_ver": "3.2.1",
-    "as_ver": "3.2.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.2.1",
+      "name": "Breath of the Othershore",
+      "start": "12/05/2025",
+      "end": "23/06/2025"
+    },
+    "pf": {
+      "ver": "3.2.1",
+      "name": "Structural Rules",
+      "start": "28/04/2025",
+      "end": "09/06/2025"
+    },
+    "as": {
+      "ver": "3.2.1",
+      "name": "Warlord of the Locusts",
+      "start": "14/04/2025",
+      "end": "26/05/2025"
+    },
+    "aa": null
   },
   "3.3.1": {
     "collect_date": "31/05/2025",
-    "moc_ver": "3.2.1",
-    "pf_ver": "3.2.1",
-    "as_ver": "3.3.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.2.1",
+      "name": "Breath of the Othershore",
+      "start": "12/05/2025",
+      "end": "23/06/2025"
+    },
+    "pf": {
+      "ver": "3.2.1",
+      "name": "Structural Rules",
+      "start": "28/04/2025",
+      "end": "09/06/2025"
+    },
+    "as": {
+      "ver": "3.3.1",
+      "name": "Cutting Mistral",
+      "start": "26/05/2025",
+      "end": "07/07/2025"
+    },
+    "aa": null
   },
   "3.3.2": {
     "collect_date": "16/06/2025",
-    "moc_ver": "3.2.1",
-    "pf_ver": "3.3.1",
-    "as_ver": "3.3.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.2.1",
+      "name": "Breath of the Othershore",
+      "start": "12/05/2025",
+      "end": "23/06/2025"
+    },
+    "pf": {
+      "ver": "3.3.1",
+      "name": "Narrative Analysis",
+      "start": "09/06/2025",
+      "end": "21/07/2025"
+    },
+    "as": {
+      "ver": "3.3.1",
+      "name": "Cutting Mistral",
+      "start": "26/05/2025",
+      "end": "07/07/2025"
+    },
+    "aa": null
   },
   "3.3.3": {
     "collect_date": "27/06/2025",
-    "moc_ver": "3.3.1",
-    "pf_ver": "3.3.1",
-    "as_ver": "3.3.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.3.1",
+      "name": "Lupine Moon-Devourer",
+      "start": "23/06/2025",
+      "end": "04/08/2025"
+    },
+    "pf": {
+      "ver": "3.3.1",
+      "name": "Narrative Analysis",
+      "start": "09/06/2025",
+      "end": "21/07/2025"
+    },
+    "as": {
+      "ver": "3.3.1",
+      "name": "Cutting Mistral",
+      "start": "26/05/2025",
+      "end": "07/07/2025"
+    },
+    "aa": null
   },
   "3.3.4": {
     "collect_date": "06/07/2025",
-    "moc_ver": "3.3.1",
-    "pf_ver": "3.3.1",
-    "as_ver": "3.3.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.3.1",
+      "name": "Lupine Moon-Devourer",
+      "start": "23/06/2025",
+      "end": "04/08/2025"
+    },
+    "pf": {
+      "ver": "3.3.1",
+      "name": "Narrative Analysis",
+      "start": "09/06/2025",
+      "end": "21/07/2025"
+    },
+    "as": {
+      "ver": "3.3.1",
+      "name": "Cutting Mistral",
+      "start": "26/05/2025",
+      "end": "07/07/2025"
+    },
+    "aa": null
   },
   "3.4.1": {
     "collect_date": "15/07/2025",
-    "moc_ver": "3.3.1",
-    "pf_ver": "3.3.1",
-    "as_ver": "3.4.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.3.1",
+      "name": "Lupine Moon-Devourer",
+      "start": "23/06/2025",
+      "end": "04/08/2025"
+    },
+    "pf": {
+      "ver": "3.3.1",
+      "name": "Narrative Analysis",
+      "start": "09/06/2025",
+      "end": "21/07/2025"
+    },
+    "as": {
+      "ver": "3.4.1",
+      "name": "Ichor Beast",
+      "start": "07/07/2025",
+      "end": "18/08/2025"
+    },
+    "aa": null
   },
   "3.4.2": {
     "collect_date": "25/07/2025",
-    "moc_ver": "3.3.1",
-    "pf_ver": "3.4.1",
-    "as_ver": "3.4.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.3.1",
+      "name": "Lupine Moon-Devourer",
+      "start": "23/06/2025",
+      "end": "04/08/2025"
+    },
+    "pf": {
+      "ver": "3.4.1",
+      "name": "Three Act Structure",
+      "start": "21/07/2025",
+      "end": "01/09/2025"
+    },
+    "as": {
+      "ver": "3.4.1",
+      "name": "Ichor Beast",
+      "start": "07/07/2025",
+      "end": "18/08/2025"
+    },
+    "aa": null
   },
   "3.4.3": {
     "collect_date": "08/08/2025",
-    "moc_ver": "3.4.1",
-    "pf_ver": "3.4.1",
-    "as_ver": "3.4.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.4.1",
+      "name": "Gambler's Plight",
+      "start": "04/08/2025",
+      "end": "15/09/2025"
+    },
+    "pf": {
+      "ver": "3.4.1",
+      "name": "Three Act Structure",
+      "start": "21/07/2025",
+      "end": "01/09/2025"
+    },
+    "as": {
+      "ver": "3.4.1",
+      "name": "Ichor Beast",
+      "start": "07/07/2025",
+      "end": "18/08/2025"
+    },
+    "aa": null
   },
   "3.5.1": {
     "collect_date": "22/08/2025",
-    "moc_ver": "3.4.1",
-    "pf_ver": "3.4.1",
-    "as_ver": "3.5.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.4.1",
+      "name": "Gambler's Plight",
+      "start": "04/08/2025",
+      "end": "15/09/2025"
+    },
+    "pf": {
+      "ver": "3.4.1",
+      "name": "Three Act Structure",
+      "start": "21/07/2025",
+      "end": "01/09/2025"
+    },
+    "as": {
+      "ver": "3.5.1",
+      "name": "Lupine Warhead",
+      "start": "18/08/2025",
+      "end": "29/09/2025"
+    },
+    "aa": null
   },
   "3.5.2": {
     "collect_date": "07/09/2025",
-    "moc_ver": "3.4.1",
-    "pf_ver": "3.5.1",
-    "as_ver": "3.5.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.4.1",
+      "name": "Gambler's Plight",
+      "start": "04/08/2025",
+      "end": "15/09/2025"
+    },
+    "pf": {
+      "ver": "3.5.1",
+      "name": "Subjective Narrative",
+      "start": "01/09/2025",
+      "end": "13/10/2025"
+    },
+    "as": {
+      "ver": "3.5.1",
+      "name": "Lupine Warhead",
+      "start": "18/08/2025",
+      "end": "29/09/2025"
+    },
+    "aa": null
   },
   "3.5.3": {
     "collect_date": "19/09/2025",
-    "moc_ver": "3.5.1",
-    "pf_ver": "3.5.1",
-    "as_ver": "3.5.1",
-    "aa_ver": null
+    "moc": {
+      "ver": "3.5.1",
+      "name": "Pillar of Genesis",
+      "start": "15/09/2025",
+      "end": "27/10/2025"
+    },
+    "pf": {
+      "ver": "3.5.1",
+      "name": "Subjective Narrative",
+      "start": "01/09/2025",
+      "end": "13/10/2025"
+    },
+    "as": {
+      "ver": "3.5.1",
+      "name": "Lupine Warhead",
+      "start": "18/08/2025",
+      "end": "29/09/2025"
+    },
+    "aa": null
   },
   "3.6.1": {
     "collect_date": "05/10/2025",
-    "moc_ver": "3.5.1",
-    "pf_ver": "3.5.1",
-    "as_ver": "3.6.1",
-    "aa_ver": "3.6.1"
+    "moc": {
+      "ver": "3.5.1",
+      "name": "Pillar of Genesis",
+      "start": "15/09/2025",
+      "end": "27/10/2025"
+    },
+    "pf": {
+      "ver": "3.5.1",
+      "name": "Subjective Narrative",
+      "start": "01/09/2025",
+      "end": "13/10/2025"
+    },
+    "as": {
+      "ver": "3.6.1",
+      "name": "Gale of Netherveil",
+      "start": "29/09/2025",
+      "end": "10/11/2025"
+    },
+    "aa": {
+      "ver": "3.6.1",
+      "name": "Intellitron Endgame",
+      "start": "23/09/2025",
+      "end": "04/11/2025"
+    }
   },
   "3.6.2": {
     "collect_date": "19/10/2025",
-    "moc_ver": "3.5.1",
-    "pf_ver": "3.6.1",
-    "as_ver": "3.6.1",
-    "aa_ver": "3.6.1"
+    "moc": {
+      "ver": "3.5.1",
+      "name": "Pillar of Genesis",
+      "start": "15/09/2025",
+      "end": "27/10/2025"
+    },
+    "pf": {
+      "ver": "3.6.1",
+      "name": "Iambic Pentameter",
+      "start": "13/10/2025",
+      "end": "24/11/2025"
+    },
+    "as": {
+      "ver": "3.6.1",
+      "name": "Gale of Netherveil",
+      "start": "29/09/2025",
+      "end": "10/11/2025"
+    },
+    "aa": {
+      "ver": "3.6.1",
+      "name": "Intellitron Endgame",
+      "start": "23/09/2025",
+      "end": "04/11/2025"
+    }
   },
   "3.6.3": {
     "collect_date": "01/11/2025",
-    "moc_ver": "3.6.1",
-    "pf_ver": "3.6.1",
-    "as_ver": "3.6.1",
-    "aa_ver": "3.6.1"
+    "moc": {
+      "ver": "3.6.1",
+      "name": "Category Mistake",
+      "start": "27/10/2025",
+      "end": "08/12/2025"
+    },
+    "pf": {
+      "ver": "3.6.1",
+      "name": "Iambic Pentameter",
+      "start": "13/10/2025",
+      "end": "24/11/2025"
+    },
+    "as": {
+      "ver": "3.6.1",
+      "name": "Gale of Netherveil",
+      "start": "29/09/2025",
+      "end": "10/11/2025"
+    },
+    "aa": {
+      "ver": "3.6.1",
+      "name": "Intellitron Endgame",
+      "start": "23/09/2025",
+      "end": "04/11/2025"
+    }
   },
   "3.6.3.2": {
     "collect_date": "10/11/2025",
-    "moc_ver": "3.6.1",
-    "pf_ver": "3.6.1",
-    "as_ver": "3.7.1",
-    "aa_ver": "3.7.1"
+    "moc": {
+      "ver": "3.6.1",
+      "name": "Category Mistake",
+      "start": "27/10/2025",
+      "end": "08/12/2025"
+    },
+    "pf": {
+      "ver": "3.6.1",
+      "name": "Iambic Pentameter",
+      "start": "13/10/2025",
+      "end": "24/11/2025"
+    },
+    "as": {
+      "ver": "3.7.1",
+      "name": "Instigation of the Locusts",
+      "start": "10/11/2025",
+      "end": "22/12/2025"
+    },
+    "aa": {
+      "ver": "3.7.1",
+      "name": "Illusory Realm of the Blazing Sun",
+      "start": "04/11/2025",
+      "end": "16/12/2025"
+    }
   },
   "3.7.1": {
     "collect_date": "15/11/2025",
-    "moc_ver": "3.6.1",
-    "pf_ver": "3.6.1",
-    "as_ver": "3.7.1",
-    "aa_ver": "3.7.1"
+    "moc": {
+      "ver": "3.6.1",
+      "name": "Category Mistake",
+      "start": "27/10/2025",
+      "end": "08/12/2025"
+    },
+    "pf": {
+      "ver": "3.6.1",
+      "name": "Iambic Pentameter",
+      "start": "13/10/2025",
+      "end": "24/11/2025"
+    },
+    "as": {
+      "ver": "3.7.1",
+      "name": "Instigation of the Locusts",
+      "start": "10/11/2025",
+      "end": "22/12/2025"
+    },
+    "aa": {
+      "ver": "3.7.1",
+      "name": "Illusory Realm of the Blazing Sun",
+      "start": "04/11/2025",
+      "end": "16/12/2025"
+    }
   },
   "3.7.2": {
     "collect_date": "28/11/2025",
-    "moc_ver": "3.6.1",
-    "pf_ver": "3.7.1",
-    "as_ver": "3.7.1",
-    "aa_ver": "3.7.1"
+    "moc": {
+      "ver": "3.6.1",
+      "name": "Category Mistake",
+      "start": "27/10/2025",
+      "end": "08/12/2025"
+    },
+    "pf": {
+      "ver": "3.7.1",
+      "name": "Syntax Rule",
+      "start": "24/11/2025",
+      "end": "05/01/2026"
+    },
+    "as": {
+      "ver": "3.7.1",
+      "name": "Instigation of the Locusts",
+      "start": "10/11/2025",
+      "end": "22/12/2025"
+    },
+    "aa": {
+      "ver": "3.7.1",
+      "name": "Illusory Realm of the Blazing Sun",
+      "start": "04/11/2025",
+      "end": "16/12/2025"
+    }
   },
   "3.7.3": {
     "collect_date": "12/12/2025",
-    "moc_ver": "3.7.1",
-    "pf_ver": "3.7.1",
-    "as_ver": "3.7.1",
-    "aa_ver": "3.7.1"
+    "moc": {
+      "ver": "3.7.1",
+      "name": "Monkey Business",
+      "start": "08/12/2025",
+      "end": "19/01/2026"
+    },
+    "pf": {
+      "ver": "3.7.1",
+      "name": "Syntax Rule",
+      "start": "24/11/2025",
+      "end": "05/01/2026"
+    },
+    "as": {
+      "ver": "3.7.1",
+      "name": "Instigation of the Locusts",
+      "start": "10/11/2025",
+      "end": "22/12/2025"
+    },
+    "aa": {
+      "ver": "3.7.1",
+      "name": "Illusory Realm of the Blazing Sun",
+      "start": "04/11/2025",
+      "end": "16/12/2025"
+    }
   },
   "3.8.1": {
     "collect_date": "27/12/2025",
-    "moc_ver": "3.7.1",
-    "pf_ver": "3.7.1",
-    "as_ver": "3.8.1",
-    "aa_ver": "3.8.1"
+    "moc": {
+      "ver": "3.7.1",
+      "name": "Monkey Business",
+      "start": "08/12/2025",
+      "end": "19/01/2026"
+    },
+    "pf": {
+      "ver": "3.7.1",
+      "name": "Syntax Rule",
+      "start": "24/11/2025",
+      "end": "05/01/2026"
+    },
+    "as": {
+      "ver": "3.8.1",
+      "name": "Primate Knight",
+      "start": "22/12/2025",
+      "end": "02/02/2026"
+    },
+    "aa": {
+      "ver": "3.8.1",
+      "name": "Dissonance",
+      "start": "16/12/2025",
+      "end": "12/02/2026"
+    }
   },
   "3.8.2": {
     "collect_date": "09/01/2026",
-    "moc_ver": "3.7.1",
-    "pf_ver": "3.8.1",
-    "as_ver": "3.8.1",
-    "aa_ver": "3.8.1"
+    "moc": {
+      "ver": "3.7.1",
+      "name": "Monkey Business",
+      "start": "08/12/2025",
+      "end": "19/01/2026"
+    },
+    "pf": {
+      "ver": "3.8.1",
+      "name": "Epic Collection",
+      "start": "05/01/2026",
+      "end": "16/02/2026"
+    },
+    "as": {
+      "ver": "3.8.1",
+      "name": "Primate Knight",
+      "start": "22/12/2025",
+      "end": "02/02/2026"
+    },
+    "aa": {
+      "ver": "3.8.1",
+      "name": "Dissonance",
+      "start": "16/12/2025",
+      "end": "12/02/2026"
+    }
   },
   "3.8.3": {
     "collect_date": "23/01/2026",
-    "moc_ver": "3.8.1",
-    "pf_ver": "3.8.1",
-    "as_ver": "3.8.1",
-    "aa_ver": "3.8.1"
+    "moc": {
+      "ver": "3.8.1",
+      "name": "Breached Nest",
+      "start": "19/01/2026",
+      "end": "02/03/2026"
+    },
+    "pf": {
+      "ver": "3.8.1",
+      "name": "Epic Collection",
+      "start": "05/01/2026",
+      "end": "16/02/2026"
+    },
+    "as": {
+      "ver": "3.8.1",
+      "name": "Primate Knight",
+      "start": "22/12/2025",
+      "end": "02/02/2026"
+    },
+    "aa": {
+      "ver": "3.8.1",
+      "name": "Dissonance",
+      "start": "16/12/2025",
+      "end": "12/02/2026"
+    }
   },
   "3.8.4": {
     "collect_date": "06/02/2026",
-    "moc_ver": "3.8.1",
-    "pf_ver": "3.8.1",
-    "as_ver": "3.8.2",
-    "aa_ver": "3.8.1"
+    "moc": {
+      "ver": "3.8.1",
+      "name": "Breached Nest",
+      "start": "19/01/2026",
+      "end": "02/03/2026"
+    },
+    "pf": {
+      "ver": "3.8.1",
+      "name": "Epic Collection",
+      "start": "05/01/2026",
+      "end": "16/02/2026"
+    },
+    "as": {
+      "ver": "3.8.2",
+      "name": "Dominance of Netherveil",
+      "start": "02/02/2026",
+      "end": "16/03/2026"
+    },
+    "aa": {
+      "ver": "3.8.1",
+      "name": "Dissonance",
+      "start": "16/12/2025",
+      "end": "12/02/2026"
+    }
   },
   "4.0.1": {
     "collect_date": "22/02/2026",
-    "moc_ver": "3.8.1",
-    "pf_ver": "4.0.1",
-    "as_ver": "3.8.2",
-    "aa_ver": "4.0.1"
+    "moc": {
+      "ver": "3.8.1",
+      "name": "Breached Nest",
+      "start": "19/01/2026",
+      "end": "02/03/2026"
+    },
+    "pf": {
+      "ver": "4.0.1",
+      "name": "Wordless Novel",
+      "start": "16/02/2026",
+      "end": "30/03/2026"
+    },
+    "as": {
+      "ver": "3.8.2",
+      "name": "Dominance of Netherveil",
+      "start": "02/02/2026",
+      "end": "16/03/2026"
+    },
+    "aa": {
+      "ver": "4.0.1",
+      "name": "Cyber Crisis",
+      "start": "12/02/2026",
+      "end": "24/03/2026"
+    }
   },
   "4.0.2": {
     "collect_date": "06/03/2026",
-    "moc_ver": "4.0.1",
-    "pf_ver": "4.0.1",
-    "as_ver": "3.8.2",
-    "aa_ver": "4.0.1"
+    "moc": {
+      "ver": "4.0.1",
+      "name": "Cyber Mystery",
+      "start": "02/03/2026",
+      "end": "13/04/2026"
+    },
+    "pf": {
+      "ver": "4.0.1",
+      "name": "Wordless Novel",
+      "start": "16/02/2026",
+      "end": "30/03/2026"
+    },
+    "as": {
+      "ver": "3.8.2",
+      "name": "Dominance of Netherveil",
+      "start": "02/02/2026",
+      "end": "16/03/2026"
+    },
+    "aa": {
+      "ver": "4.0.1",
+      "name": "Cyber Crisis",
+      "start": "12/02/2026",
+      "end": "24/03/2026"
+    }
   },
   "4.1.1": {
     "collect_date": "03/04/2026",
-    "moc_ver": "4.0.1",
-    "pf_ver": "4.1.1",
-    "as_ver": "4.0.1",
-    "aa_ver": "4.1.1"
+    "moc": {
+      "ver": "4.0.1",
+      "name": "Cyber Mystery",
+      "start": "02/03/2026",
+      "end": "13/04/2026"
+    },
+    "pf": {
+      "ver": "4.1.1",
+      "name": "Virtual Made Manifest",
+      "start": "30/03/2026",
+      "end": "11/05/2026"
+    },
+    "as": {
+      "ver": "4.0.1",
+      "name": "Militant Lupine",
+      "start": "16/03/2026",
+      "end": "27/04/2026"
+    },
+    "aa": {
+      "ver": "4.1.1",
+      "name": "Don't Mess With Pom-Pom",
+      "start": "24/03/2026",
+      "end": "21/04/2026"
+    }
   },
   "4.1.2": {
     "collect_date": "19/04/2026",
-    "moc_ver": "4.1.1",
-    "pf_ver": "4.1.1",
-    "as_ver": "4.0.1",
-    "aa_ver": "4.1.1"
+    "moc": {
+      "ver": "4.1.1",
+      "name": "Grand Finale",
+      "start": "13/04/2026",
+      "end": "25/05/2026"
+    },
+    "pf": {
+      "ver": "4.1.1",
+      "name": "Virtual Made Manifest",
+      "start": "30/03/2026",
+      "end": "11/05/2026"
+    },
+    "as": {
+      "ver": "4.0.1",
+      "name": "Militant Lupine",
+      "start": "16/03/2026",
+      "end": "27/04/2026"
+    },
+    "aa": {
+      "ver": "4.1.1",
+      "name": "Don't Mess With Pom-Pom",
+      "start": "24/03/2026",
+      "end": "21/04/2026"
+    }
   },
   "4.2.1": {
     "collect_date": "02/05/2026",
-    "moc_ver": "4.1.1",
-    "pf_ver": "4.1.1",
-    "as_ver": "4.2.1",
-    "aa_ver": "4.2.1"
+    "moc": {
+      "ver": "4.1.1",
+      "name": "Grand Finale",
+      "start": "13/04/2026",
+      "end": "25/05/2026"
+    },
+    "pf": {
+      "ver": "4.1.1",
+      "name": "Virtual Made Manifest",
+      "start": "30/03/2026",
+      "end": "11/05/2026"
+    },
+    "as": {
+      "ver": "4.2.1",
+      "name": "Idol of the Locusts",
+      "start": "27/04/2026",
+      "end": "08/06/2026"
+    },
+    "aa": {
+      "ver": "4.2.1",
+      "name": "Happiness Syntax",
+      "start": "21/04/2026",
+      "end": "31/05/2026"
+    }
   },
   "4.2.2": {
     "collect_date": "16/05/2026",
-    "moc_ver": "4.1.1",
-    "pf_ver": "4.2.1",
-    "as_ver": "4.2.1",
-    "aa_ver": "4.2.1"
+    "moc": {
+      "ver": "4.1.1",
+      "name": "Grand Finale",
+      "start": "13/04/2026",
+      "end": "25/05/2026"
+    },
+    "pf": {
+      "ver": "4.2.1",
+      "name": "Illusory Concepts",
+      "start": "11/05/2026",
+      "end": "22/06/2026"
+    },
+    "as": {
+      "ver": "4.2.1",
+      "name": "Idol of the Locusts",
+      "start": "27/04/2026",
+      "end": "08/06/2026"
+    },
+    "aa": {
+      "ver": "4.2.1",
+      "name": "Happiness Syntax",
+      "start": "21/04/2026",
+      "end": "31/05/2026"
+    }
   },
   "4.2.3": {
     "collect_date": "29/05/2026",
-    "moc_ver": "4.2.1",
-    "pf_ver": "4.2.1",
-    "as_ver": "4.2.1",
-    "aa_ver": "4.2.1"
+    "moc": {
+      "ver": "4.2.1",
+      "name": "Duty Action",
+      "start": "25/05/2026",
+      "end": "06/07/2026"
+    },
+    "pf": {
+      "ver": "4.2.1",
+      "name": "Illusory Concepts",
+      "start": "11/05/2026",
+      "end": "22/06/2026"
+    },
+    "as": {
+      "ver": "4.2.1",
+      "name": "Idol of the Locusts",
+      "start": "27/04/2026",
+      "end": "08/06/2026"
+    },
+    "aa": {
+      "ver": "4.2.1",
+      "name": "Happiness Syntax",
+      "start": "21/04/2026",
+      "end": "31/05/2026"
+    }
   },
   "4.3.1": {
     "collect_date": "11/06/2026",
-    "moc_ver": "4.2.1",
-    "pf_ver": "4.2.1",
-    "as_ver": "4.3.1",
-    "aa_ver": "4.3.1"
+    "moc": {
+      "ver": "4.2.1",
+      "name": "Duty Action",
+      "start": "25/05/2026",
+      "end": "06/07/2026"
+    },
+    "pf": {
+      "ver": "4.2.1",
+      "name": "Illusory Concepts",
+      "start": "11/05/2026",
+      "end": "22/06/2026"
+    },
+    "as": {
+      "ver": "4.3.1",
+      "name": "Gale of Forgetting",
+      "start": "08/06/2026",
+      "end": "20/07/2026"
+    },
+    "aa": {
+      "ver": "4.3.1",
+      "name": "The Humming Laughter",
+      "start": "31/05/2026",
+      "end": "12/07/2026"
+    }
   }
 }

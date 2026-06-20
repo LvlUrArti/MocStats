@@ -16,12 +16,14 @@ ENDGAME_NAMES = {
 IGNORE_SUFFIXES = ["rogue", "nous", "tourn"]
 
 
-def get_version_map(filenames: list[str]) -> dict[str, dict[str, str | bool | None]]:
+def get_version_map(
+    filenames: list[str],
+) -> dict[str, dict[str, None | str | dict[str, str | bool | None]]]:
     """Group filenames by version and identifies their splits.
 
     Returns: { "version_str": [{"split": "split_name", "path": "filename.csv"}, ...] }.
     """
-    version_map: dict[str, dict[str, str | bool | None]] = {}
+    version_map: dict[str, dict[str, None | str | dict[str, str | bool | None]]] = {}
 
     def get_date(date: str) -> datetime:
         return datetime.strptime(date, "%d/%m/%Y")
@@ -47,10 +49,10 @@ def get_version_map(filenames: list[str]) -> dict[str, dict[str, str | bool | No
     for version, collect_date in collect_dates.items():
         version_map[version] = {
             "collect_date": collect_date,
-            "moc_ver": None,
-            "pf_ver": None,
-            "as_ver": None,
-            "aa_ver": None,
+            "moc": None,
+            "pf": None,
+            "as": None,
+            "aa": None,
         }
 
     for filename in sorted(filenames):
@@ -82,10 +84,15 @@ def get_version_map(filenames: list[str]) -> dict[str, dict[str, str | bool | No
         if split_name not in {"pf", "as", "aa", "moc"}:
             continue
 
-        version_map[version][f"{split_name}_ver"] = get_ver(
-            split_name,
-            collect_dates[version],
-        )
+        ver_name = get_ver(split_name, collect_dates[version])
+        if ver_name:
+            endgame = endgame_versions[ENDGAME_NAMES[split_name]][ver_name]
+            version_map[version][split_name] = {
+                "ver": ver_name,
+                "name": endgame["name"],
+                "start": endgame["time_start"],
+                "end": endgame["time_end"],
+            }
 
     return version_map
 
