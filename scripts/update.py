@@ -169,6 +169,9 @@ for char_id, char in raw_chars.items():
                 "release": char.release,
             }
 
+            if not char.release:
+                print(f"⚠️  Missing release date for {char_name}")
+
             if char_add["rarity"] == 5:
                 if "Trailblazer" in char_name:
                     char_add["rarity"] = 4
@@ -178,7 +181,7 @@ for char_id, char in raw_chars.items():
 
             char_roles: list[str] = []
             while True:
-                role_char = int(input(f"Role? (0-{len(ROLES)}): {ROLES}: "))
+                role_char = int(input(f"Role? (0-{len(ROLES) - 1}): {ROLES}: "))
                 if 0 <= role_char < len(ROLES):
                     char_roles.append(ROLES[role_char].lower())
 
@@ -191,8 +194,9 @@ for char_id, char in raw_chars.items():
 
     if multi_elem_char:
         trailblazer_id_list: list[str] = []
+        store_trailblazer_id_list: list[str] = chars_data[char_name]["trailblazer_ids"]
         if "trailblazer_ids" in chars_data[char_name]:
-            trailblazer_id_list += chars_data[char_name]["trailblazer_ids"]
+            trailblazer_id_list += store_trailblazer_id_list
         if char_id not in trailblazer_id_list:
             trailblazer_id_list.append(char_id)
         chars_data[char_name]["trailblazer_ids"] = trailblazer_id_list
