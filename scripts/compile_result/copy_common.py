@@ -3,7 +3,7 @@
 import json
 from os import path
 from pathlib import Path
-from shutil import copytree, make_archive, rmtree
+from shutil import copy, copytree, make_archive, rmtree
 from sys import path as sys_path
 
 sys_path.append("../")
@@ -32,11 +32,7 @@ if ENDGAME_INFO:
         Path("../../results/web_results"),
     )
 
-    with open("../../data/versions/config.json") as f:
-        config = json.load(f)
-
-    with open("../../results/web_results/config.json", "w") as f:
-        json.dump(config[RECENT_PHASE], f, indent=2)
+    copy("../../data/versions/config.json", "../../results/final_results/config.json")
 
     if ENDGAME_INFO.aa and ENDGAME_INFO.aa.ver:
         with open("../../data/versions/aa_boss_names.json") as f:
