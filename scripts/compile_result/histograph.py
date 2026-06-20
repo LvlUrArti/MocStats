@@ -11,7 +11,13 @@ from combine_char import (
     dps_base_slugs,
     load_base_stats,
 )
-from comp_rates_config import CHARS_INFO, ENDGAME_INFOS, RECENT_PHASE, CharInfo
+from comp_rates_config import (
+    CHARS_INFO,
+    ENDGAME_INFOS,
+    MODE_ATTR_MAP,
+    RECENT_PHASE,
+    CharInfo,
+)
 
 # ----------------------------------------------------------------------
 # Configuration
@@ -41,15 +47,8 @@ def get_latest_unique_versions(
     # Iterate over outer keys
     for patch_ver, patch_data in ENDGAME_INFOS.items():
         for mode in modes:
-            match mode:
-                case "pf":
-                    version = patch_data.pf_ver
-                case "aa":
-                    version = patch_data.aa_ver
-                case "as":
-                    version = patch_data.as_ver
-                case "moc" | _:
-                    version = patch_data.moc_ver
+            mode_obj = getattr(patch_data, MODE_ATTR_MAP[mode])
+            version = mode_obj.ver if mode_obj else None
             if version:
                 mode_versions[mode].append((patch_ver, version))
         if patch_ver == RECENT_PHASE:

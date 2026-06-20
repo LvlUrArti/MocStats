@@ -9,7 +9,7 @@ from os.path import dirname as path_dirname
 from os.path import join as path_join
 from sys import exit as sys_exit
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 parser = ArgumentParser()
 parser.add_argument("-v", "--version", help="Version to compile")
@@ -37,20 +37,43 @@ def relative_path(relative_path: str) -> str:
     return path_join(script_dir, relative_path)
 
 
+class EndgameMode(BaseModel):
+    """Endgame mode version info."""
+
+    ver: str
+    name: str
+    start: datetime
+    end: datetime
+
+    @field_validator("start", "end", mode="before")
+    @classmethod
+    def parse_date(cls, value: str) -> datetime:
+        """Convert string to datetime."""
+        return datetime.strptime(value, "%d/%m/%Y")
+
+
 class EndgameConfig(BaseModel):
     """Endgame collect date and version info."""
 
     collect_date: datetime
-    moc_ver: str | None
-    pf_ver: str | None
-    as_ver: str | None
-    aa_ver: str | None
+    moc: EndgameMode | None = None
+    pf: EndgameMode | None = None
+    as_: EndgameMode | None = Field(None, alias="as")
+    aa: EndgameMode | None = None
 
     @field_validator("collect_date", mode="before")
     @classmethod
     def parse_collect_date(cls, value: str) -> datetime:
         """Convert string to datetime."""
         return datetime.strptime(value, "%d/%m/%Y")
+
+
+MODE_ATTR_MAP: dict[str, str] = {
+    "moc": "moc",
+    "pf": "pf",
+    "as": "as_",
+    "aa": "aa",
+}
 
 
 with open(relative_path("../data/versions/config.json")) as f:
@@ -141,8 +164,10 @@ if cfg is None:
     star_num_threshold = 3
 else:
     # Check version exists
-    if ENDGAME_INFO and not getattr(ENDGAME_INFO, f"{args.mode}_ver"):
-        sys_exit()
+    if ENDGAME_INFO:
+        mode_obj = getattr(ENDGAME_INFO, MODE_ATTR_MAP[args.mode])
+        if not mode_obj or not mode_obj.ver:
+            sys_exit()
 
     # Initial values
     pf_filename = f"_{args.mode}"

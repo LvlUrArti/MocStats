@@ -38,12 +38,12 @@ if ENDGAME_INFO:
     with open("../../results/web_results/config.json", "w") as f:
         json.dump(config[RECENT_PHASE], f, indent=2)
 
-    if ENDGAME_INFO.aa_ver:
+    if ENDGAME_INFO.aa and ENDGAME_INFO.aa.ver:
         with open("../../data/versions/aa_boss_names.json") as f:
             boss_names = json.load(f)
 
         with open("../../results/web_results/boss_names.json", "w") as f:
-            json.dump(boss_names[ENDGAME_INFO.aa_ver], f, indent=2)
+            json.dump(boss_names[ENDGAME_INFO.aa.ver], f, indent=2)
 
     make_archive("../../results/results", "zip", "../../results/web_results")
     copy_results()

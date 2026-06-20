@@ -11,6 +11,7 @@ from comp_rates_config import (
     ENDGAME_INFO,
     ENDGAME_INFOS,
     LIGHT_CONES,
+    MODE_ATTR_MAP,
     RECENT_PHASE,
 )
 from pydantic import BaseModel
@@ -299,12 +300,14 @@ def get_read_path(ver: str, mode: str) -> str:
 
 def get_previous_mode_phase(mode: str) -> str:
     """Get the previous phase of a mode."""
-    mode_key = f"{mode}_ver"  # e.g., "aa_ver"
+    mode_key = MODE_ATTR_MAP[mode]
     prev_phase = RECENT_PHASE
-    check_ver = getattr(ENDGAME_INFO, mode_key)
+    check_obj = getattr(ENDGAME_INFO, mode_key)
+    check_ver = check_obj.ver if check_obj else None
 
     for phase, inner in ENDGAME_INFOS.items():
-        cur_ver = getattr(inner, mode_key)
+        cur_obj = getattr(inner, mode_key)
+        cur_ver = cur_obj.ver if cur_obj else None
         if cur_ver == check_ver:
             break
         prev_phase = phase
