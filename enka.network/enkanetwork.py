@@ -310,6 +310,7 @@ async def main() -> None:
 
         print("\nFinished")
         send_notification("Data Collect Done", "Data Collect Done")
+        await client.close()
 
 
 asyncio.run(main())
