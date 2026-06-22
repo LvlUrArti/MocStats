@@ -4,6 +4,7 @@ import csv
 import json
 import os.path
 import sys
+from pathlib import Path
 
 sys.path.append("../scripts/")
 from comp_rates_config import (
@@ -56,3 +57,33 @@ else:
 filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build"
 char_filename = filename + "_char.csv"
 filename = filename + ".csv"
+
+
+def get_start_index(id_list: list[int]) -> int:
+    """Determine the index in `id_list` from which to start collecting new data."""
+    # If CSV doesn't exist, start from the beginning
+    if not Path(filename).exists():
+        return 0
+
+    # Read the last row of the CSV
+    with open(filename, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        # Get the last row by iterating to the end
+        last_row = None
+        for row in reader:
+            last_row = row
+        if last_row is None:  # only header or empty
+            return 0
+
+    # Find the index of the last ID in the original list
+    try:
+        idx = id_list.index(int(last_row["uid"]))
+    except ValueError:
+        # ID is not in the list
+        return 0
+
+    # Resume from the next ID
+    return idx + 1
+
+
+start_index = get_start_index(uids)
