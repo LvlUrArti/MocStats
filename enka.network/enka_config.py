@@ -3,11 +3,9 @@
 import csv
 import json
 import os.path
-import sys
 from pathlib import Path
 
-sys.path.append("../scripts/")
-from comp_rates_config import (
+from scripts.comp_rates_config import (
     BASE_RESULT_PATH,
     CHARS_INFO,
     RECENT_PHASE,

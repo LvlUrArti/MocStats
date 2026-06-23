@@ -14,15 +14,23 @@ from os import path
 from statistics import mean as stat_mean
 from statistics import median as stat_median
 from sys import exit as sys_exit
-from sys import path as sys_path
 from time import time
 
 from matplotlib.pyplot import hist as plt_hist
 from matplotlib.pyplot import show as plt_show
+from nohomo_config import (
+    check_char,
+    check_char_name,
+    check_stats,
+    print_chart,
+    round_stats,
+    skip_check_skew_stats,
+)
+from pynput import keyboard
+from scipy.stats import skew
 from send2trash import send2trash
 
-sys_path.append("../scripts/")
-from comp_rates_config import (
+from scripts.comp_rates_config import (
     BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
     CHAR_RESULT_PATH,
@@ -33,18 +41,8 @@ from comp_rates_config import (
     skip_self,
     slug_with_prefix,
 )
-from csv_to_pickle import PickleData, load_pickle_data
-from nohomo_config import (
-    check_char,
-    check_char_name,
-    check_stats,
-    print_chart,
-    round_stats,
-    skip_check_skew_stats,
-)
-from player_phase import PlayerPhase
-from pynput import keyboard
-from scipy.stats import skew
+from scripts.csv_to_pickle import PickleData, load_pickle_data
+from scripts.player_phase import PlayerPhase
 
 
 def read_csv(file: TextIOWrapper) -> list[dict[str, str]]:
