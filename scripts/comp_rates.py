@@ -36,7 +36,6 @@ from comp_rates_config import (
 )
 from composition import Composition, Stage
 from csv_to_pickle import PickleData, load_pickle_data
-from line_profiler import profile
 from player_phase import PlayerPhase
 from scipy.stats import skew, trim_mean
 
@@ -67,7 +66,6 @@ else:
     hoyobuddy_uids = set[str]()
 
 
-@profile
 def main() -> None:
     """Compile data."""
     start_time = time()
@@ -137,7 +135,6 @@ def main() -> None:
         start_time = cur_time
 
 
-@profile
 def comp_usages(
     rooms: list[str],
     filename: str = "comp_usages",
@@ -177,7 +174,6 @@ class CompUsage(Composition):
         self.app_rank: int
 
 
-@profile
 def used_comps(
     rooms: list[str],
     filename: str,
@@ -332,7 +328,6 @@ def used_comps(
     return comps_dict, total_comps
 
 
-@profile
 def rank_usages(
     comps_dict: dict[tuple[str, ...], CompUsage],
     rooms: list[str],
@@ -401,7 +396,6 @@ def rank_usages(
         comps_dict[comp].app_rank = rates.index(cur_comp.app_rate) + 1
 
 
-@profile
 def duo_usages(
     usage: dict[str, cu.CharUsageData],
     rooms: list[str],
@@ -418,7 +412,6 @@ def duo_usages(
     duo_write(duos_dict, usage, "duo_usages", check_duo=check_duo)
 
 
-@profile
 def used_duos(
     comps: list[Composition],
     rooms: list[str],
@@ -545,7 +538,6 @@ def used_duos(
     return return_duos
 
 
-@profile
 def char_usages(
     rooms: list[str],
     filename: str = "char_usages",
@@ -562,7 +554,6 @@ def char_usages(
     return chars_dict
 
 
-@profile
 def comp_usages_write(
     comps_dict: dict[tuple[str, ...], CompUsage],
     filename: str,
@@ -705,7 +696,6 @@ def comp_usages_write(
             out_file.write(dumps(out_json, indent=2))
 
 
-@profile
 def duo_write(
     duos_dict: dict[str, dict[str, cu.RoundApp]],
     usage: dict[str, cu.CharUsageData],
@@ -862,7 +852,6 @@ def duo_write(
         out_file.write(dumps(out_duos, indent=2))
 
 
-@profile
 def char_usages_write(
     chars_dict: dict[str, cu.CharUsageData],
     filename: str,
