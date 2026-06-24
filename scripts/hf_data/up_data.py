@@ -3,7 +3,6 @@
 from os import listdir
 from os.path import dirname, exists, join
 from sys import path as sys_path
-from time import sleep
 
 sys_path.append("../")
 from comp_rates_config import RECENT_PHASE, args
@@ -13,8 +12,8 @@ from huggingface_hub import (
     hf_hub_download,  # pyright: ignore[reportUnknownVariableType]
 )
 from huggingface_hub.repocard import RepoCard
-from plyer import notification  # type: ignore[reportMissingTypeStubs]
 from send2trash import send2trash
+from utils.notif import send_notification
 
 yes_arg: bool | None = args.yes
 no_arg: bool | None = args.no
@@ -265,11 +264,4 @@ if __name__ == "__main__":
     scan_upload_and_clean()
     config = generate_yaml_config()
     update_readme(config)
-
-    notification.notify(
-        title="Finished",
-        message="Finished uploading data",
-        # displaying time
-        timeout=2,
-    )  # pyright: ignore[reportOptionalCall]
-    sleep(0.1)
+    send_notification("Finished", "Finished uploading data")

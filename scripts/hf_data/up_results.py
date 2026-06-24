@@ -1,15 +1,13 @@
 """Generate a list of configs from a folder of csv files."""
 
-# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false, reportOptionalCall=false
 from os.path import exists
 from sys import path as sys_path
-from time import sleep
 
 sys_path.append("../")
 from comp_rates_config import RECENT_PHASE
 from huggingface_hub import HfApi
 from huggingface_hub.repocard import RepoCard
-from plyer import notification
+from utils.notif import send_notification
 
 # ================= CONFIGURATION =================
 # Where to look for NEW files to upload
@@ -80,10 +78,4 @@ def update_readme() -> None:
 if __name__ == "__main__":
     scan_upload_and_clean()
     update_readme()
-
-    notification.notify(
-        title="Finished",
-        message="Finished uploading data",
-        timeout=2,
-    )
-    sleep(0.1)
+    send_notification("Finished", "Finished uploading data")
