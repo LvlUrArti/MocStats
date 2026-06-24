@@ -116,7 +116,7 @@ default_values = {
     "moc": 11,
     "pf": 22000,
     "as": 3000,
-    "aa": 6,
+    "aa": 7,
 }
 
 cycle_modes = {"moc", "aa"}
