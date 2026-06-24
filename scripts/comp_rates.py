@@ -589,7 +589,6 @@ def comp_usages_write(
         ),
     )
     comp_names: list[str] = []
-    dual_comp_names: list[str] = []
 
     for comp in comps_dict:
         if info_char and filename not in comp:
@@ -599,11 +598,7 @@ def comp_usages_write(
         # Only one variation of each comp name is included,
         # unless if it's used for a character's infographic
         if (
-            (
-                comp_name not in comp_names
-                and comp_name not in dual_comp_names
-                and cur_comp.round not in {99.99, 0}
-            )
+            (comp_name not in comp_names and cur_comp.round not in {99.99, 0})
             or comp_name == "-"
             or info_char
         ):
