@@ -6,6 +6,8 @@ from sys import path as sys_path
 
 sys_path.append("../")
 
+from typing import TYPE_CHECKING
+
 from comp_rates_config import (
     CHARS_INFO,
     ENDGAME_INFO,
@@ -15,6 +17,9 @@ from comp_rates_config import (
     RECENT_PHASE,
 )
 from pydantic import BaseModel
+
+if TYPE_CHECKING:
+    from comp_rates_config import EndgameMode
 
 # ----------------------------------------------------------------------
 # Constants
@@ -306,7 +311,7 @@ def get_previous_mode_phase(mode: str) -> str:
     check_ver = check_obj.ver if check_obj else None
 
     for phase, inner in ENDGAME_INFOS.items():
-        cur_obj = getattr(inner, mode_key)
+        cur_obj: EndgameMode | None = getattr(inner, mode_key)
         cur_ver = cur_obj.ver if cur_obj else None
         if cur_ver == check_ver:
             break
