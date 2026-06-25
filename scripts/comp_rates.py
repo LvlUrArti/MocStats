@@ -17,6 +17,7 @@ from comp_rates_config import (
     CHAR_RESULT_PATH,
     CHARS_INFO,
     COMP_RESULT_PATH,
+    DUOS_RESULT_PATH,
     F2P_ONLY,
     WHALE_ONLY,
     aa_mode,
@@ -733,7 +734,7 @@ def duo_write(
     elif F2P_ONLY:
         filename = filename + "_E0S0"
 
-    with open(f"../{BASE_RESULT_PATH}/duos/{filename}.csv", "w", newline="") as f:
+    with open(f"../{DUOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
@@ -826,29 +827,17 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open(f"../{BASE_RESULT_PATH}/duos/duo_check.csv", "w", newline="") as f:
+        with open(f"../{DUOS_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
             csv_writer = csvwriter(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
-        for out_dd_print in out_dd:
-            print(
-                str(out_dd[out_dd_print]["char_i"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_i_app"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_j"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_j_app"])
-                + ", "
-                + str(out_dd[out_dd_print]["avg_round"]),
-            )
         sys_exit()
 
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open(f"../{BASE_RESULT_PATH}/duos/{filename}.json", "w") as out_file:
+    with open(f"../{DUOS_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 

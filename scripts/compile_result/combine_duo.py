@@ -6,7 +6,7 @@ from sys import path as sys_path
 from send2trash import send2trash
 
 sys_path.append("../")
-from comp_rates_config import BASE_RESULT_PATH
+from comp_rates_config import DUOS_RESULT_PATH
 
 
 def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
@@ -101,7 +101,7 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
 
 if __name__ == "__main__":
     combine_duo_files(
-        f"../../{BASE_RESULT_PATH}/duos/duo_usages.json",
-        f"../../{BASE_RESULT_PATH}/duos/duo_usages_C1.json",
-        f"../../{BASE_RESULT_PATH}/duos/duo_usages.json",
+        f"../../{DUOS_RESULT_PATH}/duo_usages.json",
+        f"../../{DUOS_RESULT_PATH}/duo_usages_C1.json",
+        f"../../{DUOS_RESULT_PATH}/duo_usages.json",
     )

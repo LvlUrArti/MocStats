@@ -17,6 +17,7 @@ from comp_rates_config import (
     CHAR_NAME_REPLACE,
     CHAR_RESULT_PATH,
     COMP_RESULT_PATH,
+    DUOS_RESULT_PATH,
     RECENT_PHASE,
     RECENT_PHASE_PF,
     aa_mode,
@@ -87,7 +88,7 @@ def main() -> None:
         f"../{COMP_RESULT_PATH}",
         f"../{BUILD_RESULT_PATH}",
         f"../{CHAR_RESULT_PATH}",
-        f"../{BASE_RESULT_PATH}/duos",
+        f"../{DUOS_RESULT_PATH}",
         "../data/pickle",
     ]:
         if not path.exists(make_path):
