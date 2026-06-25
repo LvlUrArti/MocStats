@@ -5,13 +5,7 @@ import json
 import os.path
 from pathlib import Path
 
-from scripts.comp_rates_config import (
-    BASE_RESULT_PATH,
-    CHARS_INFO,
-    RECENT_PHASE,
-    as_mode,
-    pf_mode,
-)
+from scripts.comp_rates_config import BASE_RESULT_PATH, CHARS_INFO, RECENT_PHASE
 
 skip_self = False
 skip_random = False
@@ -25,13 +19,6 @@ check_stats = []
 # stat.py
 run_all_chars = True
 run_chars_name = ["Firefly", "Ruan Mei", "Gallagher", "Misha", "Xueyi"]
-
-
-phase_num = RECENT_PHASE
-if as_mode:
-    phase_num = phase_num + "_as"
-elif pf_mode:
-    phase_num = phase_num + "_pf"
 
 with open("../data/relics.json") as f:
     relics_data = json.load(f)
