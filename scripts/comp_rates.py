@@ -738,11 +738,9 @@ def duo_write(
         csv_writer = csvwriter(f)
         count = 0
         out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
-        out_duos_exclu: dict[str, dict[str, dict[str, str | float]]] = {}
         for duos in out_duos:
             duo_char = str(duos["char"])
             out_duos_check[duo_char] = {}
-            out_duos_exclu[duo_char] = {}
             if count == 0:
                 temp_duos = ["char", "app"]
                 for i in range(10):
@@ -809,15 +807,6 @@ def duo_write(
                                 "char_j": char_j,
                                 "char_j_app": str(out_j_i["app"]),
                                 "avg_round": str(out_i_j["avg_round"]),
-                            }
-                        elif char_j in out_duos_exclu[char_i]:
-                            out_exc = out_duos_exclu[char_i][char_j]
-                            out_dd[frozenset([char_i, char_j])] = {
-                                "char_i": char_i,
-                                "char_i_app": str(out_exc["app"]),
-                                "char_j": char_j,
-                                "char_j_app": str(out_j_i["app"]),
-                                "avg_round": str(out_exc["avg_round"]),
                             }
 
         sorted_out_dd = sorted(
