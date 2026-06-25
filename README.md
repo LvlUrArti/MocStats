@@ -14,8 +14,6 @@ Feel free to analyze the data and post the findings. If you do, please credit me
 
 Run `pip install -r requirements.txt`
 
-Run `pip install -e .`
-
 In the `scripts/hf_data` folder, run `python fetch_data.py`
 
 Change past and recent phase in `scripts/comp_rates_config.py`

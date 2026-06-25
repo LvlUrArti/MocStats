@@ -1,14 +1,3 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "mocstats"
-version = "0.1.0"
-
-[tool.setuptools.packages.find]
-include = ["scripts*"]
-
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
@@ -37,6 +26,7 @@ ignore = [
 # Enforce typing-related rules
 [tool.pyright]
 typeCheckingMode = "strict"
+extraPaths = ["./scripts"]
 [tool.ruff.lint.flake8-builtins]
 strict-checking = true
 [tool.ruff.lint.flake8-type-checking]

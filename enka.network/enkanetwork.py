@@ -16,8 +16,7 @@ from enka_config import (
     trailblazer_ids,
     uids,
 )
-
-from scripts.utils.notif import send_notification
+from utils.notif import send_notification
 
 print(len(uids))
 
