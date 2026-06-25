@@ -209,9 +209,9 @@ CONS_LIMIT = 2
 
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}"
-CHAR_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/chars"
-COMP_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/comps"
-BUILD_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}/builds"
+CHAR_RESULT_PATH = f"{BASE_RESULT_PATH}/chars"
+COMP_RESULT_PATH = f"{BASE_RESULT_PATH}/comps"
+BUILD_RESULT_PATH = f"{BASE_RESULT_PATH}/builds"
 
 skip_self = False
 skip_random = False
