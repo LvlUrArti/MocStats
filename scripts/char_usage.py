@@ -19,7 +19,6 @@ from comp_rates_config import (
     sig_weaps,
 )
 from composition import Stage
-from line_profiler import profile
 from scipy.stats import skew, trim_mean
 from utils.percentile import calculate_percentile
 
@@ -75,7 +74,6 @@ def include_dps(char: str) -> bool:
     return len(CHARS_INFO[char].role) > 1
 
 
-@profile
 def appearances(
     users: dict[str, PlayerPhase],
     chambers: list[str],
@@ -509,7 +507,6 @@ class CharUsageData(CharApp):
         self.rank: int
 
 
-@profile
 def usages(
     app: dict[str, CharApp],
     chambers: list[str],
