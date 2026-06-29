@@ -19,6 +19,7 @@ from comp_rates_config import (
     COMP_RESULT_PATH,
     DUOS_RESULT_PATH,
     F2P_ONLY,
+    TRIM_PROPORTION,
     WHALE_ONLY,
     aa_mode,
     all_stages,
@@ -355,7 +356,7 @@ def rank_usages(
                         avg_round.append(
                             trim_mean(
                                 cur_round,
-                                0.25,
+                                TRIM_PROPORTION,
                             ),
                         )
                     else:
@@ -523,7 +524,7 @@ def used_duos(
                             bias=True,
                         )
                         if abs(skewness) > 0.8:
-                            avg_round.append(trim_mean(duo_round, 0.25))
+                            avg_round.append(trim_mean(duo_round, TRIM_PROPORTION))
                         else:
                             avg_round.append(mean(duo_round))
                     else:

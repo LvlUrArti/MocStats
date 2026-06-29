@@ -206,6 +206,7 @@ skew_num = 0.8
 duo_dict_len = 30
 duo_dict_len_print = 10
 CONS_LIMIT = 2
+TRIM_PROPORTION = 0.1
 
 RECENT_PHASE_PF = RECENT_PHASE + pf_filename
 BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_PF}"

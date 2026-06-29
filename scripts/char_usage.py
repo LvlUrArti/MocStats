@@ -11,6 +11,7 @@ from comp_rates_config import (
     CHARS_INFO,
     CONS_LIMIT,
     F2P_ONLY,
+    TRIM_PROPORTION,
     WHALE_ONLY,
     include_dual_sustain,
     moc_mode,
@@ -286,7 +287,7 @@ def appearances(
                         )
                         skewness = skew(round_list, axis=0, bias=True)
                         if abs(skewness) > SKEW_LIMIT:
-                            avg_round.append(trim_mean(round_list, 0.25))
+                            avg_round.append(trim_mean(round_list, TRIM_PROPORTION))
                         else:
                             avg_round.append(mean(round_list))
                     else:
@@ -339,7 +340,10 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(cons_freq.round_list[room_num], 0.25),
+                                    trim_mean(
+                                        cons_freq.round_list[room_num],
+                                        TRIM_PROPORTION,
+                                    ),
                                 )
                             else:
                                 avg_round.append(mean(cons_freq.round_list[room_num]))
@@ -382,7 +386,10 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(weap_freq.round_list[room_num], 0.25),
+                                    trim_mean(
+                                        weap_freq.round_list[room_num],
+                                        TRIM_PROPORTION,
+                                    ),
                                 )
                             else:
                                 avg_round.append(mean(weap_freq.round_list[room_num]))
@@ -425,7 +432,10 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(arti_freq.round_list[room_num], 0.25),
+                                    trim_mean(
+                                        arti_freq.round_list[room_num],
+                                        TRIM_PROPORTION,
+                                    ),
                                 )
                             else:
                                 avg_round.append(mean(arti_freq.round_list[room_num]))
@@ -468,7 +478,10 @@ def appearances(
                             )
                             if abs(skewness) > SKEW_LIMIT:
                                 avg_round.append(
-                                    trim_mean(planar_freq.round_list[room_num], 0.25),
+                                    trim_mean(
+                                        planar_freq.round_list[room_num],
+                                        TRIM_PROPORTION,
+                                    ),
                                 )
                             else:
                                 avg_round.append(mean(planar_freq.round_list[room_num]))
