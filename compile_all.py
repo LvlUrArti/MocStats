@@ -5,8 +5,9 @@ from subprocess import CalledProcessError, Popen, run
 from sys import executable as exe
 from sys import exit as sys_exit
 
-from scripts.utils.notif import send_notification
 from send2trash import send2trash
+
+from scripts.utils.notif import send_notification
 
 # Define absolute directory tracks relative to where this script is launched
 BASE_DIR = getcwd()
@@ -166,7 +167,7 @@ def main(add_args: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    versions_to_process = ["4.3.1"]
+    versions_to_process = ["4.3.2"]
 
     try:
         for ver in versions_to_process:

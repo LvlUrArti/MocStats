@@ -1461,5 +1461,32 @@
       "start": "31/05/2026",
       "end": "12/07/2026"
     }
+  },
+  "4.3.2": {
+    "collect_date": "25/06/2026",
+    "moc": {
+      "ver": "4.2.1",
+      "name": "Duty Action",
+      "start": "25/05/2026",
+      "end": "06/07/2026"
+    },
+    "pf": {
+      "ver": "4.3.1",
+      "name": "Falsehood to Fact",
+      "start": "22/06/2026",
+      "end": "03/08/2026"
+    },
+    "as": {
+      "ver": "4.3.1",
+      "name": "Gale of Forgetting",
+      "start": "08/06/2026",
+      "end": "20/07/2026"
+    },
+    "aa": {
+      "ver": "4.3.1",
+      "name": "The Humming Laughter",
+      "start": "31/05/2026",
+      "end": "12/07/2026"
+    }
   }
 }
