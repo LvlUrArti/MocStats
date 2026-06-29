@@ -44,8 +44,16 @@ def scan_upload_and_clean() -> None:
     print(f"🚀 Starting upload from {LOCAL_DATA_DIR} to {REPO_ID}...")
 
     try:
+        api.upload_file(
+            path_or_fileobj=f"{LOCAL_DATA_DIR}/config.json",
+            path_in_repo="config.json",
+            repo_id=REPO_ID,
+            repo_type="dataset",
+            commit_message=f"🤖 Upload {RECENT_PHASE} config",
+        )
         api.upload_folder(
-            folder_path=LOCAL_DATA_DIR,
+            folder_path=f"{LOCAL_DATA_DIR}/{RECENT_PHASE}",
+            path_in_repo=RECENT_PHASE,
             repo_id=REPO_ID,
             repo_type="dataset",
             commit_message=f"🤖 Upload {RECENT_PHASE} data",
