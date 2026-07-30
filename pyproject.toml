@@ -5,6 +5,7 @@ ignore = [
   "BLE001",   # Catch all exceptions
   "ASYNC230", # Use "with open" in async context
   "ASYNC250", # Use "input" in async context
+  "CPY001",   # Missing copyright notice
   "S301",     # Use pickle package
   "S603",     # Use of subprocess
   "S607",     # Use of check_output
@@ -26,7 +27,7 @@ ignore = [
 # Enforce typing-related rules
 [tool.pyright]
 typeCheckingMode = "strict"
-extraPaths = ["./scripts"]
+extraPaths = ["./scripts", "./MocStats/scripts"]
 [tool.ruff.lint.flake8-builtins]
 strict-checking = true
 [tool.ruff.lint.flake8-type-checking]
