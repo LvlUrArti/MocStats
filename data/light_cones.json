@@ -1551,6 +1551,36 @@
     "preview": "image/light_cone_preview/23059.png",
     "portrait": "image/light_cone_portrait/23059.png"
   },
+  "A Star That Lights the Night": {
+    "id": "23060",
+    "name": "A Star That Lights the Night",
+    "rarity": 5,
+    "path": "Mage",
+    "desc": "Looking back at her childhood, she remembered the first time she heard adventure stories of the Trailblaze.\nHer tiny heart beat for the mystery and vastness of the universe, so she picked up a paintbrush and drew her very first imaginings of the cosmos.\n\"A comet ship, a silver rail, a Navigator...\"\n\"With this, is it possible to Trailblaze now?\"\nBut a curse delayed her footsteps, and a sickbed confined her youth.\nDuring those lonely times, towering stacks of books, scattered engine blueprints, and empty bottles of paint became her everyday life.\nHer frail figure wielded the brush, carefully outlining the dream she yearned for.\n\"Perhaps I can seize more possibilities within this limited time.\"\n\"Even a dream is worth being illuminated by colors.\"\nAs the stars shifted once more, in the blink of an eye, she had already departed on her journey to the stars.\nCarrying the wish she shared with her friend, she became the person she had always dreamed of becoming.\n\"The journey of the Trailblaze begins at this very moment.\"\nThe Express traverses the universe, and the footprints of the Navigator and her companions advancing side by side form a solid silver rail.\n\"Together, let's reach the future where the stars reside!\"",
+    "icon": "icon/light_cone/23060.png",
+    "preview": "image/light_cone_preview/23060.png",
+    "portrait": "image/light_cone_portrait/23060.png"
+  },
+  "Flickering Stars": {
+    "id": "23061",
+    "name": "Flickering Stars",
+    "rarity": 5,
+    "path": "Mage",
+    "desc": "The instant magical energy surges forth, the gem's brilliant hues splash across the walls.\nThe teenage girl breaks into a delighted smile, carefully enfolding the dancing light with her palms.\n\"I did it! Does this mean I can also become a great mage someday?\"\nShe envisions her future as a mage, planting the seed of a wish deep in her heart.\n\"You can do this, Rin Tohsaka! Succeeding once isn't enough! You need to succeed countless times!\"\n\"I don't know what the future holds, but right now, just follow your heart and press forward!\"\nIn this moment of triumph, her expectations of herself, her family's hopes, and the responsibility she shoulders all converge.\nThe girl quietly cheers herself on. She's ready to become the best version of herself.\nThe road ahead stretches long and arduous, yet her blazing heart shines brighter than any magic.",
+    "icon": "icon/light_cone/23061.png",
+    "preview": "image/light_cone_preview/23061.png",
+    "portrait": "image/light_cone_portrait/23061.png"
+  },
+  "I Am As You Behold": {
+    "id": "23062",
+    "name": "I Am As You Behold",
+    "rarity": 5,
+    "path": "Warrior",
+    "desc": "Treasure, power, conquest, challenges... A jumble of fragments played on repeat in his mind.\nIn the flickering lamplight, the King drained his cup in one gulp.\n\"Overflowing riches, boundless lands, absolute power. All that is rightfully mine belongs to me.\"\n\"But if that is all there is... does anything truly matter?\"\nA languid figure sank into the plush sofa, thoughts and musings dissipating like smoke in an instant.\nEven a king must occasionally surrender to his own desires and savor a moment of pleasure.\n\"What does it matter what I seek or gain? The moments when life pulses freely at my whim are the moments I treasure most.\"",
+    "icon": "icon/light_cone/23062.png",
+    "preview": "image/light_cone_preview/23062.png",
+    "portrait": "image/light_cone_portrait/23062.png"
+  },
   "On the Fall of an Aeon": {
     "id": "24000",
     "name": "On the Fall of an Aeon",
