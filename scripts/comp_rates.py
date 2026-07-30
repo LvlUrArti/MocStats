@@ -8,7 +8,6 @@ from itertools import permutations
 from json import dumps
 from os import path
 from statistics import mean
-from sys import exit as sys_exit
 from time import time
 
 import char_usage as cu
@@ -79,11 +78,7 @@ def main() -> None:
             filename="all",
         )
         if not F2P_ONLY:
-            duo_usages(
-                usage,
-                one_stage,
-                check_duo=False,
-            )
+            duo_usages(usage, one_stage)
         cur_time = time()
         print("done char:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
@@ -401,25 +396,20 @@ def rank_usages(
 def duo_usages(
     usage: dict[str, cu.CharUsageData],
     rooms: list[str],
-    *,
-    check_duo: bool = False,
 ) -> None:
     """Calculate duo usage."""
     duos_dict: dict[str, dict[str, cu.RoundApp]] = used_duos(
         all_comps,
         rooms,
         usage,
-        check_duo=check_duo,
     )
-    duo_write(duos_dict, usage, "duo_usages", check_duo=check_duo)
+    duo_write(duos_dict, usage, "duo_usages")
 
 
 def used_duos(
     comps: list[Composition],
     rooms: list[str],
     usage: dict[str, cu.CharUsageData],
-    *,
-    check_duo: bool,
 ) -> dict[str, dict[str, cu.RoundApp]]:
     """Return dictionary of all the duos used and how many times they were used."""
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
@@ -488,14 +478,10 @@ def used_duos(
 
         duos = list(permutations(comp.characters, 2))
         for duo in duos:
-            is_triple_dps = False
-
             if duo not in duos_dict:
                 duos_dict[duo] = cu.RoundApp()
             duos_dict[duo].app_flat += 1
 
-            if is_triple_dps and check_duo:
-                continue
             if (whale_comp == WHALE_ONLY) and (
                 sustain_count <= 1 or include_dual_sustain
             ):
@@ -702,8 +688,6 @@ def duo_write(
     duos_dict: dict[str, dict[str, cu.RoundApp]],
     usage: dict[str, cu.CharUsageData],
     filename: str,
-    *,
-    check_duo: bool,
 ) -> None:
     """Write duo usage."""
     out_duos: list[dict[str, str | float]] = []
@@ -763,65 +747,6 @@ def duo_write(
                     duos["avg_round_" + str(i + 1)],
                 ]
             csv_writer.writerow(temp_duos)
-
-            if check_duo:
-                for i in range(duo_dict_len):
-                    j = str(i + 1)
-                    duo_app_j = float(str(duos["app_rate_" + j])[:-1])
-                    duo_round_j = float(duos["avg_round_" + j])
-                    duo_j = str(duos["char_" + j])
-                    if (
-                        duo_app_j >= 1
-                        and float(duos["app_flat_" + j]) >= 10
-                        and (
-                            (duo_round_j < usage[duo_j].round)
-                            or (duo_round_j < usage[str(duo_char)].round)
-                        )
-                        and usage[duo_j].round != 99.99
-                        and usage[duo_j].round != 0
-                    ):
-                        out_duos_check[duo_char][duo_j] = {
-                            "app": duo_app_j,
-                            "avg_round": duo_round_j,
-                        }
-    if check_duo:
-        char_names = list(CHARS_INFO.keys())
-        out_dd: dict[frozenset[str], dict[str, str | float]] = {}
-        out_dd_list: list[list[str]] = []
-        for char_i in char_names:
-            for char_j in char_names:
-                is_char_i_dps = "dps" in CHARS_INFO[char_i].role
-                is_char_j_dps = "dps" in CHARS_INFO[char_j].role
-                if is_char_i_dps and is_char_j_dps:
-                    if char_j not in out_duos_check:
-                        continue
-                    if char_i not in out_duos_check:
-                        continue
-                    if char_i in out_duos_check[char_j]:
-                        out_dd_list.append([char_j, char_i])
-                        out_i_j = out_duos_check[char_i][char_j]
-                        out_j_i = out_duos_check[char_j][char_i]
-                        if char_j in out_duos_check[char_i]:
-                            out_dd[frozenset([char_i, char_j])] = {
-                                "char_i": char_i,
-                                "char_i_app": str(out_i_j["app"]),
-                                "char_j": char_j,
-                                "char_j_app": str(out_j_i["app"]),
-                                "avg_round": str(out_i_j["avg_round"]),
-                            }
-
-        sorted_out_dd = sorted(
-            out_dd.items(),
-            key=lambda t: t[1]["char_i"],
-            reverse=True,
-        )
-        out_dd = dict(sorted_out_dd)
-
-        with open(f"../{DUOS_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
-            csv_writer = csvwriter(f)
-            for out_dd_print in out_dd_list:
-                csv_writer.writerow(out_dd_print)
-        sys_exit()
 
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
