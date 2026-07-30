@@ -18,12 +18,12 @@ IGNORE_SUFFIXES = ["rogue", "nous", "tourn"]
 
 def get_version_map(
     filenames: list[str],
-) -> dict[str, dict[str, None | str | dict[str, str | bool | None]]]:
+) -> dict[str, dict[str, str | dict[str, str | bool | None] | None]]:
     """Group filenames by version and identifies their splits.
 
     Returns: { "version_str": [{"split": "split_name", "path": "filename.csv"}, ...] }.
     """
-    version_map: dict[str, dict[str, None | str | dict[str, str | bool | None]]] = {}
+    version_map: dict[str, dict[str, str | dict[str, str | bool | None] | None]] = {}
 
     def get_date(date: str) -> datetime:
         return datetime.strptime(date, "%d/%m/%Y")

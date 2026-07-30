@@ -87,9 +87,10 @@ async def main() -> None:
             "ornament",
         ]
 
-        writer = csv.writer(open(filename, "a", encoding="UTF8", newline=""))
-        if empty_file(filename):
-            writer.writerow(header)
+        with open(filename, "a", encoding="UTF8", newline="") as f:
+            writer = csv.writer(f)
+            if empty_file(filename):
+                writer.writerow(header)
 
         header = [
             "uid",
@@ -102,11 +103,10 @@ async def main() -> None:
             "relics",
         ]
 
-        writer_chars = csv.writer(
-            open(char_filename, "a", encoding="UTF8", newline=""),
-        )
-        if empty_file(char_filename):
-            writer_chars.writerow(header)
+        with open(char_filename, "a", encoding="UTF8", newline="") as f:
+            writer_chars = csv.writer(f)
+            if empty_file(char_filename):
+                writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))
@@ -274,8 +274,10 @@ async def main() -> None:
                         line.append(char_set)
                         line_chars.append(char_set)
 
-                        writer.writerow(line)
-                        writer_chars.writerow(line_chars)
+                        with open(filename, "a", encoding="UTF8", newline="") as f:
+                            writer.writerow(line)
+                        with open(char_filename, "a", encoding="UTF8", newline="") as f:
+                            writer_chars.writerow(line_chars)
                     break
                 except enka.errors.PlayerDoesNotExistError:
                     print("Player does not exist.")

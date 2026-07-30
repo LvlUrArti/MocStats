@@ -46,17 +46,13 @@ for file_name in file_names:
         matched_teams_c1[team_key] = team
 
     # Iterate over the matched_teams_c1 and add the avg_round to the matched teams
-    for team_key in matched_teams:  # noqa: PLC0206
+    for team_key, matched_team in matched_teams.items():
         if team_key in matched_teams_c1:
-            matched_teams[team_key]["app_rate_c1"] = matched_teams_c1[team_key][
-                "app_rate"
-            ]
-            matched_teams[team_key]["avg_round_c1"] = matched_teams_c1[team_key][
-                "avg_round"
-            ]
+            matched_team["app_rate_c1"] = matched_teams_c1[team_key]["app_rate"]
+            matched_team["avg_round_c1"] = matched_teams_c1[team_key]["avg_round"]
         else:
-            matched_teams[team_key]["app_rate_c1"] = 0
-            matched_teams[team_key]["avg_round_c1"] = exclude_value
+            matched_team["app_rate_c1"] = 0
+            matched_team["avg_round_c1"] = exclude_value
 
     team_data = [
         value
