@@ -109,18 +109,34 @@ class ModeConfig(BaseModel):
 # Mode configurations
 mode_configs: dict[str, ModeConfig] = {
     "as": ModeConfig(
-        all_stages=["4-1", "4-2", "4-3"],
-        one_stage=["4-1", "4-2", "4-3"],
-        star_num_threshold=4,
+        all_stages=["4-1", "4-2"],
+        one_stage=["4-1", "4-2"],
+        star_num_threshold=3,
         # Starward Mode added in phase 4.3.1
-        thresholds=[(datetime(2026, 6, 8), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
+        thresholds=[
+            (
+                datetime(2026, 6, 8),
+                ["4-1", "4-2", "4-3"],
+                ["4-1", "4-2", "4-3"],
+                4,
+                False,
+            ),
+        ],
     ),
     "pf": ModeConfig(
-        all_stages=["4-1", "4-2", "4-3"],
-        one_stage=["4-1", "4-2", "4-3"],
-        star_num_threshold=4,
+        all_stages=["4-1", "4-2"],
+        one_stage=["4-1", "4-2"],
+        star_num_threshold=3,
         # Starward Mode added in phase 4.3.1
-        thresholds=[(datetime(2026, 6, 22), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
+        thresholds=[
+            (
+                datetime(2026, 6, 22),
+                ["4-1", "4-2", "4-3"],
+                ["4-1", "4-2", "4-3"],
+                4,
+                False,
+            ),
+        ],
     ),
     "aa": ModeConfig(
         all_stages=["1-1", "1-2", "1-3", "2-1"],
@@ -129,28 +145,31 @@ mode_configs: dict[str, ModeConfig] = {
         thresholds=[],
     ),
     "moc": ModeConfig(
-        all_stages=["12-1", "12-2", "12-3"],
-        one_stage=["12-1", "12-2", "12-3"],
-        star_num_threshold=4,
+        all_stages=[f"{i}-{j}" for i in range(3, 11) for j in (1, 2)],  # stages 3-10,
+        one_stage=[f"{i}-{j}" for i in range(3, 6) for j in (1, 2)],  # stages 3-5,
+        star_num_threshold=1,
+        include_dual_sustain=True,
         thresholds=[
+            # After phase 1.1.2
             (
-                datetime(2023, 6, 26),  # Before phase 1.1.2
-                [f"{i}-{j}" for i in range(3, 11) for j in (1, 2)],  # stages 3-10
-                [f"{i}-{j}" for i in range(3, 6) for j in (1, 2)],  # stages 3-5
-                1,
-                True,
-            ),
-            (
-                datetime(2023, 7, 24),  # Before phase 1.2.1
+                datetime(2023, 6, 26),
                 [f"{i}-{j}" for i in range(6, 11) for j in (1, 2)],  # stages 6-10
                 [f"{i}-{j}" for i in range(6, 9) for j in (1, 2)],  # stages 6-8
                 1,
                 True,
             ),
+            # After phase 1.2.1
+            (datetime(2023, 7, 24), ["10-1", "10-2"], ["10-1", "10-2"], 3, True),
             # Floor 11 & 12 added in version 1.6.1
-            (datetime(2023, 12, 27), ["10-1", "10-2"], ["10-1", "10-2"], 3, True),
+            (datetime(2023, 12, 27), ["12-1", "12-2"], ["12-1", "12-2"], 3, False),
             # Starward Mode added in phase 4.3.1
-            (datetime(2026, 7, 6), ["12-1", "12-2"], ["12-1", "12-2"], 3, False),
+            (
+                datetime(2026, 7, 6),
+                ["12-1", "12-2", "12-3"],
+                ["12-1", "12-2", "12-3"],
+                4,
+                False,
+            ),
         ],
     ),
 }
@@ -158,8 +177,10 @@ mode_configs: dict[str, ModeConfig] = {
 for config in mode_configs.values():
     # Apply thresholds if any
     if ENDGAME_INFO and config.thresholds:
-        for date, stages, one_stages, star_num, set_dual_sustain in config.thresholds:
-            if ENDGAME_INFO.collect_date <= date:
+        for date, stages, one_stages, star_num, set_dual_sustain in reversed(
+            config.thresholds,
+        ):
+            if ENDGAME_INFO.collect_date >= date:
                 config.include_dual_sustain = set_dual_sustain
                 config.all_stages = stages
                 config.one_stage = one_stages
