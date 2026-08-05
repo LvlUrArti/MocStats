@@ -99,38 +99,38 @@ if not as_mode:
 class ModeConfig(BaseModel):
     """Configuration for a game mode."""
 
-    default_stages: list[str]
-    default_one_stage: list[str]
-    star_num_default: int
+    all_stages: list[str]
+    one_stage: list[str]
+    star_num_threshold: int
     thresholds: list[tuple[datetime, list[str], list[str], int, bool]]
 
 
 # Mode configurations
-MODES_CONFIG: dict[str, ModeConfig] = {
+mode_configs: dict[str, ModeConfig] = {
     "as": ModeConfig(
-        default_stages=["4-1", "4-2", "4-3"],
-        default_one_stage=["4-1", "4-2", "4-3"],
-        star_num_default=4,
+        all_stages=["4-1", "4-2", "4-3"],
+        one_stage=["4-1", "4-2", "4-3"],
+        star_num_threshold=4,
         # Starward Mode added in phase 4.3.1
         thresholds=[(datetime(2026, 6, 8), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
     ),
     "pf": ModeConfig(
-        default_stages=["4-1", "4-2", "4-3"],
-        default_one_stage=["4-1", "4-2", "4-3"],
-        star_num_default=4,
+        all_stages=["4-1", "4-2", "4-3"],
+        one_stage=["4-1", "4-2", "4-3"],
+        star_num_threshold=4,
         # Starward Mode added in phase 4.3.1
         thresholds=[(datetime(2026, 6, 22), ["4-1", "4-2"], ["4-1", "4-2"], 3, False)],
     ),
     "aa": ModeConfig(
-        default_stages=["1-1", "1-2", "1-3", "2-1"],
-        default_one_stage=["1-1", "1-2", "1-3"],
-        star_num_default=3,
+        all_stages=["1-1", "1-2", "1-3", "2-1"],
+        one_stage=["1-1", "1-2", "1-3"],
+        star_num_threshold=3,
         thresholds=[],
     ),
     "moc": ModeConfig(
-        default_stages=["12-1", "12-2", "12-3"],
-        default_one_stage=["12-1", "12-2", "12-3"],
-        star_num_default=4,
+        all_stages=["12-1", "12-2", "12-3"],
+        one_stage=["12-1", "12-2", "12-3"],
+        star_num_threshold=4,
         thresholds=[
             (
                 datetime(2023, 6, 26),  # Before phase 1.1.2
@@ -155,7 +155,7 @@ MODES_CONFIG: dict[str, ModeConfig] = {
 }
 
 
-cfg = MODES_CONFIG.get(args.mode)
+cfg = mode_configs.get(args.mode)
 
 if cfg is None:
     pf_filename = ""
@@ -171,9 +171,9 @@ else:
 
     # Initial values
     pf_filename = f"_{args.mode}"
-    all_stages = cfg.default_stages
-    one_stage = cfg.default_one_stage
-    star_num_threshold = cfg.star_num_default
+    all_stages = cfg.all_stages
+    one_stage = cfg.one_stage
+    star_num_threshold = cfg.star_num_threshold
 
     # Apply thresholds if any
     if ENDGAME_INFO and cfg.thresholds:

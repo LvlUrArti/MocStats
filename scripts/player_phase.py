@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -14,25 +15,16 @@ with open("../data/relic_affixes.json") as relic_file:
     articombinations: dict[str, list[str]] = json.load(relic_file)
 
 
+@dataclass
 class OwnedChars:
     """An object that stores information about owned characters."""
 
-    def __init__(
-        self,
-        level: str,
-        cons: str,
-        weapon: str,
-        element: str,
-        artifacts: str,
-        planars: str,
-    ) -> None:
-        """Character constructor."""
-        self.level: int = int(level)
-        self.cons: int = int(cons)
-        self.weapon: str = weapon
-        self.element: str = element
-        self.artifacts: str = artifacts
-        self.planars: str = planars
+    level: int
+    cons: int
+    weapon: str
+    element: str
+    artifacts: str
+    planars: str
 
 
 class PlayerPhase:
@@ -89,7 +81,14 @@ class PlayerPhase:
 
         if "Flex, " in artifacts:
             artifacts = artifacts.replace("Flex, ", "") + ", Flex"
-        self.owned[name] = OwnedChars(level, cons, weapon, element, artifacts, planars)
+        self.owned[name] = OwnedChars(
+            level=int(level),
+            cons=int(cons),
+            weapon=weapon,
+            element=element,
+            artifacts=artifacts,
+            planars=planars,
+        )
 
     def add_comp(self, composition: Composition) -> None:
         """Add a composition to the chambers dict."""
