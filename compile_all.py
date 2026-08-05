@@ -167,12 +167,16 @@ def main(add_args: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    versions_to_process = ["4.4.1"]
+    versions_to_process: list[str] = []
 
     try:
-        for ver in versions_to_process:
-            print(f"\nProcessing {ver}")
-            main(["-v", ver])
+        if len(versions_to_process) == 0:
+            print("\nNo versions specified. Processing default version")
+            main()
+        else:
+            for ver in versions_to_process:
+                print(f"\nProcessing {ver}")
+                main(["-v", ver])
 
         print("\n🎉 Full pipeline executed successfully!")
         send_notification(
