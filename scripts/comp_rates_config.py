@@ -155,6 +155,17 @@ mode_configs: dict[str, ModeConfig] = {
     ),
 }
 
+for config in mode_configs.values():
+    # Apply thresholds if any
+    if ENDGAME_INFO and config.thresholds:
+        for date, stages, one_stages, star_num, set_dual_sustain in config.thresholds:
+            if ENDGAME_INFO.collect_date <= date:
+                config.include_dual_sustain = set_dual_sustain
+                config.all_stages = stages
+                config.one_stage = one_stages
+                config.star_num_threshold = star_num
+                break
+
 
 cfg = mode_configs.get(args.mode)
 
@@ -170,22 +181,11 @@ else:
         if not mode_obj or not mode_obj.ver:
             sys_exit()
 
-    # Initial values
     pf_filename = f"_{args.mode}"
     all_stages = cfg.all_stages
     one_stage = cfg.one_stage
     star_num_threshold = cfg.star_num_threshold
     include_dual_sustain = cfg.include_dual_sustain
-
-    # Apply thresholds if any
-    if ENDGAME_INFO and cfg.thresholds:
-        for date, stages, one_stages, star_num, set_dual_sustain in cfg.thresholds:
-            if ENDGAME_INFO.collect_date <= date:
-                include_dual_sustain = set_dual_sustain
-                all_stages = stages
-                one_stage = one_stages
-                star_num_threshold = star_num
-                break
 
 run_all_chars = True
 run_chars_name = {"Aglaea", "Boothill", "Robin", "Silver Wolf"}
