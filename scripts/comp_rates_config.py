@@ -102,6 +102,7 @@ class ModeConfig(BaseModel):
     all_stages: list[str]
     one_stage: list[str]
     star_num_threshold: int
+    include_dual_sustain: bool = False
     thresholds: list[tuple[datetime, list[str], list[str], int, bool]]
 
 
@@ -174,6 +175,7 @@ else:
     all_stages = cfg.all_stages
     one_stage = cfg.one_stage
     star_num_threshold = cfg.star_num_threshold
+    include_dual_sustain = cfg.include_dual_sustain
 
     # Apply thresholds if any
     if ENDGAME_INFO and cfg.thresholds:
