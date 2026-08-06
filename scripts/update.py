@@ -195,7 +195,7 @@ for char_id, char in raw_chars.items():
     if multi_elem_char:
         trailblazer_id_list: list[str] = []
         store_trailblazer_id_list = chars_data[char_name]["trailblazer_ids"]
-        if store_trailblazer_id_list is list:
+        if isinstance(store_trailblazer_id_list, list):
             trailblazer_id_list += store_trailblazer_id_list
         if char_id not in trailblazer_id_list:
             trailblazer_id_list.append(char_id)
