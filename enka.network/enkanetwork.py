@@ -275,8 +275,10 @@ async def main() -> None:
                         line_chars.append(char_set)
 
                         with open(filename, "a", encoding="UTF8", newline="") as f:
+                            writer = csv.writer(f)
                             writer.writerow(line)
                         with open(char_filename, "a", encoding="UTF8", newline="") as f:
+                            writer_chars = csv.writer(f)
                             writer_chars.writerow(line_chars)
                     break
                 except enka.errors.PlayerDoesNotExistError:
