@@ -27,7 +27,7 @@ from comp_rates_config import (
     skip_self,
 )
 from composition import Composition, Stage
-from player_phase import PlayerPhase
+from player_phase import OwnedChars, PlayerPhase
 
 EXT_CHAR_NAME_REPLACE = {
     **CHAR_NAME_REPLACE,
@@ -199,12 +199,14 @@ def main() -> None:
                     line["name"] = EXT_CHAR_NAME_REPLACE[line["name"]]
                 player.add_character(
                     line["name"],
-                    line["level"],
-                    line["cons"],
-                    line["weapon"],
-                    line["element"],
-                    line.get("artifacts", ""),
-                    line.get("relics", ""),
+                    OwnedChars(
+                        level=int(line["level"]),
+                        cons=int(line["cons"]),
+                        weapon=line["weapon"],
+                        element=line["element"],
+                        artifacts=line.get("artifacts", ""),
+                        planars=line.get("relics", ""),
+                    ),
                 )
     all_players[last_uid] = player
 

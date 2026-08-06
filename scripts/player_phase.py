@@ -52,12 +52,7 @@ class PlayerPhase:
     def add_character(
         self,
         name: str,
-        level: str,
-        cons: str,
-        weapon: str,
-        element: str,
-        artifacts: str,
-        planars: str,
+        char: OwnedChars,
     ) -> None:
         """Add in a character to the owned characters dict."""
         for arti_item in articombinations.values():
@@ -69,26 +64,22 @@ class PlayerPhase:
             replaced = False
             arti_name = arti_item[0]
             for arti_replace in comarti:
-                if arti_replace in artifacts:
-                    artifacts = artifacts.replace(arti_replace, ", " + arti_name)
+                if arti_replace in char.artifacts:
+                    char.artifacts = char.artifacts.replace(
+                        arti_replace,
+                        ", " + arti_name,
+                    )
                     replaced = True
             if replaced:
                 arti_name = arti_item[1]
             for arti_replace in articom:
-                if arti_replace in artifacts:
-                    artifacts = artifacts.replace(arti_replace, "")
-                    artifacts = artifacts + ", " + arti_name
+                if arti_replace in char.artifacts:
+                    char.artifacts = char.artifacts.replace(arti_replace, "")
+                    char.artifacts = char.artifacts + ", " + arti_name
 
-        if "Flex, " in artifacts:
-            artifacts = artifacts.replace("Flex, ", "") + ", Flex"
-        self.owned[name] = OwnedChars(
-            level=int(level),
-            cons=int(cons),
-            weapon=weapon,
-            element=element,
-            artifacts=artifacts,
-            planars=planars,
-        )
+        if "Flex, " in char.artifacts:
+            char.artifacts = char.artifacts.replace("Flex, ", "") + ", Flex"
+        self.owned[name] = char
 
     def add_comp(self, composition: Composition) -> None:
         """Add a composition to the chambers dict."""
