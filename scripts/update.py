@@ -266,7 +266,7 @@ def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str,
 save_entries: dict[str, dict[str, dict[str, str]]] = {}
 
 moc_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
-    "https://www.buhflipexplode.org/hsr/fh/fh-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/fh/fh-versions.json",
 )
 for entry in moc_data:
     name = str(entry["name"])
@@ -274,17 +274,17 @@ for entry in moc_data:
         save_entries[name] = add_endgame(entry["versions"])
 
 pf_data: dict[str, dict[str, str]] = load_from_url(
-    "https://www.buhflipexplode.org/hsr/pf/pf-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/pf/pf-versions.json",
 )
 save_entries["Pure Fiction"] = add_endgame(pf_data)
 
 as_data: dict[str, dict[str, str]] = load_from_url(
-    "https://www.buhflipexplode.org/hsr/as/as-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/as/as-versions.json",
 )
 save_entries["Apocalyptic Shadow"] = add_endgame(as_data)
 
 aa_data: dict[str, dict[str, str]] = load_from_url(
-    "https://www.buhflipexplode.org/hsr/aa/aa-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/aa/aa-versions.json",
 )
 save_entries["Anomaly Arbitration"] = add_endgame(aa_data)
 
