@@ -1515,5 +1515,32 @@
       "start": "14/07/2026",
       "end": "25/08/2026"
     }
+  },
+  "4.4.2": {
+    "collect_date": "06/08/2026",
+    "moc": {
+      "ver": "4.3.1",
+      "name": "Academy Ghost Story",
+      "start": "06/07/2026",
+      "end": "17/08/2026"
+    },
+    "pf": {
+      "ver": "4.4.1",
+      "name": "Fabricated Business",
+      "start": "03/08/2026",
+      "end": "14/09/2026"
+    },
+    "as": {
+      "ver": "4.4.1",
+      "name": "Vanguard Knight",
+      "start": "20/07/2026",
+      "end": "31/08/2026"
+    },
+    "aa": {
+      "ver": "4.4.1",
+      "name": "Enwreathed by the World",
+      "start": "14/07/2026",
+      "end": "25/08/2026"
+    }
   }
 }

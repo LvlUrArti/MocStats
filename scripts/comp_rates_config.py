@@ -28,7 +28,7 @@ parser.add_argument("-n", "--no", action="store_true")
 
 args = parser.parse_args()
 
-RECENT_PHASE: str = args.version or "4.4.1"
+RECENT_PHASE: str = args.version or "4.4.2"
 
 
 def relative_path(relative_path: str) -> str:
