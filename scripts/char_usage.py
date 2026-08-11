@@ -85,11 +85,7 @@ def appearances(
     app: dict[str, CharApp] = {}
     user_chars: dict[str, set[str]] = {}
 
-    all_uids: dict[int, set[str]] = {}
-
-    for chamber in chambers:
-        stage = Stage.from_string(chamber)
-        all_uids[stage.stage] = set[str]()
+    all_uids = set[str]()
 
     for char in CHARS_INFO:
         user_chars[char] = set[str]()
@@ -157,6 +153,8 @@ def appearances(
                     if char in user.owned and user.owned[char].weapon in sig_weaps:
                         f2p_comp = False
 
+            all_uids.add(user.player)
+
             # >E2 clears should still be included to calculate
             # characters' average score for all eidolons
             if (
@@ -206,7 +204,6 @@ def appearances(
                     if chambers == one_stage:
                         user_chars[char].add(user.player)
 
-                    all_uids[cur_chamber].add(user.player)
                     app[char].app_flat += 1
 
                     if (
@@ -252,7 +249,7 @@ def appearances(
                                 cur_chamber
                             ].append(user_round)
 
-    total = sum(len(uids) for uids in all_uids.values()) / 100.0
+    total = len(all_uids) / 100.0
     all_rounds: dict[str, dict[int, dict[int, int]]] = {}
     for char, char_item in app.items():
         all_rounds[char] = {}
