@@ -24,6 +24,9 @@ from numpy import percentile
 from scipy.stats import skew, trim_mean
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from composition import Composition
     from player_phase import PlayerPhase
 
 filterwarnings("ignore", category=RuntimeWarning)
@@ -84,6 +87,75 @@ def robust_round_mean(round_list: list[int], *, can_trim: bool) -> float:
     return mean(round_list)
 
 
+def check_whale(
+    chamber: Composition,
+    user: PlayerPhase,
+    *,
+    whale_comp: bool,
+    giga_whale: bool,
+    f2p_comp: bool,
+) -> tuple[bool, bool, bool]:
+    """Detect whale/f2p/giga-whale status from a chamber's composition."""
+    for char in chamber.characters:
+        char_cons: int | None = None
+        if chamber.char_cons:
+            char_cons = chamber.char_cons[char]
+        elif char in user.owned:
+            char_cons = user.owned[char].cons
+
+        if (
+            CHARS_INFO[char].availability == "Limited 5*"
+            and char_cons is not None
+            and char_cons > 0
+        ):
+            whale_comp = True
+            if char_cons > CONS_LIMIT:
+                giga_whale = True
+        if char in user.owned and user.owned[char].weapon in sig_weaps:
+            f2p_comp = False
+    return whale_comp, giga_whale, f2p_comp
+
+
+def gear_round(freq: RoundApp) -> float:
+    """Average cycle count, trimmed when the data is skewed."""
+    avg_round = [
+        robust_round_mean(
+            freq.round_list[room_num],
+            can_trim=freq.app_flat > SKEW_APP_LIMIT,
+        )
+        for room_num in range(1, 13)
+        if freq.round_list[room_num]
+    ]
+    return round(mean(avg_round), DEFAULT_ROUND) if avg_round else DEFAULT_VALUE
+
+
+def calc_gear_rates(
+    gear_freq: dict[str, RoundApp],
+    app_flat: float,
+    *,
+    info_char: bool,
+    extra_include: Callable[[RoundApp], bool] = lambda _f: False,
+) -> dict[str, RoundApp]:
+    """Sort gear frequency by usage and populate appearance/round rates."""
+    gear_freq = {
+        gear: freq
+        for gear, freq in sorted(
+            gear_freq.items(),
+            key=lambda t: t[1].app_flat,
+            reverse=True,
+        )
+        if gear != "Flex"
+    }
+    for freq in gear_freq.values():
+        if freq.app_flat > GEAR_APP_THRESHOLD or extra_include(freq) or info_char:
+            freq.app = round(freq.app_flat / app_flat, 2)
+            freq.round = gear_round(freq)
+        else:
+            freq.app = 0
+            freq.round = DEFAULT_VALUE
+    return gear_freq
+
+
 def appearances(
     users: dict[str, PlayerPhase],
     chambers: list[str],
@@ -112,31 +184,19 @@ def appearances(
             cur_chamber = chamber.stage
             if str(chamber) not in chambers or not user_chamber.valid_clear:
                 continue
-            whale_comp = False
-            giga_whale = False
-            f2p_comp = True
-            sustain_count = 0
 
-            for char in user_chamber.characters:
-                char_cons = None
-                if user_chamber.char_cons:
-                    char_cons = user_chamber.char_cons[char]
-                elif char in user.owned:
-                    char_cons = user.owned[char].cons
-
-                if (
-                    CHARS_INFO[char].availability == "Limited 5*"
-                    and char_cons is not None
-                    and char_cons > 0
-                ):
-                    whale_comp = True
-                    if char_cons > CONS_LIMIT:
-                        giga_whale = True
-                if char in user.owned and user.owned[char].weapon in sig_weaps:
-                    f2p_comp = False
-                if "sustain" in CHARS_INFO[char].role:
-                    sustain_count += 1
-
+            whale_comp, giga_whale, f2p_comp = check_whale(
+                user_chamber,
+                user,
+                whale_comp=False,
+                giga_whale=False,
+                f2p_comp=True,
+            )
+            sustain_count = sum(
+                1
+                for char in user_chamber.characters
+                if "sustain" in CHARS_INFO[char].role
+            )
             check_sustain_count = sustain_count <= 1 or include_dual_sustain
 
             if moc_mode:
@@ -144,23 +204,13 @@ def appearances(
                 if side_chamber not in user.chambers:
                     continue
                 user_side_chamber = user.chambers[side_chamber]
-                for char in user_side_chamber.characters:
-                    char_cons = None
-                    if user_side_chamber.char_cons:
-                        char_cons = user_side_chamber.char_cons[char]
-                    elif char in user.owned:
-                        char_cons = user.owned[char].cons
-
-                    if (
-                        CHARS_INFO[char].availability == "Limited 5*"
-                        and char_cons is not None
-                        and char_cons > 0
-                    ):
-                        whale_comp = True
-                        if char_cons > CONS_LIMIT:
-                            giga_whale = True
-                    if char in user.owned and user.owned[char].weapon in sig_weaps:
-                        f2p_comp = False
+                whale_comp, giga_whale, f2p_comp = check_whale(
+                    user_side_chamber,
+                    user,
+                    whale_comp=whale_comp,
+                    giga_whale=giga_whale,
+                    f2p_comp=f2p_comp,
+                )
 
             all_uids.add(user.player)
 
@@ -320,123 +370,33 @@ def appearances(
                     cons_freq.app_flat / char_item.app_flat_all * 100,
                     2,
                 )
-                avg_round = [
-                    robust_round_mean(
-                        cons_freq.round_list[room_num],
-                        can_trim=cons_freq.app_flat > SKEW_APP_LIMIT,
-                    )
-                    for room_num in range(1, 13)
-                    if cons_freq.round_list[room_num]
-                ]
-                if avg_round:
-                    cons_freq.round = round(mean(avg_round), DEFAULT_ROUND)
-                else:
-                    cons_freq.round = DEFAULT_VALUE
+                cons_freq.round = gear_round(cons_freq)
             else:
                 cons_freq.app = 0.00
                 cons_freq.round = DEFAULT_VALUE
 
         app_flat = char_item.owned / 100.0
         # Calculate weapons
-        sorted_weapons = sorted(
-            char_item.weap_freq.items(),
-            key=lambda t: t[1].app_flat,
-            reverse=True,
+        char_item.weap_freq = calc_gear_rates(
+            char_item.weap_freq,
+            app_flat,
+            info_char=info_char,
+            extra_include=lambda f, app_flat=app_flat: (
+                f.app_flat / app_flat > WEAP_APP_THRESHOLD
+            ),
         )
-        char_item.weap_freq = dict(sorted_weapons)
-        for weap_freq in char_item.weap_freq.values():
-            # If a gear appears >15 times, include it
-            # Because there might be 1* gears
-            # If it's for character infographic, include all gears
-            if (
-                weap_freq.app_flat > GEAR_APP_THRESHOLD
-                or (weap_freq.app_flat / app_flat) > WEAP_APP_THRESHOLD
-                or info_char
-            ):
-                weap_freq.app = round(weap_freq.app_flat / app_flat, 2)
-                avg_round = [
-                    robust_round_mean(
-                        weap_freq.round_list[room_num],
-                        can_trim=weap_freq.app_flat > SKEW_APP_LIMIT,
-                    )
-                    for room_num in range(1, 13)
-                    if weap_freq.round_list[room_num]
-                ]
-                if avg_round:
-                    weap_freq.round = round(mean(avg_round), DEFAULT_ROUND)
-                else:
-                    weap_freq.round = DEFAULT_VALUE
-            else:
-                weap_freq.app = 0
-                weap_freq.round = DEFAULT_VALUE
-
-        # Remove flex artifacts
-        if "Flex" in char_item.arti_freq:
-            del char_item.arti_freq["Flex"]
         # Calculate artifacts
-        sorted_arti = sorted(
-            char_item.arti_freq.items(),
-            key=lambda t: t[1].app_flat,
-            reverse=True,
+        char_item.arti_freq = calc_gear_rates(
+            char_item.arti_freq,
+            app_flat,
+            info_char=info_char,
         )
-        char_item.arti_freq = dict(sorted_arti)
-        for arti, arti_freq in char_item.arti_freq.items():
-            # If a gear appears >15 times, include it
-            # Because there might be 1* gears
-            # If it's for character infographic, include all gears
-            if (
-                arti_freq.app_flat > GEAR_APP_THRESHOLD or info_char
-            ) and arti != "Flex":
-                arti_freq.app = round(arti_freq.app_flat / app_flat, 2)
-                avg_round = [
-                    robust_round_mean(
-                        arti_freq.round_list[room_num],
-                        can_trim=arti_freq.app_flat > SKEW_APP_LIMIT,
-                    )
-                    for room_num in range(1, 13)
-                    if arti_freq.round_list[room_num]
-                ]
-                if avg_round:
-                    arti_freq.round = round(mean(avg_round), DEFAULT_ROUND)
-                else:
-                    arti_freq.round = DEFAULT_VALUE
-            else:
-                arti_freq.app = 0
-                arti_freq.round = DEFAULT_VALUE
-
-        # Remove flex artifacts
-        if "Flex" in char_item.planar_freq:
-            del char_item.planar_freq["Flex"]
-        # Calculate artifacts
-        sorted_planars = sorted(
-            char_item.planar_freq.items(),
-            key=lambda t: t[1].app_flat,
-            reverse=True,
+        # Calculate planars
+        char_item.planar_freq = calc_gear_rates(
+            char_item.planar_freq,
+            app_flat,
+            info_char=info_char,
         )
-        char_item.planar_freq = dict(sorted_planars)
-        for planar, planar_freq in char_item.planar_freq.items():
-            # If a gear appears >15 times, include it
-            # Because there might be 1* gears
-            # If it's for character infographic, include all gears
-            if (
-                planar_freq.app_flat > GEAR_APP_THRESHOLD or info_char
-            ) and planar != "Flex":
-                planar_freq.app = round(planar_freq.app_flat / app_flat, 2)
-                avg_round = [
-                    robust_round_mean(
-                        planar_freq.round_list[room_num],
-                        can_trim=planar_freq.app_flat > SKEW_APP_LIMIT,
-                    )
-                    for room_num in range(1, 13)
-                    if planar_freq.round_list[room_num]
-                ]
-                if avg_round:
-                    planar_freq.round = round(mean(avg_round), DEFAULT_ROUND)
-                else:
-                    planar_freq.round = DEFAULT_VALUE
-            else:
-                planar_freq.app = 0
-                planar_freq.round = DEFAULT_VALUE
     return app
 
 
@@ -481,17 +441,9 @@ def usages(
         if chambers != one_stage:
             continue
 
-        weapons = list(app_char.weap_freq)
-        for i in range(len(weapons)):
-            uses[char].weapons[weapons[i]] = app_char.weap_freq[weapons[i]]
-
-        artifacts = list(app_char.arti_freq)
-        for i in range(len(artifacts)):
-            uses[char].artifacts[artifacts[i]] = app_char.arti_freq[artifacts[i]]
-
-        planars = list(app_char.planar_freq)
-        for i in range(len(planars)):
-            uses[char].planars[planars[i]] = app_char.planar_freq[planars[i]]
+        uses[char].weapons = dict(app_char.weap_freq)
+        uses[char].artifacts = dict(app_char.arti_freq)
+        uses[char].planars = dict(app_char.planar_freq)
 
         for i in range(7):
             uses[char].cons_usage[i]["app"] = str(app_char.cons_freq[i].app)

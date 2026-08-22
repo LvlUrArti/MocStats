@@ -18,7 +18,6 @@ from comp_rates_config import (
     COMP_RESULT_PATH,
     DUOS_RESULT_PATH,
     F2P_ONLY,
-    TRIM_PROPORTION,
     WHALE_ONLY,
     aa_mode,
     all_stages,
@@ -38,7 +37,6 @@ from comp_rates_config import (
 from composition import Composition, Stage
 from csv_to_pickle import PickleData, load_pickle_data
 from player_phase import PlayerPhase
-from scipy.stats import skew, trim_mean
 
 loaded_data: PickleData = load_pickle_data("../data/pickle/data" + pf_filename + ".pkl")
 
@@ -171,6 +169,14 @@ class CompUsage(Composition):
         self.app_rank: int
 
 
+def get_side_comp(comp: Composition) -> Composition | None:
+    """Return the same player's other-node comp in MoC mode, if cleared."""
+    if not moc_mode:
+        return None
+    side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
+    return all_players[comp.player].chambers.get(side_chamber)
+
+
 def used_comps(
     rooms: list[str],
     filename: str,
@@ -196,20 +202,14 @@ def used_comps(
         total_star_db_comps[stage] = 0
         total_hoyobuddy_comps[stage] = 0
 
-    whale_count = 0
-    f2p_count = 0
-
     for comp in all_comps:
         # Check if the comp is used in the rooms that are being checked
         if str(comp.room) not in rooms or not comp.valid_clear:
             continue
 
-        side_comp = None
-        if moc_mode:
-            side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
-            if side_chamber not in all_players[comp.player].chambers:
-                continue
-            side_comp = all_players[comp.player].chambers[side_chamber]
+        side_comp = get_side_comp(comp)
+        if side_comp is None and moc_mode:
+            continue
 
         comp_tuple = tuple(comp.characters)
 
@@ -218,52 +218,25 @@ def used_comps(
         if side_comp and len(side_comp.characters) < 4:
             continue
 
-        whale_comp = False
-        giga_whale = False
-        f2p_comp = True
-        for char in range(4):
-            comp_char = comp_tuple[char]
-            char_cons = None
-
-            if comp.char_cons:
-                char_cons = comp.char_cons[comp_char]
-            elif comp_char in all_players[comp.player].owned:
-                char_cons = all_players[comp.player].owned[comp_char].cons
-
-            if (
-                CHARS_INFO[comp_char].availability == "Limited 5*"
-                and char_cons is not None
-                and char_cons > 0
-            ):
-                whale_comp = True
-                if char_cons > 2:
-                    giga_whale = True
-
+        whale_comp, giga_whale, _ = cu.check_whale(
+            comp,
+            all_players[comp.player],
+            whale_comp=False,
+            giga_whale=False,
+            f2p_comp=True,
+        )
         if side_comp:
-            for char in side_comp.characters:
-                char_cons = None
+            whale_comp, giga_whale, _ = cu.check_whale(
+                side_comp,
+                all_players[side_comp.player],
+                whale_comp=whale_comp,
+                giga_whale=giga_whale,
+                f2p_comp=True,
+            )
 
-                if side_comp.char_cons:
-                    char_cons = side_comp.char_cons[char]
-                elif char in all_players[side_comp.player].owned:
-                    char_cons = all_players[side_comp.player].owned[char].cons
-
-                if (
-                    CHARS_INFO[char].availability == "Limited 5*"
-                    and char_cons is not None
-                    and char_cons > 0
-                ):
-                    whale_comp = True
-                    if char_cons > 2:
-                        giga_whale = True
-
-        if whale_comp:
-            whale_count += 1
-        if f2p_comp:
-            f2p_count += 1
         if (
             (WHALE_ONLY and not whale_comp)
-            or (F2P_ONLY and (not f2p_comp or whale_comp))
+            or (F2P_ONLY and whale_comp)
             or giga_whale
             or comp.is_hard_mode  # Anomaly arbitration plight
         ):
@@ -279,7 +252,7 @@ def used_comps(
 
         if whale_comp:
             comp_data.whale_count.add(comp.player)
-        if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
+        if whale_comp == WHALE_ONLY:
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             avg_round_stage[cur_room].append(comp.round_num)
@@ -341,23 +314,12 @@ def rank_usages(
             cur_round = cur_comp.round_num_dict[room_num]
             if cur_round:
                 uses_room[room_num] = len(cur_round)
-                if cur_comp.uses > 10:
-                    skewness = skew(
+                avg_round.append(
+                    cu.robust_round_mean(
                         cur_round,
-                        axis=0,
-                        bias=True,
-                    )
-                    if abs(skewness) > 0.8:
-                        avg_round.append(
-                            trim_mean(
-                                cur_round,
-                                TRIM_PROPORTION,
-                            ),
-                        )
-                    else:
-                        avg_round.append(mean(cur_round))
-                else:
-                    avg_round.append(mean(cur_round))
+                        can_trim=cur_comp.uses > 10,
+                    ),
+                )
 
         comp_threshold = 10 if cur_comp.healer else 50
         cur_comp.is_count_round = True
@@ -423,50 +385,29 @@ def used_duos(
         ):
             continue
 
-        whale_comp = False
-        giga_whale = False
-        sustain_count = 0
-        for char in comp.characters:
-            char_cons = None
-            if comp.char_cons:
-                char_cons = comp.char_cons[char]
-            elif char in all_players[comp.player].owned:
-                char_cons = all_players[comp.player].owned[char].cons
+        whale_comp, giga_whale, _ = cu.check_whale(
+            comp,
+            all_players[comp.player],
+            whale_comp=False,
+            giga_whale=False,
+            f2p_comp=True,
+        )
+        sustain_count = sum(
+            1 for char in comp.characters if "sustain" in CHARS_INFO[char].role
+        )
 
-            if (
-                CHARS_INFO[char].availability == "Limited 5*"
-                and char_cons is not None
-                and char_cons > 0
-            ):
-                whale_comp = True
-                if char_cons > 2:
-                    giga_whale = True
-            if "sustain" in CHARS_INFO[char].role:
-                sustain_count += 1
-
-        side_comp = None
-        if moc_mode:
-            side_chamber = Stage(comp.room.stage, 2 if comp.room.node == 1 else 1)
-            if side_chamber not in all_players[comp.player].chambers:
-                continue
-            side_comp = all_players[comp.player].chambers[side_chamber]
+        side_comp = get_side_comp(comp)
+        if side_comp is None and moc_mode:
+            continue
 
         if side_comp:
-            for char in side_comp.characters:
-                char_cons = None
-                if side_comp.char_cons:
-                    char_cons = side_comp.char_cons[char]
-                elif char in all_players[side_comp.player].owned:
-                    char_cons = all_players[side_comp.player].owned[char].cons
-
-                if (
-                    CHARS_INFO[char].availability == "Limited 5*"
-                    and char_cons is not None
-                    and char_cons > 0
-                ):
-                    whale_comp = True
-                    if char_cons > 2:
-                        giga_whale = True
+            whale_comp, giga_whale, _ = cu.check_whale(
+                side_comp,
+                all_players[side_comp.player],
+                whale_comp=whale_comp,
+                giga_whale=giga_whale,
+                f2p_comp=True,
+            )
 
         if (
             (WHALE_ONLY and not whale_comp)
@@ -503,18 +444,12 @@ def used_duos(
                 duo_round = cur_duo.round_list[room_num]
                 if duo_round:
                     cur_duo.app_flat += len(duo_round)
-                    if len(duo_round) > 1:
-                        skewness = skew(
+                    avg_round.append(
+                        cu.robust_round_mean(
                             duo_round,
-                            axis=0,
-                            bias=True,
-                        )
-                        if abs(skewness) > 0.8:
-                            avg_round.append(trim_mean(duo_round, TRIM_PROPORTION))
-                        else:
-                            avg_round.append(mean(duo_round))
-                    else:
-                        avg_round.append(mean(duo_round))
+                            can_trim=len(duo_round) > 1,
+                        ),
+                    )
             if avg_round:
                 cur_duo.round = round(mean(avg_round), 0 if pf_mode else 2)
             else:
@@ -540,6 +475,15 @@ def char_usages(
     if filename == "all" or (aa_mode and filename not in ["1", "2"]):
         char_usages_write(chars_dict, filename)
     return chars_dict
+
+
+def add_mode_suffix(filename: str) -> str:
+    """Append the whale/f2p suffix to an output filename."""
+    if WHALE_ONLY:
+        return filename + "_C1"
+    if F2P_ONLY:
+        return filename + "_E0S0"
+    return filename
 
 
 def comp_usages_write(
@@ -658,13 +602,10 @@ def comp_usages_write(
     if info_char:
         out_comps += var_comps
 
-    if not (sort_app):
+    if not sort_app:
         filename = filename + "_rounds"
 
-    if WHALE_ONLY:
-        filename = filename + "_C1"
-    elif F2P_ONLY:
-        filename = filename + "_E0S0"
+    filename = add_mode_suffix(filename)
 
     if floor:
         with open(
@@ -714,18 +655,13 @@ def duo_write(
             out_duos.append(out_duos_append)
     out_duos = sorted(out_duos, key=lambda t: t["app"], reverse=True)
 
-    if WHALE_ONLY:
-        filename = filename + "_C1"
-    elif F2P_ONLY:
-        filename = filename + "_E0S0"
+    filename = add_mode_suffix(filename)
 
     with open(f"../{DUOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csvwriter(f)
         count = 0
-        out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
         for duos in out_duos:
             duo_char = str(duos["char"])
-            out_duos_check[duo_char] = {}
             if count == 0:
                 temp_duos = ["char", "app"]
                 for i in range(10):
@@ -756,6 +692,86 @@ def duo_write(
         out_file.write(dumps(out_duos, indent=2))
 
 
+def fill_gear_slots(
+    out: dict[str, str | int | float],
+    gear: dict[str, cu.RoundApp],
+    prefix: str,
+    length: int,
+) -> None:
+    """Fill gear slot name/app/round keys, defaulting empty slots."""
+    gear_names = list(gear)
+    gear_values = list(gear.values())
+    for i in range(length):
+        j = str(i + 1)
+        if i < len(gear_values):
+            out[prefix + "_" + j] = gear_names[i]
+            out[prefix + "_" + j + "_app"] = str(gear_values[i].app) + "%"
+            out[prefix + "_" + j + "_round"] = str(gear_values[i].round)
+        else:
+            out[prefix + "_" + j] = ""
+            out[prefix + "_" + j + "_app"] = "0.0"
+            out[prefix + "_" + j + "_round"] = "0.0" if pf_mode else "99.99"
+
+
+def fill_artifact_slots(
+    out: dict[str, str | int | float],
+    artifacts: dict[str, cu.RoundApp],
+    length: int,
+) -> None:
+    """Fill artifact slot keys, splitting set names into part keys."""
+    arti_names = list(artifacts)
+    arti_values = list(artifacts.values())
+    for i in range(length):
+        j = str(i + 1)
+        if i < len(arti_values):
+            name = arti_names[i]
+            out["artifact_" + j] = name
+            parts = (
+                name.replace("Watchmaker,", "Watchmaker")
+                .replace("Sigonia,", "Sigonia")
+                .replace("Duran,", "Duran")
+                .split(", ")
+            )
+            out["artifact_" + j + "_1"] = (
+                parts[0]
+                .replace("Watchmaker", "Watchmaker,")
+                .replace("Sigonia", "Sigonia,")
+                .replace("Duran", "Duran,")
+            )
+            out["artifact_" + j + "_2"] = (
+                parts[1]
+                .replace("Watchmaker", "Watchmaker,")
+                .replace("Sigonia", "Sigonia,")
+                .replace("Duran", "Duran,")
+            ) if len(parts) > 1 else ""
+            out["artifact_" + j + "_app"] = str(arti_values[i].app) + "%"
+            out["artifact_" + j + "_round"] = str(arti_values[i].round)
+        else:
+            out["artifact_" + j] = ""
+            out["artifact_" + j + "_1"] = ""
+            out["artifact_" + j + "_2"] = ""
+            out["artifact_" + j + "_app"] = "0.0"
+            out["artifact_" + j + "_round"] = "0.0" if pf_mode else "99.99"
+
+
+def fill_cons_slots(
+    out: dict[str, str | int | float],
+    cons_usage: dict[int, dict[str, str]],
+    *,
+    use_data: bool,
+) -> None:
+    """Fill constellation usage keys, using defaults when gear data is absent."""
+    for i in range(7):
+        if use_data:
+            cons_values = list(list(cons_usage.values())[i].values())
+            app = str(cons_values[0]) + "%"
+            out["app_" + str(i)] = "-" if app == "-%" else app
+            out["round_" + str(i)] = str(cons_values[3])
+        else:
+            out["app_" + str(i)] = "0.0%"
+            out["round_" + str(i)] = "0.0" if pf_mode else "99.99"
+
+
 def char_usages_write(
     chars_dict: dict[str, cu.CharUsageData],
     filename: str,
@@ -782,117 +798,14 @@ def char_usages_write(
         for i in ["app_rate", "app_rate_e0"]:
             if out_chars_append[i] == "-%":
                 out_chars_append[i] = "-"
-        if list(cur_char.weapons):
-            for i in range(weap_len):
-                j = str(i + 1)
-                if i < len(list(cur_char.weapons)):
-                    cur_weap = list(cur_char.weapons.values())
-                    out_chars_append["weapon_" + j] = list(cur_char.weapons)[i]
-                    out_chars_append["weapon_" + j + "_app"] = (
-                        str(cur_weap[i].app) + "%"
-                    )
-                    out_chars_append["weapon_" + j + "_round"] = str(cur_weap[i].round)
-                else:
-                    out_chars_append["weapon_" + j] = ""
-                    out_chars_append["weapon_" + j + "_app"] = "0.0"
-                    out_chars_append["weapon_" + j + "_round"] = (
-                        "0.0" if pf_mode else "99.99"
-                    )
-            for i in range(arti_len):
-                j = str(i + 1)
-                if i < len(list(cur_char.artifacts)):
-                    arti_name = list(cur_char.artifacts)[i]
-                    out_chars_append["artifact_" + j] = arti_name
-                    arti_name = (
-                        arti_name.replace("Watchmaker,", "Watchmaker")
-                        .replace("Sigonia,", "Sigonia")
-                        .replace("Duran,", "Duran")
-                        .split(", ")
-                    )
-                    out_chars_append["artifact_" + j + "_1"] = (
-                        arti_name[0]
-                        .replace("Watchmaker", "Watchmaker,")
-                        .replace("Sigonia", "Sigonia,")
-                        .replace("Duran", "Duran,")
-                    )
-                    if len(arti_name) > 1:
-                        out_chars_append["artifact_" + j + "_2"] = (
-                            arti_name[1]
-                            .replace("Watchmaker", "Watchmaker,")
-                            .replace("Sigonia", "Sigonia,")
-                            .replace("Duran", "Duran,")
-                        )
-                    else:
-                        out_chars_append["artifact_" + j + "_2"] = ""
-                    cur_arti = list(cur_char.artifacts.values())
-                    out_chars_append["artifact_" + j + "_app"] = (
-                        str(cur_arti[i].app) + "%"
-                    )
-                    out_chars_append["artifact_" + j + "_round"] = str(
-                        cur_arti[i].round,
-                    )
-                else:
-                    out_chars_append["artifact_" + j] = ""
-                    out_chars_append["artifact_" + j + "_1"] = ""
-                    out_chars_append["artifact_" + j + "_2"] = ""
-                    out_chars_append["artifact_" + j + "_app"] = "0.0"
-                    out_chars_append["artifact_" + j + "_round"] = (
-                        "0.0" if pf_mode else "99.99"
-                    )
-            for i in range(planar_len):
-                j = str(i + 1)
-                if i < len(list(cur_char.planars)):
-                    cur_planar = list(cur_char.planars.values())
-                    out_chars_append["planar_" + j] = list(cur_char.planars)[i]
-                    out_chars_append["planar_" + j + "_app"] = (
-                        str(cur_planar[i].app) + "%"
-                    )
-                    out_chars_append["planar_" + j + "_round"] = str(
-                        cur_planar[i].round,
-                    )
-                else:
-                    out_chars_append["planar_" + j] = ""
-                    out_chars_append["planar_" + j + "_app"] = "0.0"
-                    out_chars_append["planar_" + j + "_round"] = (
-                        "0.0" if pf_mode else "99.99"
-                    )
-            for i in range(7):
-                out_chars_append["app_" + str(i)] = (
-                    str(next(iter(list(cur_char.cons_usage.values())[i].values())))
-                    + "%"
-                )
-                out_chars_append["round_" + str(i)] = str(
-                    list(list(cur_char.cons_usage.values())[i].values())[3],
-                )
-                if out_chars_append["app_" + str(i)] == "-%":
-                    out_chars_append["app_" + str(i)] = "-"
-        else:
-            for i in range(weap_len):
-                j = str(i + 1)
-                out_chars_append["weapon_" + j] = ""
-                out_chars_append["weapon_" + j + "_app"] = "0.0"
-                out_chars_append["weapon_" + j + "_round"] = (
-                    "0.0" if pf_mode else "99.99"
-                )
-            for i in range(arti_len):
-                j = str(i + 1)
-                out_chars_append["artifact_" + j] = ""
-                out_chars_append["artifact_" + j + "_1"] = ""
-                out_chars_append["artifact_" + j + "_2"] = ""
-                out_chars_append["artifact_" + j + "_app"] = "0.0"
-                out_chars_append["artifact_" + j + "_round"] = (
-                    "0.0" if pf_mode else "99.99"
-                )
-            for i in range(planar_len):
-                j = str(i + 1)
-                out_chars_append["planar_" + j] = ""
-                out_chars_append["planar_" + j + "_app"] = "0.0"
-                out_chars_append["planar_" + j + "_round"] = (
-                    "0.0" if pf_mode else "99.99"
-                )
-            for i in range(7):
-                out_chars_append["app_" + str(i)] = "0.0%"
-                out_chars_append["round_" + str(i)] = "0.0" if pf_mode else "99.99"
+        fill_gear_slots(out_chars_append, cur_char.weapons, "weapon", weap_len)
+        fill_artifact_slots(out_chars_append, cur_char.artifacts, arti_len)
+        fill_gear_slots(out_chars_append, cur_char.planars, "planar", planar_len)
+        fill_cons_slots(
+            out_chars_append,
+            cur_char.cons_usage,
+            use_data=bool(cur_char.weapons),
+        )
         out_chars_append["cons_avg"] = cur_char.cons_avg
         out_chars_append["sample"] = cur_char.sample
         out_chars_append["sample_app_flat"] = cur_char.sample_app_flat
@@ -901,10 +814,7 @@ def char_usages_write(
         if char == filename:
             break
 
-    if WHALE_ONLY:
-        filename = filename + "_C1"
-    elif F2P_ONLY:
-        filename = filename + "_E0S0"
+    filename = add_mode_suffix(filename)
 
     iterate_value_app = ["app_rate", "app_rate_e0"]
     iterate_value_round = ["avg_round", "std_dev_round"]
