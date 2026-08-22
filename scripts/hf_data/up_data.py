@@ -113,7 +113,9 @@ def scan_upload_and_clean() -> None:
         return
 
     files_to_upload = [
-        f for f in listdir(LOCAL_DATA_DIR) if f.endswith((".csv", ".json"))
+        f
+        for f in listdir(LOCAL_DATA_DIR)
+        if (f.endswith((".csv", ".json")) and f.startswith(RECENT_PHASE))
     ]
 
     if not files_to_upload:
