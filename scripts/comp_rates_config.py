@@ -73,6 +73,7 @@ MODE_ATTR_MAP: dict[str, str] = {
     "pf": "pf",
     "as": "as_",
     "aa": "aa",
+    "aa_boss": "aa",
 }
 
 

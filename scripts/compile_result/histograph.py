@@ -29,7 +29,7 @@ for char_info in CHARS_INFO.values():
 # ----------------------------------------------------------------------
 # Group versions by mode and collect data dictionaries
 # ----------------------------------------------------------------------
-modes = ["moc", "pf", "as", "aa"]
+modes = ["moc", "pf", "as", "aa", "aa_boss"]
 
 
 def get_latest_unique_versions(
@@ -86,9 +86,14 @@ for mode, versions in selected_versions.items():
     e1_data[mode] = []
 
     for version in versions:
-        base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
-        e0_path = f"{base_path}/all.json"
-        e1_path = f"{base_path}/all_C1.json"
+        if mode == "aa_boss":
+            base_path = f"../../results/all_results/{version}/{version}_aa/chars"
+            e0_path = f"{base_path}/2-1.json"
+            e1_path = f"{base_path}/2-1_C1.json"
+        else:
+            base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
+            e0_path = f"{base_path}/all.json"
+            e1_path = f"{base_path}/all_C1.json"
         data_e0 = load_base_stats(e0_path)
         data_e1 = load_base_stats(e1_path)
         if data_e0:
@@ -117,9 +122,10 @@ default_values = {
     "pf": 22000,
     "as": 3000,
     "aa": 7,
+    "aa_boss": 7,
 }
 
-cycle_modes = {"moc", "aa"}
+cycle_modes = {"moc", "aa", "aa_boss"}
 
 for char in sorted(all_chars):
     # Determine base slug by stripping known prefixes
