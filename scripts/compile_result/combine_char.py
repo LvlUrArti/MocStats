@@ -89,7 +89,6 @@ class BaseCharacterStats(BaseModel):
     app_rate_e0: float
     avg_round: float | int
     std_dev_round: float | int
-    q1_round: float | int
     rarity: str
 
     # Weapons 1-10

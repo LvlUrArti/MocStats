@@ -776,7 +776,6 @@ def char_usages_write(
             "app_rate_e0": str(cur_char.app_exclude) + "%",
             "avg_round": str(cur_char.round),
             "std_dev_round": str(cur_char.std_dev_round),
-            "q1_round": str(cur_char.q1_round),
             "role": cur_char.role[0],
             "rarity": cur_char.rarity,
         }
@@ -908,7 +907,7 @@ def char_usages_write(
         filename = filename + "_E0S0"
 
     iterate_value_app = ["app_rate", "app_rate_e0"]
-    iterate_value_round = ["avg_round", "std_dev_round", "q1_round"]
+    iterate_value_round = ["avg_round", "std_dev_round"]
     iterate_name_arti: list[str] = []
     for i in range(weap_len):
         j = str(i + 1)

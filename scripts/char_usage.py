@@ -21,7 +21,6 @@ from comp_rates_config import (
 )
 from composition import Stage
 from scipy.stats import skew, trim_mean
-from utils.percentile import calculate_percentile
 
 if TYPE_CHECKING:
     from player_phase import PlayerPhase
@@ -60,7 +59,6 @@ class CharApp(RoundApp):
         self.app_exclude: float = 0
         self.owned: int = 0
         self.std_dev_round: float = 0
-        self.q1_round: float = 0
         self.weap_freq: dict[str, RoundApp] = {}
         self.arti_freq: dict[str, RoundApp] = {}
         self.planar_freq: dict[str, RoundApp] = {}
@@ -261,7 +259,6 @@ def appearances(
         if char_item.app_flat_exclude >= EXCLUDED_LIMIT:
             avg_round: list[float] = []
             std_dev_round: list[float] = []
-            q1_round: list[float] = []
             uses_room: dict[int, int] = {}
 
             for room_num in range(1, 13):
@@ -277,11 +274,6 @@ def appearances(
                     uses_room[room_num] = len(round_list)
                     if len(round_list) > MIN_APP_LIMIT:
                         std_dev_round.append(stdev(round_list))
-                        q1_round.append(
-                            float(
-                                calculate_percentile(round_list, 75 if pf_mode else 25),
-                            ),
-                        )
                         skewness = skew(round_list, axis=0, bias=True)
                         if abs(skewness) > SKEW_LIMIT:
                             avg_round.append(trim_mean(round_list, TRIM_PROPORTION))
@@ -289,7 +281,6 @@ def appearances(
                             avg_round.append(mean(round_list))
                     else:
                         std_dev_round.append(0)
-                        q1_round.append(0)
                         avg_round.append(mean(round_list))
 
             is_count_cycles = True
@@ -305,13 +296,10 @@ def appearances(
             if is_count_cycles:
                 char_item.round = round(mean(avg_round), DEFAULT_ROUND)
                 char_item.std_dev_round = round(mean(std_dev_round), DEFAULT_ROUND)
-                char_item.q1_round = round(mean(q1_round), DEFAULT_ROUND)
             else:
                 char_item.round = DEFAULT_VALUE
-                char_item.q1_round = DEFAULT_VALUE
         else:
             char_item.round = DEFAULT_VALUE
-            char_item.q1_round = DEFAULT_VALUE
 
         char_item.sample = len(user_chars[char])
 
