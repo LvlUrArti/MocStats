@@ -1110,5 +1110,17 @@
     "role": [
       "dps"
     ]
+  },
+  "Robin \u2022 Summeretto": {
+    "id": "1512",
+    "rarity": 5,
+    "path": "Remembrance",
+    "element": "Wind",
+    "availability": "Limited 5*",
+    "slug": "robin-summeretto",
+    "release": 1787734800,
+    "role": [
+      "amplifier"
+    ]
   }
 }
