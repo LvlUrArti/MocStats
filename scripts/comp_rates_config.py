@@ -80,7 +80,7 @@ MODE_ATTR_MAP: dict[str, str] = {
 with open(relative_path("../data/versions/config.json")) as f:
     raw_config = load(f)
     ENDGAME_INFOS: dict[str, EndgameConfig] = {
-        char_name: EndgameConfig(**item) for char_name, item in raw_config.items()
+        patch_ver: EndgameConfig(**item) for patch_ver, item in raw_config.items()
     }
     ENDGAME_INFO: EndgameConfig | None = ENDGAME_INFOS.get(RECENT_PHASE)
 
@@ -252,21 +252,7 @@ run_commands = {
     # "Character specific infographics",
 }
 
-if args.top or args.f2p:
-    run_commands = {
-        "Char usages all stages",
-        "Char usages for each stage",
-    }
-
-elif args.whale:
-    run_commands = {
-        "Char usages all stages",
-        "Char usages for each stage",
-        "Comp usage all stages",
-        "Comp usages for each stage",
-    }
-
-elif args.chars_top:
+if args.chars_top:
     run_commands = {
         "Char usages all stages",
     }
@@ -291,6 +277,20 @@ elif args.chars_all:
 
 elif args.comps_all:
     run_commands = {
+        "Comp usage all stages",
+        "Comp usages for each stage",
+    }
+
+elif args.top or args.f2p:
+    run_commands = {
+        "Char usages all stages",
+        "Char usages for each stage",
+    }
+
+elif args.whale:
+    run_commands = {
+        "Char usages all stages",
+        "Char usages for each stage",
         "Comp usage all stages",
         "Comp usages for each stage",
     }
