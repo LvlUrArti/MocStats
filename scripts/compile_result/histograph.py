@@ -17,6 +17,7 @@ from comp_rates_config import (
     MODE_ATTR_MAP,
     RECENT_PHASE,
     CharInfo,
+    mode_configs,
 )
 
 # ----------------------------------------------------------------------
@@ -118,7 +119,8 @@ modes_phases_data: dict[str, dict[str, list[dict[str, BaseCharacterStats]]]] = {
 }
 
 default_values = {
-    "moc": 11,
+    # If starward mode, MoC default value is 13
+    "moc": 13 if mode_configs["moc"].star_num_threshold == 4 else 11,
     "pf": 22000,
     "as": 3000,
     "aa": 7,
