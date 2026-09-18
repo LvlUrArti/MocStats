@@ -1122,5 +1122,17 @@
     "role": [
       "amplifier"
     ]
+  },
+  "Aventurine \u2022 Waveflair": {
+    "id": "1513",
+    "rarity": 5,
+    "path": "Elation",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "aventurine-waveflair",
+    "release": 1789203600,
+    "role": [
+      "dps"
+    ]
   }
 }
