@@ -35,7 +35,7 @@ modes = ["moc", "pf", "as", "aa", "aa_boss"]
 
 def get_latest_unique_versions(
     modes: list[str],
-    count: int = 3,
+    count: int = 2,
 ) -> dict[str, list[str]]:
     """Get unique versions.
 
