@@ -213,7 +213,12 @@
     "4.4.1": {
       "name": "Stormcleanse",
       "time_start": "17/08/2026",
-      "time_end": "21/09/2026"
+      "time_end": "28/09/2026"
+    },
+    "4.6.1": {
+      "name": "Crossing the Afterlife",
+      "time_start": "28/09/2026",
+      "time_end": "02/11/2026"
     }
   },
   "Pure Fiction": {
@@ -494,7 +499,12 @@
     "4.5.1": {
       "name": "Return of the Legion",
       "time_start": "25/08/2026",
-      "time_end": "06/10/2026"
+      "time_end": "28/09/2026"
+    },
+    "4.6.1": {
+      "name": "Return to Roots",
+      "time_start": "28/09/2026",
+      "time_end": "11/11/2026"
     }
   }
 }

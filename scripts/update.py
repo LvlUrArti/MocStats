@@ -247,13 +247,24 @@ class EndgameConfig(BaseModel):
         return value
 
 
-def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str, str]]:
+def add_endgame(
+    versions_dict: dict[str, dict[str, Any]],
+    name: str,
+) -> dict[str, dict[str, str]]:
     """Add endgame versions."""
     versions: dict[str, dict[str, Any]] = {}
     for version, version_item in versions_dict.items():
         config = EndgameConfig(**version_item)
         version_time = config.versionTime
-        if version_time != "xx/xx/20xx - xx/xx/20xx":
+        skip = False
+        if version_time == "xx/xx/20xx - xx/xx/20xx":
+            skip_input = input(
+                f"Missing endgame version time for {name}: {config.versionName}"
+                f" ({version}). Skip? (y/n): ",
+            )
+            if skip_input.lower() == "y":
+                skip = True
+        if not skip:
             versions[version] = {
                 "name": config.versionName,
                 "time_start": version_time.split(" - ")[0],
@@ -271,22 +282,22 @@ moc_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
 for entry in moc_data:
     name = str(entry["name"])
     if name == "Memory of Chaos":
-        save_entries[name] = add_endgame(entry["versions"])
+        save_entries[name] = add_endgame(entry["versions"], name)
 
 pf_data: dict[str, dict[str, str]] = load_from_url(
     "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/pf/pf-versions.json",
 )
-save_entries["Pure Fiction"] = add_endgame(pf_data)
+save_entries["Pure Fiction"] = add_endgame(pf_data, "Pure Fiction")
 
 as_data: dict[str, dict[str, str]] = load_from_url(
     "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/as/as-versions.json",
 )
-save_entries["Apocalyptic Shadow"] = add_endgame(as_data)
+save_entries["Apocalyptic Shadow"] = add_endgame(as_data, "Apocalyptic Shadow")
 
 aa_data: dict[str, dict[str, str]] = load_from_url(
     "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/aa/aa-versions.json",
 )
-save_entries["Anomaly Arbitration"] = add_endgame(aa_data)
+save_entries["Anomaly Arbitration"] = add_endgame(aa_data, "Anomaly Arbitration")
 
 with open("../data/versions/endgame_versions.json", "w") as out_file:
     out_file.write(json.dumps(save_entries, indent=2))
