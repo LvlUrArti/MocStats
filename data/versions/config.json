@@ -1623,5 +1623,27 @@
       "start": "25/08/2026",
       "end": "06/10/2026"
     }
+  },
+  "4.6.1": {
+    "collect_date": "01/10/2026",
+    "moc": null,
+    "pf": {
+      "ver": "4.5.1",
+      "name": "Domain Genesis",
+      "start": "14/09/2026",
+      "end": "19/10/2026"
+    },
+    "as": {
+      "ver": "4.5.1",
+      "name": "Celestial Lupine",
+      "start": "31/08/2026",
+      "end": "05/10/2026"
+    },
+    "aa": {
+      "ver": "4.5.1",
+      "name": "Return of the Legion",
+      "start": "25/08/2026",
+      "end": "06/10/2026"
+    }
   }
 }

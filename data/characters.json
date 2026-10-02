@@ -1134,5 +1134,17 @@
     "role": [
       "dps"
     ]
+  },
+  "Pearl": {
+    "id": "1503",
+    "rarity": 5,
+    "path": "Elation",
+    "element": "Ice",
+    "availability": "Limited 5*",
+    "slug": "pearl",
+    "release": 1790586000,
+    "role": [
+      "sustain"
+    ]
   }
 }
