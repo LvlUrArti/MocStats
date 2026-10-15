@@ -11,6 +11,7 @@ from comp_rates_config import (
     BASE_RESULT_PATH,
     CHARS_INFO,
     RECENT_PHASE,
+    pf_filename,
 )
 
 skip_self = False
@@ -36,6 +37,24 @@ for char in CHARS_INFO.values():
             trailblazer_id for trailblazer_id in char.trailblazer_ids
         )
 
+iter_start = 0
+iter_end = 180
+filename = pf_filename.replace("_moc", "")
+
+if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
+    uidlist: list[int] = []
+    try:
+        for i in range(iter_start, iter_end):
+            print(f"\x1b[1K\r{i} / {iter_end}", end="")
+
+            with open(f"../../spiraldata{filename}{i}.csv", encoding="cp1252") as f:
+                reader = csv.reader(f, delimiter=",")
+                headers = next(reader)
+                spiraldata_temp = list(reader)
+                uidlist.extend(int(j[0]) for j in spiraldata_temp)
+    except FileNotFoundError:
+        pass
+    uids = list(dict.fromkeys(uidlist))
 if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
     with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")

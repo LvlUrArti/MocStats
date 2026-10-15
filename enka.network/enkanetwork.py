@@ -18,7 +18,7 @@ from enka_config import (
 )
 from utils.notif import send_notification
 
-print(len(uids))
+print(f"\x1b[1K\r{len(uids)}")
 
 
 def jprint(obj: dict[str, str]) -> None:
