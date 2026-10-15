@@ -1650,5 +1650,32 @@
       "start": "28/09/2026",
       "end": "11/11/2026"
     }
+  },
+  "4.6.2": {
+    "collect_date": "14/10/2026",
+    "moc": {
+      "ver": "4.6.1",
+      "name": "Crossing the Afterlife",
+      "start": "28/09/2026",
+      "end": "02/11/2026"
+    },
+    "pf": {
+      "ver": "4.5.1",
+      "name": "Domain Genesis",
+      "start": "14/09/2026",
+      "end": "19/10/2026"
+    },
+    "as": {
+      "ver": "4.6.1",
+      "name": "Dominance of Oblivion",
+      "start": "05/10/2026",
+      "end": "16/11/2026"
+    },
+    "aa": {
+      "ver": "4.6.1",
+      "name": "Return to Roots",
+      "start": "28/09/2026",
+      "end": "11/11/2026"
+    }
   }
 }
