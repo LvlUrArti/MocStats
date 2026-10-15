@@ -55,7 +55,7 @@ if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
     except FileNotFoundError:
         pass
     uids = list(dict.fromkeys(uidlist))
-if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
+elif os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
     with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)
