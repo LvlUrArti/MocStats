@@ -1,6 +1,7 @@
 """Combine JSON results from different game modes into a unified build dataset."""
 
 import json
+from datetime import date
 from os.path import exists
 from sys import path as sys_path
 
@@ -86,7 +87,6 @@ class BaseCharacterStats(BaseModel):
     """Base character stats from a single game mode (MoC, PF, AS, or AA)."""
 
     char: str
-    is_new: bool = False
     app_rate: float
     app_rate_e0: float
     avg_round: float | int
@@ -326,14 +326,34 @@ def get_previous_mode_phase(mode: str) -> str:
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 modes = ["moc", "pf", "as", "aa"]
+previous_phases: dict[str, str] = {
+    mode: get_previous_mode_phase(mode) for mode in modes
+}
+char_release_dates: dict[str, date] = {
+    info.slug: info.release.date() for info in CHARS_INFO.values()
+}
+
+
+def is_new_char(char: str, mode: str) -> bool:
+    """Return True if the character released after the previous phase collection."""
+    if ENDGAME_INFO is None:
+        return False
+    prev_info = ENDGAME_INFOS.get(previous_phases[mode])
+    if prev_info is None:
+        return False
+    base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
+    release = char_release_dates.get(base_char)
+    if release is None:
+        return False
+    return prev_info.collect_date.date() < release <= ENDGAME_INFO.collect_date.date()
+
+
 boss_configs: dict[str, list[tuple[int, str]]] = {
     mode: list(enumerate(mode_configs[mode].all_stages, start=1)) for mode in modes
 }
 
 for suf in ["", "_prev"]:
-    phases = {
-        mode: get_previous_mode_phase(mode) if suf else RECENT_PHASE for mode in modes
-    }
+    phases = previous_phases if suf else dict.fromkeys(modes, RECENT_PHASE)
 
     for mode in modes:
         folder_dir = get_read_path(phases[mode], mode)
@@ -684,7 +704,7 @@ def process_chars() -> None:
 
                 # Only include is_new for the most recent phase (not previous)
                 if suf == "":
-                    out[f"is_new_{mode}"] = get_val(base, "is_new")
+                    out[f"is_new_{mode}"] = is_new_char(char, mode)
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
         round_modes = [

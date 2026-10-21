@@ -792,7 +792,6 @@ def char_usages_write(
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
             "char": char,
-            "is_new": cur_char.is_new,
             "app_rate": str(cur_char.app) + "%",
             "app_rate_e0": str(cur_char.app_exclude) + "%",
             "avg_round": str(cur_char.round),

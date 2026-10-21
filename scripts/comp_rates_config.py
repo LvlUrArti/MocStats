@@ -313,7 +313,6 @@ class CharInfo(BaseModel):
     release: datetime
     role: list[str]
     trailblazer_ids: list[str] | None = None
-    is_new: bool = False
 
     @field_validator("release", mode="before")
     @classmethod
@@ -332,12 +331,6 @@ with open(relative_path("../data/characters.json")) as char_file:
             or (datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date)
         )
     }
-
-if mode_obj:
-    mode_start = mode_obj.start.date()
-    mode_end = mode_obj.end.date()
-    for char in CHARS_INFO.values():
-        char.is_new = mode_start <= char.release.date() <= mode_end
 
 with open(relative_path("../data/light_cones.json")) as char_file:
     LIGHT_CONES: dict[str, dict[str, str | int]] = load(char_file)
