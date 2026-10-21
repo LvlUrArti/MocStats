@@ -412,6 +412,7 @@ class CharUsageData(CharApp):
         super().__init__()
         self.__dict__.update(char_app.__dict__)
         self.usage = 0
+        self.is_new = CHARS_INFO[char].is_new
         self.role = CHARS_INFO[char].role
         self.rarity = CHARS_INFO[char].availability
         self.weapons: dict[str, RoundApp] = {}

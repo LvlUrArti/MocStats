@@ -739,11 +739,15 @@ def fill_artifact_slots(
                 .replace("Duran", "Duran,")
             )
             out["artifact_" + j + "_2"] = (
-                parts[1]
-                .replace("Watchmaker", "Watchmaker,")
-                .replace("Sigonia", "Sigonia,")
-                .replace("Duran", "Duran,")
-            ) if len(parts) > 1 else ""
+                (
+                    parts[1]
+                    .replace("Watchmaker", "Watchmaker,")
+                    .replace("Sigonia", "Sigonia,")
+                    .replace("Duran", "Duran,")
+                )
+                if len(parts) > 1
+                else ""
+            )
             out["artifact_" + j + "_app"] = str(arti_values[i].app) + "%"
             out["artifact_" + j + "_round"] = str(arti_values[i].round)
         else:
@@ -788,6 +792,7 @@ def char_usages_write(
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
             "char": char,
+            "is_new": cur_char.is_new,
             "app_rate": str(cur_char.app) + "%",
             "app_rate_e0": str(cur_char.app_exclude) + "%",
             "avg_round": str(cur_char.round),

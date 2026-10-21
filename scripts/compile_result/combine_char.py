@@ -85,6 +85,7 @@ class BaseCharacterStats(BaseModel):
     """Base character stats from a single game mode (MoC, PF, AS, or AA)."""
 
     char: str
+    is_new: bool = False
     app_rate: float
     app_rate_e0: float
     avg_round: float | int
@@ -677,6 +678,10 @@ def process_chars() -> None:
                     base,
                     "sample_size_players",
                 )
+
+                # Only include is_new for the most recent phase (not previous)
+                if suf == "":
+                    out[f"is_new_{mode}"] = get_val(base, "is_new")
 
         # ----- 3. Eidolon round data (0..6) for base modes -----
         round_modes = [
