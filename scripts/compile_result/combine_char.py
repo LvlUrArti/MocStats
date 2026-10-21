@@ -15,6 +15,7 @@ from comp_rates_config import (
     LIGHT_CONES,
     MODE_ATTR_MAP,
     RECENT_PHASE,
+    mode_configs,
 )
 from pydantic import BaseModel
 
@@ -325,24 +326,30 @@ def get_previous_mode_phase(mode: str) -> str:
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 modes = ["moc", "pf", "as", "aa"]
+boss_configs: dict[str, list[tuple[int, str]]] = {
+    mode: list(enumerate(mode_configs[mode].all_stages, start=1)) for mode in modes
+}
 
 for suf in ["", "_prev"]:
     phases = {
         mode: get_previous_mode_phase(mode) if suf else RECENT_PHASE for mode in modes
     }
+
     for mode in modes:
         folder_dir = get_read_path(phases[mode], mode)
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all.json")
         raw[f"{mode}_e1{suf}"] = load_base_stats(f"{folder_dir}/all_C1.json")
         raw[f"{mode}_s0{suf}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 
-    read_path = get_read_path(phases["aa"], "aa")
-    boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")]
-    for boss_num, boss_room in boss_configs:
-        file_name = f"{read_path}/{boss_room}"
-        raw[f"aa_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
-        raw[f"aa_boss_{boss_num}_e1{suf}"] = load_base_stats(f"{file_name}_C1.json")
-        raw[f"aa_boss_{boss_num}_s0{suf}"] = load_base_stats(f"{file_name}_E0S0.json")
+        for boss_num, boss_room in boss_configs[mode]:
+            file_name = f"{folder_dir}/{boss_room}"
+            raw[f"{mode}_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
+            raw[f"{mode}_boss_{boss_num}_e1{suf}"] = load_base_stats(
+                f"{file_name}_C1.json",
+            )
+            raw[f"{mode}_boss_{boss_num}_s0{suf}"] = load_base_stats(
+                f"{file_name}_E0S0.json",
+            )
 
 
 # ----------------------------------------------------------------------
@@ -651,11 +658,7 @@ def process_chars() -> None:
                         return DEFAULT_SCORE
                     return DEFAULT_CYCLE
 
-                boss_suffixes = (
-                    ["", "_boss_1", "_boss_2", "_boss_3", "_boss_4"]
-                    if mode == "aa"
-                    else [""]
-                )
+                boss_suffixes = ["", *(f"_boss_{num}" for num, _ in boss_configs[mode])]
 
                 for boss_idx, boss_suf in enumerate(boss_suffixes):
                     for var_off, var_suf in enumerate(variants):

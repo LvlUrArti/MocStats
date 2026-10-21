@@ -81,7 +81,7 @@ def main() -> None:
         print("done char:", round(cur_time - start_time, 2), "s")
         start_time = cur_time
 
-        if "Char usages for each stage" in run_commands and aa_mode:
+        if "Char usages for each stage" in run_commands:
             char_chambers: dict[str, dict[str, cu.CharUsageData]] = {
                 "all": usage.copy(),
             }
@@ -472,7 +472,7 @@ def char_usages(
         info_char=False,
     )
     chars_dict: dict[str, cu.CharUsageData] = cu.usages(app, chambers=rooms)
-    if filename == "all" or (aa_mode and filename not in ["1", "2"]):
+    if filename == "all" or filename not in ["1", "2"]:
         char_usages_write(chars_dict, filename)
     return chars_dict
 
