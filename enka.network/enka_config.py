@@ -4,6 +4,7 @@ import csv
 import json
 import os.path
 import sys
+import time
 from pathlib import Path
 
 sys.path.append("../scripts/")
@@ -47,7 +48,11 @@ if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
         for i in range(iter_start, iter_end):
             print(f"\x1b[1K\r{i} / {iter_end}", end="")
 
-            with open(f"../../spiraldata{filename}{i}.csv", encoding="cp1252") as f:
+            csv_path = Path(f"../../spiraldata{filename}{i}.csv")
+            if time.time() - csv_path.stat().st_mtime < 120:
+                break
+
+            with open(csv_path, encoding="cp1252") as f:
                 reader = csv.reader(f, delimiter=",")
                 headers = next(reader)
                 spiraldata_temp = list(reader)
