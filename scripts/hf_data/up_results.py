@@ -7,7 +7,6 @@ sys_path.append("../")
 from comp_rates_config import RECENT_PHASE
 from huggingface_hub import HfApi
 from huggingface_hub.repocard import RepoCard
-from utils.notif import send_notification
 
 # ================= CONFIGURATION =================
 # Where to look for NEW files to upload
@@ -86,4 +85,3 @@ def update_readme() -> None:
 if __name__ == "__main__":
     scan_upload_and_clean()
     update_readme()
-    send_notification("Finished", "Finished uploading data")
