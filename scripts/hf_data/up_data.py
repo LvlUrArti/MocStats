@@ -39,7 +39,7 @@ LOCAL_DATA_DIR = f"../../data/raw_csvs{real_suffix}"
 CSV_LIST_FILE = f"repo_files{real_suffix}.csv"
 CSV_LIST = join("../../data", CSV_LIST_FILE)
 
-CHUNK_SIZE = 3
+CHUNK_SIZE = 1
 REPO_ID = f"LvlUrArti/MocData{'Real' if is_real_suffix else ''}"
 DEFAULT_README = (
     "# MocData\n\nUsed alongside my [data compilation repository]"
