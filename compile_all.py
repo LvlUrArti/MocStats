@@ -1,5 +1,6 @@
 """Main pipeline script."""
 
+from argparse import ArgumentParser
 from os import getcwd, mkdir, path
 from subprocess import CalledProcessError, Popen, run
 from sys import executable as exe
@@ -9,6 +10,14 @@ from send2trash import send2trash
 
 from scripts.utils.notif import send_notification
 
+parser = ArgumentParser(description="Run the full compilation pipeline.")
+parser.add_argument(
+    "--old",
+    action="store_true",
+    help="Skip compiling new data",
+)
+args = parser.parse_args()
+
 # Define absolute directory tracks relative to where this script is launched
 BASE_DIR = getcwd()
 SCRIPTS_DIR = path.join(BASE_DIR, "scripts")
@@ -16,7 +25,7 @@ HF_DATA_DIR = path.join(SCRIPTS_DIR, "hf_data")
 MIHOMO_DIR = path.join(BASE_DIR, "mihomo")
 COMPILE_RESULT_DIR = path.join(SCRIPTS_DIR, "compile_result")
 WEB_RESULTS_DIR = path.join(BASE_DIR, "results", "web_results")
-NEW_DATA = True
+NEW_DATA = not args.old
 
 
 def run_sequential(cmd: list[str], cwd: str) -> None:
