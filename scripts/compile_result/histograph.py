@@ -160,7 +160,7 @@ for char in sorted(all_chars):
             # Appearance rate: average over phases where character exists
             app_rates: list[float] = []
             app_rates.extend(
-                phase_data[char].app_rate
+                phase_data[char].app_rate_e0
                 for phase_data in phases_data
                 if char in phase_data
             )

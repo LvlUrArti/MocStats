@@ -265,13 +265,10 @@ def appearances(
 
                     app[char].app_flat += 1
 
-                    if (
-                        whale_comp == WHALE_ONLY
-                        and (not F2P_ONLY or f2p_comp)
-                        and check_sustain_count
-                    ):
+                    if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                         app[char].app_flat_exclude += 1
-                        app[char].round_list[cur_chamber].append(user_round)
+                        if check_sustain_count:
+                            app[char].round_list[cur_chamber].append(user_round)
 
                     if chambers != one_stage:
                         continue
