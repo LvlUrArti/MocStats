@@ -12,9 +12,16 @@ from scripts.utils.notif import send_notification
 
 parser = ArgumentParser(description="Run the full compilation pipeline.")
 parser.add_argument(
+    "-o",
     "--old",
     action="store_true",
     help="Skip compiling new data",
+)
+parser.add_argument(
+    "-s",
+    "--skip",
+    action="store_true",
+    help="Skip uploading results",
 )
 args = parser.parse_args()
 
@@ -25,7 +32,6 @@ HF_DATA_DIR = path.join(SCRIPTS_DIR, "hf_data")
 MIHOMO_DIR = path.join(BASE_DIR, "mihomo")
 COMPILE_RESULT_DIR = path.join(SCRIPTS_DIR, "compile_result")
 WEB_RESULTS_DIR = path.join(BASE_DIR, "results", "web_results")
-NEW_DATA = not args.old
 
 
 def run_sequential(cmd: list[str], cwd: str) -> None:
@@ -68,7 +74,7 @@ def main(add_args: list[str] | None = None) -> None:
     if add_args is None:
         add_args = []
 
-    if NEW_DATA:
+    if not args.old:
         run_sequential([exe, "combine_raw_chars.py", *add_args], cwd=SCRIPTS_DIR)
         run_sequential([exe, "hash.py", *add_args], cwd=SCRIPTS_DIR)
         run_sequential([exe, "up_data.py", "-y", *add_args], cwd=HF_DATA_DIR)
@@ -169,7 +175,7 @@ def main(add_args: list[str] | None = None) -> None:
         )
         run_sequential([exe, "copy_common.py", *add_args], cwd=COMPILE_RESULT_DIR)
 
-        if NEW_DATA:
+        if not args.skip:
             run_sequential([exe, "up_results.py", *add_args], cwd=HF_DATA_DIR)
     else:
         print("\nWeb results directory not found. Skipping copy and upload.")
