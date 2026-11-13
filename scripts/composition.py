@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from comp_rates_config import CHARS_INFO, aa_mode, star_num_threshold
+from comp_rates_config import CHAR_NAME_REPLACE, CHARS_INFO, aa_mode, star_num_threshold
 
 
 class Stage(NamedTuple):
@@ -88,10 +88,8 @@ class Composition:
         comp_chars.sort()
         for iter_character in comp_chars:
             character = iter_character
-            if character == "Topaz and Numby":
-                character = "Topaz & Numby"
-            if character == "March 7th":
-                character = "Ice March 7th"
+            if character in CHAR_NAME_REPLACE:
+                character = CHAR_NAME_REPLACE[character]
             self.char_presence[character] = True
             if CHARS_INFO[character].availability in ["Limited 5*", "5*"]:
                 fives.append(character)

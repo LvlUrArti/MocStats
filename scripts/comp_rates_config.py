@@ -219,6 +219,7 @@ CHAR_NAME_REPLACE = {
     "Dan Heng Ã¢â,¬Â¢ Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
     "Dan Heng \u2022 Imbibitor Lunae": "Dan Heng • Imbibitor Lunae",
     "Topaz and Numby": "Topaz & Numby",
+    "March 7th": "Ice March 7th",
 }
 
 # threshold for comps in character infographics, non-inclusive

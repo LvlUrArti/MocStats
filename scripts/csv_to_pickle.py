@@ -29,11 +29,6 @@ from comp_rates_config import (
 from composition import Composition, Stage
 from player_phase import OwnedChars, PlayerPhase
 
-EXT_CHAR_NAME_REPLACE = {
-    **CHAR_NAME_REPLACE,
-    "March 7th": "Ice March 7th",
-}
-
 all_players: dict[str, PlayerPhase] = {}
 all_comps: list[Composition] = []
 avg_round_stage: dict[int, list[int]] = {}
@@ -137,8 +132,8 @@ def main() -> None:
             for i in range(1, 5):
                 char = line[f"ch{i}"]
                 if char != "":
-                    if char in EXT_CHAR_NAME_REPLACE:
-                        char = EXT_CHAR_NAME_REPLACE[char]
+                    if char in CHAR_NAME_REPLACE:
+                        char = CHAR_NAME_REPLACE[char]
                     comp_chars_temp.append(char)
 
             cons_chars_temp: list[int] = []
@@ -195,8 +190,8 @@ def main() -> None:
                     all_players[last_uid] = player
                     last_uid = line["uid"]
                     player = PlayerPhase(last_uid)
-                if line["name"] in EXT_CHAR_NAME_REPLACE:
-                    line["name"] = EXT_CHAR_NAME_REPLACE[line["name"]]
+                if line["name"] in CHAR_NAME_REPLACE:
+                    line["name"] = CHAR_NAME_REPLACE[line["name"]]
                 player.add_character(
                     line["name"],
                     OwnedChars(
