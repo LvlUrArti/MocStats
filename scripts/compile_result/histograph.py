@@ -6,9 +6,9 @@ Calculate over the last three phases of MoC, PF, and AS.
 import json
 
 # Import your existing models and loader
+from character_roles import has_role_variants, role_for_key, split_key
 from combine_char import (
     BaseCharacterStats,
-    dps_base_slugs,
     load_base_stats,
 )
 from comp_rates_config import (
@@ -131,23 +131,21 @@ cycle_modes = {"moc", "aa", "aa_boss"}
 
 for char in sorted(all_chars):
     # Determine base slug by stripping known prefixes
-    base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
+    prefix, base_char = split_key(char)
 
     # Prepare output entry
     entry: dict[str, float | int | str | None] = {
         "char": base_char,
     }
 
-    # Add special_role only if this character has multiple roles
-    if base_char in dps_base_slugs:
-        if char.startswith("solo-"):
-            entry["role"] = "dps"
-        elif char.startswith("supp-"):
-            entry["role"] = "specialist"
-        else:
+    char_info = CHARS_BY_SLUG.get(base_char)
+    if char_info is not None:
+        if prefix is not None:
+            entry["role"] = role_for_key(char, char_info.role)
+        elif has_role_variants(char_info.role):
             continue
-    elif base_char in CHARS_BY_SLUG:
-        entry["role"] = CHARS_BY_SLUG[base_char].role[0]
+        else:
+            entry["role"] = char_info.role[0]
 
     # Process each mode
     for mode in modes:

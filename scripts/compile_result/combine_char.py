@@ -9,6 +9,11 @@ sys_path.append("../")
 
 from typing import TYPE_CHECKING
 
+from character_roles import (
+    iter_character_keys,
+    special_role_for_key,
+    split_key,
+)
 from comp_rates_config import (
     CHARS_INFO,
     ENDGAME_INFO,
@@ -341,7 +346,7 @@ def is_new_char(char: str, mode: str) -> bool:
     prev_info = ENDGAME_INFOS.get(previous_phases[mode])
     if prev_info is None:
         return False
-    base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
+    _prefix, base_char = split_key(char)
     release = char_release_dates.get(base_char)
     if release is None:
         return False
@@ -464,14 +469,13 @@ usage_dicts: dict[str, dict[str, CharacterGearUsage]] = {
 # Build list of all character keys (including solo/support variants)
 # ----------------------------------------------------------------------
 character_keys: list[str] = []
-dps_base_slugs: set[str] = set()  # track base slugs of characters with multiple roles
+roles_by_slug: dict[str, list[str]] = {}
 
 for char_info in CHARS_INFO.values():
-    character_keys.append(char_info.slug)
-    if len(char_info.role) > 1:
-        dps_base_slugs.add(char_info.slug)
-        character_keys.append("solo-" + char_info.slug)
-        character_keys.append("supp-" + char_info.slug)
+    roles_by_slug[char_info.slug] = char_info.role
+    character_keys.extend(
+        key for key, _role in iter_character_keys(char_info.slug, char_info.role)
+    )
 
 
 def process_chars() -> None:
@@ -633,21 +637,11 @@ def process_chars() -> None:
 
     for char in character_keys:
         # Determine base slug by stripping known prefixes
-        base_char = char[5:] if char.startswith(("solo-", "supp-")) else char
+        _prefix, base_char = split_key(char)
 
         # Base dictionary for this character (output format)
         out: dict[str, float | str] = {"char": base_char}
-
-        # Add special_role only if this character has multiple roles
-        if base_char in dps_base_slugs:
-            if char.startswith("solo-"):
-                out["special_role"] = "DPS"
-            elif char.startswith("supp-"):
-                out["special_role"] = "S-DPS"
-            else:
-                out["special_role"] = "ALL"
-        else:
-            out["special_role"] = ""
+        out["special_role"] = special_role_for_key(char, roles_by_slug[base_char])
 
         # ----- 1. Simple fields (appearance rates, average cycles, samples) -----
         for is_prev_mode in (False, True):

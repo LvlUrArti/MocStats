@@ -22,6 +22,7 @@ from matplotlib.pyplot import show as plt_show
 from send2trash import send2trash
 
 sys_path.append("../scripts/")
+from character_roles import is_prefixed
 from comp_rates_config import (
     BUILD_RESULT_PATH,
     CHAR_NAME_REPLACE,
@@ -349,7 +350,7 @@ def write_files(
     csv_writer.writerow(["name", *stats[next(iter(chars))].stats_write.keys()])
     for char in chars:
         del stats[char].sample_size
-        if not stats[char].name.startswith(("solo-", "supp-")):
+        if not is_prefixed(stats[char].name):
             csv_writer.writerow([stats[char].name, *stats[char].stats_write.values()])
             csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
     f1.close()

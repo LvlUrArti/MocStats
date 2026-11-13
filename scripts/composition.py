@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NamedTuple
 
+from character_roles import composition_bucket, has_role_variants
 from comp_rates_config import CHAR_NAME_REPLACE, CHARS_INFO, aa_mode, star_num_threshold
 
 
@@ -94,15 +95,18 @@ class Composition:
             if CHARS_INFO[character].availability in ["Limited 5*", "5*"]:
                 fives.append(character)
 
-            if CHARS_INFO[character].role == ["dps"]:
-                self.dps.insert(0, character)
-            elif CHARS_INFO[character].role == ["dps", "specialist"]:
-                self.dps.append(character)
-            elif CHARS_INFO[character].role[0] == "specialist":
+            roles = CHARS_INFO[character].role
+            bucket = composition_bucket(roles)
+            if bucket == "dps":
+                if has_role_variants(roles):
+                    self.dps.append(character)
+                else:
+                    self.dps.insert(0, character)
+            elif bucket == "subdps":
                 self.subdps.append(character)
-            elif CHARS_INFO[character].role[0] == "amplifier":
+            elif bucket == "amplifier":
                 self.amplifier.append(character)
-            elif CHARS_INFO[character].role[0] == "sustain":
+            elif bucket == "healer":
                 self.healer.append(character)
 
         if not self.dps and not self.subdps:

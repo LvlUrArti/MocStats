@@ -9,6 +9,7 @@ from os.path import dirname as path_dirname
 from os.path import join as path_join
 from sys import exit as sys_exit
 
+from character_roles import split_key
 from pydantic import BaseModel, Field, field_validator
 
 parser = ArgumentParser()
@@ -362,7 +363,7 @@ for light_cone in LIGHT_CONES:
 
 def slug_with_prefix(char_name: str) -> str:
     """Get character slug with prefix."""
-    prefix = char_name[:5] if char_name.startswith(("solo-", "supp-")) else ""
-    slug = CHARS_INFO[char_name[5:] if prefix else char_name].slug
+    prefix, base_name = split_key(char_name)
+    slug = CHARS_INFO[base_name].slug
 
-    return f"{prefix}{slug}" if prefix else slug
+    return f"{prefix}-{slug}" if prefix else slug

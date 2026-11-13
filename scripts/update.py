@@ -7,6 +7,7 @@ from io import StringIO
 from typing import Any
 
 import requests
+from character_roles import ROLE_DEFS
 from pydantic import BaseModel, field_validator
 
 
@@ -127,12 +128,7 @@ MULTI_ELEM_CHARS: dict[str, str] = {
     "March 7th": " March 7th",
 }
 
-ROLES = [
-    "DPS",
-    "Specialist",
-    "Amplifier",
-    "Sustain",
-]
+ROLES = [role_def.display_name for role_def in ROLE_DEFS.values()]
 
 with open("../data/characters.json") as char_file:
     chars_data: dict[str, dict[str, str | int | list[str] | None]] = json.load(

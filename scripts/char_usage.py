@@ -7,6 +7,12 @@ from statistics import mean, stdev
 from typing import TYPE_CHECKING
 from warnings import filterwarnings
 
+from character_roles import (
+    ROLE_DEFS,
+    iter_character_keys,
+    split_key,
+    usage_variant_roles,
+)
 from comp_rates_config import (
     CHARS_INFO,
     CONS_LIMIT,
@@ -71,11 +77,6 @@ class CharApp(RoundApp):
         self.sample: int = 0
         self.sample_app_flat: int = 0
         self.cons_freq = {i: RoundApp() for i in range(7)}
-
-
-def include_dps(char: str) -> bool:
-    """Check if character is a DPS and a sub-DPS character."""
-    return len(CHARS_INFO[char].role) > 1
 
 
 def robust_round_mean(round_list: list[int], *, can_trim: bool) -> float:
@@ -169,15 +170,9 @@ def appearances(
     all_uids = set[str]()
 
     for char in CHARS_INFO:
-        user_chars[char] = set[str]()
-        app[char] = CharApp()
-
-        if include_dps(char):
-            user_chars["solo-" + char] = set[str]()
-            app["solo-" + char] = CharApp()
-
-            user_chars["supp-" + char] = set[str]()
-            app["supp-" + char] = CharApp()
+        for key, _role in iter_character_keys(char, CHARS_INFO[char].role):
+            user_chars[key] = set[str]()
+            app[key] = CharApp()
 
     for user in users.values():
         for chamber, user_chamber in user.chambers.items():
@@ -224,19 +219,15 @@ def appearances(
                 continue
 
             for comp_char in user_chamber.characters:
-                solo_dps = include_dps(comp_char)
-                supp_dps = solo_dps
-
-                if len(user_chamber.dps) > 1:
-                    solo_dps = False
-                else:
-                    supp_dps = False
-
+                roles = CHARS_INFO[comp_char].role
+                is_sole_dps = (
+                    comp_char in user_chamber.dps and len(user_chamber.dps) == 1
+                )
                 loop_char = [comp_char]
-                if solo_dps:
-                    loop_char.append("solo-" + comp_char)
-                if supp_dps:
-                    loop_char.append("supp-" + comp_char)
+                loop_char.extend(
+                    f"{ROLE_DEFS[role].prefix}-{comp_char}"
+                    for role in usage_variant_roles(roles, is_sole_dps=is_sole_dps)
+                )
 
                 for char in loop_char:
                     user_round = user_chamber.round_num
@@ -402,10 +393,7 @@ class CharUsageData(CharApp):
 
     def __init__(self, char_app: CharApp, char: str) -> None:
         """Initialize CharUsageData class."""
-        if "solo-" in char:
-            char = char.replace("solo-", "")
-        if "supp-" in char:
-            char = char.replace("supp-", "")
+        _prefix, char = split_key(char)
         super().__init__()
         self.__dict__.update(char_app.__dict__)
         self.usage = 0
