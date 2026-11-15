@@ -113,7 +113,7 @@ def check_whale(
             whale_comp = True
             if char_cons > CONS_LIMIT:
                 giga_whale = True
-        if char in user.owned and user.owned[char].weapon in sig_weaps:
+        if (char in user.owned and user.owned[char].weapon in sig_weaps) or whale_comp:
             f2p_comp = False
     return whale_comp, giga_whale, f2p_comp
 
