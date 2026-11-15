@@ -136,10 +136,10 @@ async def main() -> None:
                         if str(character.id) in trailblazer_ids:
                             if "March 7th" in character.name:
                                 line.append("March 7th")
-                                line_chars.append("March 7th")
+                                line_chars.append(f"{element_name} March 7th")
                             else:
                                 line.append("Trailblazer")
-                                line_chars.append("Trailblazer")
+                                line_chars.append(f"{element_name} Trailblazer")
                         else:
                             line.append(character.name)
                             line_chars.append(character.name)
@@ -155,7 +155,7 @@ async def main() -> None:
                             line.append("")
                             line_chars.append("")
                             line.append("")
-                        line_chars.append(element_name)
+                        line_chars.append(element_name.lower())
 
                         line.extend(
                             skill.level
