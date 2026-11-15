@@ -2,17 +2,17 @@
   "Memory of Chaos": {
     "1.0.1": {
       "name": "Favor of Amber",
-      "time_start": "26/04/2023",
-      "time_end": "13/05/2023"
+      "time_start": "17/04/2023",
+      "time_end": "15/05/2023"
     },
     "1.0.2": {
       "name": "Favor of Amber",
-      "time_start": "13/05/2023",
-      "time_end": "27/05/2023"
+      "time_start": "15/05/2023",
+      "time_end": "29/05/2023"
     },
     "1.0.3": {
       "name": "Favor of Amber",
-      "time_start": "27/05/2023",
+      "time_start": "29/05/2023",
       "time_end": "12/06/2023"
     },
     "1.1.1": {
@@ -81,13 +81,13 @@
       "time_end": "11/12/2023"
     },
     "1.5.2": {
-      "name": "Sedition of Imbibitor Lunae",
+      "name": "Enigma in Deep Space",
       "time_start": "11/12/2023",
-      "time_end": "27/12/2023"
+      "time_end": "25/12/2023"
     },
     "1.6.1": {
       "name": "Enigma in Deep Space",
-      "time_start": "27/12/2023",
+      "time_start": "25/12/2023",
       "time_end": "05/02/2024"
     },
     "1.6.2": {
@@ -215,12 +215,12 @@
       "time_start": "17/08/2026",
       "time_end": "28/09/2026"
     },
-    "4.6.1": {
+    "4.5.1": {
       "name": "Crossing the Afterlife",
       "time_start": "28/09/2026",
       "time_end": "02/11/2026"
     },
-    "4.6.2": {
+    "4.6.1": {
       "name": "Survival of the Fittest",
       "time_start": "02/11/2026",
       "time_end": "14/12/2026"
@@ -366,7 +366,7 @@
   "Apocalyptic Shadow": {
     "2.3.1": {
       "name": "Stormwind Knight",
-      "time_start": "19/06/2024",
+      "time_start": "17/06/2024",
       "time_end": "05/08/2024"
     },
     "2.4.1": {

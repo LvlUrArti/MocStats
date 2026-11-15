@@ -1,6 +1,6 @@
 """Update JSON data."""
 
-# ruff: noqa: N815, ANN401, D101, D102
+# ruff: noqa: N815, ANN401
 
 import json
 from io import StringIO
@@ -8,7 +8,8 @@ from typing import Any
 
 import requests
 from character_roles import ROLE_DEFS
-from pydantic import BaseModel, field_validator
+from endgame_versions import update_endgame_versions
+from pydantic import BaseModel
 
 
 def load_from_url(url: str) -> Any:
@@ -135,9 +136,9 @@ with open("../data/characters.json") as char_file:
         char_file,
     )
 
-latest_ver: str = load_from_url("https://static.nanoka.cc/manifest.json")["hsr"][
-    "latest"
-]
+manifest: dict[str, Any] = load_from_url("https://static.nanoka.cc/manifest.json")
+latest_ver: str = manifest["hsr"]["latest"]
+live_version: str = manifest["hsr"]["live"]
 download = load_from_url(f"https://static.nanoka.cc/hsr/{latest_ver}/character.json")
 raw_chars = {char_id: RawCharInfo(**item) for char_id, item in download.items()}
 
@@ -201,99 +202,9 @@ with open("../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars_data, indent=2))
 
 
-class EndgameEnemy(BaseModel):
-    id: str
-
-
-class EndgameWave(BaseModel):
-    enemies: list[EndgameEnemy]
-
-
-class EndgameSide(BaseModel):
-    waves: list[EndgameWave]
-
-
-class EndgameSides(BaseModel):
-    sides: list[EndgameSide]
-
-    @field_validator("sides", mode="before")
-    @classmethod
-    def normalize_waves(cls, value: list[dict[str, str]]) -> list[dict[str, Any]]:
-        # If the input has 'enemies' but no 'waves', wrap it into a waves array
-        if "enemies" in value[0]:
-            return [{"waves": value}]
-        return value
-
-
-class EndgameNodes(BaseModel):
-    nodes: list[EndgameSides]
-
-
-class EndgameConfig(BaseModel):
-    versionTime: str
-    versionName: str
-    versionEnemies: EndgameNodes  # Always expect nodes after normalization
-
-    @field_validator("versionEnemies", mode="before")
-    @classmethod
-    def normalize_enemies(cls, value: dict[str, Any]) -> dict[str, list[Any]]:
-        # If the input has 'sides' but no 'nodes', wrap it into a nodes array
-        if "sides" in value:
-            return {"nodes": [value]}
-        return value
-
-
-def add_endgame(
-    versions_dict: dict[str, dict[str, Any]],
-    name: str,
-) -> dict[str, dict[str, str]]:
-    """Add endgame versions."""
-    versions: dict[str, dict[str, Any]] = {}
-    for version, version_item in versions_dict.items():
-        config = EndgameConfig(**version_item)
-        version_time = config.versionTime
-        skip = False
-        if version_time == "xx/xx/20xx - xx/xx/20xx":
-            skip_input = input(
-                f"Missing endgame version time for {name}: {config.versionName}"
-                f" ({version}). Skip? (y/n): ",
-            )
-            if skip_input.lower() == "y":
-                skip = True
-        if not skip:
-            versions[version] = {
-                "name": config.versionName,
-                "time_start": version_time.split(" - ")[0],
-                "time_end": version_time.split(" - ")[1],
-            }
-    return versions
-
-
-# Endgame versions update
-save_entries: dict[str, dict[str, dict[str, str]]] = {}
-
-moc_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
-    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/fh/fh-versions.json",
+save_entries: dict[str, dict[str, dict[str, str]]] = update_endgame_versions(
+    live_version,
 )
-for entry in moc_data:
-    name = str(entry["name"])
-    if name == "Memory of Chaos":
-        save_entries[name] = add_endgame(entry["versions"], name)
-
-pf_data: dict[str, dict[str, str]] = load_from_url(
-    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/pf/pf-versions.json",
-)
-save_entries["Pure Fiction"] = add_endgame(pf_data, "Pure Fiction")
-
-as_data: dict[str, dict[str, str]] = load_from_url(
-    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/as/as-versions.json",
-)
-save_entries["Apocalyptic Shadow"] = add_endgame(as_data, "Apocalyptic Shadow")
-
-aa_data: dict[str, dict[str, str]] = load_from_url(
-    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/hsr/aa/aa-versions.json",
-)
-save_entries["Anomaly Arbitration"] = add_endgame(aa_data, "Anomaly Arbitration")
 
 with open("../data/versions/endgame_versions.json", "w") as out_file:
     out_file.write(json.dumps(save_entries, indent=2))
