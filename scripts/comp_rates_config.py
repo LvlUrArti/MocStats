@@ -30,6 +30,9 @@ parser.add_argument("-n", "--no", action="store_true")
 
 args = parser.parse_args()
 
+if sum((args.whale, args.giga_whale, args.f2p)) > 1:
+    parser.error("-w/--whale, -gw/--giga-whale, and -f/--f2p are mutually exclusive")
+
 RECENT_PHASE: str = args.version or "4.6.4"
 
 
