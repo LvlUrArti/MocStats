@@ -4,6 +4,9 @@ Calculate over the last three phases of MoC, PF, and AS.
 """
 
 import json
+from sys import path as sys_path
+
+sys_path.append("../")
 
 # Import your existing models and loader
 from character_roles import has_role_variants, role_for_key, split_key
