@@ -180,13 +180,13 @@ for char in sorted(all_chars):
 
             # Average rounds: average over phases where character exists
             avg_rounds: list[float | int] = []
-            valid_rounds = 0
+            suffix_rounds = 0
 
             for phase_data in phases_data:
                 if char in phase_data:
                     stats = phase_data[char]
 
-                    valid_rounds += 1
+                    suffix_rounds += 1
                     if stats.avg_round != invalid_value:
                         avg_rounds.append(stats.avg_round)
                     else:
@@ -201,6 +201,8 @@ for char in sorted(all_chars):
                 )
             else:
                 entry[f"{mode}_score{suffix}"] = default_values[mode]
+
+            valid_rounds = max(valid_rounds, suffix_rounds)
 
         entry[f"{mode}_new"] = valid_rounds <= 1
 
