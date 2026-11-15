@@ -18,6 +18,7 @@ from comp_rates_config import (
     COMP_RESULT_PATH,
     DUOS_RESULT_PATH,
     F2P_ONLY,
+    GIGA_WHALE_ONLY,
     WHALE_ONLY,
     aa_mode,
     all_stages,
@@ -111,7 +112,7 @@ def main() -> None:
                 filename=room,
             )
 
-        if not WHALE_ONLY and not F2P_ONLY:
+        if not WHALE_ONLY and not GIGA_WHALE_ONLY and not F2P_ONLY:
             with open(f"../{BASE_RESULT_PATH}/demographic.json", "w") as out_file:
                 out_file.write(dumps(sample_size, indent=2))
         cur_time = time()
@@ -236,8 +237,9 @@ def used_comps(
 
         if (
             (WHALE_ONLY and not whale_comp)
+            or (GIGA_WHALE_ONLY and not giga_whale)
             or (F2P_ONLY and whale_comp)
-            or giga_whale
+            or (giga_whale and not GIGA_WHALE_ONLY)
             or comp.is_hard_mode  # Anomaly arbitration plight
         ):
             continue
@@ -252,7 +254,7 @@ def used_comps(
 
         if whale_comp:
             comp_data.whale_count.add(comp.player)
-        if whale_comp == WHALE_ONLY:
+        if whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY:
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             avg_round_stage[cur_room].append(comp.round_num)
@@ -411,8 +413,9 @@ def used_duos(
 
         if (
             (WHALE_ONLY and not whale_comp)
+            or (GIGA_WHALE_ONLY and not giga_whale)
             or (F2P_ONLY and whale_comp)
-            or giga_whale
+            or (giga_whale and not GIGA_WHALE_ONLY)
             or comp.is_hard_mode
         ):
             continue
@@ -423,7 +426,7 @@ def used_duos(
                 duos_dict[duo] = cu.RoundApp()
             duos_dict[duo].app_flat += 1
 
-            if (whale_comp == WHALE_ONLY) and (
+            if (whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY) and (
                 sustain_count <= 1 or include_dual_sustain
             ):
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
@@ -481,6 +484,8 @@ def add_mode_suffix(filename: str) -> str:
     """Append the whale/f2p suffix to an output filename."""
     if WHALE_ONLY:
         return filename + "_C1"
+    if GIGA_WHALE_ONLY:
+        return filename + "_C6"
     if F2P_ONLY:
         return filename + "_E0S0"
     return filename

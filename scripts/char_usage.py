@@ -17,6 +17,7 @@ from comp_rates_config import (
     CHARS_INFO,
     CONS_LIMIT,
     F2P_ONLY,
+    GIGA_WHALE_ONLY,
     TRIM_PROPORTION,
     WHALE_ONLY,
     include_dual_sustain,
@@ -213,6 +214,7 @@ def appearances(
             # characters' average score for all eidolons
             if (
                 (WHALE_ONLY and (giga_whale or not whale_comp))
+                or (GIGA_WHALE_ONLY and not giga_whale)
                 or (F2P_ONLY and (not f2p_comp or whale_comp))
                 or user_chamber.is_hard_mode
             ):
@@ -248,7 +250,7 @@ def appearances(
                             ].append(user_round)
                         app[char].cons_avg += char_con
 
-                    if giga_whale:
+                    if giga_whale and not GIGA_WHALE_ONLY:
                         continue
 
                     if chambers == one_stage:
@@ -256,7 +258,9 @@ def appearances(
 
                     app[char].app_flat += 1
 
-                    if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
+                    if (whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY) and (
+                        not F2P_ONLY or f2p_comp
+                    ):
                         app[char].app_flat_exclude += 1
                         if check_sustain_count:
                             app[char].round_list[cur_chamber].append(user_round)

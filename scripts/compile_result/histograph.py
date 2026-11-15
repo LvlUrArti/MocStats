@@ -81,26 +81,33 @@ for m in modes:
 # Load data for all unique versions
 e0_data: dict[str, list[dict[str, BaseCharacterStats]]] = {}
 e1_data: dict[str, list[dict[str, BaseCharacterStats]]] = {}
+e6_data: dict[str, list[dict[str, BaseCharacterStats]]] = {}
 
 for mode, versions in selected_versions.items():
     e0_data[mode] = []
     e1_data[mode] = []
+    e6_data[mode] = []
 
     for version in versions:
         if mode == "aa_boss":
             base_path = f"../../results/all_results/{version}/{version}_aa/chars"
             e0_path = f"{base_path}/2-1.json"
             e1_path = f"{base_path}/2-1_C1.json"
+            e6_path = f"{base_path}/2-1_C6.json"
         else:
             base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
             e0_path = f"{base_path}/all.json"
             e1_path = f"{base_path}/all_C1.json"
+            e6_path = f"{base_path}/all_C6.json"
         data_e0 = load_base_stats(e0_path)
         data_e1 = load_base_stats(e1_path)
+        data_e6 = load_base_stats(e6_path)
         if data_e0:
             e0_data[mode].append(data_e0)
         if data_e1:
             e1_data[mode].append(data_e1)
+        if data_e6:
+            e6_data[mode].append(data_e6)
 
 # ----------------------------------------------------------------------
 # Compute averages per character
@@ -116,6 +123,7 @@ for phases in e0_data.values():
 modes_phases_data: dict[str, dict[str, list[dict[str, BaseCharacterStats]]]] = {
     "": e0_data,
     "_e1": e1_data,
+    "_e6": e6_data,
 }
 
 default_values = {

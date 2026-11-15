@@ -364,6 +364,7 @@ for suf in ["", "_prev"]:
         folder_dir = get_read_path(phases[mode], mode)
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all.json")
         raw[f"{mode}_e1{suf}"] = load_base_stats(f"{folder_dir}/all_C1.json")
+        raw[f"{mode}_e6{suf}"] = load_base_stats(f"{folder_dir}/all_C6.json")
         raw[f"{mode}_s0{suf}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
 
         for boss_num, boss_room in boss_configs[mode]:
@@ -371,6 +372,9 @@ for suf in ["", "_prev"]:
             raw[f"{mode}_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
             raw[f"{mode}_boss_{boss_num}_e1{suf}"] = load_base_stats(
                 f"{file_name}_C1.json",
+            )
+            raw[f"{mode}_boss_{boss_num}_e6{suf}"] = load_base_stats(
+                f"{file_name}_C6.json",
             )
             raw[f"{mode}_boss_{boss_num}_s0{suf}"] = load_base_stats(
                 f"{file_name}_E0S0.json",
@@ -630,7 +634,7 @@ def process_chars() -> None:
                 out_dict[f"{part}_stats_{i + 1}"] = ""
                 out_dict[f"{part}_stats_{i + 1}_app"] = DEFAULT_APP
 
-    variants = ["", "_e1", "_s0"]
+    variants = ["", "_e1", "_e6", "_s0"]
     fields = ["app_rate", "avg_round"]
 
     output_data: list[dict[str, float | str]] = []

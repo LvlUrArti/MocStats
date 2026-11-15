@@ -22,6 +22,7 @@ parser.add_argument("-t", "--top", action="store_true")
 parser.add_argument("-cht", "--chars_top", action="store_true")
 parser.add_argument("-ct", "--comps_top", action="store_true")
 parser.add_argument("-w", "--whale", action="store_true")
+parser.add_argument("-gw", "--giga-whale", action="store_true")
 parser.add_argument("-f", "--f2p", action="store_true")
 # Prompt for real data (hf data)
 parser.add_argument("-y", "--yes", action="store_true")
@@ -245,6 +246,7 @@ DUOS_RESULT_PATH = f"{BASE_RESULT_PATH}/duos"
 skip_self = False
 skip_random = False
 WHALE_ONLY: bool = args.whale
+GIGA_WHALE_ONLY: bool = args.giga_whale
 F2P_ONLY: bool = args.f2p
 
 run_commands = {
@@ -290,7 +292,7 @@ elif args.top or args.f2p:
         "Char usages for each stage",
     }
 
-elif args.whale:
+elif args.whale or args.giga_whale:
     run_commands = {
         "Char usages all stages",
         "Char usages for each stage",

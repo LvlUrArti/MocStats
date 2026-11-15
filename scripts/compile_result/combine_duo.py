@@ -9,22 +9,31 @@ sys_path.append("../")
 from comp_rates_config import DUOS_RESULT_PATH
 
 
-def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
+def combine_duo_files(
+    base_file: str,
+    e1_file: str,
+    e6_file: str,
+    output_file: str,
+) -> None:
     """Combine duo usage files, matching partners by name."""
     with open(base_file, encoding="utf-8") as f:
         base_data = json.load(f)
     with open(e1_file, encoding="utf-8") as f:
         e1_data = json.load(f)
+    with open(e6_file, encoding="utf-8") as f:
+        e6_data = json.load(f)
 
     # Map main character to its object for quick lookup
     base_map = {item["char"]: item for item in base_data}
     e1_map = {item["char"]: item for item in e1_data}
+    e6_map = {item["char"]: item for item in e6_data}
 
     combined: list[dict[str, str]] = []
 
     # Process each character from the base file (assume it covers all needed)
     for char, base_obj in base_map.items():
         e1_obj = e1_map.get(char, {})
+        e6_obj = e6_map.get(char, {})
 
         # Helper to extract partner data from an object.
         def extract_partners(
@@ -46,6 +55,7 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
 
         base_partners = extract_partners(base_obj)
         e1_partners = extract_partners(e1_obj)
+        e6_partners = extract_partners(e6_obj)
 
         # Build ordered list of partner names:
         # First all partners from base in the order they appear (by increasing index)
@@ -58,6 +68,11 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
             seen.add(name)
         # Then add any partners from e1 that are not already seen
         for name in e1_partners:
+            if name not in seen:
+                ordered_names.append(name)
+                seen.add(name)
+        # Then add any partners from e6 that are not already seen
+        for name in e6_partners:
             if name not in seen:
                 ordered_names.append(name)
                 seen.add(name)
@@ -80,6 +95,12 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
             e1_avg_round = e1_metrics.get("avg_round", 99.99)
             e1_app_flat = e1_metrics.get("app_flat", 0)
 
+            # e6 metrics (may be missing)
+            e6_metrics = e6_partners.get(partner_name, {})
+            e6_app_rate = e6_metrics.get("app_rate", "0.00%")
+            e6_avg_round = e6_metrics.get("avg_round", 99.99)
+            e6_app_flat = e6_metrics.get("app_flat", 0)
+
             new_obj[f"char_{i}"] = partner_name
             new_obj[f"app_rate_{i}"] = app_rate
             new_obj[f"avg_round_{i}"] = avg_round
@@ -87,12 +108,16 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
             new_obj[f"app_rate_e1_{i}"] = e1_app_rate
             new_obj[f"avg_round_e1_{i}"] = e1_avg_round
             new_obj[f"app_flat_e1_{i}"] = e1_app_flat
+            new_obj[f"app_rate_e6_{i}"] = e6_app_rate
+            new_obj[f"avg_round_e6_{i}"] = e6_avg_round
+            new_obj[f"app_flat_e6_{i}"] = e6_app_flat
 
         combined.append(new_obj)
 
     # Delete input files
     send2trash(base_file)
     send2trash(e1_file)
+    send2trash(e6_file)
 
     # Write output
     with open(output_file, "w", encoding="utf-8") as f:
@@ -101,7 +126,8 @@ def combine_duo_files(base_file: str, e1_file: str, output_file: str) -> None:
 
 if __name__ == "__main__":
     combine_duo_files(
-        f"../../{DUOS_RESULT_PATH}/duo_usages.json",
-        f"../../{DUOS_RESULT_PATH}/duo_usages_C1.json",
-        f"../../{DUOS_RESULT_PATH}/duo_usages.json",
+        base_file=f"../../{DUOS_RESULT_PATH}/duo_usages.json",
+        e1_file=f"../../{DUOS_RESULT_PATH}/duo_usages_C1.json",
+        e6_file=f"../../{DUOS_RESULT_PATH}/duo_usages_C6.json",
+        output_file=f"../../{DUOS_RESULT_PATH}/duo_usages.json",
     )

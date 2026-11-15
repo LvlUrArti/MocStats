@@ -96,6 +96,7 @@ def main(add_args: list[str] | None = None) -> None:
     run_parallel(
         [
             [exe, "comp_rates.py", "-w", "-m", "moc", *add_args],
+            [exe, "comp_rates.py", "-gw", "-m", "moc", *add_args],
             [exe, "comp_rates.py", "-f", "-m", "moc", *add_args],
             [exe, "comp_rates.py", "-a", "-m", "moc", *add_args],
         ],
@@ -105,6 +106,7 @@ def main(add_args: list[str] | None = None) -> None:
     run_parallel(
         [
             [exe, "comp_rates.py", "-w", "-m", "pf", *add_args],
+            [exe, "comp_rates.py", "-gw", "-m", "pf", *add_args],
             [exe, "comp_rates.py", "-f", "-m", "pf", *add_args],
             [exe, "comp_rates.py", "-a", "-m", "pf", *add_args],
         ],
@@ -114,6 +116,7 @@ def main(add_args: list[str] | None = None) -> None:
     run_parallel(
         [
             [exe, "comp_rates.py", "-w", "-m", "as", *add_args],
+            [exe, "comp_rates.py", "-gw", "-m", "as", *add_args],
             [exe, "comp_rates.py", "-f", "-m", "as", *add_args],
             [exe, "comp_rates.py", "-a", "-m", "as", *add_args],
         ],
@@ -123,6 +126,7 @@ def main(add_args: list[str] | None = None) -> None:
     run_parallel(
         [
             [exe, "comp_rates.py", "-w", "-m", "aa", *add_args],
+            [exe, "comp_rates.py", "-gw", "-m", "aa", *add_args],
             [exe, "comp_rates.py", "-f", "-m", "aa", *add_args],
             [exe, "comp_rates.py", "-a", "-m", "aa", *add_args],
         ],
