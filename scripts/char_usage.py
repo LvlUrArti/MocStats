@@ -258,8 +258,10 @@ def appearances(
 
                     app[char].app_flat += 1
 
-                    if (whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY) and (
-                        not F2P_ONLY or f2p_comp
+                    if (
+                        whale_comp == (WHALE_ONLY or GIGA_WHALE_ONLY)
+                        and giga_whale == GIGA_WHALE_ONLY
+                        and (not F2P_ONLY or f2p_comp)
                     ):
                         app[char].app_flat_exclude += 1
                         if check_sustain_count:

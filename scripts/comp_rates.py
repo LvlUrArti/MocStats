@@ -254,7 +254,10 @@ def used_comps(
 
         if whale_comp:
             comp_data.whale_count.add(comp.player)
-        if whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY:
+        if (
+            whale_comp == (WHALE_ONLY or GIGA_WHALE_ONLY)
+            and giga_whale == GIGA_WHALE_ONLY
+        ):
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             avg_round_stage[cur_room].append(comp.round_num)
@@ -426,8 +429,10 @@ def used_duos(
                 duos_dict[duo] = cu.RoundApp()
             duos_dict[duo].app_flat += 1
 
-            if (whale_comp == WHALE_ONLY or giga_whale == GIGA_WHALE_ONLY) and (
-                sustain_count <= 1 or include_dual_sustain
+            if (
+                whale_comp == (WHALE_ONLY or GIGA_WHALE_ONLY)
+                and giga_whale == GIGA_WHALE_ONLY
+                and (sustain_count <= 1 or include_dual_sustain)
             ):
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
