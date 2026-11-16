@@ -417,7 +417,6 @@ def used_duos(
             (WHALE_ONLY and not whale_comp)
             or (GIGA_WHALE_ONLY and not giga_whale)
             or (F2P_ONLY and whale_comp)
-            or (giga_whale and not GIGA_WHALE_ONLY)
             or comp.is_hard_mode
         ):
             continue
@@ -426,13 +425,13 @@ def used_duos(
         for duo in duos:
             if duo not in duos_dict:
                 duos_dict[duo] = cu.RoundApp()
-            duos_dict[duo].app_flat += 1
 
             if (
                 whale_comp == (WHALE_ONLY or GIGA_WHALE_ONLY)
                 and giga_whale == GIGA_WHALE_ONLY
                 and (sustain_count <= 1 or include_dual_sustain)
             ):
+                duos_dict[duo].app_flat += 1
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
     sorted_duos = sorted(duos_dict.items(), key=lambda t: t[1].app_flat, reverse=True)
@@ -441,10 +440,13 @@ def used_duos(
     return_duos: dict[str, dict[str, cu.RoundApp]] = {}
     for duo in duos_dict:
         cur_duo = duos_dict[duo]
-        if usage[duo[0]].app_flat > 0:
+        if usage[duo[0]].app_flat_exclude > 0:
             # Calculate the appearance rate of the duo by dividing the appearance count
             # of the duo with the appearance count of the first character
-            cur_duo.app = round(cur_duo.app_flat * 100 / usage[duo[0]].app_flat, 2)
+            cur_duo.app = round(
+                cur_duo.app_flat * 100 / usage[duo[0]].app_flat_exclude,
+                2,
+            )
             cur_duo.app_flat = 0
             avg_round: list[float] = []
             for room_num in range(1, 13):
