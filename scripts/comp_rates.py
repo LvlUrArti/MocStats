@@ -249,7 +249,6 @@ def used_comps(
 
         comps_all_uids[comp.room.stage].add(comp.player)
         comp_data = comps_dict[comp_tuple]
-        comp_data.uses += 1
         comp_data.players.add(comp.player)
 
         if whale_comp:
@@ -258,6 +257,7 @@ def used_comps(
             whale_comp == (WHALE_ONLY or GIGA_WHALE_ONLY)
             and giga_whale == GIGA_WHALE_ONLY
         ):
+            comp_data.uses += 1
             cur_room = comp.room.stage
             comp_data.round_num_dict[cur_room].append(comp.round_num)
             avg_round_stage[cur_room].append(comp.round_num)
