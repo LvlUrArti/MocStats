@@ -239,7 +239,6 @@ def used_comps(
             (WHALE_ONLY and not whale_comp)
             or (GIGA_WHALE_ONLY and not giga_whale)
             or (F2P_ONLY and whale_comp)
-            or (giga_whale and not GIGA_WHALE_ONLY)
             or comp.is_hard_mode  # Anomaly arbitration plight
         ):
             continue

@@ -250,9 +250,6 @@ def appearances(
                             ].append(user_round)
                         app[char].cons_avg += char_con
 
-                    if giga_whale and not GIGA_WHALE_ONLY:
-                        continue
-
                     if chambers == one_stage:
                         user_chars[char].add(user.player)
 
