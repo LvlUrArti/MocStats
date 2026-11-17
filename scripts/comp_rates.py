@@ -440,13 +440,17 @@ def used_duos(
     return_duos: dict[str, dict[str, cu.RoundApp]] = {}
     for duo in duos_dict:
         cur_duo = duos_dict[duo]
-        if usage[duo[0]].app_flat_exclude > 0:
+        first_char_app = usage[duo[0]].app_flat_exclude
+
+        if first_char_app > 10:
             # Calculate the appearance rate of the duo by dividing the appearance count
             # of the duo with the appearance count of the first character
             cur_duo.app = round(
-                cur_duo.app_flat * 100 / usage[duo[0]].app_flat_exclude,
+                cur_duo.app_flat * 100 / first_char_app,
                 2,
             )
+
+        if cur_duo.app > 0:
             cur_duo.app_flat = 0
             avg_round: list[float] = []
             for room_num in range(1, 13):
@@ -459,7 +463,7 @@ def used_duos(
                             can_trim=len(duo_round) > 1,
                         ),
                     )
-            if avg_round:
+            if avg_round and cur_duo.app_flat > 10:
                 cur_duo.round = round(mean(avg_round), 0 if pf_mode else 2)
             else:
                 cur_duo.round = 0 if pf_mode else 99.99

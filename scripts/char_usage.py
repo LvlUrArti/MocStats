@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     from player_phase import PlayerPhase
 
 filterwarnings("ignore", category=RuntimeWarning)
-GEAR_APP_THRESHOLD = 0
+GEAR_APP_THRESHOLD = 10
 WEAP_APP_THRESHOLD = 20
 MOC_LOWER_LIMIT = 10
 MIN_APP_LIMIT = 10
@@ -149,11 +149,10 @@ def calc_gear_rates(
         if gear != "Flex"
     }
     for freq in gear_freq.values():
+        freq.app = round(freq.app_flat / app_flat, 2) if app_flat > 0 else 0
         if freq.app_flat > GEAR_APP_THRESHOLD or extra_include(freq) or info_char:
-            freq.app = round(freq.app_flat / app_flat, 2)
             freq.round = gear_round(freq)
         else:
-            freq.app = 0
             freq.round = DEFAULT_VALUE
     return gear_freq
 
@@ -356,14 +355,18 @@ def appearances(
         if char_item.app_flat_all > 0:
             char_item.cons_avg = round(char_item.cons_avg / char_item.app_flat_all, 2)
         for cons_freq in char_item.cons_freq.values():
-            if cons_freq.app_flat > 0:
-                cons_freq.app = round(
+            cons_freq.app = (
+                round(
                     cons_freq.app_flat / char_item.app_flat_all * 100,
                     2,
                 )
+                if char_item.app_flat_all > 0
+                else 0
+            )
+
+            if cons_freq.app_flat > 10:
                 cons_freq.round = gear_round(cons_freq)
             else:
-                cons_freq.app = 0.00
                 cons_freq.round = DEFAULT_VALUE
 
         app_flat = char_item.owned / 100.0
