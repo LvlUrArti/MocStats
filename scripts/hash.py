@@ -21,7 +21,7 @@ files = {
 
 # 2. Load data without convert_dtypes (unless absolutely necessary)
 # Force UID to string or int immediately to save memory/time
-dfs = {name: read_csv(path, encoding="cp1252") for name, path in files.items()}
+dfs = {name: read_csv(path, encoding="utf-8") for name, path in files.items()}
 
 # 3. Build the hash using set unions
 all_uids: set[str] = set()

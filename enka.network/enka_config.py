@@ -52,7 +52,7 @@ if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
             if time.time() - csv_path.stat().st_mtime < 120:
                 break
 
-            with open(csv_path, encoding="cp1252") as f:
+            with open(csv_path, encoding="utf-8") as f:
                 reader = csv.reader(f, delimiter=",")
                 headers = next(reader)
                 spiraldata_temp = list(reader)

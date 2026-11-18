@@ -27,7 +27,7 @@ print("Opening files...")
 with open(enka_char_path, encoding="UTF8") as f:
     reader = list(DictReader(f))
     char_data_temp: list[dict[str, str]] = list(reader)
-with open(char_data_path) as f:
+with open(char_data_path, encoding="utf-8") as f:
     reader = list(DictReader(f))
     char_data_temp += list(reader)
     for line in char_data_temp:
@@ -48,6 +48,6 @@ for uid, uid_char in char_data.items():
 
 send2trash(char_data_path)
 send2trash(enka_char_path)
-with open(char_data_path, "w", newline="") as f:
+with open(char_data_path, "w", encoding="utf-8", newline="") as f:
     csv_writer = csv_writer(f)
     csv_writer.writerows(print_data)

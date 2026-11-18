@@ -91,9 +91,9 @@ def main() -> None:
 
     filename = RECENT_PHASE_PF.replace("_moc", "")
     with (
-        open(f"../data/raw_csvs_real/{filename}.csv")
+        open(f"../data/raw_csvs_real/{filename}.csv", encoding="utf-8")
         if path.exists("../data/raw_csvs_real/")
-        else open(f"../data/raw_csvs/{filename}.csv")
+        else open(f"../data/raw_csvs/{filename}.csv", encoding="utf-8")
     ) as f:
         reader = list(DictReader(f))
 
@@ -165,9 +165,12 @@ def main() -> None:
         avg_round_stage[chamber_num] = []
 
     with (
-        open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv")
+        open(
+            "../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv",
+            encoding="utf-8",
+        )
         if path.exists("../data/raw_csvs_real/")
-        else open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv")
+        else open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv", encoding="utf-8")
     ) as f:
         reader = list(DictReader(f))
 
