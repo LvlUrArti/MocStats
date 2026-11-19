@@ -31,14 +31,11 @@ from numpy import percentile
 from scipy.stats import skew, trim_mean
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from composition import Composition
     from player_phase import PlayerPhase
 
 filterwarnings("ignore", category=RuntimeWarning)
 GEAR_APP_THRESHOLD = 10
-WEAP_APP_THRESHOLD = 20
 MOC_LOWER_LIMIT = 10
 MIN_APP_LIMIT = 10
 SKEW_LIMIT = 0.8
@@ -123,7 +120,7 @@ def gear_round(freq: RoundApp) -> float:
     avg_round = [
         robust_round_mean(
             freq.round_list[room_num],
-            can_trim=freq.app_flat > SKEW_APP_LIMIT,
+            can_trim=freq.app_flat >= SKEW_APP_LIMIT,
         )
         for room_num in range(1, 13)
         if freq.round_list[room_num]
@@ -136,7 +133,6 @@ def calc_gear_rates(
     app_flat: float,
     *,
     info_char: bool,
-    extra_include: Callable[[RoundApp], bool] = lambda _f: False,
 ) -> dict[str, RoundApp]:
     """Sort gear frequency by usage and populate appearance/round rates."""
     gear_freq = {
@@ -150,7 +146,7 @@ def calc_gear_rates(
     }
     for freq in gear_freq.values():
         freq.app = round(freq.app_flat / app_flat, 2) if app_flat > 0 else 0
-        if freq.app_flat > GEAR_APP_THRESHOLD or extra_include(freq) or info_char:
+        if freq.app_flat >= GEAR_APP_THRESHOLD or info_char:
             freq.round = gear_round(freq)
         else:
             freq.round = DEFAULT_VALUE
@@ -323,7 +319,7 @@ def appearances(
                         for round_num_iter in round_list:
                             all_rounds[char][room_num][round_num_iter] += 1
                     uses_room[room_num] = len(round_list)
-                    enough_samples = len(round_list) > MIN_APP_LIMIT
+                    enough_samples = len(round_list) >= MIN_APP_LIMIT
                     std_dev_round.append(stdev(round_list) if enough_samples else 0)
                     avg_round.append(
                         robust_round_mean(round_list, can_trim=enough_samples),
@@ -364,7 +360,7 @@ def appearances(
                 else 0
             )
 
-            if cons_freq.app_flat > 10:
+            if cons_freq.app_flat >= 10:
                 cons_freq.round = gear_round(cons_freq)
             else:
                 cons_freq.round = DEFAULT_VALUE
@@ -375,9 +371,6 @@ def appearances(
             char_item.weap_freq,
             app_flat,
             info_char=info_char,
-            extra_include=lambda f, app_flat=app_flat: (
-                f.app_flat / app_flat > WEAP_APP_THRESHOLD
-            ),
         )
         # Calculate artifacts
         char_item.arti_freq = calc_gear_rates(

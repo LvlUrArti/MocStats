@@ -258,7 +258,7 @@ for char, stat_char in stats.items():
                 if (
                     mean[char][stat] > 0
                     and median[char][stat] > 0
-                    and stat_char.sample_size > 10
+                    and stat_char.sample_size >= 10
                 ) and stat not in skip_check_skew_stats:
                     skewness = round(skew(stat_count, axis=0, bias=True), 2)
                 if abs(skewness) > skew_num:

@@ -223,6 +223,8 @@ def used_comps(
         if side_comp and len(side_comp.characters) < 4:
             continue
 
+        comps_all_uids[comp.room.stage].add(comp.player)
+
         whale_comp, giga_whale, _ = cu.check_whale(
             comp,
             all_players[comp.player],
@@ -250,7 +252,6 @@ def used_comps(
         if comp_tuple not in comps_dict:
             comps_dict[comp_tuple] = CompUsage(comp)
 
-        comps_all_uids[comp.room.stage].add(comp.player)
         comp_data = comps_dict[comp_tuple]
         comp_data.players.add(comp.player)
 
@@ -325,7 +326,7 @@ def rank_usages(
                 avg_round.append(
                     cu.robust_round_mean(
                         cur_round,
-                        can_trim=cur_comp.uses > 10,
+                        can_trim=cur_comp.uses >= 10,
                     ),
                 )
 
@@ -446,7 +447,7 @@ def used_duos(
         cur_duo = duos_dict[duo]
         first_char_app = usage[duo[0]].app_flat_exclude
 
-        if first_char_app > 10:
+        if first_char_app >= 10:
             # Calculate the appearance rate of the duo by dividing the appearance count
             # of the duo with the appearance count of the first character
             cur_duo.app = round(
@@ -467,7 +468,7 @@ def used_duos(
                             can_trim=len(duo_round) > 1,
                         ),
                     )
-            if avg_round and cur_duo.app_flat > 10:
+            if avg_round and cur_duo.app_flat >= 10:
                 cur_duo.round = round(mean(avg_round), 0 if pf_mode else 2)
             else:
                 cur_duo.round = 0 if pf_mode else 99.99
