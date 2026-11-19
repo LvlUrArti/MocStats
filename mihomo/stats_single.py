@@ -49,7 +49,7 @@ else:
     with open("../data/raw_csvs/" + RECENT_PHASE + "_build.csv", encoding="UTF8") as f:
         data = list(read_csv(f))
 
-with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
+with open(f"../{CHAR_RESULT_PATH}/all.csv", encoding="utf-8") as f:
     reader = csvreader(f, delimiter=",")
     col_names_build = next(reader)
     build = list(read_csv(f))

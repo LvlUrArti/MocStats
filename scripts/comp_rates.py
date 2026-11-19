@@ -113,7 +113,11 @@ def main() -> None:
             )
 
         if not WHALE_ONLY and not GIGA_WHALE_ONLY and not F2P_ONLY:
-            with open(f"../{BASE_RESULT_PATH}/demographic.json", "w") as out_file:
+            with open(
+                f"../{BASE_RESULT_PATH}/demographic.json",
+                "w",
+                encoding="utf-8",
+            ) as out_file:
                 out_file.write(dumps(sample_size, indent=2))
         cur_time = time()
         print("done comp stage:", round(cur_time - start_time, 2), "s")
@@ -626,6 +630,7 @@ def comp_usages_write(
         with open(
             f"../{COMP_RESULT_PATH}/comps_usage_{filename}.csv",
             "w",
+            encoding="utf-8",
             newline="",
         ) as f:
             csv_writer = csvwriter(f)
@@ -636,6 +641,7 @@ def comp_usages_write(
         with open(
             f"../{COMP_RESULT_PATH}/{filename}.json",
             "w",
+            encoding="utf-8",
         ) as out_file:
             out_file.write(dumps(out_json, indent=2))
 
@@ -672,7 +678,12 @@ def duo_write(
 
     filename = add_mode_suffix(filename)
 
-    with open(f"../{DUOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
+    with open(
+        f"../{DUOS_RESULT_PATH}/{filename}.csv",
+        "w",
+        encoding="utf-8",
+        newline="",
+    ) as f:
         csv_writer = csvwriter(f)
         count = 0
         for duos in out_duos:
@@ -703,7 +714,11 @@ def duo_write(
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open(f"../{DUOS_RESULT_PATH}/{filename}.json", "w") as out_file:
+    with open(
+        f"../{DUOS_RESULT_PATH}/{filename}.json",
+        "w",
+        encoding="utf-8",
+    ) as out_file:
         out_file.write(dumps(out_duos, indent=2))
 
 
@@ -884,11 +899,20 @@ def char_usages_write(
                 )
             else:
                 out_chars[i][value] = 0 if pf_mode else 99.99
-    with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
+    with open(
+        f"../{CHAR_RESULT_PATH}/{filename}.json",
+        "w",
+        encoding="utf-8",
+    ) as out_file:
         out_file.write(dumps(out_chars, indent=2))
 
     if filename.startswith("all"):
-        with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
+        with open(
+            f"../{CHAR_RESULT_PATH}/{filename}.csv",
+            "w",
+            encoding="utf-8",
+            newline="",
+        ) as f:
             csv_writer = csvwriter(f)
             count = 0
             for chars in out_chars_csv:

@@ -70,7 +70,7 @@ except FileNotFoundError:
     print("No build data found.")
     data = []
 
-with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
+with open(f"../{CHAR_RESULT_PATH}/all.csv", encoding="utf-8") as f:
     build = list(read_csv(f))
 
 archetype = "all"
