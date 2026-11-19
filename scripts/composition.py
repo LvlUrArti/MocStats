@@ -120,6 +120,14 @@ class Composition:
             self.amplifier.remove("Welt")
             self.healer.append("Welt")
 
+        # Lightning Trailblazer is only a dps if Aha is in the team
+        # and no other dps is present
+        if "Lightning Trailblazer" in self.dps and (
+            "Aeon \u2605 Aha" not in self.amplifier or len(self.dps) > 1
+        ):
+            self.dps.remove("Lightning Trailblazer")
+            self.amplifier.insert(0, "Lightning Trailblazer")
+
         self.fivecount = len(fives)
         self.characters = self.dps + self.subdps + self.amplifier + self.healer
 

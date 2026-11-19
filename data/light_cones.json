@@ -980,6 +980,16 @@
     "preview": "image/light_cone_preview/22008.png",
     "portrait": "image/light_cone_portrait/22008.png"
   },
+  "See You at the World's End!": {
+    "id": "22009",
+    "name": "See You at the World's End!",
+    "rarity": 4,
+    "path": "Elation",
+    "desc": "The Aeon's magic act draws to a close, yet the lingering warmth of the miracle still reverberates across the universe.\nJust as it was thousands of Amber Eras ago, the \"Trailblaze\" and \"Elation\" stand side by side once more, and THEY shall part ways to forge ahead yet again.\nNo one knows what the future holds, but the promise remains unchanged.\n\"Got it! I'll scatter variables across the universe, creating a journey where the unknown and surprises go hand in hand~\"\nTHEIR silhouette vanishes into the cosmos, THEIR laughter drifting in the wind:\n\"Walk the path Akivili never finished, and then, see you at the World's End!\"",
+    "icon": "icon/light_cone/22009.png",
+    "preview": "image/light_cone_preview/22009.png",
+    "portrait": "image/light_cone_portrait/22009.png"
+  },
   "Night on the Milky Way": {
     "id": "23000",
     "name": "Night on the Milky Way",
@@ -1630,6 +1640,16 @@
     "icon": "icon/light_cone/23064.png",
     "preview": "image/light_cone_preview/23064.png",
     "portrait": "image/light_cone_portrait/23064.png"
+  },
+  "Upon the First Echo of \"Aha\"": {
+    "id": "23065",
+    "name": "Upon the First Echo of \"Aha\"",
+    "rarity": 5,
+    "path": "Elation",
+    "desc": "THEY were once the most dazzling protagonist on stage.\nThe stars cycled through day and night on that carousel, and THEY used magic to illuminate the dim dusk.\nUpon the first echo of \"Aha,\" so laughed the masses.\nTHEY were once the most brilliant dream-maker behind the scenes, manipulating the cosmos with tricks and fooling vicious beasts with humor.\nUnder THEIR guidance, touring performances quietly raised their curtains beneath the Phantasmoon, bringing hope to every wish.\nWhen people grew accustomed to sitting in the audience, waiting for new sensory stimuli, the Elation seemed to have already found its standard answer.\nWhen the final game began and the curtains parted, only the mask of a God remained on stage.\nSome chose to break the dead silence, some attempted to take the stage, while THEY played the loyal audience, cheering for everyone's \"Aha Instant\"...\n\"Aha is not the name of the Elation. The so-called Elation is an answer everyone must find for themselves~\"\nNo one noticed when THEY left, nor did anyone know where THEY went.\nOnly in those moments when certain lives are born, on nights when fireworks bloom, or on the unlit sides of a particular stage...\nAn occasional chuckle echoed from among the billions, as if THEY were merely passing by, or had perhaps never left at all.",
+    "icon": "icon/light_cone/23065.png",
+    "preview": "image/light_cone_preview/23065.png",
+    "portrait": "image/light_cone_portrait/23065.png"
   },
   "On the Fall of an Aeon": {
     "id": "24000",

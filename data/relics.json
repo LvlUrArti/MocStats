@@ -2111,6 +2111,50 @@
     "sub_affix_id": "2",
     "icon": "icon/relic/328_1.png"
   },
+  "33295": {
+    "id": "33295",
+    "set_id": "329",
+    "name": "Moment of Joy's Eternal Stage",
+    "rarity": 2,
+    "type": "NECK",
+    "max_level": 6,
+    "main_affix_id": "25",
+    "sub_affix_id": "2",
+    "icon": "icon/relic/329_0.png"
+  },
+  "33296": {
+    "id": "33296",
+    "set_id": "329",
+    "name": "Moment of Joy's Magic Prop",
+    "rarity": 2,
+    "type": "OBJECT",
+    "max_level": 6,
+    "main_affix_id": "26",
+    "sub_affix_id": "2",
+    "icon": "icon/relic/329_1.png"
+  },
+  "33305": {
+    "id": "33305",
+    "set_id": "330",
+    "name": "ASC Dark Fissure",
+    "rarity": 2,
+    "type": "NECK",
+    "max_level": 6,
+    "main_affix_id": "25",
+    "sub_affix_id": "2",
+    "icon": "icon/relic/330_0.png"
+  },
+  "33306": {
+    "id": "33306",
+    "set_id": "330",
+    "name": "ASC Negative Film",
+    "rarity": 2,
+    "type": "OBJECT",
+    "max_level": 6,
+    "main_affix_id": "26",
+    "sub_affix_id": "2",
+    "icon": "icon/relic/330_1.png"
+  },
   "41011": {
     "id": "41011",
     "set_id": "101",
@@ -4223,6 +4267,50 @@
     "sub_affix_id": "3",
     "icon": "icon/relic/328_1.png"
   },
+  "43295": {
+    "id": "43295",
+    "set_id": "329",
+    "name": "Moment of Joy's Eternal Stage",
+    "rarity": 3,
+    "type": "NECK",
+    "max_level": 9,
+    "main_affix_id": "35",
+    "sub_affix_id": "3",
+    "icon": "icon/relic/329_0.png"
+  },
+  "43296": {
+    "id": "43296",
+    "set_id": "329",
+    "name": "Moment of Joy's Magic Prop",
+    "rarity": 3,
+    "type": "OBJECT",
+    "max_level": 9,
+    "main_affix_id": "36",
+    "sub_affix_id": "3",
+    "icon": "icon/relic/329_1.png"
+  },
+  "43305": {
+    "id": "43305",
+    "set_id": "330",
+    "name": "ASC Dark Fissure",
+    "rarity": 3,
+    "type": "NECK",
+    "max_level": 9,
+    "main_affix_id": "35",
+    "sub_affix_id": "3",
+    "icon": "icon/relic/330_0.png"
+  },
+  "43306": {
+    "id": "43306",
+    "set_id": "330",
+    "name": "ASC Negative Film",
+    "rarity": 3,
+    "type": "OBJECT",
+    "max_level": 9,
+    "main_affix_id": "36",
+    "sub_affix_id": "3",
+    "icon": "icon/relic/330_1.png"
+  },
   "51011": {
     "id": "51011",
     "set_id": "101",
@@ -6334,6 +6422,50 @@
     "main_affix_id": "46",
     "sub_affix_id": "4",
     "icon": "icon/relic/328_1.png"
+  },
+  "53295": {
+    "id": "53295",
+    "set_id": "329",
+    "name": "Moment of Joy's Eternal Stage",
+    "rarity": 4,
+    "type": "NECK",
+    "max_level": 12,
+    "main_affix_id": "45",
+    "sub_affix_id": "4",
+    "icon": "icon/relic/329_0.png"
+  },
+  "53296": {
+    "id": "53296",
+    "set_id": "329",
+    "name": "Moment of Joy's Magic Prop",
+    "rarity": 4,
+    "type": "OBJECT",
+    "max_level": 12,
+    "main_affix_id": "46",
+    "sub_affix_id": "4",
+    "icon": "icon/relic/329_1.png"
+  },
+  "53305": {
+    "id": "53305",
+    "set_id": "330",
+    "name": "ASC Dark Fissure",
+    "rarity": 4,
+    "type": "NECK",
+    "max_level": 12,
+    "main_affix_id": "45",
+    "sub_affix_id": "4",
+    "icon": "icon/relic/330_0.png"
+  },
+  "53306": {
+    "id": "53306",
+    "set_id": "330",
+    "name": "ASC Negative Film",
+    "rarity": 4,
+    "type": "OBJECT",
+    "max_level": 12,
+    "main_affix_id": "46",
+    "sub_affix_id": "4",
+    "icon": "icon/relic/330_1.png"
   },
   "55001": {
     "id": "55001",
@@ -8512,5 +8644,49 @@
     "main_affix_id": "56",
     "sub_affix_id": "5",
     "icon": "icon/relic/328_1.png"
+  },
+  "63295": {
+    "id": "63295",
+    "set_id": "329",
+    "name": "Moment of Joy's Eternal Stage",
+    "rarity": 5,
+    "type": "NECK",
+    "max_level": 15,
+    "main_affix_id": "55",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/329_0.png"
+  },
+  "63296": {
+    "id": "63296",
+    "set_id": "329",
+    "name": "Moment of Joy's Magic Prop",
+    "rarity": 5,
+    "type": "OBJECT",
+    "max_level": 15,
+    "main_affix_id": "56",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/329_1.png"
+  },
+  "63305": {
+    "id": "63305",
+    "set_id": "330",
+    "name": "ASC Dark Fissure",
+    "rarity": 5,
+    "type": "NECK",
+    "max_level": 15,
+    "main_affix_id": "55",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/330_0.png"
+  },
+  "63306": {
+    "id": "63306",
+    "set_id": "330",
+    "name": "ASC Negative Film",
+    "rarity": 5,
+    "type": "OBJECT",
+    "max_level": 15,
+    "main_affix_id": "56",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/330_1.png"
   }
 }

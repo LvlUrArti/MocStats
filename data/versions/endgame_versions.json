@@ -224,6 +224,11 @@
       "name": "Survival of the Fittest",
       "time_start": "02/11/2026",
       "time_end": "14/12/2026"
+    },
+    "4.7.1": {
+      "name": "Echo of Darkness",
+      "time_start": "14/12/2026",
+      "time_end": "25/01/2027"
     }
   },
   "Pure Fiction": {
@@ -361,6 +366,11 @@
       "name": "Imagined Words",
       "time_start": "19/10/2026",
       "time_end": "30/11/2026"
+    },
+    "4.7.1": {
+      "name": "Fiction Made Truth",
+      "time_start": "30/11/2026",
+      "time_end": "11/01/2027"
     }
   },
   "Apocalyptic Shadow": {
@@ -468,6 +478,16 @@
       "name": "Dominance of Oblivion",
       "time_start": "05/10/2026",
       "time_end": "16/11/2026"
+    },
+    "4.7.1": {
+      "name": "Navigator's Netherveil",
+      "time_start": "16/11/2026",
+      "time_end": "28/12/2026"
+    },
+    "4.8.1": {
+      "name": "Navigator's Netherveil",
+      "time_start": "28/12/2026",
+      "time_end": "28/01/2027"
     }
   },
   "Anomaly Arbitration": {
@@ -520,6 +540,11 @@
       "name": "Return to Roots",
       "time_start": "28/09/2026",
       "time_end": "11/11/2026"
+    },
+    "4.7.1": {
+      "name": "Hidden Stage",
+      "time_start": "11/11/2026",
+      "time_end": "23/12/2026"
     }
   }
 }

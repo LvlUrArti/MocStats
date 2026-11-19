@@ -1044,6 +1044,7 @@
     "slug": "trailblazer-elation",
     "release": 1776848400,
     "role": [
+      "dps",
       "amplifier"
     ],
     "trailblazer_ids": [
@@ -1146,6 +1147,18 @@
     "release": 1790586000,
     "role": [
       "sustain"
+    ]
+  },
+  "Aeon \u2605 Aha": {
+    "id": "1511",
+    "rarity": 5,
+    "path": "Elation",
+    "element": "Quantum",
+    "availability": "Limited 5*",
+    "slug": "aha",
+    "release": 1794387600,
+    "role": [
+      "amplifier"
     ]
   }
 }

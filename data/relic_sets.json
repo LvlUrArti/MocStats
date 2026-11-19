@@ -1043,5 +1043,37 @@
       []
     ],
     "icon": "icon/relic/328.png"
+  },
+  "329": {
+    "id": "329",
+    "name": "God's Moment of Joy",
+    "desc": [
+      "Increases the wearer's SPD by 6%. When the wearer's Elation stat reaches 40% or higher, advances the wearer's action by 40% immediately upon entering combat."
+    ],
+    "properties": [
+      [
+        {
+          "type": "SpeedAddedRatio",
+          "value": 0.06
+        }
+      ]
+    ],
+    "icon": "icon/relic/329.png"
+  },
+  "330": {
+    "id": "330",
+    "name": "Subspace ASC Center",
+    "desc": [
+      "Increases the wearer's SPD by 6%. When the wearer's SPD reaches 145 or higher, increases all allies' Break Effect by 18% after entering combat. This effect cannot stack."
+    ],
+    "properties": [
+      [
+        {
+          "type": "SpeedAddedRatio",
+          "value": 0.06
+        }
+      ]
+    ],
+    "icon": "icon/relic/330.png"
   }
 }

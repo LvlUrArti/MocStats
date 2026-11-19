@@ -4,7 +4,7 @@
     "moc": {
       "ver": "1.0.3",
       "name": "Favor of Amber",
-      "start": "27/05/2023",
+      "start": "29/05/2023",
       "end": "12/06/2023"
     },
     "pf": null,
@@ -195,9 +195,9 @@
     "collect_date": "14/12/2023",
     "moc": {
       "ver": "1.5.2",
-      "name": "Sedition of Imbibitor Lunae",
+      "name": "Enigma in Deep Space",
       "start": "11/12/2023",
-      "end": "27/12/2023"
+      "end": "25/12/2023"
     },
     "pf": null,
     "as": null,
@@ -208,7 +208,7 @@
     "moc": {
       "ver": "1.6.1",
       "name": "Enigma in Deep Space",
-      "start": "27/12/2023",
+      "start": "25/12/2023",
       "end": "05/02/2024"
     },
     "pf": null,
@@ -366,7 +366,7 @@
     "as": {
       "ver": "2.3.1",
       "name": "Stormwind Knight",
-      "start": "19/06/2024",
+      "start": "17/06/2024",
       "end": "05/08/2024"
     },
     "aa": null
@@ -1627,7 +1627,7 @@
   "4.6.1": {
     "collect_date": "01/10/2026",
     "moc": {
-      "ver": "4.6.1",
+      "ver": "4.5.1",
       "name": "Crossing the Afterlife",
       "start": "28/09/2026",
       "end": "02/11/2026"
@@ -1654,7 +1654,7 @@
   "4.6.2": {
     "collect_date": "14/10/2026",
     "moc": {
-      "ver": "4.6.1",
+      "ver": "4.5.1",
       "name": "Crossing the Afterlife",
       "start": "28/09/2026",
       "end": "02/11/2026"
@@ -1681,7 +1681,7 @@
   "4.6.3": {
     "collect_date": "22/10/2026",
     "moc": {
-      "ver": "4.6.1",
+      "ver": "4.5.1",
       "name": "Crossing the Afterlife",
       "start": "28/09/2026",
       "end": "02/11/2026"
@@ -1708,7 +1708,7 @@
   "4.6.4": {
     "collect_date": "05/11/2026",
     "moc": {
-      "ver": "4.6.2",
+      "ver": "4.6.1",
       "name": "Survival of the Fittest",
       "start": "02/11/2026",
       "end": "14/12/2026"
@@ -1730,6 +1730,33 @@
       "name": "Return to Roots",
       "start": "28/09/2026",
       "end": "11/11/2026"
+    }
+  },
+  "4.7.1": {
+    "collect_date": "18/11/2026",
+    "moc": {
+      "ver": "4.6.1",
+      "name": "Survival of the Fittest",
+      "start": "02/11/2026",
+      "end": "14/12/2026"
+    },
+    "pf": {
+      "ver": "4.6.1",
+      "name": "Imagined Words",
+      "start": "19/10/2026",
+      "end": "30/11/2026"
+    },
+    "as": {
+      "ver": "4.7.1",
+      "name": "Navigator's Netherveil",
+      "start": "16/11/2026",
+      "end": "28/12/2026"
+    },
+    "aa": {
+      "ver": "4.7.1",
+      "name": "Hidden Stage",
+      "start": "11/11/2026",
+      "end": "23/12/2026"
     }
   }
 }
