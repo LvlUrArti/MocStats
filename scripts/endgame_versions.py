@@ -321,7 +321,6 @@ def resolve_times(
         old_start = existing_entry.get("time_start")
         old_end = existing_entry.get("time_end")
         if old_start and old_end:
-            print(f"{kind} {version_id}: using existing times for {label}")
             return old_start, old_end
 
     name = get_name(info)

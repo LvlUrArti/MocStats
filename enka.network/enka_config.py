@@ -3,8 +3,8 @@
 import csv
 import json
 import os.path
+import sqlite3
 import sys
-import time
 from pathlib import Path
 
 sys.path.append("../scripts/")
@@ -38,35 +38,35 @@ for char in CHARS_INFO.values():
             trailblazer_id for trailblazer_id in char.trailblazer_ids
         )
 
-iter_start = 0
-iter_end = 180
-filename = pf_filename.replace("_moc", "")
+results_mode = pf_filename.replace("_", "")
+state_db_path = Path(__file__).resolve().parents[2] / f"collect_state_{RECENT_PHASE}.db"
 
-if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
-    uidlist: list[int] = []
+
+def load_uids_from_db(path: Path, mode: str) -> list[int]:
+    """Return UIDs with collected results for a mode from the state database."""
     try:
-        for i in range(iter_start, iter_end):
-            print(f"\x1b[1K\r{i} / {iter_end}", end="")
+        with sqlite3.connect(f"{path.resolve().as_uri()}?mode=ro", uri=True) as conn:
+            rows = conn.execute(
+                "SELECT DISTINCT uid FROM results WHERE mode = ? ORDER BY uid",
+                (mode,),
+            ).fetchall()
+    except sqlite3.Error:
+        # Missing, locked, or older database: fall back to the exported UID list.
+        return []
+    return [int(row[0]) for row in rows]
 
-            csv_path = Path(f"../../spiraldata{filename}{i}.csv")
-            if time.time() - csv_path.stat().st_mtime < 120:
-                break
 
-            with open(csv_path, encoding="utf-8") as f:
-                reader = csv.reader(f, delimiter=",")
-                headers = next(reader)
-                spiraldata_temp = list(reader)
-                uidlist.extend(int(j[0]) for j in spiraldata_temp)
-    except FileNotFoundError:
-        pass
-    uids = list(dict.fromkeys(uidlist))
-elif os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
+uids: list[int] = []
+if state_db_path.exists():
+    uids = load_uids_from_db(state_db_path, results_mode)
+
+if not uids and os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
     with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
-        reader = csv.reader(f, delimiter=",")
-        uids = list(reader)
-        uids = [int(uid[0]) for uid in uids]
-        uids = list(dict.fromkeys(uids))
-else:
+        uids = list(
+            dict.fromkeys(int(row[0]) for row in csv.reader(f, delimiter=",")),
+        )
+
+if not uids:
     uids = [806411333]
 
 filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build"
